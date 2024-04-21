@@ -51,24 +51,35 @@ export default function Signup() {
       handle: handle,
       phoneNumber: phoneNumber,
     };
-  
     try {
-      
       const response = await axios.post('http://3.35.47.250:8281/sign-up', requestData);
-
       console.log("response",response);
-  
-     
       if (response.status === 200) {
         console.log("회원가입 성공!");
-       
       } else {
         console.error("회원가입 실패:", response.data);
-       
       }
     } catch (error) {
       console.error("회원가입 오류:", error);
-      
+    }
+  };
+
+  // 백준 유효 계정 인증 버튼
+  const handleConfirmHandle = async () => {
+   
+    const requestData = {
+      handle: handle,
+    };
+    try {
+      const response = await axios.post('http://3.35.47.250:8281/sign-up/handle', requestData);
+      console.log("response",response);
+      if (response.status === 200) {
+        console.log("백준 유효 계정 인증 성공!");
+      } else {
+        console.error("백준 유효 계정 인증 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("백준 유효 계정 인증 오류:", error);
     }
   };
   
@@ -98,7 +109,7 @@ export default function Signup() {
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
                 />
-                <itemS.BtnConfirm>
+                <itemS.BtnConfirm onClick={handleConfirmHandle}>
                   <div>인증하기</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>

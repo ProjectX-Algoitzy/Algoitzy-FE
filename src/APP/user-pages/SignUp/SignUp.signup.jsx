@@ -83,6 +83,24 @@ export default function Signup() {
     }
   };
   
+  // 이메일 인증 코드 전송 버튼
+  const handleSubmitEmail = async () => {
+   
+    const requestData = {
+      email: email,
+    };
+    try {
+      const response = await axios.post('http://3.35.47.250:8281/email/certification', requestData);
+      console.log("response",response);
+      if (response.status === 200) {
+        console.log("이메일 인증 코드 전송 성공!");
+      } else {
+        console.error("이메일 인증 코드 전송 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("이메일 인증 코드 전송 오류:", error);
+    }
+  };
 
   return (
     <div>
@@ -157,7 +175,7 @@ export default function Signup() {
                   onChange={(e) => setPhoneConfirmCode(e.target.value)}
                 />
                 <itemS.BtnConfirm>
-                  <div>인증하기</div>
+                  <div>인증번호 확인</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
@@ -172,7 +190,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <itemS.BtnConfirm>
+                <itemS.BtnConfirm onClick={handleSubmitEmail}>
                   <div>인증하기</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -185,7 +203,7 @@ export default function Signup() {
                   onChange={(e) => setEmailConfirmCode(e.target.value)}
                 />
                 <itemS.BtnConfirm>
-                  <div>인증하기</div>
+                  <div>인증번호 확인</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>

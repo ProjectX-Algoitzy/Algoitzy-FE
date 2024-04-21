@@ -85,79 +85,79 @@ export const typography = {
 	},
 
 	// Pretendard 폰트 - 가독성 높은 폰트
-	HEAD_0: {
+	// HEAD_0: {
+	// 	fontFamily: "Pretendard",
+	// 	fontWeight: "bold",
+	// 	fontSize: "60px",
+	// 	lineHeight: "80px",
+	// },
+	H1_B_60: {
 		fontFamily: "Pretendard",
 		fontWeight: "bold",
 		fontSize: "60px",
 		lineHeight: "80px",
 	},
-	HEAD_1: {
-		fontFamily: "Pretendard",
-		fontWeight: "bold",
-		fontSize: "60px",
-		lineHeight: "80px",
-	},
-	HEAD_2: {
+	H2_SB_48: {
 		fontFamily: "Pretendard",
 		fontWeight: "semibold",
 		fontSize: "48px",
 		lineHeight: "64px",
 	},
-	HEAD_3: {
+	H3_SB_40: {
 		fontFamily: "Pretendard",
 		fontWeight: "semibold",
 		fontSize: "40px",
 		lineHeight: "54px",
 	},
-	Title_1: {
+	T1_SB_32: {
 		fontFamily: "Pretendard",
 		fontWeight: "semibold",
 		fontSize: "32px",
 		lineHeight: "42px",
 	},
-	Title_2: {
+	T2_M_28: {
 		fontFamily: "Pretendard",
 		fontWeight: "medium",
 		fontSize: "28px",
 		lineHeight: "36px",
 	},
-	Title_3: {
+	T3_B_24: {
 		fontFamily: "Pretendard",
 		fontWeight: "bold",
 		fontSize: "24px",
 		lineHeight: "32px",
 	},
-	Title_4: {
+	T4_SB_20: {
 		fontFamily: "Pretendard",
 		fontWeight: "semibold",
 		fontSize: "20px",
 		lineHeight: "26px",
 	},
-	Title_5: {
+	T5_SB_16: {
 		fontFamily: "Pretendard",
 		fontWeight: "semibold",
 		fontSize: "16px",
 		lineHeight: "21px",
 	},
-	Body_1: {
+	B1_M_20: {
 		fontFamily: "Pretendard",
 		fontWeight: "medium",
 		fontSize: "20px",
 		lineHeight: "26px",
 	},
-	Body_2: {
+	B2_M_16: {
 		fontFamily: "Pretendard",
 		fontWeight: "medium",
 		fontSize: "16px",
 		lineHeight: "21px",
 	},
-	Body_3: {
+	B3_M_14: {
 		fontFamily: "Pretendard",
 		fontWeight: "medium",
 		fontSize: "14px",
 		lineHeight: "18px",
 	},
-	SUB: {
+	Sub_M_12: {
 		fontFamily: "Pretendard",
 		fontWeight: "medium",
 		fontSize: "12px",
@@ -173,3 +173,25 @@ export const Title_4 = styled.div`
   
 `;
 */
+
+export const Btns = {
+	Btn_fill_certi_disable: {
+		width: "140px",
+		height: "56px",
+		background: "#D2D9E5",
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_fill_disable: {
+		width: "386px",
+		height: "56px",
+		background: "#D2D9E5",
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	
+
+	
+};

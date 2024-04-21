@@ -4,12 +4,14 @@ import axios from 'axios';
 
 export default function Signup() {
 
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [handle, setHandle] = useState(''); 
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [handle, setHandle] = useState(''); // Add handle state
+  const [phoneConfirmCode, setPhoneConfirmCode] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailConfirmCode, setEmailConfirmCode] = useState('');
 
   // 비밀번호 유효성 검사
   // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
@@ -72,56 +74,116 @@ export default function Signup() {
   
 
   return (
-    <itemS.Container>
-      <itemS.Label>이메일:</itemS.Label>
-      <itemS.Input
-        type="text"
-        placeholder="이메일을 입력해주세요"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-  
-      <itemS.Label>비밀번호:</itemS.Label>
-      <itemS.Input
-        type="password"
-        placeholder="비밀번호를 입력해주세요"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-  
-      <itemS.Label>비밀번호 확인:</itemS.Label>
-      <itemS.Input
-        type="password"
-        placeholder="비밀번호 확인"
-        value={passwordConfirmation}
-        onChange={(e) => setPasswordConfirmation(e.target.value)}
-      />
-  
-      <itemS.Label>이름:</itemS.Label>
-      <itemS.Input
-        type="text"
-        placeholder="이름을 입력해주세요"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-  
-      <itemS.Label>백준닉네임:</itemS.Label>
-      <itemS.Input
-        type="text"
-        placeholder="백준닉네임을 입력해주세요"
-        value={handle}
-        onChange={(e) => setHandle(e.target.value)}
-      />
-  
-      <itemS.Label>핸드폰 번호:</itemS.Label>
-      <itemS.Input
-        type="text"
-        placeholder="000-0000-0000"
-        value={phoneNumber}
-        onChange={(e) => setPhoneNumber(e.target.value)}
-      />
-  
-      <itemS.Button onClick={handleSubmit}>회원가입</itemS.Button>
-    </itemS.Container>
+    <div>
+      <itemS.Container>
+        <itemS.InnerContainer>
+          <itemS.Head3>회원가입</itemS.Head3>
+          <div>
+            <itemS.LIContainer>
+              <itemS.Label>이름</itemS.Label>
+              <itemS.InputBox
+                type="text"
+                placeholder="이름을 입력해주세요"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </itemS.LIContainer>
+          
+            <itemS.LIContainer>
+              <itemS.Label>백준닉네임</itemS.Label>
+              <itemS.InputConfirmBoxWrapper>
+                <itemS.InputConfirmBox
+                  type="text"
+                  placeholder="백준닉네임을 입력해주세요"
+                  value={handle}
+                  onChange={(e) => setHandle(e.target.value)}
+                />
+                <itemS.BtnConfirm>
+                  <div>인증하기</div>
+                </itemS.BtnConfirm>
+              </itemS.InputConfirmBoxWrapper>
+            </itemS.LIContainer>
+            
+            <itemS.LIContainer>
+              <itemS.Label>비밀번호</itemS.Label>
+              <itemS.InputBox
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </itemS.LIContainer>
+        
+            <itemS.LIContainer>
+              <itemS.Label>비밀번호 확인</itemS.Label>
+              <itemS.InputBox
+                type="password"
+                placeholder="비밀번호 확인"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+              />
+            </itemS.LIContainer>
+
+            <itemS.LIContainer>
+              <itemS.Label>핸드폰 번호</itemS.Label>
+              <itemS.InputConfirmBoxWrapper>
+                <itemS.InputConfirmBox
+                  type="text"
+                  placeholder="000-0000-0000"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+                <itemS.BtnConfirm>
+                  <div>인증하기</div>
+                </itemS.BtnConfirm>
+              </itemS.InputConfirmBoxWrapper>
+
+              <itemS.InputConfirmBoxWrapper>
+                <itemS.InputConfirmBox
+                  type="text"
+                  placeholder="인증코드"
+                  value={phoneConfirmCode}
+                  onChange={(e) => setPhoneConfirmCode(e.target.value)}
+                />
+                <itemS.BtnConfirm>
+                  <div>인증하기</div>
+                </itemS.BtnConfirm>
+              </itemS.InputConfirmBoxWrapper>
+            </itemS.LIContainer>
+            
+            
+            <itemS.LIContainer>
+              <itemS.Label>이메일</itemS.Label>
+              <itemS.InputConfirmBoxWrapper>
+                <itemS.InputConfirmBox
+                  type="text"
+                  placeholder="이메일을 입력해주세요"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <itemS.BtnConfirm>
+                  <div>인증하기</div>
+                </itemS.BtnConfirm>
+              </itemS.InputConfirmBoxWrapper>
+              
+              <itemS.InputConfirmBoxWrapper>
+                <itemS.InputConfirmBox
+                  type="text"
+                  placeholder="인증코드"
+                  value={emailConfirmCode}
+                  onChange={(e) => setEmailConfirmCode(e.target.value)}
+                />
+                <itemS.BtnConfirm>
+                  <div>인증하기</div>
+                </itemS.BtnConfirm>
+              </itemS.InputConfirmBoxWrapper>
+            </itemS.LIContainer>
+          </div>
+          <itemS.Btn onClick={handleSubmit}>
+            <div>회원가입</div>
+          </itemS.Btn>
+        </itemS.InnerContainer>
+      </itemS.Container>
+    </div>
   );
 }

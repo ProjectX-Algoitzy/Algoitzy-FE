@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom" 
-import Home from "./sharing-pages/Home"
-import Login from "./sharing-pages/Login"
-import Signup from "./user-pages/Signup"
-import Header from "./components/Header"
+import Home from "./APP/sharing-pages/Home"
+import Login from "./APP/sharing-pages/Login"
+import Signup from "./APP/user-pages/SignUp/SignUp.signup"
+import Header from "./APP/components/Header"
 
 function App() {
   return (

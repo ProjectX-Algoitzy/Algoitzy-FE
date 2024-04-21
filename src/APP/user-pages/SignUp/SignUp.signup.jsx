@@ -54,7 +54,7 @@ export default function Signup() {
   
     try {
       
-      const response = await axios.post('http://3.35.47.250:8281/swagger-ui/index.html#//sign-up', requestData);
+      const response = await axios.post('http://3.35.47.250:8281/sign-up', requestData);
 
       console.log("response",response);
   

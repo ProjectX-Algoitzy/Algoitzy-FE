@@ -191,7 +191,58 @@ export const Btns = {
 		border: "none",
 		cursor: "pointer",
 	},
-	
-
-	
+	Btn_fill_normal: {
+		width: "320px",
+		height: "72px",
+		background: colors.Blue_0_Main,
+		color: colors.White,
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_fill_default: {
+		width: "386px",
+		height: "56px",
+		background: colors.Blue_0_Main,
+		color: colors.White,
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_fill_hover: {
+		width: "386px",
+		height: "56px",
+		background: colors.Blue_3,
+		color: colors.White,
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_fill_press: {
+		width: "386px",
+		height: "56px",
+		background: colors.Blue_5_Dark,
+		color: colors.White,
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_fill_certi_enable : {
+		width: "140px",
+		height: "56px",
+		background: colors.B_Grey_7,
+		color: colors.White,
+		borderRadius: "4px",
+		border: "none",
+		cursor: "pointer",
+	},
+	Btn_ghost_default : {
+		width: "145px",
+		height: "40px",
+		background: colors.Black,
+		color: colors.Blue_4_Dark,
+		borderRadius: "4px",
+		borderColor: colors.Blue_4_Dark,
+		cursor: "pointer",
+	}
 };

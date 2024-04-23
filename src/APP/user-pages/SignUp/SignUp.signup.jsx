@@ -82,6 +82,26 @@ export default function Signup() {
       console.error("백준 유효 계정 인증 오류:", error);
     }
   };
+
+  // 휴대 전화 인증 버튼
+  const handleConfirmPhone = async () => {
+   
+    const requestData = {
+      phoneNumber: phoneNumber,
+      code: phoneConfirmCode
+    };
+    try {
+      const response = await axios.post('http://3.35.47.250:8281/sign-up/phone-number', requestData);
+      console.log("response",response);
+      if (response.status === 200) {
+        console.log("휴대 전화 인증 성공!");
+      } else {
+        console.error("휴대 전화 인증 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("휴대 전화 인증 오류:", error);
+    }
+  };
   
   // 이메일 인증 코드 전송 버튼
   const handleSubmitEmail = async () => {
@@ -99,6 +119,25 @@ export default function Signup() {
       }
     } catch (error) {
       console.error("이메일 인증 코드 전송 오류:", error);
+    }
+  };
+
+  // SMS 인증 코드 전송 버튼
+  const handleSubmitSMS = async () => {
+   
+    const requestData = {
+      phoneNumber: phoneNumber,
+    };
+    try {
+      const response = await axios.post('http://3.35.47.250:8281/sms/certification', requestData);
+      console.log("response",response);
+      if (response.status === 200) {
+        console.log("SMS 인증 코드 전송 성공!");
+      } else {
+        console.error("SMS 인증 코드 전송 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("SMS 인증 코드 전송 오류:", error);
     }
   };
 
@@ -162,7 +201,7 @@ export default function Signup() {
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
-                <itemS.BtnConfirm>
+                <itemS.BtnConfirm onClick={handleSubmitSMS}>
                   <div>인증하기</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -174,7 +213,7 @@ export default function Signup() {
                   value={phoneConfirmCode}
                   onChange={(e) => setPhoneConfirmCode(e.target.value)}
                 />
-                <itemS.BtnConfirm>
+                <itemS.BtnConfirm onClick={handleConfirmPhone}>
                   <div>인증번호 확인</div>
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>

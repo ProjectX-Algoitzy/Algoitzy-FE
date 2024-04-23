@@ -41,48 +41,48 @@ export const colors = {
 };
 
 export const typography = {
-	title_lg: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "semibold",
-		fontSize: "48px",
-		lineHeight: "120%",
-	},
-	title_md: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "semibold",
-		fontSize: "36px",
-		lineHeight: "120%",
-	},
-	title_sm: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "semibold",
-		fontSize: "24px",
-		lineHeight: "130%",
-	},
-	text_lg: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "semibold",
-		fontSize: "18px",
-		lineHeight: "140%",
-	},
-	text_md: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "regular",
-		fontSize: "16px",
-		lineHeight: "140%",
-	},
-	text_sm: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "regular",
-		fontSize: "14px",
-		lineHeight: "140%",
-	},
-	caption: {
-		fontFamily: "Pretendard Variable",
-		fontWeight: "regular",
-		fontSize: "12px",
-		lineHeight: "140%",
-	},
+	// title_lg: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "semibold",
+	// 	fontSize: "48px",
+	// 	lineHeight: "120%",
+	// },
+	// title_md: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "semibold",
+	// 	fontSize: "36px",
+	// 	lineHeight: "120%",
+	// },
+	// title_sm: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "semibold",
+	// 	fontSize: "24px",
+	// 	lineHeight: "130%",
+	// },
+	// text_lg: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "semibold",
+	// 	fontSize: "18px",
+	// 	lineHeight: "140%",
+	// },
+	// text_md: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "regular",
+	// 	fontSize: "16px",
+	// 	lineHeight: "140%",
+	// },
+	// text_sm: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "regular",
+	// 	fontSize: "14px",
+	// 	lineHeight: "140%",
+	// },
+	// caption: {
+	// 	fontFamily: "Pretendard Variable",
+	// 	fontWeight: "regular",
+	// 	fontSize: "12px",
+	// 	lineHeight: "140%",
+	// },
 
 	// Pretendard 폰트 - 가독성 높은 폰트
 	// HEAD_0: {

@@ -13,33 +13,34 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [emailConfirmCode, setEmailConfirmCode] = useState('');
 
+  const [borderColor, setBorderColor] = useState('1px solid #CFCFCF');
+
   // 비밀번호 유효성 검사
-  // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{1,8}$/;
 
-  // // 비밀번호 확인 
-  // const [isPasswordValid, setIsPasswordValid] = useState(true);
-  // const handlePasswordChange = (value) => {
-  //   setPassword(value); 
-  //   // 비밀번호를 정규식과 비교하여 유효성을 검사
-  //   if (passwordRegex.test(value)) {
-  //     setIsPasswordValid(true);
-  //   } else {
-  //     setIsPasswordValid(false);
-  //   }
-  // };
+  // 휴대폰 번호 유효성 검사 
+  const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
-  // // 비밀번호 확인 
-  // const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(true);
-  // const handlePasswordConfirmationChange = (value) => {
-  //   setPasswordConfirmation(value);
-  //   // 비밀번호 확인 값과 비밀번호 값이 일치하는지 확인
-  //   if (value === password) {
-  //     setIsPasswordConfirmed(true);
-  //   } else {
-  //     setIsPasswordConfirmed(false);
-  //   }
-  // };
-  
+  // 비밀번호 유효성 확인 
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+    setIsPasswordValid(PasswordRegex.test(value));
+  }
+
+  // 휴대폰 번호 유효성 확인
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+  const handlePhoneNumberChange = (value) => {
+    console.log("cnt",value.trim().length);
+    setPhoneNumber(value);
+    setIsPhoneNumberValid(PhoneRegex.test(value));
+    if (!PhoneRegex.test(value) && value.trim().length > 0) {
+      setBorderColor('1px solid #DC4A41'); // Red
+    } else {
+      setBorderColor('1px solid #CFCFCF'); // Grey_4
+    }
+  };
+
   // 회원가입 버튼
   const handleSubmit = async () => {
    
@@ -151,7 +152,7 @@ export default function Signup() {
               <itemS.Label>이름</itemS.Label>
               <itemS.InputBox
                 type="text"
-                placeholder="이름을 입력해주세요"
+                placeholder="이름을 입력해주세요."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -162,12 +163,12 @@ export default function Signup() {
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
-                  placeholder="백준닉네임을 입력해주세요"
+                  placeholder="백준닉네임을 입력해주세요."
                   value={handle}
                   onChange={(e) => setHandle(e.target.value)}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmHandle}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
@@ -176,11 +177,16 @@ export default function Signup() {
               <itemS.Label>비밀번호</itemS.Label>
               <itemS.InputBox
                 type="password"
-                placeholder="비밀번호를 입력해주세요"
+                placeholder="비밀번호를 입력해주세요."
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePasswordChange(e.target.value)}
               />
             </itemS.LIContainer>
+            {!isPasswordValid && password.length > 0 && (
+            <itemS.ErrorMessage>
+              * 특수문자 1개 이상, 영문+숫자, 8자 이내로 설정해주세요.
+            </itemS.ErrorMessage>
+            )}
         
             <itemS.LIContainer>
               <itemS.Label>비밀번호 확인</itemS.Label>
@@ -199,12 +205,17 @@ export default function Signup() {
                   type="text"
                   placeholder="000-0000-0000"
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                  style={{ border: borderColor }}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitSMS}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
+              {!isPhoneNumberValid && phoneNumber.length > 0
+                ? <itemS.ErrorMessage>* 특수문자 1개 이상, 영문+숫자, 8자 이내로 설정해주세요.</itemS.ErrorMessage>
+                : <itemS.DescriptionText>인증받을 유효한 휴대폰 번호를 입력해주세요.</itemS.DescriptionText>
+              }
 
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
@@ -214,7 +225,7 @@ export default function Signup() {
                   onChange={(e) => setPhoneConfirmCode(e.target.value)}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmPhone}>
-                  <div>인증번호 확인</div>
+                 인증번호 확인
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
@@ -225,14 +236,17 @@ export default function Signup() {
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
-                  placeholder="이메일을 입력해주세요"
+                  placeholder="이메일을 입력해주세요."
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitEmail}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
+              <itemS.DescriptionText>
+                인증받을 유효한 이메일을 입력해주세요.
+              </itemS.DescriptionText>
               
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
@@ -242,7 +256,7 @@ export default function Signup() {
                   onChange={(e) => setEmailConfirmCode(e.target.value)}
                 />
                 <itemS.BtnConfirm>
-                  <div>인증번호 확인</div>
+                 인증번호 확인
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>

@@ -16,6 +16,9 @@ export const colors = {
     Black: "#191919",
     White: "#FFFFFF",
 
+	// Error Messages
+	Red: "#DC4A41",
+
 	// Gray Scale	
     Grey_8:"#171717",
     Grey_7: "#333333",
@@ -40,10 +43,13 @@ export const colors = {
 	G_Yellow_1: "linear-gradient(#F9D581, #F88F78)",
 };
 
+// semibold : 600
+// bold : 700
+// medium : 500
 export const typography = {
 	// title_lg: {
 	// 	fontFamily: "Pretendard Variable",
-	// 	fontWeight: "semibold",
+	// 	fontWeight: "600",
 	// 	fontSize: "48px",
 	// 	lineHeight: "120%",
 	// },
@@ -93,73 +99,73 @@ export const typography = {
 	// },
 	H1_B_60: {
 		fontFamily: "Pretendard",
-		fontWeight: "bold",
+		fontWeight: "700",
 		fontSize: "60px",
 		lineHeight: "80px",
 	},
 	H2_SB_48: {
 		fontFamily: "Pretendard",
-		fontWeight: "semibold",
+		fontWeight: "600",
 		fontSize: "48px",
 		lineHeight: "64px",
 	},
 	H3_SB_40: {
 		fontFamily: "Pretendard",
-		fontWeight: "semibold",
+		fontWeight: "600",
 		fontSize: "40px",
 		lineHeight: "54px",
 	},
 	T1_SB_32: {
 		fontFamily: "Pretendard",
-		fontWeight: "semibold",
+		fontWeight: "600",
 		fontSize: "32px",
 		lineHeight: "42px",
 	},
 	T2_M_28: {
 		fontFamily: "Pretendard",
-		fontWeight: "medium",
+		fontWeight: "500",
 		fontSize: "28px",
 		lineHeight: "36px",
 	},
 	T3_B_24: {
 		fontFamily: "Pretendard",
-		fontWeight: "bold",
+		fontWeight: "700",
 		fontSize: "24px",
 		lineHeight: "32px",
 	},
 	T4_SB_20: {
 		fontFamily: "Pretendard",
-		fontWeight: "semibold",
+		fontWeight: "600",
 		fontSize: "20px",
 		lineHeight: "26px",
 	},
 	T5_SB_16: {
 		fontFamily: "Pretendard",
-		fontWeight: "semibold",
+		fontWeight: "600",
 		fontSize: "16px",
 		lineHeight: "21px",
 	},
 	B1_M_20: {
 		fontFamily: "Pretendard",
-		fontWeight: "medium",
+		fontWeight: "500",
 		fontSize: "20px",
 		lineHeight: "26px",
 	},
 	B2_M_16: {
 		fontFamily: "Pretendard",
-		fontWeight: "medium",
+		fontWeight: "500",
 		fontSize: "16px",
 		lineHeight: "21px",
 	},
 	B3_M_14: {
 		fontFamily: "Pretendard",
-		fontWeight: "medium",
+		fontWeight: "500",
 		fontSize: "14px",
 		lineHeight: "18px",
 	},
 	Sub_M_12: {
 		fontFamily: "Pretendard",
-		fontWeight: "medium",
+		fontWeight: "500",
 		fontSize: "12px",
 		lineHeight: "15px",
 	},

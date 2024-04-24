@@ -9,37 +9,115 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneConfirmCode, setPhoneConfirmCode] = useState('');
+  const [SMSCode, setSMSCode] = useState('');
   const [email, setEmail] = useState('');
-  const [emailConfirmCode, setEmailConfirmCode] = useState('');
+  const [emailCode, setEmailCode] = useState('');
+
+  // border색상 및 메시지 상태
+  // 백준 계정 색상 및 메시지
+  const [handleColor, setHandleColor] = useState('#CFCFCF'); 
+  const [handleMessage, setHandleMessage] = useState(''); 
+
+  // 비밀번호 색상 및 메시지
+  const [pwdborderColor, setPwdBorderColor] = useState('1px solid #CFCFCF'); 
+
+  // 비밀번호 확인 색상 및 메시지
+  const [pwdConfirmborderColor, setPwdConfirmBorderColor] = useState('1px solid #CFCFCF'); 
+
+  // 핸드폰 및 인증코드 색상 및 메시지
+  const [phoneBorderColor, setPhoneBorderColor] = useState('#CFCFCF'); // Grey_4
+  const [phoneMessageColor, setPhoneMessageColor] = useState('#171717'); // Grey_8
+  const [phoneMessage, setPhoneMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); 
+  const [SMSColor, setSMSColor] = useState('#CFCFCF'); // Grey_4
+  const [SMSMessage, setSMSMessage] = useState(''); 
+
+  // 이메일 및 인증코드 색상 및 메시지
+  const [emailBorderColor, setEmailBorderColor] = useState('#CFCFCF'); // Grey_4
+  const [emailMessageColor, setEmailMessageColor] = useState('#171717'); // Grey_8
+  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); 
+  const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4
+  const [emailCodeMessage, setEmailCodeMessage] = useState(''); 
+
 
   // 비밀번호 유효성 검사
-  // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{1,15}$/;
 
-  // // 비밀번호 확인 
-  // const [isPasswordValid, setIsPasswordValid] = useState(true);
-  // const handlePasswordChange = (value) => {
-  //   setPassword(value); 
-  //   // 비밀번호를 정규식과 비교하여 유효성을 검사
-  //   if (passwordRegex.test(value)) {
-  //     setIsPasswordValid(true);
-  //   } else {
-  //     setIsPasswordValid(false);
-  //   }
-  // };
+  // 핸드폰 번호 유효성 검사 
+  // const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
-  // // 비밀번호 확인 
-  // const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(true);
-  // const handlePasswordConfirmationChange = (value) => {
-  //   setPasswordConfirmation(value);
-  //   // 비밀번호 확인 값과 비밀번호 값이 일치하는지 확인
-  //   if (value === password) {
-  //     setIsPasswordConfirmed(true);
-  //   } else {
-  //     setIsPasswordConfirmed(false);
-  //   }
-  // };
+  // 유효성 확인
+  // 백준 계정 유효성 확인
+  const [isHandleValid, setIsHandleValid] = useState(false);
   
+  // 비밀번호 유효성 확인 
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  // 비밀번호 확인 유효성 확인 
+  const [isPasswordConfirmValid, setIsPasswordConfirmValid] = useState(false);
+
+  // 핸드폰 번호 및 인증 코드 유효성 확인
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+  const [isSMSValid, setIsSMSValid] = useState(false);
+
+  // 이메일 및 인증 코드 유효성 확인
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailCodeValid, setIsEmailCodeValid] = useState(false);
+  
+
+  // 비밀번호 입력 change event
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+    setIsPasswordValid(PasswordRegex.test(value));
+    if (!PasswordRegex.test(value) && value.trim().length > 0) {
+      setPwdBorderColor('1px solid #DC4A41'); // Red
+    } else {
+      setPwdBorderColor('1px solid #555555'); // Grey_6
+    }
+  }
+
+  // 비밀번호 확인 입력 change event
+  const handlePasswordConfirmChange = (value) => {
+    setPasswordConfirmation(value);
+    setIsPasswordConfirmValid(PasswordRegex.test(value));
+    if (value !== password && value.trim().length > 0) {
+      setPwdConfirmBorderColor('1px solid #DC4A41'); // Red
+    } else {
+      setPwdConfirmBorderColor('1px solid #555555'); // Grey_6
+    }
+  }
+
+  // 백준 계정 입력 change event
+  const handleHandleChange = (value) => {
+    setHandle(value);
+    setHandleColor('#555555'); // Grey_6
+  }
+
+  // 핸드폰 번호 입력 change event
+  const handlePhoneNumberChange = (value) => {
+    setPhoneNumber(value);
+    setPhoneBorderColor('#555555'); // Grey_6
+  }
+
+  // 핸드폰 번호 인증 코드 입력 change event
+  const handleSMSCodeChange = (value) => {
+    setSMSCode(value);
+    setSMSColor('#555555'); // Grey_6
+  }
+
+  // 핸드폰 번호 입력 change event
+  const handleEmailChange = (value) => {
+    setEmail(value);
+    setEmailBorderColor('#555555'); // Grey_6
+  }
+
+  // 핸드폰 번호 인증 코드 입력 change event
+  const handleEmailCodeChange = (value) => {
+    setEmailCode(value);
+    setEmailCodeColor('#555555'); // Grey_6
+  }
+
+  
+
   // 회원가입 버튼
   const handleSubmit = async () => {
    
@@ -64,9 +142,8 @@ export default function Signup() {
     }
   };
 
-  // 백준 유효 계정 인증 버튼
+  // 백준 유효 계정 인증하기 버튼
   const handleConfirmHandle = async () => {
-   
     const requestData = {
       handle: handle,
     };
@@ -75,35 +152,82 @@ export default function Signup() {
       console.log("response",response);
       if (response.status === 200) {
         console.log("백준 유효 계정 인증 성공!");
-      } else {
+        setIsHandleValid(true);
+        setHandleColor('#3083F7'); // Blue_3
+        setHandleMessage('인증이 완료되었습니다.');
+      } else { // 이 경우는 없느건가?
         console.error("백준 유효 계정 인증 실패:", response.data);
+        
       }
     } catch (error) {
       console.error("백준 유효 계정 인증 오류:", error);
+      setIsHandleValid(false);
+      setHandleColor('#DC4A41'); // Red
+      setHandleMessage('등록되지 않은 계정입니다.');
     }
   };
 
-  // 휴대 전화 인증 버튼
+  // 핸드폰 번호 인증번호 확인 버튼
   const handleConfirmPhone = async () => {
    
     const requestData = {
       phoneNumber: phoneNumber,
-      code: phoneConfirmCode
+      code: SMSCode
     };
     try {
       const response = await axios.post('http://3.35.47.250:8281/sign-up/phone-number', requestData);
       console.log("response",response);
       if (response.status === 200) {
-        console.log("휴대 전화 인증 성공!");
+        console.log("핸드폰 번호 인증 성공!");
+        setIsSMSValid(true);
+        setPhoneBorderColor('#3083F7'); // Blue_3
+        setPhoneMessageColor('#3083F7'); // Blue_3
+        setPhoneMessage('인증이 완료되었습니다.');
+        setSMSColor('#555555'); // grey_6
       } else {
-        console.error("휴대 전화 인증 실패:", response.data);
+        console.error("핸드폰 번호 인증 실패:", response.data);
+        setSMSColor('#DC4A41'); // REd
+        setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
       }
     } catch (error) {
-      console.error("휴대 전화 인증 오류:", error);
+      console.error("핸드폰 번호 인증 오류:", error);
+      setIsSMSValid(false);
+      setSMSColor('#DC4A41'); // REd
+      setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
     }
   };
   
-  // 이메일 인증 코드 전송 버튼
+  // 이메일 인증번호 확인 버튼
+  const handleConfirmEmail = async () => {
+   
+    const requestData = {
+      email: email,
+      code: emailCode
+    };
+    try {
+      const response = await axios.post('http://3.35.47.250:8281/sign-up/email', requestData);
+      console.log("response",response);
+      if (response.status === 200) {
+        console.log("이메일 인증 성공!");
+        setIsEmailCodeValid(true);
+        setEmailBorderColor('#3083F7'); // Blue_3
+        setEmailMessageColor('#3083F7'); // Blue_3
+        setEmailMessage('인증이 완료되었습니다.');
+        setEmailCodeColor('#555555'); // grey_6
+      } else {
+        console.error("이메일 인증 실패:", response.data);
+        setEmailCodeColor('#DC4A41'); // REd
+        setEmailCodeMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+      }
+    } catch (error) {
+      console.error("이메일 인증 오류:", error);
+      setIsEmailCodeValid(false);
+      setEmailCodeColor('#DC4A41'); // REd
+      setEmailCodeMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+    }
+  };
+
+  // 이메일 인증 코드 전송 버튼 {인증하기 버튼}
   const handleSubmitEmail = async () => {
    
     const requestData = {
@@ -114,15 +238,23 @@ export default function Signup() {
       console.log("response",response);
       if (response.status === 200) {
         console.log("이메일 인증 코드 전송 성공!");
+        setIsEmailValid(true);
+        setEmailBorderColor('#3083F7'); // Blue_3
+        setEmailMessageColor('#3083F7'); // Blue_3
+        setEmailMessage('인증번호가 발송되었습니다.');
       } else {
         console.error("이메일 인증 코드 전송 실패:", response.data);
       }
     } catch (error) {
       console.error("이메일 인증 코드 전송 오류:", error);
+      setIsEmailValid(false);
+      setEmailBorderColor('#DC4A41'); // Red
+      setEmailMessageColor('#DC4A41'); // Red
+      setEmailMessage('사용할 수 없는 핸드폰 번호입니다.');
     }
   };
 
-  // SMS 인증 코드 전송 버튼
+  // SMS 인증 코드 전송 버튼 {인증하기 버튼}
   const handleSubmitSMS = async () => {
    
     const requestData = {
@@ -133,11 +265,19 @@ export default function Signup() {
       console.log("response",response);
       if (response.status === 200) {
         console.log("SMS 인증 코드 전송 성공!");
+        setIsPhoneNumberValid(true);
+        setPhoneBorderColor('#3083F7'); // Blue_3
+        setPhoneMessageColor('#3083F7'); // Blue_3
+        setPhoneMessage('인증번호가 발송되었습니다.');
       } else {
         console.error("SMS 인증 코드 전송 실패:", response.data);
       }
     } catch (error) {
       console.error("SMS 인증 코드 전송 오류:", error);
+      setIsPhoneNumberValid(false);
+      setPhoneBorderColor('#DC4A41'); // Red
+      setPhoneMessageColor('#DC4A41'); // Red
+      setPhoneMessage('사용할 수 없는 핸드폰 번호입니다.');
     }
   };
 
@@ -151,7 +291,7 @@ export default function Signup() {
               <itemS.Label>이름</itemS.Label>
               <itemS.InputBox
                 type="text"
-                placeholder="이름을 입력해주세요"
+                placeholder="이름을 입력해주세요."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -162,25 +302,38 @@ export default function Signup() {
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
-                  placeholder="백준닉네임을 입력해주세요"
+                  placeholder="백준닉네임을 입력해주세요."
                   value={handle}
-                  onChange={(e) => setHandle(e.target.value)}
+                  onChange={(e) => handleHandleChange(e.target.value)}
+                  style={{ border: `1px solid ${handleColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmHandle}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
+            <itemS.Message
+              style={{ color: `${handleColor}` }}
+            >
+              {handleMessage}
+            </itemS.Message>
+            
             
             <itemS.LIContainer>
               <itemS.Label>비밀번호</itemS.Label>
               <itemS.InputBox
                 type="password"
-                placeholder="비밀번호를 입력해주세요"
+                placeholder="비밀번호를 입력해주세요."
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => handlePasswordChange(e.target.value)}
+                style={{ border: pwdborderColor }}
               />
             </itemS.LIContainer>
+            {!isPasswordValid && password.length > 0 && (
+            <itemS.ErrorMessage>
+              * 특수문자 1개 이상, 영문+숫자, 15자 이내로 설정해주세요.
+            </itemS.ErrorMessage>
+            )}
         
             <itemS.LIContainer>
               <itemS.Label>비밀번호 확인</itemS.Label>
@@ -188,9 +341,16 @@ export default function Signup() {
                 type="password"
                 placeholder="비밀번호 확인"
                 value={passwordConfirmation}
-                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                onChange={(e) => handlePasswordConfirmChange(e.target.value)}
+                style={{ border: pwdConfirmborderColor }}
               />
             </itemS.LIContainer>
+            {!isPasswordConfirmValid && passwordConfirmation.length > 0 && (
+            <itemS.ErrorMessage>
+              비밀번호가 일치하지 않습니다.
+            </itemS.ErrorMessage>
+            )}
+        
 
             <itemS.LIContainer>
               <itemS.Label>핸드폰 번호</itemS.Label>
@@ -199,25 +359,37 @@ export default function Signup() {
                   type="text"
                   placeholder="000-0000-0000"
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={(e) => handlePhoneNumberChange(e.target.value)}
+                  style={{ border: `1px solid ${phoneBorderColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitSMS}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
+              <itemS.CodeMessage
+                style={{ color: `${phoneMessageColor}` }}
+              >
+                {phoneMessage}
+              </itemS.CodeMessage>
 
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
                   placeholder="인증코드"
-                  value={phoneConfirmCode}
-                  onChange={(e) => setPhoneConfirmCode(e.target.value)}
+                  value={SMSCode}
+                  onChange={(e) => handleSMSCodeChange(e.target.value)}
+                  style={{ border: `1px solid ${SMSColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmPhone}>
-                  <div>인증번호 확인</div>
+                 인증번호 확인
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
+            <itemS.Message
+              style={{ color: `${SMSColor}` }}
+            >
+              {SMSMessage}
+            </itemS.Message>
             
             
             <itemS.LIContainer>
@@ -225,25 +397,37 @@ export default function Signup() {
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
-                  placeholder="이메일을 입력해주세요"
+                  placeholder="이메일을 입력해주세요."
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleEmailChange(e.target.value)}
+                  style={{ border: `1px solid ${emailBorderColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitEmail}>
-                  <div>인증하기</div>
+                 인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
+              <itemS.CodeMessage
+                style={{ color: `${emailMessageColor}` }}
+              >
+                {emailMessage}
+              </itemS.CodeMessage>
               
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"
                   placeholder="인증코드"
-                  value={emailConfirmCode}
-                  onChange={(e) => setEmailConfirmCode(e.target.value)}
+                  value={emailCode}
+                  onChange={(e) => handleEmailCodeChange(e.target.value)}
+                  style={{ border: `1px solid ${emailCodeColor}` }}
                 />
-                <itemS.BtnConfirm>
-                  <div>인증번호 확인</div>
+                <itemS.BtnConfirm onClick={handleConfirmEmail}>
+                 인증번호 확인
                 </itemS.BtnConfirm>
+                <itemS.Message
+                  style={{ color: `${emailCodeColor}` }}
+                >
+                  {emailCodeMessage}
+                </itemS.Message>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
           </div>

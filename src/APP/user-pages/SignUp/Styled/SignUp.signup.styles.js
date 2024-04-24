@@ -22,7 +22,7 @@ export const InnerContainer = styled.div`
 // 회원가입 head
 export const Head3 = styled.div`
 	${tokens.typography.H3_SB_40}
-	margin-top: 74px;
+	margin-top: 78px;
 `;
 
 // 라벨+입력 컨테이너
@@ -36,7 +36,7 @@ export const Label = styled.label`
 	height: 24px;
 	${tokens.typography.T4_SB_20}
 	color: ${tokens.colors.Grey_8};
-	margin-top: 34px;
+	margin-top: 30px;
 	margin-bottom: 10px;
 `;
 
@@ -49,6 +49,7 @@ export const InputBox = styled.input`
 	${tokens.typography.B2_M_16}
 	color: ${tokens.colors.Grey_8};
 	padding: 0 10px;
+	margin-bottom: 4px;
 
 	&::placeholder {
 		color: ${tokens.colors.Grey_4}; 
@@ -58,8 +59,10 @@ export const InputBox = styled.input`
 	&:not(:placeholder-shown) { 
 		border: 1px solid ${tokens.colors.Grey_6};
 	  }
+	
 `;
 
+// 입력+인증 컨테이너
 export const InputConfirmBoxWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -74,6 +77,7 @@ export const InputConfirmBox = styled.input`
 	${tokens.typography.B2_M_16}
 	color: ${tokens.colors.Grey_8};
 	padding: 0 10px;
+	margin-bottom: 4px;
 
 	&::placeholder {
 		color: ${tokens.colors.Grey_4}; 
@@ -131,18 +135,20 @@ export const BtnConfirm = styled.button`
 `;
 
 // 입력값 설명
-export const DescriptionText = styled.div`
+export const CodeMessage = styled.div`
 	color: ${tokens.colors.Grey_6};
 	${tokens.typography.B3_M_14}
-	margin-top: 4px;
 	margin-bottom: 14px;
 `;
 
-
+// 에러 메시지
 export const ErrorMessage = styled.div`
 	color: ${tokens.colors.Red};
 	${tokens.typography.B3_M_14}
-	margin-top: 4px;
 	margin-bottom: 14px;
 `;
 
+// 백준 계정 인증 확인 메시지
+export const Message = styled.div`
+	${tokens.typography.B3_M_14}
+`;

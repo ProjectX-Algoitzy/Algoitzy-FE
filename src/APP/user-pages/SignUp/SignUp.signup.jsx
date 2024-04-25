@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import axios from 'axios';
 
@@ -46,6 +46,8 @@ export default function Signup() {
   // const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
   // 유효성 확인
+  // 이름 유효성 확인
+  const [isNameValid, setIsNameValid] = useState(false);
   // 백준 계정 유효성 확인
   const [isHandleValid, setIsHandleValid] = useState(false);
   
@@ -62,7 +64,38 @@ export default function Signup() {
   // 이메일 및 인증 코드 유효성 확인
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isEmailCodeValid, setIsEmailCodeValid] = useState(false);
+
+  // 회원가입 버튼 색상 및 활성화/비활성화
+  const [btnSubmitColor, setBtnSubmitColor] = useState(); // B_Grey_3
+  const [isAbled, setIsAbled] = useState(false); 
+  // Blue_0_Main
+
+  useEffect(() => {
+    const isAllValid = isNameValid && isHandleValid && isPasswordValid && isPasswordConfirmValid && isPhoneNumberValid && isSMSValid && isEmailValid && isEmailCodeValid;
+    setBtnSubmitColor(isAllValid ? '#00A5FF' : '#D2D9E5');
+    setIsAbled(isAllValid);
+  }, [isNameValid, isHandleValid, isPasswordValid, isPasswordConfirmValid, isPhoneNumberValid, isSMSValid, isEmailValid, isEmailCodeValid]);
+
   
+
+  // 이름 입력 change event
+  const handleNameChange = (value) => {
+    setName(value);
+    setIsNameValid(value.trim().length > 0);
+  }
+
+  // 백준 계정 입력 change event
+  const handleHandleChange = (value) => {
+    setHandle(value);
+    setHandleColor('#555555'); // Grey_6
+
+    // 입력 했다가 모두 지우는 경우를 생각해야 할까 -> 해당 입력칸 focus 상태면 생각하지 않아도 된다 border 변화 못느껴서 -> 다른 칸을 선택했을때는 티가 난다 -> 이런경우가 생길까?
+    // if (value.trim().length > 0) {
+    //   setHandleColor('#555555'); // Grey_6
+    // } else {
+    //   setHandleColor('#CFCFCF'); // Grey_6
+    // }
+  }
 
   // 비밀번호 입력 change event
   const handlePasswordChange = (value) => {
@@ -86,11 +119,6 @@ export default function Signup() {
     }
   }
 
-  // 백준 계정 입력 change event
-  const handleHandleChange = (value) => {
-    setHandle(value);
-    setHandleColor('#555555'); // Grey_6
-  }
 
   // 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
@@ -115,8 +143,6 @@ export default function Signup() {
     setEmailCode(value);
     setEmailCodeColor('#555555'); // Grey_6
   }
-
-  
 
   // 회원가입 버튼
   const handleSubmit = async () => {
@@ -293,7 +319,7 @@ export default function Signup() {
                 type="text"
                 placeholder="이름을 입력해주세요."
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleNameChange(e.target.value)}
               />
             </itemS.LIContainer>
           
@@ -431,7 +457,11 @@ export default function Signup() {
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
           </div>
-          <itemS.Btn onClick={handleSubmit}>
+          <itemS.Btn 
+            onClick={handleSubmit}
+            style={{ backgroundColor: `${btnSubmitColor}` }}
+            disabled={!isAbled}
+          >
             <div>회원가입</div>
           </itemS.Btn>
         </itemS.InnerContainer>

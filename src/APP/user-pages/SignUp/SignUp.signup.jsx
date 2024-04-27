@@ -1,8 +1,11 @@
 import React, { useState, useEffect  } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import axios from 'axios';
 
 export default function Signup() {
+
+  const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [handle, setHandle] = useState(''); 
@@ -166,6 +169,8 @@ export default function Signup() {
       console.log("response",response);
       if (response.status === 200) {
         console.log("회원가입 성공!");
+        alert("회원가입을 성공하셨습니다.");
+        navigate("/login");
       } else {
         console.error("회원가입 실패:", response.data);
       }

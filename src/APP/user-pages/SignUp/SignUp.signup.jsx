@@ -18,25 +18,25 @@ export default function Signup() {
   const [handleColor, setHandleColor] = useState('#CFCFCF'); 
   const [handleMessage, setHandleMessage] = useState(''); 
 
-  // 비밀번호 색상 및 메시지
+  // 비밀번호 border 색상 
   const [pwdborderColor, setPwdBorderColor] = useState('1px solid #CFCFCF'); 
 
-  // 비밀번호 확인 색상 및 메시지
+  // 비밀번호 확인 border 색상 
   const [pwdConfirmborderColor, setPwdConfirmBorderColor] = useState('1px solid #CFCFCF'); 
 
   // 핸드폰 및 인증코드 색상 및 메시지
-  const [phoneBorderColor, setPhoneBorderColor] = useState('#CFCFCF'); // Grey_4
-  const [phoneMessageColor, setPhoneMessageColor] = useState('#171717'); // Grey_8
-  const [phoneMessage, setPhoneMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); 
-  const [SMSColor, setSMSColor] = useState('#CFCFCF'); // Grey_4
-  const [SMSMessage, setSMSMessage] = useState(''); 
+  const [phoneBorderColor, setPhoneBorderColor] = useState('#CFCFCF'); // Grey_4 border 색상
+  const [phoneMessageColor, setPhoneMessageColor] = useState('#171717'); // Grey_8 메시지 색상
+  const [phoneMessage, setPhoneMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); // 메시지
+  const [SMSColor, setSMSColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
+  const [SMSMessage, setSMSMessage] = useState(''); // 메시지
 
   // 이메일 및 인증코드 색상 및 메시지
-  const [emailBorderColor, setEmailBorderColor] = useState('#CFCFCF'); // Grey_4
-  const [emailMessageColor, setEmailMessageColor] = useState('#171717'); // Grey_8
-  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); 
-  const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4
-  const [emailCodeMessage, setEmailCodeMessage] = useState(''); 
+  const [emailBorderColor, setEmailBorderColor] = useState('#CFCFCF'); // Grey_4 border 색상
+  const [emailMessageColor, setEmailMessageColor] = useState('#171717'); // Grey_8 메시지 색상
+  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); // 메시지
+  const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
+  const [emailCodeMessage, setEmailCodeMessage] = useState(''); // 메시지
 
 
   // 비밀번호 유효성 검사
@@ -69,6 +69,12 @@ export default function Signup() {
   const [btnSubmitColor, setBtnSubmitColor] = useState(); // B_Grey_3
   const [isAbled, setIsAbled] = useState(false); 
   // Blue_0_Main
+
+  // 핸드폰 번호 '인증하기' text
+  const [phoneConfirmBtnText, setPhoneConfirmBtnText] = useState("인증하기"); 
+
+  // 이메일 '인증하기' text
+  const [emailConfirmBtnText, setemailConfirmBtnText] = useState("인증하기"); 
 
   useEffect(() => {
     const isAllValid = isNameValid && isHandleValid && isPasswordValid && isPasswordConfirmValid && isPhoneNumberValid && isSMSValid && isEmailValid && isEmailCodeValid;
@@ -220,6 +226,7 @@ export default function Signup() {
       setIsSMSValid(false);
       setSMSColor('#DC4A41'); // REd
       setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+      setPhoneConfirmBtnText("다시 인증하기");
     }
   };
   
@@ -250,6 +257,7 @@ export default function Signup() {
       setIsEmailCodeValid(false);
       setEmailCodeColor('#DC4A41'); // REd
       setEmailCodeMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+      setemailConfirmBtnText("다시 인증하기");
     }
   };
 
@@ -277,6 +285,7 @@ export default function Signup() {
       setEmailBorderColor('#DC4A41'); // Red
       setEmailMessageColor('#DC4A41'); // Red
       setEmailMessage('사용할 수 없는 핸드폰 번호입니다.');
+      
     }
   };
 
@@ -304,6 +313,7 @@ export default function Signup() {
       setPhoneBorderColor('#DC4A41'); // Red
       setPhoneMessageColor('#DC4A41'); // Red
       setPhoneMessage('사용할 수 없는 핸드폰 번호입니다.');
+      
     }
   };
 
@@ -389,7 +399,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${phoneBorderColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitSMS}>
-                 인증하기
+                 {phoneConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
               <itemS.CodeMessage
@@ -429,7 +439,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${emailBorderColor}` }}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitEmail}>
-                 인증하기
+                 {emailConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
               <itemS.CodeMessage

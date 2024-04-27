@@ -42,7 +42,7 @@ export const Label = styled.label`
 
 // 입력 박스
 export const InputBox = styled.input`
-	width: 590px;
+	width: 570px;
 	height: 56px;
 	border: 1px solid ${tokens.colors.Grey_4};
 	border-radius: 4px;
@@ -70,7 +70,7 @@ export const InputConfirmBoxWrapper = styled.div`
 
 // 입력+인증 박스
 export const InputConfirmBox = styled.input`
-	width: 434px;
+	width: 414px;
 	height: 56px;
 	border: 1px solid ${tokens.colors.Grey_4};
 	border-radius: 4px;

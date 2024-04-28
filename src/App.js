@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "./APP/sharing-pages/Home"
 import Login from "./APP/sharing-pages/Login"
 import Signup from "./APP/user-pages/SignUp/SignUp.signup"
+import WritingApplication from "./APP/user-pages/WritingApplication/WritingApplication.writingapplication"
 import Header from "./APP/components/Header/Header.header"
 import Footer from "./APP/components/Footer/Footer.footer"
 import styled from "styled-components"
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/writingapplication" element={<WritingApplication />}/>
         </Routes>
         <Footer />
       </BrowserRouter>

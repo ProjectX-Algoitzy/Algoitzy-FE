@@ -41,6 +41,7 @@ export const colors = {
 	G_Blue_1: "linear-gradient(#65BCF8, #3083F7)",
 	G_Blue_2: "linear-gradient(#3083F7, #364B8B)",
 	G_Yellow_1: "linear-gradient(#F9D581, #F88F78)",
+	dddd: "radical-gradient(#00A3FF 100%, #0E0D12)"
 };
 
 // semibold : 600

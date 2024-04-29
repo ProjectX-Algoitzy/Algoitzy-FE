@@ -1,10 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom" 
-import Home from "./APP/sharing-pages/Home"
+import Langding from "./APP/user-pages/Langding/Langding.landing"
 import Login from "./APP/user-pages/Auth/Auth.login"
 import Signup from "./APP/user-pages/SignUp/SignUp.signup"
+import WritingApplication from "./APP/user-pages/WritingApplication/WritingApplication.writingapplication"
 import Header from "./APP/components/Header/Header.header"
 import Footer from "./APP/components/Footer/Footer.footer"
 import styled from "styled-components"
+import StudyList from "./APP/user-pages/StudyList/StudyList.studylist"
 
 const Root = styled.div`
   position: absolute;
@@ -21,9 +23,11 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Langding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/writingapplication" element={<WritingApplication />}/>
+          <Route path="/studylist" element={<StudyList />} />
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom" 
-import Home from "./APP/sharing-pages/Home"
+import Langding from "./APP/user-pages/Langding/Langding.landing"
 import Login from "./APP/user-pages/Auth/Auth.login"
 import Signup from "./APP/user-pages/SignUp/SignUp.signup"
 import WritingApplication from "./APP/user-pages/WritingApplication/WritingApplication.writingapplication"
@@ -23,7 +23,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Langding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/writingapplication" element={<WritingApplication />}/>

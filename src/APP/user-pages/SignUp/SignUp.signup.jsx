@@ -220,6 +220,7 @@ export default function Signup() {
         setPhoneBorderColor('#3083F7'); // Blue_3
         setPhoneMessageColor('#3083F7'); // Blue_3
         setPhoneMessage('인증이 완료되었습니다.');
+        setSMSMessage('');
         setSMSColor('#555555'); // grey_6
       } else {
         console.error("핸드폰 번호 인증 실패:", response.data);
@@ -347,6 +348,7 @@ export default function Signup() {
                   value={handle}
                   onChange={(e) => handleHandleChange(e.target.value)}
                   style={{ border: `1px solid ${handleColor}` }}
+                  disabled={isHandleValid}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmHandle}>
                  인증하기
@@ -402,6 +404,7 @@ export default function Signup() {
                   value={phoneNumber}
                   onChange={(e) => handlePhoneNumberChange(e.target.value)}
                   style={{ border: `1px solid ${phoneBorderColor}` }}
+                  disabled={isSMSValid}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitSMS}>
                  {phoneConfirmBtnText}
@@ -420,6 +423,7 @@ export default function Signup() {
                   value={SMSCode}
                   onChange={(e) => handleSMSCodeChange(e.target.value)}
                   style={{ border: `1px solid ${SMSColor}` }}
+                  disabled={isSMSValid}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmPhone}>
                  인증번호 확인
@@ -442,6 +446,7 @@ export default function Signup() {
                   value={email}
                   onChange={(e) => handleEmailChange(e.target.value)}
                   style={{ border: `1px solid ${emailBorderColor}` }}
+                  disabled={isEmailCodeValid}
                 />
                 <itemS.BtnConfirm onClick={handleSubmitEmail}>
                  {emailConfirmBtnText}
@@ -460,6 +465,7 @@ export default function Signup() {
                   value={emailCode}
                   onChange={(e) => handleEmailCodeChange(e.target.value)}
                   style={{ border: `1px solid ${emailCodeColor}` }}
+                  disabled={isEmailCodeValid}
                 />
                 <itemS.BtnConfirm onClick={handleConfirmEmail}>
                  인증번호 확인

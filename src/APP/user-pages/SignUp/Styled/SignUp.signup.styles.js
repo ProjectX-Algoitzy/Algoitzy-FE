@@ -5,6 +5,7 @@ import * as tokens from "../../../../tokens"
 export const Container = styled.div`
   display: flex;
   justify-content: center; 
+  background-image: url('/img/signup.png');
   
 `;
 
@@ -43,7 +44,7 @@ export const Label = styled.label`
 // 입력 박스
 export const InputBox = styled.input`
 	width: 570px;
-	height: 56px;
+	height: 54.4px;
 	border: 1px solid ${tokens.colors.Grey_4};
 	border-radius: 4px;
 	${tokens.typography.B2_M_16}
@@ -71,7 +72,7 @@ export const InputConfirmBoxWrapper = styled.div`
 // 입력+인증 박스
 export const InputConfirmBox = styled.input`
 	width: 414px;
-	height: 56px;
+	height: 54.4px;
 	border: 1px solid ${tokens.colors.Grey_4};
 	border-radius: 4px;
 	${tokens.typography.B2_M_16}
@@ -124,6 +125,7 @@ export const Btn = styled.button`
 	color: ${tokens.colors.White};
 	${tokens.typography.T4_SB_20}
 	margin-top: 100px;
+	
 `;
 
 // 인증하기 버튼
@@ -132,6 +134,7 @@ export const BtnConfirm = styled.button`
 	color: ${tokens.colors.White};
 	${tokens.typography.B2_M_16}
 	margin-left: 16px;
+	margin-bottom: 4px;
 `;
 
 // 입력값 설명

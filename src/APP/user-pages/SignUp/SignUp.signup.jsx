@@ -1,7 +1,7 @@
 import React, { useState, useEffect  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
-import axios from 'axios';
+import request from '../../Api/request';
 
 export default function Signup() {
 
@@ -141,13 +141,13 @@ export default function Signup() {
     setSMSColor('#555555'); // Grey_6
   }
 
-  // 핸드폰 번호 입력 change event
+  // 이메일 입력 change event
   const handleEmailChange = (value) => {
     setEmail(value);
     setEmailBorderColor('#555555'); // Grey_6
   }
 
-  // 핸드폰 번호 인증 코드 입력 change event
+  // 이메일 인증 코드 입력 change event
   const handleEmailCodeChange = (value) => {
     setEmailCode(value);
     setEmailCodeColor('#555555'); // Grey_6
@@ -165,7 +165,7 @@ export default function Signup() {
       phoneNumber: phoneNumber,
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/sign-up', requestData);
+      const response = await request.post('/sign-up', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("회원가입 성공!");
@@ -185,7 +185,7 @@ export default function Signup() {
       handle: handle,
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/sign-up/handle', requestData);
+      const response = await request.post('/sign-up/handle', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("백준 유효 계정 인증 성공!");
@@ -212,7 +212,7 @@ export default function Signup() {
       code: SMSCode
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/sign-up/phone-number', requestData);
+      const response = await request.post('/sign-up/phone-number', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("핸드폰 번호 인증 성공!");
@@ -244,7 +244,7 @@ export default function Signup() {
       code: emailCode
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/sign-up/email', requestData);
+      const response = await request.post('/sign-up/email', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("이메일 인증 성공!");
@@ -274,7 +274,7 @@ export default function Signup() {
       email: email,
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/email/certification', requestData);
+      const response = await request.post('/email/certification', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("이메일 인증 코드 전송 성공!");
@@ -302,7 +302,7 @@ export default function Signup() {
       phoneNumber: phoneNumber,
     };
     try {
-      const response = await axios.post('http://3.35.47.250:8281/sms/certification', requestData);
+      const response = await request.post('/sms/certification', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("SMS 인증 코드 전송 성공!");

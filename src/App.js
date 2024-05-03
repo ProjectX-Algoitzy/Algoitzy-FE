@@ -7,6 +7,7 @@ import Header from "./APP/components/Header/Header.header"
 import Footer from "./APP/components/Footer/Footer.footer"
 import styled from "styled-components"
 import StudyList from "./APP/user-pages/StudyList/StudyList.studylist"
+import FindEmail from "./APP/user-pages/FindAuth/FindEmail/FindAuth.FindEmail.findemail"
 
 const Root = styled.div`
   position: absolute;
@@ -28,6 +29,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/writingapplication" element={<WritingApplication />}/>
           <Route path="/studylist" element={<StudyList />} />
+          <Route path="/findemail" element={<FindEmail />} />
         </Routes>
         <Footer />
       </BrowserRouter>

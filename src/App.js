@@ -10,6 +10,7 @@ import StudyList from "./APP/user-pages/StudyList/StudyList.studylist"
 import FindEmail from "./APP/user-pages/FindAuth/FindEmail/FindAuth.FindEmail.findemail"
 import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAuth.FindEmailSuccess"
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main"
+import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy"
 
 const Root = styled.div`
   position: absolute;
@@ -34,6 +35,7 @@ function App() {
           <Route path="/findemail" element={<FindEmail />} />
           <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
           <Route path="/makedselfstudylist" element={<MakedSelfStudyList />} />
+          <Route path="/makingselfstudy" element={<MakingSelfStudy />} />
         </Routes>
         <Footer />
       </BrowserRouter>

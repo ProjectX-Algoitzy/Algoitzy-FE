@@ -29,6 +29,10 @@ export default function MakedSelfStudyList() {
     // fetchMakedApplicationDetail();
     setApplicationList(dummyData);
   }, []);
+
+  const MakeSelfStudy = () => { // 보기 추가 함수
+		navigate(`/makingselfstudy`);
+	}
     
   return (
     <itemS.Container>
@@ -37,7 +41,7 @@ export default function MakedSelfStudyList() {
           <itemS.ApplicationText>
             자율 스터디
           </itemS.ApplicationText>
-          <itemS.BtnMakeApp>
+          <itemS.BtnMakeApp onClick={MakeSelfStudy}>
             + 스터디 생성하기
           </itemS.BtnMakeApp>
           

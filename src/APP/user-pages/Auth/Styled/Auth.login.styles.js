@@ -35,20 +35,33 @@ export const Img = styled.div`
 `;
 
 // 라벨+입력 컨테이너
-export const LIContainer = styled.div`
+export const LoginIContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
 
+export const IIContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+  position: relative;
+`;
+export const Icon = styled.img`
+	width: 24px;
+	height: 24px;
+	margin-right: 4px;
+  position: absolute;
+  left: 16px;
+  top: 32px;
+`;
 // 입력 박스
 export const InputBox = styled.input`
-	width: 366px;
+	width: 324px;
 	height: 56px;
 	border: 1px solid ${tokens.colors.Grey_4};
 	border-radius: 4px;
 	${tokens.typography.B2_M_16}
 	color: ${tokens.colors.Grey_8};
-	padding: 0 10px;
+	padding: 0 10px 0 52px;
 	margin-top: 16px;
 
 	&::placeholder {

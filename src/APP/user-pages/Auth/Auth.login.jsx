@@ -39,25 +39,31 @@ export default function Login() {
         <itemS.InnerContainer>
           <itemS.Head3>로그인</itemS.Head3>
 						<itemS.Img></itemS.Img>
-            <itemS.LIContainer>
-              <itemS.InputBox
-                type="text"
-                placeholder="아이디(이메일)"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <itemS.InputBox
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                // style={{ border: pwdborderColor }}
-              />
+            <itemS.LoginIContainer>
+              <itemS.IIContainer>
+                <itemS.InputBox
+                  type="text"
+                  placeholder="아이디(이메일)"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <itemS.Icon src="/img/people.png" alt="Icon"/>
+              </itemS.IIContainer>
+              <itemS.IIContainer>
+                <itemS.InputBox
+                  type="password"
+                  placeholder="비밀번호"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  // style={{ border: pwdborderColor }}
+                />
+                <itemS.Icon src="/img/people.png" alt="Icon"/>
+              </itemS.IIContainer>
 							<itemS.UtilBox>
 								<itemS.CheckBox type="checkbox" />
 								<itemS.NormText>자동 로그인</itemS.NormText>
 							</itemS.UtilBox>
-            </itemS.LIContainer>
+            </itemS.LoginIContainer>
 						
           <itemS.Btn onClick={handleSubmit}>
             로그인
@@ -66,7 +72,7 @@ export default function Login() {
             <itemS.RouteSignup onClick={() => navigate("/signup")}>
               회원가입
             </itemS.RouteSignup>
-            <itemS.UtilText>아이디</itemS.UtilText>
+            <itemS.UtilText onClick={() => navigate("/findemail")}>아이디</itemS.UtilText>
             <itemS.UtilText>/</itemS.UtilText>
             <itemS.UtilText>
               비밀번호 찾기

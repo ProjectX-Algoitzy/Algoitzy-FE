@@ -2,10 +2,13 @@ import React, { useState, useEffect  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import request from '../../Api/request';
+import Timer from './SignUp.timer';
 
 export default function Signup() {
 
   const navigate = useNavigate();
+
+  const [timerStarted, setTimerStarted] = useState(false);
 
   const [name, setName] = useState('');
   const [handle, setHandle] = useState(''); 
@@ -87,6 +90,11 @@ export default function Signup() {
 
   
 
+  const onComplete = () => {
+    setTimerStarted(false);
+    setIsSMSValid(true);
+  }
+
   // 이름 입력 change event
   const handleNameChange = (value) => {
     setName(value);
@@ -167,7 +175,7 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("회원가입 성공!");
         alert("회원가입을 성공하셨습니다.");
         navigate("/login");
@@ -187,7 +195,7 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/handle', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("백준 유효 계정 인증 성공!");
         setIsHandleValid(true);
         setHandleColor('#3083F7'); // Blue_3
@@ -214,7 +222,7 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/phone-number', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
         setIsSMSValid(true);
         setPhoneBorderColor('#3083F7'); // Blue_3
@@ -246,7 +254,7 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/email', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("이메일 인증 성공!");
         setIsEmailCodeValid(true);
         setEmailBorderColor('#3083F7'); // Blue_3
@@ -271,16 +279,17 @@ export default function Signup() {
   const handleSubmitEmail = async () => {
    
     const requestData = {
-      email: email,
+      type: "CERTIFICATION",
+      emailList: [email],
     };
     try {
-      const response = await request.post('/email/certification', requestData);
+      const response = await request.post('/email', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("이메일 인증 코드 전송 성공!");
         setIsEmailValid(true);
-        setEmailBorderColor('#3083F7'); // Blue_3
-        setEmailMessageColor('#3083F7'); // Blue_3
+        setEmailBorderColor('#00A5FF'); // Blue_0_Main
+        setEmailMessageColor('#00A5FF'); // Blue_0_Main
         setEmailMessage('인증번호가 발송되었습니다.');
       } else {
         console.error("이메일 인증 코드 전송 실패:", response.data);
@@ -290,7 +299,7 @@ export default function Signup() {
       setIsEmailValid(false);
       setEmailBorderColor('#DC4A41'); // Red
       setEmailMessageColor('#DC4A41'); // Red
-      setEmailMessage('사용할 수 없는 핸드폰 번호입니다.');
+      setEmailMessage('사용할 수 없는 이메일입니다.');
       
     }
   };
@@ -304,12 +313,14 @@ export default function Signup() {
     try {
       const response = await request.post('/sms/certification', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("SMS 인증 코드 전송 성공!");
         setIsPhoneNumberValid(true);
-        setPhoneBorderColor('#3083F7'); // Blue_3
-        setPhoneMessageColor('#3083F7'); // Blue_3
+        setPhoneBorderColor('#00A5FF'); // Blue_0_Main
+        setPhoneMessageColor('#00A5FF'); // Blue_0_Main
         setPhoneMessage('인증번호가 발송되었습니다.');
+        setTimerStarted(true); // 타이머 시작
+        setIsSMSValid(false); // 인증코드 입력 활성화
       } else {
         console.error("SMS 인증 코드 전송 실패:", response.data);
       }
@@ -416,19 +427,30 @@ export default function Signup() {
                 {phoneMessage}
               </itemS.CodeMessage>
 
-              <itemS.InputConfirmBoxWrapper>
-                <itemS.InputConfirmBox
-                  type="text"
-                  placeholder="인증코드"
-                  value={SMSCode}
-                  onChange={(e) => handleSMSCodeChange(e.target.value)}
-                  style={{ border: `1px solid ${SMSColor}` }}
-                  disabled={isSMSValid}
-                />
+              <itemS.InputConfirmTimerBoxWrapper>
+                  <itemS.InputConfirmTimerBox maxlength="10"
+                    type="text"
+                    placeholder="인증코드"
+                    value={SMSCode}
+                    onChange={(e) => handleSMSCodeChange(e.target.value)}
+                    style={{ border: `1px solid ${SMSColor}` }}
+                    disabled={isSMSValid}
+                  />
+                  
                 <itemS.BtnConfirm onClick={handleConfirmPhone}>
                  인증번호 확인
                 </itemS.BtnConfirm>
-              </itemS.InputConfirmBoxWrapper>
+                  {timerStarted ? (
+                      <itemS.TimerBox>
+                        <itemS.TimerIcon src="/img/timer.svg" alt="Timer Icon"/>
+                        <itemS.Timer>
+                          <Timer initialTime={180} onComplete={onComplete} />
+                        </itemS.Timer>
+                      </itemS.TimerBox>
+                    ) : (
+                      <div></div>
+                    )}
+              </itemS.InputConfirmTimerBoxWrapper>
             </itemS.LIContainer>
             <itemS.Message
               style={{ color: `${SMSColor}` }}
@@ -470,13 +492,13 @@ export default function Signup() {
                 <itemS.BtnConfirm onClick={handleConfirmEmail}>
                  인증번호 확인
                 </itemS.BtnConfirm>
-                <itemS.Message
-                  style={{ color: `${emailCodeColor}` }}
-                >
-                  {emailCodeMessage}
-                </itemS.Message>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
+            <itemS.Message
+              style={{ color: `${emailCodeColor}` }}
+            >
+              {emailCodeMessage}
+            </itemS.Message>
           </div>
           <itemS.Btn 
             onClick={handleSubmit}

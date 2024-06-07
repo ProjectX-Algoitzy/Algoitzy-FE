@@ -169,6 +169,8 @@ export default function Signup() {
       password: password,
       checkPassword: passwordConfirmation, 
       name: name,
+      grade: 5,
+      major: "소프트웨어학과",
       handle: handle,
       phoneNumber: phoneNumber,
     };

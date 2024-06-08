@@ -49,7 +49,7 @@ export default function Signup() {
   const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{1,15}$/;
 
   // 핸드폰 번호 유효성 검사 
-  // const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
+  const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
   // 유효성 확인
   // 이름 유효성 확인
@@ -64,7 +64,8 @@ export default function Signup() {
   const [isPasswordConfirmValid, setIsPasswordConfirmValid] = useState(false);
 
   // 핸드폰 번호 및 인증 코드 유효성 확인
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false); // 핸드폰 번호 정규식 만족 여부
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false); // 핸드폰 번호 실제 사용 여부
   const [isSMSValid, setIsSMSValid] = useState(false);
 
   // 이메일 및 인증 코드 유효성 확인
@@ -128,7 +129,7 @@ export default function Signup() {
   // 비밀번호 확인 입력 change event
   const handlePasswordConfirmChange = (value) => {
     setPasswordConfirmation(value);
-    setIsPasswordConfirmValid(PasswordRegex.test(value));
+    setIsPasswordConfirmValid(value === password);
     if (value !== password && value.trim().length > 0) {
       setPwdConfirmBorderColor('1px solid #DC4A41'); // Red
     } else {
@@ -139,8 +140,28 @@ export default function Signup() {
 
   // 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
-    setPhoneNumber(value);
-    setPhoneBorderColor('#555555'); // Grey_6
+    // Remove all non-numeric characters
+    const numericValue = value.replace(/\D/g, ''); // 숫자가 아닌 문자 제거
+
+    let formattedValue = numericValue;
+
+    if (numericValue.length > 3 && numericValue.length <= 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3)}`; // 010-xxxx 로 변경
+    } else if (numericValue.length > 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3, 7)}-${numericValue.slice(7, 11)}`; // 010-xxxx-xxxx 로 변경
+    }
+
+    setPhoneNumber(formattedValue);
+    setIsPhoneValid(PhoneRegex.test(formattedValue));
+
+    if (!PhoneRegex.test(formattedValue) && formattedValue.trim().length > 0) {
+      setPhoneBorderColor('#DC4A41'); // Red
+      setPhoneMessageColor('#DC4A41'); // Red
+      setPhoneMessage('010-0000-0000 형식에 맞춰 입력해주세요.');
+    } else {
+      setPhoneBorderColor('#555555'); // Grey_6
+      setPhoneMessage('');
+    }
   }
 
   // 핸드폰 번호 인증 코드 입력 change event
@@ -226,6 +247,7 @@ export default function Signup() {
       console.log("response",response);
       if (response["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
+        setTimerStarted(false); // 타이머 off
         setIsSMSValid(true);
         setPhoneBorderColor('#3083F7'); // Blue_3
         setPhoneMessageColor('#3083F7'); // Blue_3
@@ -262,6 +284,7 @@ export default function Signup() {
         setEmailBorderColor('#3083F7'); // Blue_3
         setEmailMessageColor('#3083F7'); // Blue_3
         setEmailMessage('인증이 완료되었습니다.');
+        setEmailCodeMessage('');
         setEmailCodeColor('#555555'); // grey_6
       } else {
         console.error("이메일 인증 실패:", response.data);
@@ -363,7 +386,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${handleColor}` }}
                   disabled={isHandleValid}
                 />
-                <itemS.BtnConfirm onClick={handleConfirmHandle}>
+                <itemS.BtnConfirm onClick={handleConfirmHandle} disabled={isHandleValid}>
                  인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -419,7 +442,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${phoneBorderColor}` }}
                   disabled={isSMSValid}
                 />
-                <itemS.BtnConfirm onClick={handleSubmitSMS}>
+                <itemS.BtnConfirm onClick={handleSubmitSMS} disabled={isSMSValid}>
                  {phoneConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -439,7 +462,7 @@ export default function Signup() {
                     disabled={isSMSValid}
                   />
                   
-                <itemS.BtnConfirm onClick={handleConfirmPhone}>
+                <itemS.BtnConfirm onClick={handleConfirmPhone} disabled={isSMSValid}>
                  인증번호 확인
                 </itemS.BtnConfirm>
                   {timerStarted ? (
@@ -472,7 +495,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${emailBorderColor}` }}
                   disabled={isEmailCodeValid}
                 />
-                <itemS.BtnConfirm onClick={handleSubmitEmail}>
+                <itemS.BtnConfirm onClick={handleSubmitEmail} disabled={isEmailCodeValid}>
                  {emailConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -491,7 +514,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${emailCodeColor}` }}
                   disabled={isEmailCodeValid}
                 />
-                <itemS.BtnConfirm onClick={handleConfirmEmail}>
+                <itemS.BtnConfirm onClick={handleConfirmEmail} disabled={isEmailCodeValid}>
                  인증번호 확인
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>

@@ -1,16 +1,17 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom" 
-import Langding from "./APP/user-pages/Langding/Langding.landing"
-import Login from "./APP/user-pages/Auth/Auth.login"
-import Signup from "./APP/user-pages/SignUp/SignUp.signup"
-import WritingApplication from "./APP/user-pages/WritingApplication/WritingApplication.writingapplication"
-import Header from "./APP/components/Header/Header.header"
-import Footer from "./APP/components/Footer/Footer.footer"
-import styled from "styled-components"
-import StudyList from "./APP/user-pages/StudyList/StudyList.studylist"
-import FindEmail from "./APP/user-pages/FindAuth/FindEmail/FindAuth.FindEmail.findemail"
-import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAuth.FindEmailSuccess"
-import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main"
-import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Langding from "./APP/user-pages/Langding/Langding.landing";
+import Login from "./APP/user-pages/Auth/Auth.login";
+import Signup from "./APP/user-pages/SignUp/SignUp.signup";
+import WritingApplication from "./APP/user-pages/WritingApplication/WritingApplication.writingapplication";
+import Header from "./APP/components/Header/Header.header";
+import Footer from "./APP/components/Footer/Footer.footer";
+import styled from "styled-components";
+import StudyList from "./APP/user-pages/StudyList/StudyList.studylist";
+import FindEmail from "./APP/user-pages/FindAuth/FindEmail/FindAuth.FindEmail.findemail";
+import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAuth.FindEmailSuccess";
+import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
+import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
+import ScrollToTop from "./APP/Common/ScrollToTop";
 
 const Root = styled.div`
   position: absolute;
@@ -25,6 +26,7 @@ function App() {
   return (
     <Root>
       <BrowserRouter>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Langding />} />
@@ -34,8 +36,8 @@ function App() {
           <Route path="/studylist" element={<StudyList />} />
           <Route path="/findemail" element={<FindEmail />} />
           <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
-          <Route path="/makedselfstudylist" element={<MakedSelfStudyList />} />
-          <Route path="/makingselfstudy" element={<MakingSelfStudy />} />
+          <Route path="/study" element={<MakedSelfStudyList />} />
+          <Route path="/newstudy" element={<MakingSelfStudy />} />
         </Routes>
         <Footer />
       </BrowserRouter>

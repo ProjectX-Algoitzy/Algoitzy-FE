@@ -11,6 +11,8 @@ export default function Signup() {
   const [timerStarted, setTimerStarted] = useState(false);
 
   const [name, setName] = useState('');
+  const [grade, setGrade] = useState();
+  const [major, setMajor] = useState('');
   const [handle, setHandle] = useState(''); 
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -100,6 +102,16 @@ export default function Signup() {
   const handleNameChange = (value) => {
     setName(value);
     setIsNameValid(value.trim().length > 0);
+  }
+
+  // 학년 입력 change event
+  const handleGradeChange = (value) => {
+    setGrade(value);
+  }
+
+  // 학과 입력 change event
+  const handleMajorChange = (value) => {
+    setMajor(value);
   }
 
   // 백준 계정 입력 change event
@@ -372,6 +384,26 @@ export default function Signup() {
                 placeholder="이름을 입력해주세요."
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
+              />
+            </itemS.LIContainer>
+
+            <itemS.LIContainer>
+              <itemS.Label>학년</itemS.Label>
+              <itemS.InputBox
+                type="text"
+                placeholder="학년을 입력해주세요. (숫자만 입력)"
+                value={grade}
+                onChange={(e) => handleGradeChange(e.target.value)}
+              />
+            </itemS.LIContainer>
+
+            <itemS.LIContainer>
+              <itemS.Label>학과</itemS.Label>
+              <itemS.InputBox
+                type="text"
+                placeholder="학과를 입력해주세요."
+                value={major}
+                onChange={(e) => handleMajorChange(e.target.value)}
               />
             </itemS.LIContainer>
           

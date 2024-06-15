@@ -2,10 +2,14 @@ import React, { useState, useEffect, useContext  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "../../user-pages/Auth/Styled/Auth.login.styles"
 import request, { ACCESS_TOKEN } from '../../Api/request';
+import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
+import { AlertContext } from '../../Common/Alert/AlertContext';
 
 export default function Login() {
 
   const navigate = useNavigate();
+  const { confirm } = useContext(ConfirmContext);
+  const { alert } = useContext(AlertContext);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -24,7 +28,11 @@ export default function Login() {
       if (response["isSuccess"]) {
         console.log("로그인 성공!");
         // alert("로그인을 성공하셨습니다.");
-        navigate("/");
+        const result = await alert('로그인', '로그인이 완료되었습니다!');
+        if (result) {
+          navigate("/");
+        }
+        // navigate("/");
       } else {
         console.error("로그인 실패:", response.data);
       }

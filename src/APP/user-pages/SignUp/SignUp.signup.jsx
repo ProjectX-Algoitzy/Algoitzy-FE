@@ -1,12 +1,14 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import request from '../../Api/request';
 import Timer from './SignUp.timer';
+import { AlertContext } from '../../Common/Alert/AlertContext';
 
 export default function Signup() {
 
   const navigate = useNavigate();
+  const { alert } = useContext(AlertContext);
 
   const [timerStarted, setTimerStarted] = useState(false);
 
@@ -202,8 +204,8 @@ export default function Signup() {
       password: password,
       checkPassword: passwordConfirmation, 
       name: name,
-      grade: 5,
-      major: "소프트웨어학과",
+      grade: grade,
+      major: major,
       handle: handle,
       phoneNumber: phoneNumber,
     };
@@ -212,8 +214,11 @@ export default function Signup() {
       console.log("response",response);
       if (response["isSuccess"]) {
         console.log("회원가입 성공!");
-        alert("회원가입을 성공하셨습니다.");
-        navigate("/login");
+        const result = await alert('회원가입', '회원가입이 완료되었습니다!');
+        if (result) {
+          navigate("/login");
+        }
+        // navigate("/login");
       } else {
         console.error("회원가입 실패:", response.data);
       }

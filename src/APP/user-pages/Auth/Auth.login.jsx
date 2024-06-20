@@ -2,12 +2,17 @@ import React, { useState, useEffect, useContext  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "../../user-pages/Auth/Styled/Auth.login.styles"
 import request, { ACCESS_TOKEN } from '../../Api/request';
+import axios from 'axios';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
+import { LoginStateContext } from '../../Common/LoginState/LoginStateContext';
 
 export default function Login() {
 
   const navigate = useNavigate();
+
+  const { isLogin, setIsLogin } = useContext(LoginStateContext);
+
   const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
 
@@ -22,11 +27,12 @@ export default function Login() {
       password: password,
     };
     try {
-      const response = await request.post('/member/login', requestData);
+      const response = await axios.post('https://user-dev.kau-koala.com/member/login', requestData);
       console.log("response",response);
-      localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
-      if (response["isSuccess"]) {
+      localStorage.setItem(ACCESS_TOKEN, response.data.result.accessToken);
+      if (response.data["isSuccess"]) {
         console.log("로그인 성공!");
+        setIsLogin(true);
         // alert("로그인을 성공하셨습니다.");
         const result = await alert('로그인', '로그인이 완료되었습니다!');
         if (result) {

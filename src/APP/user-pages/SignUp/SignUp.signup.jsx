@@ -1,14 +1,21 @@
-import React, { useState, useEffect, useContext  } from 'react';
+import React, { useState, useEffect, useContext, useRef  } from 'react';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import request from '../../Api/request';
 import Timer from './SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function Signup() {
 
+export default function Signup() {
+  
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
+  
+  // 프로필 이미지 
+  const fileInputRef = useRef(null);
+  const [file, setFile] = useState(null);
+  const [profileUrl, setProfileUrl] = useState(null);
 
   const [timerStarted, setTimerStarted] = useState(false);
 
@@ -93,8 +100,54 @@ export default function Signup() {
     setIsAbled(isAllValid);
   }, [isNameValid, isHandleValid, isPasswordValid, isPasswordConfirmValid, isPhoneNumberValid, isSMSValid, isEmailValid, isEmailCodeValid]);
 
-  
 
+  // 프로필 이미지 파일 업로드
+  const handleFileChange = async (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      console.log('Selected file:', selectedFile.name);
+      await handleFileUpload(selectedFile);
+    }
+  };
+
+  const handleDrop = async (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile) {
+      setFile(droppedFile);
+      console.log('Dropped file:', droppedFile.name);
+      await handleFileUpload(droppedFile);
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileUpload = async (file) => {
+    const formData = new FormData();
+    formData.append('multipartFileList', file);
+
+    try {
+      const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
+      if (response.data["isSuccess"]) {
+        console.log('파일 업로드 성공:', response.data.result[0]);
+        setProfileUrl(response.data.result[0]);
+      } else {
+        console.error("파일 업로드 실패:", response.data);
+      }
+    } catch (error) {
+      console.error('파일 업로드 에러:', error);
+      // Handle the error as needed
+    }
+  };
+
+  // 타이머 완료
   const onComplete = () => {
     setTimerStarted(false);
     setIsSMSValid(true);
@@ -200,6 +253,7 @@ export default function Signup() {
   const handleSubmit = async () => {
    
     const requestData = {
+      profileUrl: profileUrl,
       email: email,
       password: password,
       checkPassword: passwordConfirmation, 
@@ -382,6 +436,24 @@ export default function Signup() {
         <itemS.InnerContainer>
           <itemS.Head3>회원가입</itemS.Head3>
           <div>
+            <itemS.LIContainer>
+              <itemS.Label>프로필 이미지</itemS.Label>
+              <itemS.InputDragBox
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+              >
+                <itemS.DragDropText>이미지 드래그 혹은</itemS.DragDropText>
+                <itemS.UploadText onClick={handleClick}>
+                  파일 업로드
+                </itemS.UploadText>
+                {file && <itemS.FileName>{file.name}</itemS.FileName>}
+              </itemS.InputDragBox>
+              <itemS.HiddenFileInput
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
+            </itemS.LIContainer>
             <itemS.LIContainer>
               <itemS.Label>이름</itemS.Label>
               <itemS.InputBox

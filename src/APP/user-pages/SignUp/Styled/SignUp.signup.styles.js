@@ -200,3 +200,55 @@ export const ErrorMessage = styled.div`
 export const Message = styled.div`
 	${tokens.typography.B3_M_14}
 `;
+
+
+// 입력 drag박스
+export const InputDragBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+  width: 224px;
+  height: 224px;
+  border: 1px dashed ${tokens.colors.B_Grey_4};
+  border-radius: 8px;
+  ${tokens.typography.B2_M_16}
+  color: ${tokens.colors.Grey_8};
+  padding: 0 10px;
+  margin-bottom: 4px;
+  background-color: ${tokens.colors.B_Grey_1};
+  cursor: pointer;
+
+  &::placeholder {
+    color: ${tokens.colors.Grey_4};
+  }
+
+  // &:hover {
+  //   border-color: ${tokens.colors.Grey_6};
+  // }
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+export const DragDropText = styled.span`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+  color: ${tokens.colors.B_Grey_7};
+	margin-bottom: 8px;
+`;
+
+export const UploadText = styled.span`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Blue_0_Main};
+`;
+
+export const FileName = styled.span`
+  ${tokens.typography.B3_M_14};
+  color: ${tokens.colors.B_Grey_7};
+	margin-top: 8px;
+`;

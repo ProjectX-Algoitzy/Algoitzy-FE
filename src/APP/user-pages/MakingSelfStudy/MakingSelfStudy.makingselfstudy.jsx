@@ -8,7 +8,6 @@ const MakingSelfStudy = () => {
     const file = event.target.files[0];
     if (file) {
       console.log('Selected file:', file);
-      // Handle the file upload here
     }
   };
 
@@ -17,7 +16,6 @@ const MakingSelfStudy = () => {
     const file = event.dataTransfer.files[0];
     if (file) {
       console.log('Dropped file:', file);
-      // Handle the file upload here
     }
   };
 

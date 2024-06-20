@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
@@ -12,6 +13,7 @@ import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAut
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
 import ScrollToTop from "./APP/Common/ScrollToTop";
+import { LoginStateContext } from "./APP/Common/LoginState/LoginStateContext";
 
 const Root = styled.div`
   position: absolute;
@@ -23,23 +25,27 @@ const Root = styled.div`
 `;
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
     <Root>
       <BrowserRouter>
         <ScrollToTop />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Langding />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/writingapplication" element={<WritingApplication />}/>
-          <Route path="/studylist" element={<StudyList />} />
-          <Route path="/findemail" element={<FindEmail />} />
-          <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
-          <Route path="/study" element={<MakedSelfStudyList />} />
-          <Route path="/newstudy" element={<MakingSelfStudy />} />
-        </Routes>
-        <Footer />
+        <LoginStateContext.Provider value={{isLogin, setIsLogin}}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Langding />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/writingapplication" element={<WritingApplication />}/>
+            <Route path="/studylist" element={<StudyList />} />
+            <Route path="/findemail" element={<FindEmail />} />
+            <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
+            <Route path="/study" element={<MakedSelfStudyList />} />
+            <Route path="/newstudy" element={<MakingSelfStudy />} />
+          </Routes>
+          <Footer />
+        </LoginStateContext.Provider>
       </BrowserRouter>
     </Root>
   );

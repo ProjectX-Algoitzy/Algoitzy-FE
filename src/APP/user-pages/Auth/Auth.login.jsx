@@ -37,6 +37,7 @@ export default function Login() {
         const result = await alert('로그인', '로그인이 완료되었습니다!');
         if (result) {
           navigate("/");
+          window.location.reload();
         }
         // navigate("/");
       } else {

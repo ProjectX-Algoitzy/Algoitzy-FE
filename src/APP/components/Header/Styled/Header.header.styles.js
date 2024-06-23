@@ -56,6 +56,7 @@ export const AdminName = styled.div` /* 로그인한 계정의 이름을 보여�
   height: 21px;
   margin-top: 10px;
   ${tokens.typography.T5_SB_16};
+  cursor: pointer;
 `;
 
 export const Btn = styled.button`

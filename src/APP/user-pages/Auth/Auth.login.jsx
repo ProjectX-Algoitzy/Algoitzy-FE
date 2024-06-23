@@ -74,10 +74,10 @@ export default function Login() {
                 />
                 <itemS.Icon src="/img/people.png" alt="Icon"/>
               </itemS.IIContainer>
-							<itemS.UtilBox>
+							{/* <itemS.UtilBox>
 								<itemS.CheckBox type="checkbox" />
 								<itemS.NormText>자동 로그인</itemS.NormText>
-							</itemS.UtilBox>
+							</itemS.UtilBox> */}
             </itemS.LoginIContainer>
 						
           <itemS.Btn onClick={handleSubmit}>

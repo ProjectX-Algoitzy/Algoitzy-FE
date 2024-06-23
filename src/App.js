@@ -13,7 +13,9 @@ import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAut
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
 import ScrollToTop from "./APP/Common/ScrollToTop";
-import { LoginStateContext } from "./APP/Common/LoginState/LoginStateContext";
+import useInterval from "./APP/Common/UseInterval"
+import { refreshToken } from "./APP/Api/refreshToken"
+import { ACCESS_TOKEN } from "./APP/Api/request"
 
 const Root = styled.div`
   position: absolute;
@@ -25,13 +27,16 @@ const Root = styled.div`
 `;
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  useInterval(() => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      refreshToken();
+    }
+  }, 30000);
 
   return (
     <Root>
       <BrowserRouter>
         <ScrollToTop />
-        <LoginStateContext.Provider value={{isLogin, setIsLogin}}>
           <Header />
           <Routes>
             <Route path="/" element={<Langding />} />
@@ -45,7 +50,6 @@ function App() {
             <Route path="/newstudy" element={<MakingSelfStudy />} />
           </Routes>
           <Footer />
-        </LoginStateContext.Provider>
       </BrowserRouter>
     </Root>
   );

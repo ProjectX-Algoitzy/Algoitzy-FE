@@ -11,7 +11,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const { isLogin, setIsLogin } = useContext(LoginStateContext);
+  //const { isLogin, setIsLogin } = useContext(LoginStateContext);
 
   const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
@@ -32,7 +32,7 @@ export default function Login() {
       localStorage.setItem(ACCESS_TOKEN, response.data.result.accessToken);
       if (response.data["isSuccess"]) {
         console.log("로그인 성공!");
-        setIsLogin(true);
+        //setIsLogin(true);
         // alert("로그인을 성공하셨습니다.");
         const result = await alert('로그인', '로그인이 완료되었습니다!');
         if (result) {

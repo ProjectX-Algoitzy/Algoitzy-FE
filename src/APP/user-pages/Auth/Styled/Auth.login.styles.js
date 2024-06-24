@@ -17,7 +17,7 @@ export const InnerContainer = styled.div`
   border: 1px solid ${tokens.colors.Grey_4};
   border-radius: 20px;
   padding: 127px 407px;
-  margin-top: 60px;
+  margin-top: 120px;
 `;
 
 // 회원가입 head

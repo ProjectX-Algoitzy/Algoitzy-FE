@@ -68,7 +68,6 @@ export const InputConfirmBoxWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
-
 // 입력+인증 박스
 export const InputConfirmBox = styled.input`
 	width: 414px;
@@ -93,31 +92,77 @@ export const InputConfirmBox = styled.input`
 	&:not(:placeholder-shown) + button {
 		background-color: ${tokens.colors.B_Grey_7};
 	}
+	
 `;
 
-//참고 코드
-// export const InputF = styled.input`
-//   &::placeholder {
-//     color: #bdbdbd;
-//   }
-//   &:focus {
-//     outline: none;
+// 타이머용 스타일들
+// 입력+인증 타이머 컨테이너
+export const InputConfirmTimerBoxWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	position: relative;
+`;
+// 입력+인증 타이머 박스
+export const InputConfirmTimerBox = styled.input`
+	width: 414px;
+	height: 54.4px;
+	border: 1px solid ${tokens.colors.Grey_4};
+	border-radius: 4px;
+	${tokens.typography.B2_M_16}
+	color: ${tokens.colors.Grey_8};
+	padding: 0 10px;
+	margin-bottom: 4px;
 
-//     &::placeholder {
-//       color: #C8C8C8;
-//       font-size: 0.57rem;
-//     }
-//   }
-// `;
+	&::placeholder {
+		color: ${tokens.colors.Grey_4}; 
+	}
 
-// 입력칸
-// export const Input = styled.input`
-// 	height: 56px;
-//   ${tokens.typography.B2_M_16}
-// 	color: ${tokens.colors.Grey_4};
-// 
-// 	border: none;
-// `;
+	// 텍스트 입력되어 있을 경우 border 색상변경
+	&:not(:placeholder-shown) { 
+		border: 1px solid ${tokens.colors.Grey_6};
+	  }
+
+	// 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
+	&:not(:placeholder-shown) + button {
+		background-color: ${tokens.colors.B_Grey_7};
+	}
+	
+	// 최대 길이 설정
+	&[maxlength] {
+		maxlength: ${props => props.maxlength};
+	}
+`;
+
+export const TimerBox = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	position: absolute;
+	top: 10px;
+	left: 329px;
+	width: 67px;
+	height: 18px;
+	background-color: rgba(251, 170, 132, 0.2);
+	border-radius: 4px;
+	padding: 9px 14px; 
+`;
+export const TimerIcon = styled.img`
+	width: 18px;
+	height: 18px;
+	margin-right: 4px;
+`;
+export const Timer = styled.div`
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	width: 45px;
+	height: 18px;
+	${tokens.typography.B3_M_14};
+	color: ${tokens.colors.Sub_3};
+	// background-color: rgba(251, 170, 132, 0.2);
+	border-radius: 4px;
+`;
 
 // 회원가입 버튼
 export const Btn = styled.button`
@@ -154,4 +199,56 @@ export const ErrorMessage = styled.div`
 // 백준 계정 인증 확인 메시지
 export const Message = styled.div`
 	${tokens.typography.B3_M_14}
+`;
+
+
+// 입력 drag박스
+export const InputDragBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+  width: 224px;
+  height: 224px;
+  border: 1px dashed ${tokens.colors.B_Grey_4};
+  border-radius: 8px;
+  ${tokens.typography.B2_M_16}
+  color: ${tokens.colors.Grey_8};
+  padding: 0 10px;
+  margin-bottom: 4px;
+  background-color: ${tokens.colors.B_Grey_1};
+  cursor: pointer;
+
+  &::placeholder {
+    color: ${tokens.colors.Grey_4};
+  }
+
+  // &:hover {
+  //   border-color: ${tokens.colors.Grey_6};
+  // }
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
+`;
+
+export const DragDropText = styled.span`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+  color: ${tokens.colors.B_Grey_7};
+	margin-bottom: 8px;
+`;
+
+export const UploadText = styled.span`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Blue_0_Main};
+`;
+
+export const FileName = styled.span`
+  ${tokens.typography.B3_M_14};
+  color: ${tokens.colors.B_Grey_7};
+	margin-top: 8px;
 `;

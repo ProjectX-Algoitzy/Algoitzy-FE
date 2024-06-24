@@ -2,37 +2,40 @@ import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
 export const FooterContainer = styled.div`
-  width: 100%;
-  height: 320px;
-`;
-
-export const FooterWrap = styled.div`
-    background-color: ${tokens.colors.Black};
-    position: sticky;
-    top: 0;
-    z-index: 1000; 
-    height: 100%; 
-    width: 100%;
-    margin: 0 auto;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    width: 100%;
+    height: 320px;
+    background-color: ${tokens.colors.Black};
     justify-content: space-between;
 `;
 
 export const FooterLeftWrap = styled.div`
     display: flex;
-    margin-left: 12%;
+    flex-direction: column;
+    margin-left: 360px;
+    margin-top: 72px;
 `;
 
 export const FooterRightWrap = styled.div`
-    align-items: center;
-    margin-right: 12%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 72px;
+    margin-right: 360px;
 `;
 
-export const Rabel = styled.div`
-	${tokens.typography.H2_SB_48}
+export const Sentence1 = styled.div`
+	${tokens.typography.T3_B_24};
 	color: ${tokens.colors.B_Grey_4};
-	margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 7px;
+`;
+
+export const Sentence2 = styled.div`
+    ${tokens.typography.T4_SB_20};
+    color: ${tokens.colors.B_Grey_6};
+`;
+
+export const Icon = styled.img`
+    width: 66px;
+    height: 66px;
 `;

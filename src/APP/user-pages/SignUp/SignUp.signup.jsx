@@ -1,13 +1,27 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect, useContext, useRef  } from 'react';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
 import request from '../../Api/request';
+import Timer from './SignUp.timer';
+import { AlertContext } from '../../Common/Alert/AlertContext';
+
 
 export default function Signup() {
-
+  
   const navigate = useNavigate();
+  const { alert } = useContext(AlertContext);
+  
+  // 프로필 이미지 
+  const fileInputRef = useRef(null);
+  const [file, setFile] = useState(null);
+  const [profileUrl, setProfileUrl] = useState(null);
+
+  const [timerStarted, setTimerStarted] = useState(false);
 
   const [name, setName] = useState('');
+  const [grade, setGrade] = useState();
+  const [major, setMajor] = useState('');
   const [handle, setHandle] = useState(''); 
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
@@ -46,7 +60,7 @@ export default function Signup() {
   const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{1,15}$/;
 
   // 핸드폰 번호 유효성 검사 
-  // const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
+  const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
   // 유효성 확인
   // 이름 유효성 확인
@@ -61,7 +75,8 @@ export default function Signup() {
   const [isPasswordConfirmValid, setIsPasswordConfirmValid] = useState(false);
 
   // 핸드폰 번호 및 인증 코드 유효성 확인
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false); // 핸드폰 번호 정규식 만족 여부
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false); // 핸드폰 번호 실제 사용 여부
   const [isSMSValid, setIsSMSValid] = useState(false);
 
   // 이메일 및 인증 코드 유효성 확인
@@ -85,12 +100,73 @@ export default function Signup() {
     setIsAbled(isAllValid);
   }, [isNameValid, isHandleValid, isPasswordValid, isPasswordConfirmValid, isPhoneNumberValid, isSMSValid, isEmailValid, isEmailCodeValid]);
 
-  
+
+  // 프로필 이미지 파일 업로드
+  const handleFileChange = async (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      console.log('Selected file:', selectedFile.name);
+      await handleFileUpload(selectedFile);
+    }
+  };
+
+  const handleDrop = async (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    if (droppedFile) {
+      setFile(droppedFile);
+      console.log('Dropped file:', droppedFile.name);
+      await handleFileUpload(droppedFile);
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileUpload = async (file) => {
+    const formData = new FormData();
+    formData.append('multipartFileList', file);
+
+    try {
+      const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
+      if (response.data["isSuccess"]) {
+        console.log('파일 업로드 성공:', response.data.result[0]);
+        setProfileUrl(response.data.result[0]);
+      } else {
+        console.error("파일 업로드 실패:", response.data);
+      }
+    } catch (error) {
+      console.error('파일 업로드 에러:', error);
+      // Handle the error as needed
+    }
+  };
+
+  // 타이머 완료
+  const onComplete = () => {
+    setTimerStarted(false);
+    setIsSMSValid(true);
+  }
 
   // 이름 입력 change event
   const handleNameChange = (value) => {
     setName(value);
     setIsNameValid(value.trim().length > 0);
+  }
+
+  // 학년 입력 change event
+  const handleGradeChange = (value) => {
+    setGrade(value);
+  }
+
+  // 학과 입력 change event
+  const handleMajorChange = (value) => {
+    setMajor(value);
   }
 
   // 백준 계정 입력 change event
@@ -120,7 +196,7 @@ export default function Signup() {
   // 비밀번호 확인 입력 change event
   const handlePasswordConfirmChange = (value) => {
     setPasswordConfirmation(value);
-    setIsPasswordConfirmValid(PasswordRegex.test(value));
+    setIsPasswordConfirmValid(value === password);
     if (value !== password && value.trim().length > 0) {
       setPwdConfirmBorderColor('1px solid #DC4A41'); // Red
     } else {
@@ -131,8 +207,28 @@ export default function Signup() {
 
   // 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
-    setPhoneNumber(value);
-    setPhoneBorderColor('#555555'); // Grey_6
+    // Remove all non-numeric characters
+    const numericValue = value.replace(/\D/g, ''); // 숫자가 아닌 문자 제거
+
+    let formattedValue = numericValue;
+
+    if (numericValue.length > 3 && numericValue.length <= 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3)}`; // 010-xxxx 로 변경
+    } else if (numericValue.length > 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3, 7)}-${numericValue.slice(7, 11)}`; // 010-xxxx-xxxx 로 변경
+    }
+
+    setPhoneNumber(formattedValue);
+    setIsPhoneValid(PhoneRegex.test(formattedValue));
+
+    if (!PhoneRegex.test(formattedValue) && formattedValue.trim().length > 0) {
+      setPhoneBorderColor('#DC4A41'); // Red
+      setPhoneMessageColor('#DC4A41'); // Red
+      setPhoneMessage('010-0000-0000 형식에 맞춰 입력해주세요.');
+    } else {
+      setPhoneBorderColor('#555555'); // Grey_6
+      setPhoneMessage('');
+    }
   }
 
   // 핸드폰 번호 인증 코드 입력 change event
@@ -157,20 +253,26 @@ export default function Signup() {
   const handleSubmit = async () => {
    
     const requestData = {
+      profileUrl: profileUrl,
       email: email,
       password: password,
       checkPassword: passwordConfirmation, 
       name: name,
+      grade: grade,
+      major: major,
       handle: handle,
       phoneNumber: phoneNumber,
     };
     try {
       const response = await request.post('/sign-up', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("회원가입 성공!");
-        alert("회원가입을 성공하셨습니다.");
-        navigate("/login");
+        const result = await alert('회원가입', '회원가입이 완료되었습니다!');
+        if (result) {
+          navigate("/login");
+        }
+        // navigate("/login");
       } else {
         console.error("회원가입 실패:", response.data);
       }
@@ -187,7 +289,7 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/handle', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("백준 유효 계정 인증 성공!");
         setIsHandleValid(true);
         setHandleColor('#3083F7'); // Blue_3
@@ -214,8 +316,9 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/phone-number', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
+        setTimerStarted(false); // 타이머 off
         setIsSMSValid(true);
         setPhoneBorderColor('#3083F7'); // Blue_3
         setPhoneMessageColor('#3083F7'); // Blue_3
@@ -246,12 +349,13 @@ export default function Signup() {
     try {
       const response = await request.post('/sign-up/email', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("이메일 인증 성공!");
         setIsEmailCodeValid(true);
         setEmailBorderColor('#3083F7'); // Blue_3
         setEmailMessageColor('#3083F7'); // Blue_3
         setEmailMessage('인증이 완료되었습니다.');
+        setEmailCodeMessage('');
         setEmailCodeColor('#555555'); // grey_6
       } else {
         console.error("이메일 인증 실패:", response.data);
@@ -271,16 +375,17 @@ export default function Signup() {
   const handleSubmitEmail = async () => {
    
     const requestData = {
-      email: email,
+      type: "CERTIFICATION",
+      emailList: [email],
     };
     try {
-      const response = await request.post('/email/certification', requestData);
+      const response = await request.post('/email', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("이메일 인증 코드 전송 성공!");
         setIsEmailValid(true);
-        setEmailBorderColor('#3083F7'); // Blue_3
-        setEmailMessageColor('#3083F7'); // Blue_3
+        setEmailBorderColor('#00A5FF'); // Blue_0_Main
+        setEmailMessageColor('#00A5FF'); // Blue_0_Main
         setEmailMessage('인증번호가 발송되었습니다.');
       } else {
         console.error("이메일 인증 코드 전송 실패:", response.data);
@@ -290,7 +395,7 @@ export default function Signup() {
       setIsEmailValid(false);
       setEmailBorderColor('#DC4A41'); // Red
       setEmailMessageColor('#DC4A41'); // Red
-      setEmailMessage('사용할 수 없는 핸드폰 번호입니다.');
+      setEmailMessage('사용할 수 없는 이메일입니다.');
       
     }
   };
@@ -304,12 +409,14 @@ export default function Signup() {
     try {
       const response = await request.post('/sms/certification', requestData);
       console.log("response",response);
-      if (response.status === 200) {
+      if (response["isSuccess"]) {
         console.log("SMS 인증 코드 전송 성공!");
         setIsPhoneNumberValid(true);
-        setPhoneBorderColor('#3083F7'); // Blue_3
-        setPhoneMessageColor('#3083F7'); // Blue_3
+        setPhoneBorderColor('#00A5FF'); // Blue_0_Main
+        setPhoneMessageColor('#00A5FF'); // Blue_0_Main
         setPhoneMessage('인증번호가 발송되었습니다.');
+        setTimerStarted(true); // 타이머 시작
+        setIsSMSValid(false); // 인증코드 입력 활성화
       } else {
         console.error("SMS 인증 코드 전송 실패:", response.data);
       }
@@ -330,12 +437,50 @@ export default function Signup() {
           <itemS.Head3>회원가입</itemS.Head3>
           <div>
             <itemS.LIContainer>
+              <itemS.Label>프로필 이미지</itemS.Label>
+              <itemS.InputDragBox
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+              >
+                <itemS.DragDropText>이미지 드래그 혹은</itemS.DragDropText>
+                <itemS.UploadText onClick={handleClick}>
+                  파일 업로드
+                </itemS.UploadText>
+                {file && <itemS.FileName>{file.name}</itemS.FileName>}
+              </itemS.InputDragBox>
+              <itemS.HiddenFileInput
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
+            </itemS.LIContainer>
+            <itemS.LIContainer>
               <itemS.Label>이름</itemS.Label>
               <itemS.InputBox
                 type="text"
                 placeholder="이름을 입력해주세요."
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
+              />
+            </itemS.LIContainer>
+
+            <itemS.LIContainer>
+              <itemS.Label>학년</itemS.Label>
+              <itemS.InputBox
+                type="text"
+                placeholder="학년을 입력해주세요. (숫자만 입력)"
+                value={grade}
+                onChange={(e) => handleGradeChange(e.target.value)}
+              />
+            </itemS.LIContainer>
+
+            <itemS.LIContainer>
+              <itemS.Label>학과</itemS.Label>
+              <itemS.InputBox
+                type="text"
+                placeholder="학과를 입력해주세요."
+                value={major}
+                onChange={(e) => handleMajorChange(e.target.value)}
               />
             </itemS.LIContainer>
           
@@ -350,7 +495,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${handleColor}` }}
                   disabled={isHandleValid}
                 />
-                <itemS.BtnConfirm onClick={handleConfirmHandle}>
+                <itemS.BtnConfirm onClick={handleConfirmHandle} disabled={isHandleValid}>
                  인증하기
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -406,7 +551,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${phoneBorderColor}` }}
                   disabled={isSMSValid}
                 />
-                <itemS.BtnConfirm onClick={handleSubmitSMS}>
+                <itemS.BtnConfirm onClick={handleSubmitSMS} disabled={isSMSValid}>
                  {phoneConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -416,19 +561,30 @@ export default function Signup() {
                 {phoneMessage}
               </itemS.CodeMessage>
 
-              <itemS.InputConfirmBoxWrapper>
-                <itemS.InputConfirmBox
-                  type="text"
-                  placeholder="인증코드"
-                  value={SMSCode}
-                  onChange={(e) => handleSMSCodeChange(e.target.value)}
-                  style={{ border: `1px solid ${SMSColor}` }}
-                  disabled={isSMSValid}
-                />
-                <itemS.BtnConfirm onClick={handleConfirmPhone}>
+              <itemS.InputConfirmTimerBoxWrapper>
+                  <itemS.InputConfirmTimerBox maxlength="10"
+                    type="text"
+                    placeholder="인증코드"
+                    value={SMSCode}
+                    onChange={(e) => handleSMSCodeChange(e.target.value)}
+                    style={{ border: `1px solid ${SMSColor}` }}
+                    disabled={isSMSValid}
+                  />
+                  
+                <itemS.BtnConfirm onClick={handleConfirmPhone} disabled={isSMSValid}>
                  인증번호 확인
                 </itemS.BtnConfirm>
-              </itemS.InputConfirmBoxWrapper>
+                  {timerStarted ? (
+                      <itemS.TimerBox>
+                        <itemS.TimerIcon src="/img/timer.svg" alt="Timer Icon"/>
+                        <itemS.Timer>
+                          <Timer initialTime={180} onComplete={onComplete} />
+                        </itemS.Timer>
+                      </itemS.TimerBox>
+                    ) : (
+                      <div></div>
+                    )}
+              </itemS.InputConfirmTimerBoxWrapper>
             </itemS.LIContainer>
             <itemS.Message
               style={{ color: `${SMSColor}` }}
@@ -448,7 +604,7 @@ export default function Signup() {
                   style={{ border: `1px solid ${emailBorderColor}` }}
                   disabled={isEmailCodeValid}
                 />
-                <itemS.BtnConfirm onClick={handleSubmitEmail}>
+                <itemS.BtnConfirm onClick={handleSubmitEmail} disabled={isEmailCodeValid}>
                  {emailConfirmBtnText}
                 </itemS.BtnConfirm>
               </itemS.InputConfirmBoxWrapper>
@@ -467,16 +623,16 @@ export default function Signup() {
                   style={{ border: `1px solid ${emailCodeColor}` }}
                   disabled={isEmailCodeValid}
                 />
-                <itemS.BtnConfirm onClick={handleConfirmEmail}>
+                <itemS.BtnConfirm onClick={handleConfirmEmail} disabled={isEmailCodeValid}>
                  인증번호 확인
                 </itemS.BtnConfirm>
-                <itemS.Message
-                  style={{ color: `${emailCodeColor}` }}
-                >
-                  {emailCodeMessage}
-                </itemS.Message>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
+            <itemS.Message
+              style={{ color: `${emailCodeColor}` }}
+            >
+              {emailCodeMessage}
+            </itemS.Message>
           </div>
           <itemS.Btn 
             onClick={handleSubmit}

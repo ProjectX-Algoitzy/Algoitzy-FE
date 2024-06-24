@@ -107,14 +107,21 @@ export const SelectAndAnswerContainer = styled.div` /*주관식 응답과 객관
   align-items: center;
 `;
 
-export const AnswerInputContainer = styled.input` /*스터디원이 주관식 질문에 답하기 위한 input콘테이너 */
+export const AnswerInputContainer = styled.input` /*스터디원이 주관식 질문에 답하기 위한 input콘테이너 */  
   margin-top: 16px;
-  margin-bottom: 40px;
   height: 48px;
   width: 100%;
   border: none;
   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
   ${tokens.typography.B2_M_16};
+
+  &::placeholder {
+    color: ${tokens.colors.Grey_5};
+  }
+
+  &:focus {
+    outline: none; /* 클릭 시 테두리 제거 */
+  }
 `;
 
 export const SelectContainer = styled.div` /*객관식 보기 및 추가버튼을 모두 감싸주는 컨테이너 */
@@ -180,37 +187,43 @@ export const BtnContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  /* justify-content: center; */
   width: 100%;
   height: 96px;
 
   position: fixed;
   bottom: 0; /* 아래쪽으로 고정 */
   left: 0; /* 왼쪽으로 고정 */
-  background-color: rgba(255, 255, 255, 0.2); /* 색상 코드를 rgba 형식으로 변경하고, 투명도를 20%로 설정 */
-  backdrop-filter: blur(8px); /* 필터를 원하는 것으로 설정 */
-  backdrop-filter: 20%;
+  background-color: rgba(255, 255, 255, 0.1); /* 색상 코드를 rgba 형식으로 변경하고, 투명도를 20%로 설정 */
+  backdrop-filter: blur(200px); /* 필터를 원하는 것으로 설정 */
   z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
 `;
 
 export const BtnContainer2 = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 19%;
+  margin-left: 564px;
 `;
 
-export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼 */
-  ${tokens.Btns.Btn_fill_default}
+export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
+  width: 388px;
+	height: 48px;
+  border-radius: 4px;
+	border: none;
+	cursor: pointer;
 	color: ${tokens.colors.White};
-	${tokens.typography.T4_SB_20}
+	${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.B_Grey_7};
-  margin-right: 80px;  /*임시로 픽셀로 마진을 놓았음... 나중에 추가수정 필요*/
 `;
 
 export const Btn = styled.button` /*저장하기 버튼*/
-	border-radius: "4px";
-	border: "none";
-	cursor: "pointer";
-  ${tokens.Btns.Btn_fill_default};
+	margin-left: 73px;
+  width: 388px;
+	height: 48px;
+  border-radius: 4px;
+	border: none;
+	cursor: pointer;
 	color: ${tokens.colors.White};
-	${tokens.typography.T4_SB_20};
+	${tokens.typography.T5_SB_16}
+  background-color: ${tokens.colors.Blue_0_Main};
 `;

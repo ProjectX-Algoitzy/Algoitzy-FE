@@ -49,25 +49,25 @@ export default function Langding() {
         <Link style={{textDecoration:"none"}} to={{pathname: '/studylist'}}><itemS.BtnStudyApply>{detailRecentGeneration}기 스터디 지원하기</itemS.BtnStudyApply></Link>
       </itemS.NormalWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487153.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame1.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487154.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame2.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487155.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame3.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487156.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame4.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487134.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame5.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/DD.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame6.png' />
       </itemS.ImgWrap>
       <itemS.ImgWrap>
-        <itemS.SecondWrapStyledImage src='/img/Frame 4487157.png' />
+        <itemS.SecondWrapStyledImage src='/img/Frame7.png' />
       </itemS.ImgWrap>
       <itemS.NormalWrap>
         <itemS.FirstSentence>지금 KOALA에 참여하세요!</itemS.FirstSentence>

@@ -6,7 +6,7 @@ export const FooterContainer = styled.div`
     flex-direction: row;
     width: 100%;
     height: 320px;
-    background-color: ${tokens.colors.Black};
+    background-color: #F6F9FB;
     justify-content: space-between;
 `;
 

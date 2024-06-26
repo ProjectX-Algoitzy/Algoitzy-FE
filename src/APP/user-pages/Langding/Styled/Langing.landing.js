@@ -5,7 +5,7 @@ export const HomeWrap = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: column; 
-  background-color: #0E0D12;
+  background-color: white;
 `;
 
 export const NormalWrap = styled.div` 
@@ -28,18 +28,24 @@ export const ImgWrap = styled.div`
 
 export const FirstSentence = styled.div` 
   display: block;
-  color: ${tokens.colors.B_Grey_1};
+  color: ${tokens.colors.Grey_8};
   ${tokens.typography.H1_B_60};
 `;//NormalWrap에 들어가는 문장1
 
 export const SecondSentence = styled.div` 
   display: block;
-  color: ${tokens.colors.B_Grey_3};
+  color: ${tokens.colors.B_Grey_6};
   ${tokens.typography.T3_B_24};
 `;//NormalWrap에 들어가는 문장2
 
 export const BtnStudyApply = styled.div` 
-    ${tokens.Btns.Btn_fill_normal};
+    width: 320px;
+		height: 72px;
+		background: ${tokens.colors.B_Grey_8};
+		color: ${tokens.colors.White};
+		border-radius: 4px;
+		border: none;
+		cursor: pointer;
     ${tokens.typography.T3_B_24};
     margin-top: 25px;
     text-align: center; 

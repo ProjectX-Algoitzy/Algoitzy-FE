@@ -17,21 +17,24 @@ export const InnerContainer = styled.div`
   border: 1px solid ${tokens.colors.Grey_4};
   border-radius: 20px;
   padding: 127px 407px;
-  margin-top: 120px;
+  margin: 120px 0;
 `;
 
 // 회원가입 head
 export const Head3 = styled.div`
 	${tokens.typography.H3_SB_40}
 	margin-top: 20px;
-    margin-bottom: 27px;
+  margin-bottom: 27px;
 `;
 
 // 이미지 자리
-export const Img = styled.div`
-    width: 386px;
-    height: 204px;
-    background-color: #E3E3E3;
+export const Img = styled.img`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 386px;
+  height: 204px;
+    
 `;
 
 // 라벨+입력 컨테이너

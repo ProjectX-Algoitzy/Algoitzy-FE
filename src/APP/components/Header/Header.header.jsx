@@ -35,6 +35,10 @@ export default function Header() {
     setActiveMenu((prev) => (prev === menu ? '' : menu));
   };
 
+  const handleNav = () => { // 하위 메뉴 이동 후 메뉴창 닫기
+    setActiveMenu('');
+  };
+
   return (
     <>
       <itemS.HeaderContainer>
@@ -66,24 +70,24 @@ export default function Header() {
         </itemS.HeaderWrap>
       </itemS.HeaderContainer>
       
-      {/* {activeMenu === 'study' && (
-        <itemS.SubStudyMenu>
-          <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
-          <itemS.SubMenuItem>커리큘럼</itemS.SubMenuItem>
-          <itemS.SubMenuItem>모의 테스트</itemS.SubMenuItem>
-          <itemS.SubMenuItem>출석부 확인</itemS.SubMenuItem>
-        </itemS.SubStudyMenu>
-      )} */}
       {activeMenu === 'study' && (
         <itemS.SubStudyMenu>
-          <itemS.SubMenuItem to={isLoggedIn ? "#" : "/login"}>정규 스터디</itemS.SubMenuItem>
-          <itemS.SubMenuItem to={isLoggedIn ? "#" : "/login"}>자율 스터디</itemS.SubMenuItem>
+          <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
+            <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
+          </itemS.StyledLink>
+          <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
+            <itemS.SubMenuItem>자율 스터디</itemS.SubMenuItem>
+          </itemS.StyledLink>
         </itemS.SubStudyMenu>
       )}
       {activeMenu === 'coding' && (
         <itemS.SubCodingMenu>
-          <itemS.SubMenuItem to={isLoggedIn ? "#" : "/login"}>기업 분석</itemS.SubMenuItem>
-          <itemS.SubMenuItem to={isLoggedIn ? "#" : "/login"}>부트캠프 분석</itemS.SubMenuItem>
+          <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
+            <itemS.SubMenuItem>기업 분석</itemS.SubMenuItem>
+          </itemS.StyledLink>
+          <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
+            <itemS.SubMenuItem>부트캠프 분석</itemS.SubMenuItem>
+          </itemS.StyledLink>
         </itemS.SubCodingMenu>
       )}
     </>

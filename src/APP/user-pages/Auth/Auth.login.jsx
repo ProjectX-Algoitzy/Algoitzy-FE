@@ -53,7 +53,7 @@ export default function Login() {
       <itemS.Container>
         <itemS.InnerContainer>
           <itemS.Head3>로그인</itemS.Head3>
-						<itemS.Img></itemS.Img>
+						<itemS.Img src="/img/login.svg" alt="Icon"/>
             <itemS.LoginIContainer>
               <itemS.IIContainer>
                 <itemS.InputBox
@@ -62,7 +62,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <itemS.Icon src="/img/people.png" alt="Icon"/>
+                <itemS.Icon src="/img/uil_user.svg" alt="Icon"/>
               </itemS.IIContainer>
               <itemS.IIContainer>
                 <itemS.InputBox
@@ -72,7 +72,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   // style={{ border: pwdborderColor }}
                 />
-                <itemS.Icon src="/img/people.png" alt="Icon"/>
+                <itemS.Icon src="/img/uil_lock.svg" alt="Icon"/>
               </itemS.IIContainer>
 							{/* <itemS.UtilBox>
 								<itemS.CheckBox type="checkbox" />

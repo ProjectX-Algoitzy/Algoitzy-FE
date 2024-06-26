@@ -47,7 +47,7 @@ export default function Header() {
             <itemS.StyledLink to="/" style={{textDecoration: 'none'}}><itemS.Rabel src='/img/koalalogo.png' alt='코알라로고'/></itemS.StyledLink>
           </itemS.HeaderLeftWrap>
           <itemS.HeaderRightWrap>
-            <itemS.StyledLink to={isLoggedIn ? "#" : "/login"}>
+            <itemS.StyledLink to={isLoggedIn ? "/regularstudy" : "/login"}>
               <itemS.PageLink>나의 스터디</itemS.PageLink>
             </itemS.StyledLink>
             <itemS.StyledLink onClick={() => handleMenuClick('study')}>
@@ -75,7 +75,7 @@ export default function Header() {
           <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
-          <itemS.StyledLink to={isLoggedIn ? "#" : "/login"} onClick={handleNav}>
+          <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>자율 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
         </itemS.SubStudyMenu>

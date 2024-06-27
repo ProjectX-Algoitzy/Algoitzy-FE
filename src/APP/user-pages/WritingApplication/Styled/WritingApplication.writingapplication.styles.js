@@ -6,6 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items : center;
   /* background-image: url('/img/makingapplication.png'); */
+  margin-bottom: 120px;
 `;
 
 export const InnerContainer = styled.div`
@@ -187,7 +188,7 @@ export const BtnContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
+  justify-content: center; 
   width: 100%;
   height: 96px;
 
@@ -202,7 +203,7 @@ export const BtnContainer = styled.div`
 export const BtnContainer2 = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 564px;
+  // margin-left: 564px;
 `;
 
 export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
@@ -217,7 +218,6 @@ export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
 `;
 
 export const Btn = styled.button` /*저장하기 버튼*/
-	margin-left: 73px;
   width: 388px;
 	height: 48px;
   border-radius: 4px;
@@ -226,4 +226,5 @@ export const Btn = styled.button` /*저장하기 버튼*/
 	color: ${tokens.colors.White};
 	${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.Blue_0_Main};
+  margin-left: 73px;
 `;

@@ -51,7 +51,7 @@ export default function Signup() {
   // 이메일 및 인증코드 색상 및 메시지
   const [emailBorderColor, setEmailBorderColor] = useState('#CFCFCF'); // Grey_4 border 색상
   const [emailMessageColor, setEmailMessageColor] = useState('#171717'); // Grey_8 메시지 색상
-  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 휴대폰 번호를 입력해주세요.'); // 메시지
+  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 이메일을 입력해주세요.'); // 메시지
   const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
   const [emailCodeMessage, setEmailCodeMessage] = useState(''); // 메시지
 
@@ -264,9 +264,9 @@ export default function Signup() {
       phoneNumber: phoneNumber,
     };
     try {
-      const response = await request.post('/sign-up', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/sign-up', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("회원가입 성공!");
         const result = await alert('회원가입', '회원가입이 완료되었습니다!');
         if (result) {
@@ -287,9 +287,9 @@ export default function Signup() {
       handle: handle,
     };
     try {
-      const response = await request.post('/sign-up/handle', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/handle', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("백준 유효 계정 인증 성공!");
         setIsHandleValid(true);
         setHandleColor('#3083F7'); // Blue_3
@@ -308,15 +308,16 @@ export default function Signup() {
 
   // 핸드폰 번호 인증번호 확인 버튼
   const handleConfirmPhone = async () => {
+    const phone = phoneNumber.replace(/-/g, '');
    
     const requestData = {
-      phoneNumber: phoneNumber,
+      phoneNumber: phone,
       code: SMSCode
     };
     try {
-      const response = await request.post('/sign-up/phone-number', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/phone-number', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
         setTimerStarted(false); // 타이머 off
         setIsSMSValid(true);
@@ -347,9 +348,9 @@ export default function Signup() {
       code: emailCode
     };
     try {
-      const response = await request.post('/sign-up/email', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/email', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("이메일 인증 성공!");
         setIsEmailCodeValid(true);
         setEmailBorderColor('#3083F7'); // Blue_3
@@ -379,9 +380,9 @@ export default function Signup() {
       emailList: [email],
     };
     try {
-      const response = await request.post('/email', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("이메일 인증 코드 전송 성공!");
         setIsEmailValid(true);
         setEmailBorderColor('#00A5FF'); // Blue_0_Main
@@ -402,14 +403,15 @@ export default function Signup() {
 
   // SMS 인증 코드 전송 버튼 {인증하기 버튼}
   const handleSubmitSMS = async () => {
+    const phone = phoneNumber.replace(/-/g, '');
    
     const requestData = {
-      phoneNumber: phoneNumber,
+      phoneNumber: phone,
     };
     try {
-      const response = await request.post('/sms/certification', requestData);
-      console.log("response",response);
-      if (response["isSuccess"]) {
+      const response = await axios.post('https://user-dev.kau-koala.com/sms/certification', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
         console.log("SMS 인증 코드 전송 성공!");
         setIsPhoneNumberValid(true);
         setPhoneBorderColor('#00A5FF'); // Blue_0_Main

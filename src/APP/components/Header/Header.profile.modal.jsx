@@ -21,6 +21,11 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
     }
   };
 
+  const handleStudyNavigation = () => {
+    setIsLoggedIn(false);
+    navigate('/regularstudy');
+  };
+
   return (
       <itemS.ArrowBubble onClick={e => e.stopPropagation()}>
         <itemS.TopContainer>
@@ -30,7 +35,7 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
         </itemS.TopContainer>
         <itemS.BottomContainer>
           <itemS.Button>개인 정보 수정</itemS.Button>
-          <itemS.Button>나의 스터디</itemS.Button>
+          <itemS.Button onClick={handleStudyNavigation}>나의 스터디</itemS.Button>
         </itemS.BottomContainer>
       </itemS.ArrowBubble>
   );

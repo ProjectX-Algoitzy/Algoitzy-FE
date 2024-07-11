@@ -2,10 +2,30 @@ import React, { useState, useEffect, useContext, useRef  } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
-import request from '../../Api/request';
+// import request from '../../Api/request';
 import Timer from './SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
+
+const gradeOptions = [
+  {value: 4, label:"4"},
+  {value: 3, label:"3"},
+  {value: 2, label:"2"},
+  {value: 1, label:"1"}
+]
+
+const gradePlaceholderText = '선택';
+
+const majorOptions = [
+  {value: "소프트웨어학과", label:"소프트웨어학과"},
+  {value: "기계공학과", label:"기계공학과"},
+  {value: "신소재공학과", label:"신소재공학과"},
+  {value: "스마트드론공학과", label:"스마트드론공학과"},
+  {value: "항공물류학과", label:"항공물류학과"},
+  {value: "항공경영학과", label:"항공경영학과"}
+]
+
+const majorPlaceholderText = '학과를 선택해주세요.';
 
 export default function Signup() {
   
@@ -20,7 +40,7 @@ export default function Signup() {
   const [timerStarted, setTimerStarted] = useState(false);
 
   const [name, setName] = useState('');
-  const [grade, setGrade] = useState();
+  const [grade, setGrade] = useState(gradeOptions[0]);
   const [major, setMajor] = useState('');
   const [handle, setHandle] = useState(''); 
   const [password, setPassword] = useState('');
@@ -31,6 +51,12 @@ export default function Signup() {
   const [emailCode, setEmailCode] = useState('');
 
   // border색상 및 메시지 상태
+  // 학년 색상
+  const [gradeColor, setGradeColor] = useState('#CFCFCF'); 
+
+  // 학과 색상
+  const [majorColor, setMajorColor] = useState('#CFCFCF'); 
+
   // 백준 계정 색상 및 메시지
   const [handleColor, setHandleColor] = useState('#CFCFCF'); 
   const [handleMessage, setHandleMessage] = useState(''); 
@@ -159,14 +185,18 @@ export default function Signup() {
     setIsNameValid(value.trim().length > 0);
   }
 
-  // 학년 입력 change event
-  const handleGradeChange = (value) => {
+  // 학년 선택 change event
+  const handleGradeChange = (selectedOption) => {
+    const { value } = selectedOption;
     setGrade(value);
+    setGradeColor('#555555');
   }
 
   // 학과 입력 change event
-  const handleMajorChange = (value) => {
+  const handleMajorChange = (selectedOption) => {
+    const { value } = selectedOption;
     setMajor(value);
+    setMajorColor('#555555');
   }
 
   // 백준 계정 입력 change event
@@ -263,6 +293,7 @@ export default function Signup() {
       handle: handle,
       phoneNumber: phoneNumber,
     };
+    console.log("requestData",requestData);
     try {
       const response = await axios.post('https://user-dev.kau-koala.com/sign-up', requestData);
       console.log("response",response.data);
@@ -466,7 +497,7 @@ export default function Signup() {
               />
             </itemS.LIContainer>
 
-            <itemS.LIContainer>
+            {/* <itemS.LIContainer>
               <itemS.Label>학년</itemS.Label>
               <itemS.InputBox
                 type="text"
@@ -474,9 +505,23 @@ export default function Signup() {
                 value={grade}
                 onChange={(e) => handleGradeChange(e.target.value)}
               />
+            </itemS.LIContainer> */}
+            <itemS.LIContainer>
+              <itemS.Label>학년</itemS.Label>
+              <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}>
+                <itemS.GradeSelect
+                  options={gradeOptions}
+                  placeholder={gradePlaceholderText}
+                  // defaultValue={gradeOptions[0]}
+                  components={{ DropdownIndicator: null, IndicatorSeparator: null }}
+                  isSearchable={false}
+                  onChange={handleGradeChange}
+                />
+                <itemS.DropText>학년</itemS.DropText>
+              </itemS.SelectBoxContainer>
             </itemS.LIContainer>
 
-            <itemS.LIContainer>
+            {/* <itemS.LIContainer>
               <itemS.Label>학과</itemS.Label>
               <itemS.InputBox
                 type="text"
@@ -484,10 +529,23 @@ export default function Signup() {
                 value={major}
                 onChange={(e) => handleMajorChange(e.target.value)}
               />
+            </itemS.LIContainer> */}
+            <itemS.LIContainer>
+              <itemS.Label>학과</itemS.Label>
+              <itemS.SelectBoxContainer style={{ border: `1px solid ${majorColor}` }}>
+                <itemS.MajorSelect
+                  options={majorOptions}
+                  placeholder={majorPlaceholderText}
+                  // defaultValue={gradeOptions[0]}
+                  components={{ DropdownIndicator: null, IndicatorSeparator: null }}
+                  isSearchable={false}
+                  onChange={handleMajorChange}
+                />
+              </itemS.SelectBoxContainer>
             </itemS.LIContainer>
           
             <itemS.LIContainer>
-              <itemS.Label>백준닉네임</itemS.Label>
+              <itemS.Label>백준 닉네임</itemS.Label>
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"

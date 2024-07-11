@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext  } from 'react';
+import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "../../../user-pages/FindAuth/FindEmail/Styled/FindAuth.FindEmail.findemail.styles"
-import request from '../../../Api/request';
+
 
 export default function FindEmail() {
 
   const navigate = useNavigate();
 
-	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
 	const [phoneNumber, setPhoneNumber] = useState('');
   const [SMSCode, setSMSCode] = useState('');
 
@@ -19,24 +20,50 @@ export default function FindEmail() {
   const [SMSMessage, setSMSMessage] = useState(''); // 메시지
 
 	// 핸드폰 번호 및 인증 코드 유효성 확인
-  // const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false); // 핸드폰 번호 정규식 만족 여부
   const [isSMSValid, setIsSMSValid] = useState(false);
 
 	// 핸드폰 번호 '인증하기' text
   const [phoneConfirmBtnText, setPhoneConfirmBtnText] = useState("인증하기");
 
-	// const [isAbled, setIsAbled] = useState(false); 
+  // 핸드폰 번호 유효성 검사 
+  const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
 
-	// useEffect(() => {
-  //   const isAllValid =  isPhoneNumberValid && isSMSValid;
-  //   setIsAbled(isAllValid);
-  // }, [isPhoneNumberValid, isSMSValid]);
+  // 확인 버튼 색상 및 활성화/비활성화
+  const [btnSubmitColor, setBtnSubmitColor] = useState(); // B_Grey_3
+  const [isAbled, setIsAbled] = useState(false); 
 
+  useEffect(() => {
+    const isAllValid = isPhoneValid && isSMSValid;
+    setBtnSubmitColor(isAllValid ? '#00A5FF' : '#D2D9E5');
+    setIsAbled(isAllValid);
+  }, [isPhoneValid, isSMSValid]);
+	
   
 	// 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
-    setPhoneNumber(value);
-    setPhoneBorderColor('#555555'); // Grey_6
+    // Remove all non-numeric characters
+    const numericValue = value.replace(/\D/g, ''); // 숫자가 아닌 문자 제거
+
+    let formattedValue = numericValue;
+
+    if (numericValue.length > 3 && numericValue.length <= 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3)}`; // 010-xxxx 로 변경
+    } else if (numericValue.length > 7) {
+      formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3, 7)}-${numericValue.slice(7, 11)}`; // 010-xxxx-xxxx 로 변경
+    }
+
+    setPhoneNumber(formattedValue);
+    setIsPhoneValid(PhoneRegex.test(formattedValue));
+
+    if (!PhoneRegex.test(formattedValue) && formattedValue.trim().length > 0) {
+      setPhoneBorderColor('#DC4A41'); // Red
+      setPhoneMessageColor('#DC4A41'); // Red
+      setPhoneMessage('010-0000-0000 형식에 맞춰 입력해주세요.');
+    } else {
+      setPhoneBorderColor('#555555'); // Grey_6
+      setPhoneMessage('');
+    }
   }
 
   // 핸드폰 번호 인증 코드 입력 change event
@@ -45,39 +72,16 @@ export default function FindEmail() {
     setSMSColor('#555555'); // Grey_6
   }
 
-
-  // 로그인 버튼
-  const handleSubmit = async () => {
-   
-    // const requestData = {
-    //   email: email,
-    //   password: password,
-    // };
-    // try {
-    //   const response = await request.post('/member/login', requestData);
-    //   console.log("response",response);
-    //   localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
-    //   if (response["isSuccess"]) {
-    //     console.log("로그인 성공!");
-    //     alert("로그인을 성공하셨습니다.");
-    //     navigate("/");
-    //   } else {
-    //     console.error("로그인 실패:", response.data);
-    //   }
-    // } catch (error) {
-    //   console.error("로그인 오류:", error);
-    // }
-  };
-
 	// 핸드폰 번호 인증번호 확인 버튼
   const handleConfirmPhone = async () => {
+    const phone = phoneNumber.replace(/-/g, '');
    
     const requestData = {
-      phoneNumber: phoneNumber,
+      phoneNumber: phone,
       code: SMSCode
     };
     try {
-      const response = await request.post('/sign-up/phone-number', requestData);
+      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/phone-number', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("핸드폰 번호 인증 성공!");
@@ -103,12 +107,13 @@ export default function FindEmail() {
 
 	// SMS 인증 코드 전송 버튼 {인증하기 버튼}
   const handleSubmitSMS = async () => {
+    const phone = phoneNumber.replace(/-/g, '');
    
     const requestData = {
-      phoneNumber: phoneNumber,
+      phoneNumber: phone,
     };
     try {
-      const response = await request.post('/sms/certification', requestData);
+      const response = await axios.post('https://user-dev.kau-koala.com/sms/certification', requestData);
       console.log("response",response);
       if (response.status === 200) {
         console.log("SMS 인증 코드 전송 성공!");
@@ -129,6 +134,31 @@ export default function FindEmail() {
     }
   };
 
+  const handleFindEmail = async () => {
+    const phone = phoneNumber.replace(/-/g, '');
+   
+    const requestData = {
+      name: name,
+      phoneNumber: phone,
+    };
+    console.log("requestData",requestData);
+    try {
+      const response = await axios.get('https://user-dev.kau-koala.com/member/find-email', {
+        params: requestData,
+      });
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
+        console.log("이메일 찾기 성공");
+        
+        navigate("/findemailsuccess", { state: { email: response.data.result } });
+      } else {
+        console.error("이메일 찾기 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("이메일 찾기 오류:", error);
+    }
+  };
+
 
   return (
 		<itemS.Container>
@@ -139,9 +169,9 @@ export default function FindEmail() {
             <itemS.Label>이름</itemS.Label>
 						<itemS.InputBox
 							type="text"
-							placeholder="아이디(이메일)"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							placeholder="이름을 입력해주세요."
+							value={name}
+							onChange={(e) => setName(e.target.value)}
 						/>
 					</itemS.LIContainer>
 
@@ -186,7 +216,11 @@ export default function FindEmail() {
               {SMSMessage}
             </itemS.Message>
 					
-				<itemS.Btn onClick={handleSubmit}>
+				<itemS.Btn 
+        onClick={handleFindEmail}
+        style={{ backgroundColor: `${btnSubmitColor}` }}
+        disabled={!isAbled}
+        >
 					확인
 				</itemS.Btn>
 				

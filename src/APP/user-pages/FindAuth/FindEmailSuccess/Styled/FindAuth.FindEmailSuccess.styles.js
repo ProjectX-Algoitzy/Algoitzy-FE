@@ -52,6 +52,7 @@ export const Text = styled.div`
 export const EmailBox = styled.div`
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	border: 1px solid ${tokens.colors.B_Grey_6};
 	border-radius: 4px;
 	width: 590px;	
@@ -69,9 +70,8 @@ export const EmailIcon = styled.div`
 
 // 이메일 계정
 export const Email = styled.div`
-    ${tokens.typography.B3_M_14};
-		height: 18px;
-		margin-top: 17px;
+	${tokens.typography.B3_M_14};
+	height: 18px;
 `;
 
 // 버튼 컨테이너

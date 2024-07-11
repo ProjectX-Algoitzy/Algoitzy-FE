@@ -13,6 +13,7 @@ import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAut
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
 import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main"
+import FindPassword from "./APP/user-pages/FindAuth/FindPassword/FindPassword.findpassword";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -47,6 +48,7 @@ function App() {
             <Route path="/studylist" element={<StudyList />} />
             <Route path="/findemail" element={<FindEmail />} />
             <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
+            <Route path="/findpassword" element={<FindPassword />} />
             <Route path="/study" element={<MakedSelfStudyList />} />
             <Route path="/newstudy" element={<MakingSelfStudy />} />
             <Route path="/regularstudy" element={<RegularStudy />} />

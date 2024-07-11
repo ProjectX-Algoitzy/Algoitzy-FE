@@ -1,36 +1,11 @@
-import React, { useState, useEffect, useContext  } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import * as itemS from "../../../user-pages/FindAuth/FindEmailSuccess/Styled/FindAuth.FindEmailSuccess.styles"
-import request from '../../../Api/request';
+import * as itemS from "../../../user-pages/FindAuth/FindEmailSuccess/Styled/FindAuth.FindEmailSuccess.styles";
 
 export default function FindEmailSuccess() {
-
   const navigate = useNavigate();
-
-	const [email, setEmail] = useState('');
-	
-  // 로그인 버튼
-  const handleSubmit = async () => {
-   
-    // const requestData = {
-    //   email: email,
-    //   password: password,
-    // };
-    // try {
-    //   const response = await request.post('/member/login', requestData);
-    //   console.log("response",response);
-    //   localStorage.setItem(ACCESS_TOKEN, response.result.accessToken);
-    //   if (response["isSuccess"]) {
-    //     console.log("로그인 성공!");
-    //     alert("로그인을 성공하셨습니다.");
-    //     navigate("/");
-    //   } else {
-    //     console.error("로그인 실패:", response.data);
-    //   }
-    // } catch (error) {
-    //   console.error("로그인 오류:", error);
-    // }
-  };
+  const location = useLocation();
+  const { email } = location.state || {};
 
 	
 
@@ -45,14 +20,14 @@ export default function FindEmailSuccess() {
 
 					</itemS.EmailIcon>
 					<itemS.Email>
-						test123@test.com
+						{email}
 					</itemS.Email>
 				</itemS.EmailBox>
 				<itemS.BtnContainer>
-					<itemS.BtnLogin>
+					<itemS.BtnLogin onClick={() => navigate("/login")}>
 						로그인
 					</itemS.BtnLogin>
-					<itemS.BtnFindPassword>
+					<itemS.BtnFindPassword onClick={() => navigate("/findpassword")}>
 						비밀번호 찾기
 					</itemS.BtnFindPassword>
 				</itemS.BtnContainer>

@@ -16,7 +16,7 @@ export default function Langding() {
         const response = await axios.get('https://user-dev.kau-koala.com/generation/max');
         console.log("스터디 최신 기수 api", response);
         setDetailRecentGeneration(response.data.result);
-        if (response["isSuccess"]) {
+        if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
         } else {
             console.error("api 연동 실패:", response);
@@ -31,7 +31,7 @@ export default function Langding() {
         const response = await axios.get('https://user-dev.kau-koala.com/study/count');
         console.log("최신 기수 스터디 개수 api", response);
         setDetailStudyCount(response.data.result);
-        if (response["isSuccess"]) {
+        if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
         } else {
             console.error("api 연동 실패:", response);
@@ -51,7 +51,10 @@ export default function Langding() {
         console.error("로그인 멤버 정보 조회 실패", error);
       }
     };
-    checkLoginStatus();
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      checkLoginStatus();
+    }
     getRecentGeneration();
     getStudyCount();
   }, []);

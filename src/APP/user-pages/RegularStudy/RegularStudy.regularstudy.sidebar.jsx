@@ -42,11 +42,11 @@ export default function RegularStudySideBar({setActiveComponent, activeComponent
                 온라인
               </itemS.OnlineContainer>
             </itemS.CountAndOnlineContainer>
-            <itemS.ManagerNameContainer>
-                <img src={regularStudyInfo.leaderProfileUrl} alt="회색동그라미" style={{width:"18px", height:"18px", marginRight:"8px"}} />
-                {regularStudyInfo.leaderName}
-                <img src="/img/iconstudymanager.png" alt="스터디장" style={{width:"58px", height:"19px", marginLeft:"8px"}} />
-              </itemS.ManagerNameContainer>
+            {/* <itemS.ManagerNameContainer>
+              <img src={regularStudyInfo.leaderProfileUrl} alt="회색동그라미" style={{width:"18px", height:"18px", marginRight:"8px"}} />
+              {regularStudyInfo.leaderName}
+              <img src="/img/iconstudymanager.png" alt="스터디장" style={{width:"58px", height:"19px", marginLeft:"8px"}} />
+            </itemS.ManagerNameContainer> */}
           </>
         )}
         <itemS.LinkContainer>

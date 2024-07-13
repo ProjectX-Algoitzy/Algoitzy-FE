@@ -10,10 +10,11 @@ import styled from "styled-components";
 import StudyList from "./APP/user-pages/StudyList/StudyList.studylist";
 import FindEmail from "./APP/user-pages/FindAuth/FindEmail/FindAuth.FindEmail.findemail";
 import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAuth.FindEmailSuccess";
+import FindPassword from "./APP/user-pages/FindAuth/FindPassword/FindPassword.findpassword";
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
 import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main"
-import FindPassword from "./APP/user-pages/FindAuth/FindPassword/FindPassword.findpassword";
+import MyStudyList from "./APP/user-pages/MyStudyList/MyStudyList.mystudylist.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -52,6 +53,7 @@ function App() {
             <Route path="/study" element={<MakedSelfStudyList />} />
             <Route path="/newstudy" element={<MakingSelfStudy />} />
             <Route path="/regularstudy" element={<RegularStudy />} />
+            <Route path="/mystudy" element={<MyStudyList />} />
           </Routes>
           <Footer />
       </BrowserRouter>

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import * as itemS from "./Styled/MakedSelfStudyList.makedselfstudylist.indivisual.styles";
+import * as itemS from "../MyStudyList/Styled/MyStudyList.mystudylist.indivisual.styles";
 
 
-export default function MakedSelfStudyListIndividual({ application, setCntApp }){
+export default function MyStudyListIndividual({ studyList }){
 
 	const navigate = useNavigate();
 
 	
 	const moveToDetail = (id) => { // 보기 추가 함수
-		navigate(`/makedapplicationdetail/${id}`);
+		navigate(`/study/${id}`);
 	}
 
 	// 스터디 제목 글자수 자르기
@@ -23,10 +23,10 @@ export default function MakedSelfStudyListIndividual({ application, setCntApp })
 
   return (
     
-		<itemS.InnerContainer key={application.applicationId}>
+		<itemS.InnerContainer key={studyList.studyId}>
 			<itemS.TopContainer>
 				
-				<itemS.TopImg>
+        <itemS.TopImg src={studyList.profileUrl} alt='프로필'>
 					
 				</itemS.TopImg>
 				
@@ -34,22 +34,22 @@ export default function MakedSelfStudyListIndividual({ application, setCntApp })
 
 			<itemS.BottomContainer>
 				<itemS.Bottom>
-					<itemS.Title onClick={() => moveToDetail(application.applicationId)}>{truncateStudyName(application.title)}</itemS.Title>
+					<itemS.Title onClick={() => moveToDetail(studyList.studyId)}>{truncateStudyName(studyList.studyName)}</itemS.Title>
 					<itemS.BottomHeadCount>
-						<itemS.PeopleIcon></itemS.PeopleIcon>		
+						<itemS.PeopleIcon src='/img/people.png' alt='아이콘'></itemS.PeopleIcon>		
 						<itemS.BottomInner>
-							<itemS.HeadCount>1</itemS.HeadCount>
-							<itemS.Total>/10</itemS.Total>
+							<itemS.HeadCount>{studyList.memberCount}</itemS.HeadCount>
+							<itemS.Total>명</itemS.Total>
 						</itemS.BottomInner>
 					</itemS.BottomHeadCount>
 					
-					<itemS.BottomBottom>
+					{/* <itemS.BottomBottom>
 						<itemS.CreatedNameContainer>
 							<itemS.ProfileIcon></itemS.ProfileIcon>
-							<itemS.CreatedName>{application.createdName}</itemS.CreatedName>
+							<itemS.CreatedName>{studyList.createdName}</itemS.CreatedName>
 						</itemS.CreatedNameContainer>
-						<itemS.CreatedDate>{application.createdTime}</itemS.CreatedDate>
-					</itemS.BottomBottom>												
+						<itemS.CreatedDate>{studyList.createdTime}</itemS.CreatedDate>
+					</itemS.BottomBottom>												 */}
 				</itemS.Bottom>
 			</itemS.BottomContainer>
 

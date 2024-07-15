@@ -45,7 +45,7 @@ function App() {
             <Route path="/" element={<Langding />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/writingapplication" element={<WritingApplication />}/>
+            <Route path="/writingapplication/:id" element={<WritingApplication />}/>
             <Route path="/studylist" element={<StudyList />} />
             <Route path="/findemail" element={<FindEmail />} />
             <Route path="/findemailsuccess" element={<FindEmailSuccess />} />

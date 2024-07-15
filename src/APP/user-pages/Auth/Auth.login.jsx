@@ -45,6 +45,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("로그인 오류:", error);
+      alert(error.response.data.result);
     }
   };
 

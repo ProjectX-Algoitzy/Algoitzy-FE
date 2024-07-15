@@ -42,10 +42,12 @@ export default function Login() {
         // navigate("/");
       } else {
         console.error("로그인 실패:", response.data);
+        alert(response.data.message || "로그인 실패"); // 실패 메시지가 없으면 기본 메시지 표시
       }
     } catch (error) {
       console.error("로그인 오류:", error);
-      alert(error.response.data.result);
+      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result || "로그인 오류 발생"; // 객체를 문자열로 변환하거나 기본 메시지 사용
+      alert(String(errorMessage)); // 문자열로 변환 보장
     }
   };
 

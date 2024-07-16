@@ -14,7 +14,7 @@ export default function MyStudyListIndividual({ studyList }){
 
 	// 스터디 제목 글자수 자르기
 	const truncateStudyName = (name) => {
-		console.log("길이",name.length);
+		// console.log("길이",name.length);
 		if (name.length > 12) {
 			return name.slice(0, 11) + '...';
 		}

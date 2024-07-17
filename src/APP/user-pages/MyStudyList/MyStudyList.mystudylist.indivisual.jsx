@@ -26,9 +26,8 @@ export default function MyStudyListIndividual({ studyList }){
 		<itemS.InnerContainer key={studyList.studyId}>
 			<itemS.TopContainer>
 				
-        <itemS.TopImg src={studyList.profileUrl} alt='프로필'>
+        <itemS.TopImg src={studyList.profileUrl} alt='프로필' />
 					
-				</itemS.TopImg>
 				
 			</itemS.TopContainer>
 

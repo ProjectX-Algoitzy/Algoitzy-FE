@@ -36,7 +36,7 @@ export default function MyStudyList() {
   //   }
   // };
 
-  const fetchStudyLists = async () => { // 최신 4기수 가져오기
+  const fetchStudyList = async () => { // 나의 스터디 가져오기
     try {
       const response = await request.get(`/study/my`);
 
@@ -53,7 +53,7 @@ export default function MyStudyList() {
   };
 
   useEffect(() => {
-    fetchStudyLists();
+    fetchStudyList();
   }, []);
 
   return (

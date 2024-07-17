@@ -15,6 +15,7 @@ import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStu
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
 import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main"
 import MyStudyList from "./APP/user-pages/MyStudyList/MyStudyList.mystudylist.main";
+import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularStudy.applyregularstudy.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -54,6 +55,7 @@ function App() {
             <Route path="/newstudy" element={<MakingSelfStudy />} />
             <Route path="/regularstudy" element={<RegularStudy />} />
             <Route path="/mystudy" element={<MyStudyList />} />
+            <Route path="/apply" element={<ApplyRegularStudy />} />
           </Routes>
           <Footer />
       </BrowserRouter>

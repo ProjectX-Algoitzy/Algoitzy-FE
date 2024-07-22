@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import * as itemS from "../RegularStudy/Styled/RegularStudy.regularstudy.curriculum.styles"
 import request from '../../Api/request'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 export default function RegularStudyCurriculum() {
+  const { id } = useParams();
   const location = useLocation();
   // const { curriculumId } = location.state;
   const [data, setData] = useState(null);
@@ -14,8 +15,7 @@ export default function RegularStudyCurriculum() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //const response = await request.get(`/study/${curriculumId}`);
-        const response = await request.get(`/study/1/curriculum`);
+        const response = await request.get(`/study/${id}/curriculum`);
         console.log("response커리큘럼", response);
         if (response["isSuccess"]) {
           setData(response.result.curriculumList);

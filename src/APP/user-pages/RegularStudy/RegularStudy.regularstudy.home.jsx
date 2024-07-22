@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import * as itemS from "../RegularStudy/Styled/RegularStudy.regularstudy.home.styles"
 import request from '../../Api/request';
+import { useParams } from 'react-router-dom';
 
 export default function RegularStudyHome() {
+  const { id } = useParams();
   const [regularStudyHome, SetRegularStudyHome] = useState(null);
   useEffect(() => {
     const fetchRegularStudyHome = async () => {
       try {
-        const response = await request.get(`study/1/home`);
+        const response = await request.get(`study/${id}/home`);
         console.log("정규스터디 홈 정보 조회", response);
         SetRegularStudyHome(response.result);
         if (response["isSuccess"]) {

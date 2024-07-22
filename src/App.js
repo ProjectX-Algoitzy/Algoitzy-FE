@@ -47,14 +47,14 @@ function App() {
             <Route path="/" element={<Langding />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/writingapplication/:id" element={<WritingApplication />}/>
+            <Route path="/writingapplication/:type/:id" element={<WritingApplication />}/>
             <Route path="/studylist" element={<StudyList />} />
             <Route path="/findemail" element={<FindEmail />} />
             <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
             <Route path="/findpassword" element={<FindPassword />} />
             <Route path="/study" element={<MakedSelfStudyList />} />
             <Route path="/newstudy" element={<MakingSelfStudy />} />
-            <Route path="/regularstudy" element={<RegularStudy />} />
+            <Route path="/regularstudy/:id" element={<RegularStudy />} />
             <Route path="/mystudy" element={<MyStudyList />} />
             <Route path="/apply" element={<ApplyRegularStudy />} />
             <Route path="/enterbootlist" element={<EnterBootList />} />

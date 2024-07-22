@@ -99,3 +99,26 @@ export const ArrowImg = styled.img`
   width: 24px;
   height: 24px;
 `;
+
+export const Btn = styled.button` /*지원하기 버튼*/
+  width: 344px;
+	height: 48px;
+  border-radius: 4px;
+	border: none;
+	cursor: pointer;
+	color: ${tokens.colors.White};
+	${tokens.typography.T5_SB_16}
+  background-color: ${tokens.colors.Blue_0_Main};
+  margin-top: 16px;
+`;
+
+export const AnnouncementBlock = styled.button` /* 지원 기간이 아닙니다 전용 박스*/
+  width: 344px;
+	height: 48px;
+  border-radius: 4px;
+	border: none;
+	color: ${tokens.colors.White};
+	${tokens.typography.T5_SB_16}
+  background-color: ${tokens.colors.B_Grey_3};
+  margin-top: 16px;
+`;

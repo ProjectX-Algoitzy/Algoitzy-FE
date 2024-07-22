@@ -1,205 +1,249 @@
 import axios from 'axios';
-import * as items from './Styled/WritingApplication.writingapplication.styles'
-import React, { useContext, useEffect, useState } from 'react'
-import request from '../../Api/request'
+import * as items from './Styled/WritingApplication.writingapplication.styles';
+import React, { useContext, useEffect, useState } from 'react';
+import request from '../../Api/request';
 import { useNavigate, useParams } from 'react-router';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
 export default function WritingApplication() {
-  const { id } = useParams(); //파라미터로 applicationId 혹은 answerId를 받아온다
-  const [detail, setDetail] = useState(null); // 받아온 지원서를 담기위해서
+  const { type, id } = useParams();
+  const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [textAnswers, setTextAnswers] = useState({}); // 주관식 응답 상태
-  const [selectedOptions, setSelectedOptions] = useState({}); // 선택된 옵션을 관리하는 상태
-  const [answerId, setAnswerId] = useState(null); // 임시저장된 답변 ID 상태
+  const [textAnswers, setTextAnswers] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
   const { confirm } = useContext(ConfirmContext);
+
+  const fetchMakedApplicationDetail = async () => {
+    try {
+      const response = await request.get(`application/${id}`);
+      console.log("get으로 날라온 response", response);
+      setDetail(response.result);
+      setLoading(false);
+      if (response.isSuccess) {
+        console.log("제작된 지원서 조회 성공");
+      } else {
+        console.error("제작된 지원서 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('제작된 지원서 조회 오류', error);
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  const fetchArbitarySavedAnswers = async () => {
+    try {
+      const response = await request.get(`answer/${id}`);
+      console.log("임시 저장된 답변 불러오기", response);
   
-  useEffect(() => {
-    const fetchMakedApplicationDetail = async () => {  // 완전 처음 지원서를 작성할 때, API호출을 담당하는 함수이다.
-      try {
-        const response = await request.get(`application/${id}`); // 본래는 id를 불러와야 함... 일단 임시로 이미 배포된 321번을 넣었음
-        // const response = await request.get(`application/4`);
-        console.log("get으로 날라온 response", response);
-        setDetail(response.result);
+      if (response.isSuccess) {
+        const { selectAnswerList, textAnswerList, title, studyName } = response.result;
+  
+        console.log("selectAnswerList: ", selectAnswerList);
+        // 임시 저장된 선택형 응답 상태를 설정
+        const loadedSelectedOptions = {};
+        selectAnswerList?.forEach(question => {
+          loadedSelectedOptions[question.sequence] = question.selectAnswerFieldList
+            ?.filter(field => field.selected)
+            .map(field => field.fieldId);
+        });
+        console.log("loadedSelectedOptions: ", loadedSelectedOptions);
+  
+        // 임시 저장된 주관식 응답 상태를 설정
+        const loadedTextAnswers = {};
+        textAnswerList?.forEach(question => {
+          loadedTextAnswers[question.sequence] = question.text;
+        });
+  
+        setSelectedOptions(loadedSelectedOptions);
+        setTextAnswers(loadedTextAnswers);
+  
+        // 지원서 제목과 스터디 이름 설정
+        setDetail({
+          title,
+          studyName,
+          selectQuestionList: selectAnswerList.map(question => ({
+            selectQuestionId: question.selectQuestionId,
+            question: question.question,
+            required: question.required,
+            multiSelect: question.multiSelect,
+            sequence: question.sequence,
+            fieldList: question.selectAnswerFieldList
+          })),
+          textQuestionList: textAnswerList.map(question => ({
+            textQuestionId: question.textQuestionId,
+            question: question.question,
+            required: question.required,
+            sequence: question.sequence,
+            text: question.text
+          }))
+        });
+  
+        console.log("textAnswers: ", loadedTextAnswers);
+        console.log("selectedOptions", loadedSelectedOptions);
         setLoading(false);
-        if (response["isSuccess"]) {
-            console.log("제작된 지원서 조회 성공");
-        } else {
-            console.error("제작된 지원서 조회 실패:", response);
+      } else {
+        console.error("임시 저장된 답변 조회 실패:", response);
+        setError(new Error("임시 저장된 답변 조회 실패"));
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('임시 저장된 답변 조회 오류', error);
+      setError(error);
+      setLoading(false);
+    }
+  };
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if(type === 'answer'){
+          await fetchArbitarySavedAnswers();
+        } else if (type === 'application') {
+          await fetchMakedApplicationDetail();
         }
       } catch (error) {
-        console.error('제작된 지원서 조회 오류', error);
+        console.error('데이터 불러오기 오류:', error);
         setError(error);
         setLoading(false);
       }
     };
 
-    const fetchArbitarySavedAnswers = async () => {
-      try {
-        const response = await request.get(`answer/${id}`);
-        console.log("임시 저장된 답변 불러오기", response);
-        // setDetail(response.result);
-        if (response["isSuccess"]) {
-          const { selectAnswerList, textAnswerList } = response.result;
-
-          // 임시 저장된 선택형 응답 상태를 설정
-          const loadedSelectedOptions = {};
-          selectAnswerList.forEach(question => {
-            loadedSelectedOptions[question.sequence] = question.selectAnswerFieldList
-              .filter(field => field.selected)
-              .map(field => field.context);
-          });
-
-          // 임시 저장된 주관식 응답 상태를 설정
-          const loadedTextAnswers = {};
-          textAnswerList.forEach(question => {
-            loadedTextAnswers[question.sequence] = question.text;
-          });
-
-          setSelectedOptions(loadedSelectedOptions);
-          setTextAnswers(loadedTextAnswers);
-          setAnswerId(response.result.answerId);
-
-          console.log("textAnswers: ", textAnswers);
-          console.log("selectedOptions", selectedOptions);
-        } else {
-          console.error("임시 저장된 답변 조회 실패:", response);
-        }
-      } catch (error) {
-        console.error('임시 저장된 답변 조회 오류', error);
-        setError(error);
-      }
-    }
-
-    fetchMakedApplicationDetail();
-    // fetchArbitarySavedAnswers();
-  }, [id]); // 이 배열만 있어야 합니다.
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+    fetchData();
+  }, [id, type]);
 
   const handleOptionClick = (selectQuestionId, fieldId, multiSelect) => {
     setSelectedOptions(prevSelected => {
-      const selectedForQuestion = prevSelected[selectQuestionId] || [];
-      
-      let updatedSelection;
-      
+      // 이전 상태를 복사하여 새로운 상태를 생성
+      const newSelectedOptions = { ...prevSelected };
+  
+      // 해당 질문에 대한 선택된 옵션 배열 가져오기
+      let selectedForQuestion = newSelectedOptions[selectQuestionId] || [];
+  
       if (multiSelect) {
+        // 다중 선택일 경우
         if (selectedForQuestion.includes(fieldId)) {
-          updatedSelection = selectedForQuestion.filter(id => id !== fieldId);
+          // 이미 선택된 상태이면 제거
+          selectedForQuestion = selectedForQuestion.filter(id => id !== fieldId);
         } else {
-          updatedSelection = [...selectedForQuestion, fieldId];
+          // 선택되지 않은 상태이면 추가
+          selectedForQuestion = [...selectedForQuestion, fieldId];
         }
       } else {
-        updatedSelection = selectedForQuestion.includes(fieldId) ? [] : [fieldId];
+        // 단일 선택일 경우, 새로운 선택으로 설정
+        selectedForQuestion = [fieldId];
       }
-      
-      return {
-        ...prevSelected,
-        [selectQuestionId]: updatedSelection,
-      };
+  
+      // 새로운 상태 업데이트
+      newSelectedOptions[selectQuestionId] = selectedForQuestion;
+      console.log("Updated selected options:", newSelectedOptions);
+      return newSelectedOptions;
     });
-  };
-
+  };  
+  
   const handleTextChange = (questionId, text) => {
     setTextAnswers(prevTextAnswers => ({
       ...prevTextAnswers,
       [questionId]: text,
     }));
   };
-
+  
   const WriteApplicationForm = async (distribution) => {
-    // textAnswers를 변환하여 createTextAnswerRequestList 생성
     const createTextAnswerRequestList = Object.keys(textAnswers).map(clientQuestionId => {
-      // 서버에서 사용하는 textQuestionId로 매핑
-      const serverTextQuestionId = allQuestions.find(question => question.sequence === parseInt(clientQuestionId)).textQuestionId;
+      const serverTextQuestionId = detail.textQuestionList.find(question => question.sequence === parseInt(clientQuestionId)).textQuestionId;
       return {
         textQuestionId: serverTextQuestionId,
         text: textAnswers[clientQuestionId]
       };
     });
-  
-    // selectedOptions를 변환하여 createSelectAnswerRequestList 생성
+
     const createSelectAnswerRequestList = Object.keys(selectedOptions).map(clientQuestionId => {
-      // 서버에서 사용하는 selectQuestionId로 매핑
-      const serverSelectQuestionId = allQuestions.find(question => question.sequence === parseInt(clientQuestionId)).selectQuestionId;
+      console.log(`Finding question with sequence: ${Number(clientQuestionId)}`); // 로그 추가
+      const question = detail.selectQuestionList.find(question => question.sequence === parseInt(clientQuestionId));
+      if (!question) {
+        console.error(`Question with sequence ${clientQuestionId} not found in selectQuestionList.`);
+        return null;
+      }
+      const serverSelectQuestionId = question.selectQuestionId;
       return {
         selectQuestionId: serverSelectQuestionId,
         fieldIdList: selectedOptions[clientQuestionId]
       };
-    });
-  
-    // requestData 생성
+    }).filter(item => item !== null); // 필터링하여 null 항목 제거
+
     const requestData = {
       confirmYN: distribution,
       createTextAnswerRequestList,
       createSelectAnswerRequestList
     };
-  
+
     console.log("requestData", requestData);
-  
+
     try {
-      // id를 사용하는 경우
-      const response = await request.post(`/answer/${id}`, requestData);
+      // const response = await request.post(`/answer/${id}`, requestData);
+      const response = await request.post(`/answer/4`, requestData);
       console.log("post로 날릴 response", response);
-      // 임시로 고정된 id를 사용하는 경우
-      // const response = await request.post(`/answer/321`, requestData);
-      
-      if (response["isSuccess"]) {
-        console.log("지원서 " + (distribution ? "저장" : "임시저장") + " 성공"); // 저장 또는 임시저장 메시지 출력
+
+      if (response.isSuccess) {
+        console.log("지원서 " + (distribution ? "저장" : "임시저장") + " 성공");
         navigate("/regularstudy");
       } else {
-        console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 실패:", response); // 저장 또는 임시저장 실패 메시지 출력
+        console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 실패:", response);
         alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
       }
     } catch (error) {
-      console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 오류", error); // 저장 또는 임시저장 오류 메시지 출력
+      console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 오류", error);
       alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
     }
   };
 
-  const handleSaveBtnClick = async () => { // 저장하기 버튼 클릭 시 사용하는 함수
+  const handleSaveBtnClick = async () => {
     const confirmation = await confirm("지원서를 저장하시겠습니까?"); 
-    if(confirmation){
+    if (confirmation) {
       await WriteApplicationForm(true);
     }
-  }
-  
-  const handleTempSaveBtnClick = async () => { // 임시저장 버튼 클릭 시
+  };
+
+  const handleTempSaveBtnClick = async () => {
     const message = await alert('지원서 임시저장이 완료되었습니다.');
-    if(message) {
+    if (message) {
       await WriteApplicationForm(false);
     }
-  }
-  
+  };
 
-  const allQuestions = [...detail.selectQuestionList, ...detail.textQuestionList]; // selectQuestionList와 textQuestionList를 합침
-  allQuestions.sort((a, b) => a.sequence - b.sequence); // sequence로 재정렬
-    return (
-      <items.Container>
-        <items.InnerContainer>
-          <items.ContentContainer>
-            <items.ApplicationName>{detail.title}</items.ApplicationName>
-            <items.StudySelectContainer>{detail.studyName}</items.StudySelectContainer>
-          </items.ContentContainer>
-        </items.InnerContainer>
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!detail) return null;
 
-        {allQuestions.map(question => (
+  const allQuestions = [...detail.selectQuestionList, ...detail.textQuestionList];
+  allQuestions.sort((a, b) => a.sequence - b.sequence);
+
+  return (
+    <items.Container>
+      <items.InnerContainer>
+        <items.ContentContainer>
+          <items.ApplicationName>{detail.title}</items.ApplicationName>
+          <items.StudySelectContainer>{detail.studyName}</items.StudySelectContainer>
+        </items.ContentContainer>
+      </items.InnerContainer>
+
+      {allQuestions.map(question => (
         <items.SecondInnerContainer key={question.sequence}>
           <items.ContentContainer>
             <items.QuestionAndMultiSelectCheckContainer>
               <items.QuestionContainer>
                 {question.question}
-                {question.required === true ? (
+                {question.required ? (
                   <items.NecessaryImg src='/img/necessarystar.png' alt='필수' />
                 ) : null}
               </items.QuestionContainer>
-              {question.multiSelect === true ? (
+              {question.multiSelect ? (
                 <items.MultiselectImg src='/img/textmultiselect.png' alt='복수응답' />
               ) : null}
             </items.QuestionAndMultiSelectCheckContainer>
@@ -213,16 +257,16 @@ export default function WritingApplication() {
                       onClick={() => handleOptionClick(question.sequence, field.fieldId, question.multiSelect)}
                     >
                       {selectedOptions[question.sequence] && selectedOptions[question.sequence].includes(field.fieldId) ? (
-                        question.multiSelect === true ? (
-                          <img src="/img/checkedsquare.png" alt="복수응답" style={{width:"20px", height:"20px"}} />
+                        question.multiSelect ? (
+                          <img src="/img/checkedsquare.png" alt="복수응답" style={{ width: "20px", height: "20px" }} />
                         ) : (
-                          <img src="/img/checkedcircleicon.png" alt="단일응답" style={{width:"20px", height:"20px"}} />
+                          <img src="/img/checkedcircleicon.png" alt="단일응답" style={{ width: "20px", height: "20px" }} />
                         )
                       ) : (
-                        question.multiSelect === true ? (
-                          <img src="/img/iconsquare.png" alt="복수응답" style={{width:"20px", height:"20px"}} />
+                        question.multiSelect ? (
+                          <img src="/img/iconsquare.png" alt="복수응답" style={{ width: "20px", height: "20px" }} />
                         ) : (
-                          <img src="/img/iconcircle.png" alt="단일응답" style={{width:"20px", height:"20px"}} />
+                          <img src="/img/iconcircle.png" alt="단일응답" style={{ width: "20px", height: "20px" }} />
                         )
                       )}
                       <items.ChoiceForSelectQuestionContainer>{field.context}</items.ChoiceForSelectQuestionContainer>
@@ -241,12 +285,13 @@ export default function WritingApplication() {
           </items.ContentContainer>
         </items.SecondInnerContainer>
       ))}
+
       <items.BtnContainer>
-          <items.BtnContainer2>
-              <items.ArbitaryBtn onClick={handleTempSaveBtnClick}>임시저장</items.ArbitaryBtn>
-              <items.Btn onClick={handleSaveBtnClick}>저장하기</items.Btn>
-          </items.BtnContainer2>
+        <items.BtnContainer2>
+          <items.ArbitaryBtn onClick={handleTempSaveBtnClick}>임시저장</items.ArbitaryBtn>
+          <items.Btn onClick={handleSaveBtnClick}>저장하기</items.Btn>
+        </items.BtnContainer2>
       </items.BtnContainer>
-      </items.Container>
-  )
+    </items.Container>
+  );
 }

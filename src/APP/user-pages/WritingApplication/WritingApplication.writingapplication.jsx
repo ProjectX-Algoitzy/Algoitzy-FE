@@ -192,7 +192,8 @@ export default function WritingApplication() {
 
       if (response.isSuccess) {
         console.log("지원서 " + (distribution ? "저장" : "임시저장") + " 성공");
-        navigate("/regularstudy");
+        // navigate(`/regularstudy/${id}`);
+        navigate(`/apply`);
       } else {
         console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 실패:", response);
         alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");

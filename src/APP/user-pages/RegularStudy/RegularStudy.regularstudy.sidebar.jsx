@@ -12,7 +12,7 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
     const fetchRegularStudyInfo = async () => {
       try {
         const response = await request.get(`study/${id}/info`);
-        console.log("정규 스터디 조회 정보: ", response);
+        console.log("정규 스터디 사이드 바 조회 정보: ", response);
         setRegularStudyInfo(response.result);
         if (response["isSuccess"]) {
           console.log("정규 스터디 조회 성공");
@@ -85,7 +85,7 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
               >
                 출석부 <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
               </itemS.ThirdstyledLink>
-              {regularStudyInfo.applicationId === 0 ? (
+              {regularStudyInfo.applicationId === null ? (
                 <itemS.AnnouncementBlock>지원 기간이 아닙니다.</itemS.AnnouncementBlock>
               ) : (
                 <itemS.Btn onClick={handleApplicationClick}>지원하기</itemS.Btn>

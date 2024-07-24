@@ -76,7 +76,7 @@ export default function Header() {
       
       {activeMenu === 'study' && (
         <itemS.SubStudyMenu>
-          <itemS.StyledLink to={isLoggedIn ? "/regularstudy" : "/login"} onClick={handleNav}>
+          <itemS.StyledLink to={isLoggedIn ? "/apply" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
           <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>

@@ -7,7 +7,7 @@ export const TupleContainer = styled.div`
   display: flex;
   // position: relative;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 1200px;
   // height: 55px;
@@ -30,26 +30,17 @@ export const TupleNumber = styled.div`
   height: 56px;
 `;
 
-export const TupleName = styled.div`
+export const TupleTitle = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 1056px;
+  width: 200px;
   height: 56px;
+  margin-left: 161px;
 `;
 
-export const TupleView = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.Black};
-  width: 72px;
-  height: 56px;
-`;
 
 

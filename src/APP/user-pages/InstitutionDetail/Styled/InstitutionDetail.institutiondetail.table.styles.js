@@ -15,7 +15,7 @@ export const Table = styled.div`
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: rgba(0, 165, 255, 0.05);
   width: 1200px;
@@ -35,26 +35,16 @@ export const CategoryNumber = styled.div`
   width: 72px;
 `;
 
-export const CategoryName = styled.div`
+export const CategoryTitle = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 1056px;
-`;
-
-export const CategoryView = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.Black};
-  text-align: center;
-  width: 72px;
+  width: 200px;
+  margin-left: 161px;
 `;
 
 // 카테고리 파트 끝
@@ -63,13 +53,14 @@ export const CategoryView = styled.div`
 export const TupleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 611px;
-  overflow: auto;
+  height: 235px;
+  margin-top: 20px;
+  // overflow: auto;
 
-  &::-webkit-scrollbar {
-    width: 0px; /* Chrome, Safari, Opera용 */
-  }
-  scrollbar-width: none; /* Firefox용 */
+  // &::-webkit-scrollbar {
+  //   width: 0px; /* Chrome, Safari, Opera용 */
+  // }
+  // scrollbar-width: none; /* Firefox용 */
 `;
 
 

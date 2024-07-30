@@ -9,7 +9,7 @@ export default function MyStudyListIndividual({ studyList }){
 
 	
 	const moveToDetail = (id) => { // 보기 추가 함수
-		navigate(`/study/${id}`);
+		navigate(`/regularstudy/${id}`);  // 정규스터디에 맞게 이동하도록 수정
 	}
 
 	// 스터디 제목 글자수 자르기

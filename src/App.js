@@ -16,6 +16,7 @@ import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.ma
 import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main"
 import MyStudyList from "./APP/user-pages/MyStudyList/MyStudyList.mystudylist.main";
 import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularStudy.applyregularstudy.main";
+import CurriculumCheck from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.curriculumcheck";
 import EnterBootList from "./APP/user-pages/EnterpriseBootcampList/EnterpriseBootcampList.enterprisebootcamplist.main";
 import InstitutionDetailMain from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
@@ -56,6 +57,7 @@ function App() {
             <Route path="/study" element={<MakedSelfStudyList />} />
             <Route path="/newstudy" element={<MakingSelfStudy />} />
             <Route path="/regularstudy/:id" element={<RegularStudy />} />
+            <Route path="/curriculumcheck/:curriculumId" element={<CurriculumCheck />} />
             <Route path="/mystudy" element={<MyStudyList />} />
             <Route path="/apply" element={<ApplyRegularStudy />} />
             <Route path="/enterbootlist" element={<EnterBootList />} />

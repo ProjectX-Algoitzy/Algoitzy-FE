@@ -3,21 +3,27 @@ import * as tokens from "../../../../tokens";
 
 export const ModalOverlay = styled.div`
   position: fixed;
-  top: 5;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 export const ModalContent = styled.div`
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  /* padding: 20px; */
+  border-radius: 8px;
   width: 987px;
-  height: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  height: 956px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* 추가된 부분 */
 `;
 
 export const FirstSentence = styled.div`
@@ -31,14 +37,8 @@ export const BigTitle = styled.div`
   ${tokens.typography.T3_B_24};
   color: ${tokens.colors.Grey_8};
   margin-left: 52px;
-`;
-
-export const CloseButton = styled.div`
-  color: #A6B0BE;
-  width: 32px;
-  height: 32px;
-  margin-top: 10px;
-  cursor: pointer;
+  margin-top: 13.96px;
+  margin-bottom: 18.62px;
 `;
 
 export const ContentContainer = styled.div`
@@ -59,14 +59,32 @@ export const SmallTitle = styled.div`
   color: ${tokens.colors.Grey_8};
 `;
 
-export const StyledInput = styled.input`
+export const StyledInputContainer = styled.div`
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
   border-radius: 4px;
   border: none;
   border: 1px solid ${tokens.colors.Grey_4};
   width: 753px;
-  height: 56px;
-  color: ${tokens.colors.Grey_7};
+  height: 56px; 
+  background-color: ${tokens.colors.Grey_1};
+`;
+
+export const LinkImg = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
+`;
+
+export const StyledInput = styled.input`
+  border: none;
+  border-left: 3px solid ${tokens.colors.B_Grey_5};
+  width: 681px;
+  height: 21px;
+  color: ${tokens.colors.B_Grey_7};
+  background-color: ${tokens.colors.Grey_1};
   ${tokens.typography.B3_M_14};
   padding-left: 16px;
 

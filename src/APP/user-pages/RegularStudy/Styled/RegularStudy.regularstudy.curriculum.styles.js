@@ -1,58 +1,114 @@
 import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
+export const CanNotEnterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 793px;
+  height: 360px;
+  background-color: ${tokens.colors.B_Grey_1};
+  border-radius: 10px;
+  color: ${tokens.colors.B_Grey_5};
+  ${tokens.typography.T3_B_24};
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 32px;
   height: 100%;
-  margin-top: 100px;
-`;
-
-export const LittleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 793px;
-  margin-bottom: 100px;
-`;
-
-export const TriangleImg = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-top: 9px;
-  margin-right: 9px;
-  cursor: pointer;
 `;
 
 export const Title = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: row;
+  width: 793px;
+  justify-content: space-between;
+  margin-top: 100px;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid ${tokens.colors.B_Grey_2};
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
-  padding-bottom: 16px;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_2};
 `;
 
-export const BlueContainer = styled.div`
+export const BtnMakeCurri = styled.button`
+  width: 190px;
+  height: 47px;
+  background: #00A5FF; 
+  color: white;
+  border-radius: 5px; 
+  border: none; 
+  cursor: pointer; 
+`;
+
+export const CurriculumContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  width: 793px;;
+  height: 100px;
+  background-color: ${tokens.colors.White};
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+`;
+
+export const CurriculumText = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 48px;
-  margin-top: 40px;
-  background-color: ${tokens.colors.B_Grey_1};
+  ${tokens.typography.T3_B_24};
   color: ${tokens.colors.Grey_8};
-  ${tokens.typography.T4_SB_20};
-  padding-left: 16px;
-`; 
+  margin-left: 40px;
+  cursor: pointer;
+`;
 
-export const ContentsContainer = styled.div`
-  margin-top: 20px;
-  margin-bottom: 43px;
-  border-radius: 4px;
-  border: 1px solid ${tokens.colors.B_Grey_2};
+export const MiddleCurriculumContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const SmallCurriculumContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const Gray5Text = styled.div`
+  display: flex;
+  align-items: center;
+  ${tokens.typography.Sub_M_12};
+  color: ${tokens.colors.Grey_5};
+  margin-top: 3px;
+  margin-left: 8px;
+`;
+
+export const Gray6Text = styled.div`
+  ${tokens.typography.Sub_M_12};
+  color: ${tokens.colors.Grey_6};
+  margin-bottom: 10px;
+`;
+
+export const Gray7Text = styled.div`
+  display: flex;
+  font-family: Pretendard;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
   color: ${tokens.colors.Grey_7};
-  width: 809px;
-  height: 224px;
-  overflow: auto;
-  resize: vertical; /* 사용자가 수직 방향으로 크기 조절 가능하도록 설정 */
+`;
+
+export const CurriculumDate = styled.div`
+  ${tokens.typography.B3_M_14};
+  color: #A2A2A2;
+`;
+
+export const DeleteIcon = styled.div`
+  background-image: url('/img/GrayX.png');
+  width: 14px;
+  height: 14px;
+  margin-top: 38px;
+  margin-right: 38px;
+  margin-left: 120px;
+  cursor: pointer;
 `;

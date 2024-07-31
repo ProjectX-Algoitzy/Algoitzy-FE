@@ -37,19 +37,19 @@ const transformData = (attendanceList) => {
     }
 
     if (problemYN){
-      students[name]['문제 인증'][week] = <itemS.ImgIcon src='/img/attendanceIcon.png' alt="출석" />;
+      students[name]['문제 인증'][week] = <itemS.ImgIcon src='/img/attendanceicon.png' alt="출석" />;
     }  else {
       students[name]['문제 인증'][week] = <itemS.ImgIcon src='/img/noattendanceicon.png' alt="결석" />;
     }
     if (blogYN) {
-      students[name]['블로그 포스팅'][week] = <itemS.ImgIcon src='/img/attendanceIcon.png' alt="출석" />;
+      students[name]['블로그 포스팅'][week] = <itemS.ImgIcon src='/img/attendanceicon.png' alt="출석" />;
     } else {
-      students[name]['블로그 포스팅'][week] = <itemS.ImgIcon src='/img/noattendanceicon.png' alt="출석" />;
+      students[name]['블로그 포스팅'][week] = <itemS.ImgIcon src='/img/noattendanceicon.png' alt="결석" />;
     }
     if (workbookYN) {
-      students[name]['주말 모의테스트'][week] = <itemS.ImgIcon src='/img/attendanceIcon.png' alt="출석" />;
+      students[name]['주말 모의테스트'][week] = <itemS.ImgIcon src='/img/attendanceicon.png' alt="출석" />;
     } else {
-      students[name]['주말 모의테스트'][week] = <itemS.ImgIcon src='/img/noattendanceicon.png' alt="출석" />;
+      students[name]['주말 모의테스트'][week] = <itemS.ImgIcon src='/img/noattendanceicon.png' alt="결석" />;
     }
   });
 
@@ -105,7 +105,9 @@ export default function RegularStudyAttendance() {
   const { id } = useParams(); //해당 스터디의 ID를 받아온다
   const [currentTab, setCurrentTab] = useState('문제 인증');
   const [data, setData] = useState({}); // 초기 데이터 상태를 빈 객체로 설정
+  const [week, setWeek] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showCertificationBtn, setShowCertificationBtn] = useState(false);
 
   useEffect(() => {
     const fetchAttendance = async () => {
@@ -122,7 +124,22 @@ export default function RegularStudyAttendance() {
         console.error("정규스터디 출석부 조회 오류", error);
       }
     };
+    const fetchWeek = async () => {
+      try {
+        const response = await request.get('/week');
+        console.log("현재 주차 정보 조회 성공: ", response);
+        if(response["isSuccess"]){
+          setShowCertificationBtn(true);
+          setWeek(response.result.week);
+        } else {
+          setShowCertificationBtn(false);
+        }
+      } catch (error) {
+        console.error("현재 주차 정보 조회 실패: ", error);
+      }
+    }
     fetchAttendance();
+    fetchWeek();
   }, [id]);
 
   const handleArrowClick = (direction) => {
@@ -149,9 +166,9 @@ export default function RegularStudyAttendance() {
         <p>로딩 중...</p>
       )}
       <itemS.BtnContainer>
-        <itemS.CertificationBtn onClick={openModal}>출석 인증하기</itemS.CertificationBtn>
+        {showCertificationBtn && <itemS.CertificationBtn onClick={openModal}>출석 인증하기</itemS.CertificationBtn>}
       </itemS.BtnContainer>
-      {showModal && <AttendanceModal onClose={closeModal} />}
+      {showModal && <AttendanceModal week={week} onClose={closeModal} />}
     </itemS.Container>
   )
 }

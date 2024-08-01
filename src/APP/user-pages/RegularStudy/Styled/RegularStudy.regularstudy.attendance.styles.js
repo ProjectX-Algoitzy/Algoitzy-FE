@@ -19,6 +19,18 @@ export const Title = styled.div`
   border-bottom: 1px solid ${tokens.colors.B_Grey_2};
 `;
 
+export const CanNotEnterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 793px;
+  height: 360px;
+  background-color: ${tokens.colors.B_Grey_1};
+  border-radius: 10px;
+  color: ${tokens.colors.B_Grey_5};
+  ${tokens.typography.T3_B_24};
+`;
+
 export const StyledTable = styled.table`
   width: 793px;
   height: 277px;

@@ -122,6 +122,7 @@ export default function RegularStudyAttendance() {
         }
       } catch (error) {
         console.error("정규스터디 출석부 조회 오류", error);
+        setShowCertificationBtn(false);
       }
     };
     const fetchWeek = async () => {
@@ -163,7 +164,7 @@ export default function RegularStudyAttendance() {
       {Object.keys(data).length > 0 ? (
         <Table currentTab={currentTab} onArrowClick={handleArrowClick} data={data} />
       ) : (
-        <p>로딩 중...</p>
+        <itemS.CanNotEnterContainer>Todo</itemS.CanNotEnterContainer>
       )}
       <itemS.BtnContainer>
         {showCertificationBtn && <itemS.CertificationBtn onClick={openModal}>출석 인증하기</itemS.CertificationBtn>}

@@ -6,13 +6,14 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 32px;
   height: 100%;
+  width: 793px;
 `;
 
 export const Title = styled.div`
   display: flex;
   margin-top: 100px;
   margin-bottom: 36px;
-  width: 793px;
+  width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
   padding-bottom: 16px;

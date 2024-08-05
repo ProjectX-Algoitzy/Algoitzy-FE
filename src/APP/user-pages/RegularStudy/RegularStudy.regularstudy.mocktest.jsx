@@ -93,6 +93,7 @@ export default function RegularStudyMocktest() {
             <itemS.Table>
               <itemS.TableHead>백준번호</itemS.TableHead>
               <itemS.TableHead>제목</itemS.TableHead>
+              <itemS.TableHead></itemS.TableHead>
               <itemS.TableHead>레벨</itemS.TableHead>
 
               {weekData[week].map((row, index) => (
@@ -101,6 +102,7 @@ export default function RegularStudyMocktest() {
                   <itemS.TableCell>
                     <a href={row.baekjoonUrl} target="_blank" rel="noopener noreferrer">{row.title}</a>
                   </itemS.TableCell>
+                  <itemS.TableCell></itemS.TableCell>
                   <itemS.TableCell>
                     <img src={row.levelImg} alt="level" style={{ width: "19.5px", height: "25px", marginLeft: "5px" }} />
                   </itemS.TableCell>

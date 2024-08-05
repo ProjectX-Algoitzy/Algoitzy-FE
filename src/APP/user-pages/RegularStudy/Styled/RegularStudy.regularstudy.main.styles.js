@@ -2,13 +2,17 @@ import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   margin-left: 360px;
-  /* justify-content: center; */
+  justify-content: center; 
   margin-top: 80px;
-  height: 100vh; // 부모 컨테이너의 height를 설정하여 자식 컨테이너가 이 height를 따르도록 합니다.
-  position: relative;
+  height: 100vh; 
+  position: relative; */
+
+  display: flex;
+  margin-left: 360px;
+  margin-top: 80px;
 `;
 
 export const Content = styled.div`

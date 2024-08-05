@@ -38,7 +38,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
 })`
   .react-select__control {
     display: flex;
-    text-align: center;
+    /* text-align: center; */
     width: 142px;
     height: 36px;
     color: ${tokens.colors.Grey_8};
@@ -101,6 +101,11 @@ export const WeeksSelectContainer = styled(Select).attrs({
   .react-select__option:active {
     background-color: transparent;
   }
+  .react-select__single-value {
+    width: 100%;
+    text-align: center;
+    padding-left: 27px;
+  }
 `;
 
 // 테이블 스타일 시작
@@ -113,6 +118,7 @@ export const Table = styled.table`
   /* height: 447px; */
   border-collapse: collapse;
   background-color: #fff;
+  table-layout: fixed; /* 열 너비 고정 */
 `;
 
 export const TableHead = styled.th`
@@ -121,22 +127,48 @@ export const TableHead = styled.th`
   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
   padding-top: 17px;
   padding-bottom: 17px;
-  padding-left: 22px;
-  padding-right: 22px;
   text-align: left;
   ${tokens.typography.T5_SB_16};
   position: relative;
+
+  /* 첫 번째 열: 백준 번호 */
+  &:nth-child(1) {
+    padding-left: 22px;
+  }
+
+  /* 두 번째 열: 제목 */
+  &:nth-child(2) {
+    padding-left: 50px;
+  }
+
+  /* 세 번째 열은 공백, 네 번째 열은 레벨 */
+  &:nth-child(4) {
+    padding-left: 60px;
+  }
 `;
 
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
-  padding-top: 17px;
+  text-align: left;
+  padding-top: 17px; 
   padding-bottom: 17px;
-  padding-left: 22px;
-  padding-right: 22px;
   border-bottom: 1px solid ${tokens.colors.B_Grey_3};
-  vertical-align: middle;
   ${tokens.typography.B2_M_16};
+
+  /* 첫 번째 열: 백준 번호 */
+  &:nth-child(1) {
+    padding-left: 22px;
+  }
+
+  /* 두 번째 열: 제목 */
+  &:nth-child(2) {
+    padding-left: 50px;
+  }
+
+  /* 세 번째 열: 레벨 */
+  &:nth-child(4) {
+    padding-left: 60px;
+  }
 `;
 // 테이블 스타일 끝

@@ -33,7 +33,7 @@ export const CanNotEnterContainer = styled.div`
 
 export const StyledTable = styled.table`
   width: 793px;
-  height: 277px;
+  /* height: 277px; */
   border-collapse: collapse;
 `;
 
@@ -52,8 +52,10 @@ export const StyledTd = styled.td`
   border-top: ${({ rowIndex }) => (rowIndex === 0 ? 'none' : '1px solid #B9C4D2')};
   border-left: ${({ colIndex }) => (colIndex === 0 ? 'none' : '1px solid #B9C4D2')};
   border-right: ${({ colIndex }) => (colIndex === 8 ? 'none' : '1px solid #B9C4D2')};
-  height: ${({ rowIndex }) => (rowIndex === 0 ? '45px' : '55px')};
-  width: ${({ colIndex }) => (colIndex === 0 ? '176px' : '55px')};
+  /* height: ${({ rowIndex }) => (rowIndex === 0 ? '45px' : '55px')};
+  width: ${({ colIndex }) => (colIndex === 0 ? '176px' : '55px')}; */
+  width: ${({ colIndex }) => (colIndex === 0 ? '176px' : 'auto')};
+  height: ${({ rowIndex }) => (rowIndex === 0 ? '45px' : '60px')};
 `;
 
 export const ImgIcon = styled.img`

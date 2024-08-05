@@ -6,13 +6,13 @@ export const Container = styled.div`
   flex-direction: column;
   padding-right: 32px;
   border-right: 1px solid ${tokens.colors.Grey_4};
-  height: 100%;
 `;
 
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 100px;
+  margin-bottom: 100px;
 `;
 
 export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 감싸주는 컨테이너*/

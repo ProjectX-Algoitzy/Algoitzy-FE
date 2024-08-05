@@ -1,43 +1,74 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import request from '../../Api/request';
 import * as itemS from "./Styled/InstitutionDetail.institutiondetail.main.styles";
 import InstitutionDetailTable from './InstitutionDetail.institutiondetail.table';
 import InstitutionDetailExplanation from './InstitutionDetail.institutiondetail.explanation';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
-import { dummydata } from './dummy';
 
-export default function InstitutionDetailMain() {
-  const { confirm } = useContext(ConfirmContext);
-  
-  const [itemList, setItemList] = useState([]); // 스터디원
 
-  useEffect(() => {
-    setItemList(dummydata);
-  }, []);
+export default function InstitutionDetail() {
+  const { institutionId } = useParams();
+  const [name, setName] = useState(''); 
+  const [content, setContent] = useState(''); 
   
-  const handleDeleteClick = async () => {
-    const confirmed = await confirm('추천 문제집과 함께 삭제되며, 삭제된 정보는 복구할 수 없습니다.\n정말로 삭제하시겠습니까?');
-    if (confirmed) {
-      console.log('확인');
-      //TODO - 삭제 api 넣을 곳
+  const [itemList, setItemList] = useState([]); // 문제집
+
+  const fetchWorkbookExplain = async () => {
+    try {
+      const response = await request.get(`/institution/${institutionId}`);
+
+      if (response.isSuccess) {
+        console.log("추천 문제집 분석 조회 성공", response);
+        setName(response.result.name);
+        setContent(response.result.content);
+      } else {
+        console.error("추천 문제집 분석 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('추천 문제집 분석 조회 오류', error);
     }
   };
 
+  const fetchWorkbook = async () => {
+    try {
+      const response = await request.get(`/institution/${institutionId}/workbook`);
+
+      if (response.isSuccess) {
+        console.log("추천 문제집 목록 조회 성공", response);
+        setItemList(response.result.workbookList);
+      } else {
+        console.error("추천 문제집 목록 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('추천 문제집 목록 조회 오류', error);
+    }
+  };
+  useEffect(() => {
+    fetchWorkbookExplain();
+    fetchWorkbook();
+  }, [institutionId]);
+  
   return (
     <itemS.OuterContainer>
       <itemS.Container>
         <itemS.InnerContainer>
           <itemS.TitleBox>
-            <itemS.Title>삼성전자</itemS.Title>
+            <itemS.Title>{name}</itemS.Title>
           </itemS.TitleBox>
           <itemS.PartBox>
             <itemS.Part>코딩테스트 분석</itemS.Part>
           </itemS.PartBox>
-          <InstitutionDetailExplanation />
+          <InstitutionDetailExplanation
+            content={content}
+          />
           <itemS.PartBox>
             <itemS.Part>추천 문제집</itemS.Part>
           </itemS.PartBox>
-          <InstitutionDetailTable itemList={itemList} />
+          <InstitutionDetailTable 
+            itemList={itemList} 
+            fetchWorkbook={fetchWorkbook}
+          />
         </itemS.InnerContainer>
       </itemS.Container>
     </itemS.OuterContainer>

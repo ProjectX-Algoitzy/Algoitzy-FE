@@ -45,6 +45,7 @@ export const DeleteButton = styled.button`
   width: 160px;
   height: 48px;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 
@@ -57,6 +58,7 @@ export const PartBox = styled.div`
   margin-bottom: 16px;
 `;
 
+// 첫번째 파트 
 export const Part = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -64,7 +66,7 @@ export const Part = styled.div`
   ${tokens.typography.T4_SB_20};
   color: ${tokens.colors.Blue_0_Main};
   background-color: rgba(0, 165, 255, 0.1);
-  width: 1180px;
+  width: 1178px;
   height: 40px;
   border: none;
   border-radius: 4px;

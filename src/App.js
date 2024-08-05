@@ -18,7 +18,7 @@ import MyStudyList from "./APP/user-pages/MyStudyList/MyStudyList.mystudylist.ma
 import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularStudy.applyregularstudy.main";
 import CurriculumCheck from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.curriculumcheck";
 import EnterBootList from "./APP/user-pages/EnterpriseBootcampList/EnterpriseBootcampList.enterprisebootcamplist.main";
-import InstitutionDetailMain from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
+import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -34,11 +34,11 @@ const Root = styled.div`
 `;
 
 function App() {
-  // useInterval(() => {
-  //   if (localStorage.getItem(ACCESS_TOKEN)) {
-  //     refreshToken();
-  //   }
-  // }, 30000);
+  useInterval(() => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      refreshToken();
+    }
+  }, 30000);
 
   return (
     <Root>
@@ -61,7 +61,7 @@ function App() {
             <Route path="/mystudy" element={<MyStudyList />} />
             <Route path="/apply" element={<ApplyRegularStudy />} />
             <Route path="/enterbootlist" element={<EnterBootList />} />
-            <Route path="/institutiondetail" element={<InstitutionDetailMain />} /> {/* 기업/부트캠프 상세조회 */}
+            <Route path="/institutiondetail/:institutionId" element={<InstitutionDetail />} /> {/* 기업/부트캠프 상세조회 */}
           </Routes>
           <Footer />
       </BrowserRouter>

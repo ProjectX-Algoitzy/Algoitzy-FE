@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import request from '../../Api/request';
 import * as itemS from "../../user-pages/EnterpriseBootcampList/Styled/EnterpriseBootcampList.enterprisebootcamplist.main.styles";
 import EnterBootListTable from './EnterpriseBootcampList.enterprisebootcamplist.table';
-import { dummyCompanyList, dummyBootList } from './dummy';
 
 export default function EnterBootList() {
   const [institutionList, setInstitutionList] = useState([]);
@@ -21,6 +20,7 @@ export default function EnterBootList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10); //TODO - 임시 ) 전체 페이지 수 -> response 값으로 전체 개수 받아와야함
   const maxPageNumbers = 5; // 페이지 수
+  const itemsPerPage = 10; // 페이지당 항목 수
 
   const tabs = ['기업', '부트캠프'];
 
@@ -30,6 +30,7 @@ export default function EnterBootList() {
 			if (response.isSuccess) {
 				console.log("기관 목록 조회 성공",response);
 				setInstitutionList(response.result.institutionList);
+        setTotalPages(Math.ceil(response.result.totalCount / itemsPerPage));
 			} else {
 				console.error("기관 목록 조회 실패:", response);
 			}

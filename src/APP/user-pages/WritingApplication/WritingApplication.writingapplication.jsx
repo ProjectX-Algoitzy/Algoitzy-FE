@@ -186,8 +186,8 @@ export default function WritingApplication() {
     console.log("requestData", requestData);
 
     try {
-      // const response = await request.post(`/answer/${id}`, requestData);
-      const response = await request.post(`/answer/4`, requestData);
+      const response = await request.post(`/answer/${id}`, requestData);
+      // const response = await request.post(`/answer/4`, requestData);
       console.log("post로 날릴 response", response);
 
       if (response.isSuccess) {

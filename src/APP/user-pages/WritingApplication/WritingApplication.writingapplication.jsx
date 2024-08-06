@@ -13,6 +13,7 @@ export default function WritingApplication() {
   const [error, setError] = useState(null);
   const [textAnswers, setTextAnswers] = useState({});
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [appId, setAppId] = useState(null);
 
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
@@ -23,6 +24,7 @@ export default function WritingApplication() {
       const response = await request.get(`application/${id}`);
       console.log("get으로 날라온 response", response);
       setDetail(response.result);
+      setAppId(id);
       setLoading(false);
       if (response.isSuccess) {
         console.log("제작된 지원서 조회 성공");
@@ -44,6 +46,7 @@ export default function WritingApplication() {
       if (response.isSuccess) {
         const { selectAnswerList, textAnswerList, title, studyName } = response.result;
   
+        setAppId(response.result.applicationId);
         console.log("selectAnswerList: ", selectAnswerList);
         // 임시 저장된 선택형 응답 상태를 설정
         const loadedSelectedOptions = {};
@@ -186,7 +189,7 @@ export default function WritingApplication() {
     console.log("requestData", requestData);
 
     try {
-      const response = await request.post(`/answer/${id}`, requestData);
+      const response = await request.post(`/answer/${appId}`, requestData);
       // const response = await request.post(`/answer/4`, requestData);
       console.log("post로 날릴 response", response);
 

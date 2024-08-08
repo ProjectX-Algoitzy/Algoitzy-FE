@@ -2,10 +2,8 @@ import React, { useState, useEffect, useContext, useRef  } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/SignUp.signup.styles"
-// import request from '../../Api/request';
 import Timer from './SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
-
 
 const gradeOptions = [
   {value: 4, label:"4"},
@@ -18,10 +16,12 @@ const gradePlaceholderText = '선택';
 
 const majorOptions = [
   {value: "소프트웨어학과", label:"소프트웨어학과"},
-  {value: "기계공학과", label:"기계공학과"},
+  {value: "기계항공학과", label:"기계항공학과"},
   {value: "신소재공학과", label:"신소재공학과"},
   {value: "스마트드론공학과", label:"스마트드론공학과"},
   {value: "항공물류학과", label:"항공물류학과"},
+  {value: "AI자율주행시스템공학과", label:"AI자율주행시스템공학과"},
+  {value: "항공운항학과", label:"항공운항학과"},
   {value: "항공경영학과", label:"항공경영학과"}
 ]
 
@@ -35,9 +35,13 @@ export default function Signup() {
   // 프로필 이미지 
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
-  const [profileUrl, setProfileUrl] = useState(null);
+  const [profileUrl, setProfileUrl] = useState('img/baseprofile.svg');
+  const [previousProfileUrl, setPreviousProfileUrl] = useState(null);
 
   const [timerStarted, setTimerStarted] = useState(false);
+  const [timerKey, setTimerKey] = useState(0); // 타이머 리렌더링 키
+
+  const [count, setCount] = useState(0); // 인증번호 발송 count
 
   const [name, setName] = useState('');
   const [grade, setGrade] = useState(gradeOptions[0]);
@@ -83,7 +87,7 @@ export default function Signup() {
 
 
   // 비밀번호 유효성 검사
-  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{1,15}$/;
+  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,15}$/;
 
   // 핸드폰 번호 유효성 검사 
   const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;
@@ -132,24 +136,16 @@ export default function Signup() {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
-      console.log('Selected file:', selectedFile.name);
+  
+      if (previousProfileUrl && previousProfileUrl !== 'img/baseprofile.svg') {
+        console.log('삭제',previousProfileUrl);
+        await handleFileDelete(previousProfileUrl);
+      }
+  
       await handleFileUpload(selectedFile);
     }
   };
-
-  const handleDrop = async (event) => {
-    event.preventDefault();
-    const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile) {
-      setFile(droppedFile);
-      console.log('Dropped file:', droppedFile.name);
-      await handleFileUpload(droppedFile);
-    }
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
+  
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -158,25 +154,39 @@ export default function Signup() {
   const handleFileUpload = async (file) => {
     const formData = new FormData();
     formData.append('multipartFileList', file);
-
+  
     try {
       const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
-      if (response.data["isSuccess"]) {
-        console.log('파일 업로드 성공:', response.data.result[0]);
-        setProfileUrl(response.data.result[0]);
+      if (response.data.isSuccess) {
+        const newProfileUrl = response.data.result[0];
+        console.log('파일 업로드 성공:', newProfileUrl);
+        setPreviousProfileUrl(profileUrl); 
+        setProfileUrl(newProfileUrl);
       } else {
-        console.error("파일 업로드 실패:", response.data);
+        console.error('파일 업로드 실패:', response.data);
       }
     } catch (error) {
       console.error('파일 업로드 에러:', error);
-      // Handle the error as needed
+    }
+  };
+  
+  const handleFileDelete = async (profileUrl) => {
+    try {
+      const response = await axios.delete(`https://user-dev.kau-koala.com/s3/${profileUrl}`);
+      if (response.data.isSuccess) {
+        console.log('파일 삭제 성공:', profileUrl);
+      } else {
+        console.error('파일 삭제 실패:', response.data);
+      }
+    } catch (error) {
+      console.error('파일 삭제 에러:', error);
     }
   };
 
   // 타이머 완료
   const onComplete = () => {
     setTimerStarted(false);
-    setIsSMSValid(true);
+    // setIsSMSValid(true); //  타이머 종료시 입력칸 비활성화
   }
 
   // 이름 입력 change event
@@ -203,13 +213,6 @@ export default function Signup() {
   const handleHandleChange = (value) => {
     setHandle(value);
     setHandleColor('#555555'); // Grey_6
-
-    // 입력 했다가 모두 지우는 경우를 생각해야 할까 -> 해당 입력칸 focus 상태면 생각하지 않아도 된다 border 변화 못느껴서 -> 다른 칸을 선택했을때는 티가 난다 -> 이런경우가 생길까?
-    // if (value.trim().length > 0) {
-    //   setHandleColor('#555555'); // Grey_6
-    // } else {
-    //   setHandleColor('#CFCFCF'); // Grey_6
-    // }
   }
 
   // 비밀번호 입력 change event
@@ -237,7 +240,6 @@ export default function Signup() {
 
   // 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
-    // Remove all non-numeric characters
     const numericValue = value.replace(/\D/g, ''); // 숫자가 아닌 문자 제거
 
     let formattedValue = numericValue;
@@ -299,11 +301,10 @@ export default function Signup() {
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("회원가입 성공!");
-        const result = await alert('회원가입', '회원가입이 완료되었습니다!');
+        const result = await alert('회원가입이 완료되었습니다!');
         if (result) {
           navigate("/login");
         }
-        // navigate("/login");
       } else {
         console.error("회원가입 실패:", response.data);
       }
@@ -333,7 +334,8 @@ export default function Signup() {
       console.error("백준 유효 계정 인증 오류:", error);
       setIsHandleValid(false);
       setHandleColor('#DC4A41'); // Red
-      setHandleMessage('등록되지 않은 계정입니다.');
+      // setHandleMessage('등록되지 않은 계정입니다.');
+      setHandleMessage(error.response.data.message);
     }
   };
 
@@ -366,7 +368,8 @@ export default function Signup() {
       console.error("핸드폰 번호 인증 오류:", error);
       setIsSMSValid(false);
       setSMSColor('#DC4A41'); // REd
-      setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+      // setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
+      setSMSMessage(error.response.data.message);
       setPhoneConfirmBtnText("다시 인증하기");
     }
   };
@@ -447,8 +450,14 @@ export default function Signup() {
         setIsPhoneNumberValid(true);
         setPhoneBorderColor('#00A5FF'); // Blue_0_Main
         setPhoneMessageColor('#00A5FF'); // Blue_0_Main
-        setPhoneMessage('인증번호가 발송되었습니다.');
+        // setPhoneMessage('인증번호가 발송되었습니다.');
+        setCount((prevCount) => {
+          const newCount = prevCount + 1;
+          setPhoneMessage(`인증번호가 발송되었습니다. (${newCount}/5)`);
+          return newCount;
+        });
         setTimerStarted(true); // 타이머 시작
+        setTimerKey((prevKey) => prevKey + 1); // 타이머 리셋
         setIsSMSValid(false); // 인증코드 입력 활성화
       } else {
         console.error("SMS 인증 코드 전송 실패:", response.data);
@@ -458,7 +467,10 @@ export default function Signup() {
       setIsPhoneNumberValid(false);
       setPhoneBorderColor('#DC4A41'); // Red
       setPhoneMessageColor('#DC4A41'); // Red
-      setPhoneMessage('사용할 수 없는 핸드폰 번호입니다.');
+      setPhoneMessage(error.response?.data?.result?.phoneNumber || error.response?.data?.message);
+      
+      // setPhoneMessage('사용할 수 없는 핸드폰 번호입니다.');
+      // console.log(error.response.data.result.phoneNumber);
       
     }
   };
@@ -471,16 +483,11 @@ export default function Signup() {
           <div>
             <itemS.LIContainer>
               <itemS.Label>프로필 이미지</itemS.Label>
-              <itemS.InputDragBox
-                onDrop={handleDrop}
-                onDragOver={handleDragOver}
-              >
-                <itemS.DragDropText>이미지 드래그 혹은</itemS.DragDropText>
-                <itemS.UploadText onClick={handleClick}>
-                  파일 업로드
-                </itemS.UploadText>
-                {file && <itemS.FileName>{file.name}</itemS.FileName>}
-              </itemS.InputDragBox>
+              <itemS.ProfileBox>
+                <itemS.Profile src={profileUrl} alt='프로필이미지' />
+                <itemS.Upload src='/img/camera.svg' alt='업로드' onClick={handleClick} />
+              </itemS.ProfileBox>
+             
               <itemS.HiddenFileInput
                 type="file"
                 ref={fileInputRef}
@@ -496,16 +503,6 @@ export default function Signup() {
                 onChange={(e) => handleNameChange(e.target.value)}
               />
             </itemS.LIContainer>
-
-            {/* <itemS.LIContainer>
-              <itemS.Label>학년</itemS.Label>
-              <itemS.InputBox
-                type="text"
-                placeholder="학년을 입력해주세요. (숫자만 입력)"
-                value={grade}
-                onChange={(e) => handleGradeChange(e.target.value)}
-              />
-            </itemS.LIContainer> */}
             <itemS.LIContainer>
               <itemS.Label>학년</itemS.Label>
               <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}>
@@ -520,16 +517,6 @@ export default function Signup() {
                 <itemS.DropText>학년</itemS.DropText>
               </itemS.SelectBoxContainer>
             </itemS.LIContainer>
-
-            {/* <itemS.LIContainer>
-              <itemS.Label>학과</itemS.Label>
-              <itemS.InputBox
-                type="text"
-                placeholder="학과를 입력해주세요."
-                value={major}
-                onChange={(e) => handleMajorChange(e.target.value)}
-              />
-            </itemS.LIContainer> */}
             <itemS.LIContainer>
               <itemS.Label>학과</itemS.Label>
               <itemS.SelectBoxContainer style={{ border: `1px solid ${majorColor}` }}>
@@ -579,7 +566,7 @@ export default function Signup() {
             </itemS.LIContainer>
             {!isPasswordValid && password.length > 0 && (
             <itemS.ErrorMessage>
-              * 특수문자 1개 이상, 영문+숫자, 15자 이내로 설정해주세요.
+              * 특수문자 1개 이상, 영문+숫자, 8~15자 이내로 설정해주세요.
             </itemS.ErrorMessage>
             )}
         
@@ -599,7 +586,6 @@ export default function Signup() {
             </itemS.ErrorMessage>
             )}
         
-
             <itemS.LIContainer>
               <itemS.Label>핸드폰 번호</itemS.Label>
               <itemS.InputConfirmBoxWrapper>
@@ -638,7 +624,11 @@ export default function Signup() {
                       <itemS.TimerBox>
                         <itemS.TimerIcon src="/img/timer.svg" alt="Timer Icon"/>
                         <itemS.Timer>
-                          <Timer initialTime={180} onComplete={onComplete} />
+                          <Timer 
+                            key={timerKey} // 리렌더링
+                            initialTime={180} 
+                            onComplete={onComplete} 
+                          />
                         </itemS.Timer>
                       </itemS.TimerBox>
                     ) : (
@@ -651,7 +641,6 @@ export default function Signup() {
             >
               {SMSMessage}
             </itemS.Message>
-            
             
             <itemS.LIContainer>
               <itemS.Label>이메일</itemS.Label>

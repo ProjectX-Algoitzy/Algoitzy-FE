@@ -77,7 +77,6 @@ export const SelectBoxContainer = styled.div`
 	border-radius: 4px;
 	padding: 0 10px;
 	margin-bottom: 4px;
-	
 `;
 
 // 셀렉트 박스 컨테이너 텍스트
@@ -272,11 +271,34 @@ export const UploadText = styled.span`
   color: ${tokens.colors.Blue_0_Main};
 `;
 
-export const FileName = styled.span`
-  ${tokens.typography.B3_M_14};
-  color: ${tokens.colors.B_Grey_7};
+export const ProfileBox = styled.div`
+  position: relative;
+  width: 224px;
+  height: 224px;
 	margin-top: 8px;
 `;
+
+export const Profile = styled.img`
+  width: 224px;
+  height: 224px;
+  border-radius: 112px;
+`;
+
+export const Upload = styled.img`
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  z-index: 999;
+  bottom: 10px;
+  right: 18px;
+  cursor: pointer;
+`;
+// export const FileName = styled.span`
+//   ${tokens.typography.B3_M_14};
+//   color: ${tokens.colors.B_Grey_7};
+// 	margin-top: 8px;
+// `;
 
 
 
@@ -293,6 +315,7 @@ export const GradeSelect = styled(Select).attrs({
   border-radius: 4px;
   text-align: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .react-select__menu {
@@ -390,6 +413,7 @@ export const MajorSelect = styled(Select).attrs({
   border-radius: 4px;
   text-align: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .react-select__menu {

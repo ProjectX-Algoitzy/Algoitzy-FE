@@ -15,7 +15,6 @@ export default function ApplyRegularStudyIndividual({ studyList }){
 
 	// 스터디 제목 글자수 자르기
 	const truncateStudyName = (name) => {
-		// console.log("길이",name.length);
 		if (name.length > 12) {
 			return name.slice(0, 11) + '...';
 		}
@@ -24,16 +23,16 @@ export default function ApplyRegularStudyIndividual({ studyList }){
 
   return (
     
-		<itemS.InnerContainer key={studyList.studyId}>		
+		<itemS.Container key={studyList.studyId}>		
         <itemS.TopImg src={studyList.profileUrl} alt='프로필' />
 	
         <itemS.Title>{truncateStudyName(studyList.studyName)}</itemS.Title>
-        <itemS.Detail>스터디 상세 보기 &gt;</itemS.Detail>
-        <itemS.Apply onClick={() => moveToWritingApplication(studyList.studyId)}>지원하기</itemS.Apply>
+        <itemS.Detail onClick={() => moveToWritingApplication(studyList.studyId)}>스터디 상세 보기 &gt;</itemS.Detail>
+        {/* <itemS.Apply>지원하기</itemS.Apply> */}
         
 
 
-		</itemS.InnerContainer>
+		</itemS.Container>
 	)
     
 };

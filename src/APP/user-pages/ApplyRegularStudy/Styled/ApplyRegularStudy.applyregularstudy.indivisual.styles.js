@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
 
-export const InnerContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;  
 
-  width: 387px;
+  width: 385px;
   height: 534px;
   background-color: ${tokens.colors.White};
   border-radius: 8px;
@@ -57,6 +57,6 @@ export const Apply = styled.button`
 	color: ${tokens.colors.White};
   border: 1px solid ${tokens.colors.B_Grey_8};
   border-radius: 8px;
-	margin-bottom: 34px;
+	margin-bottom: 32px;
 	cursor: pointer;
 `;

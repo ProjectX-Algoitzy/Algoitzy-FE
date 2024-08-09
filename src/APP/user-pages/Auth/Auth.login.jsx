@@ -15,9 +15,25 @@ export default function Login() {
 
   const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);  // Alert 창 열림 여부
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter' && !isAlertOpen) { // Alert 창이 열려있지 않을 때만 실행
+        event.preventDefault();
+        handleSubmit();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [email, password, isAlertOpen]);
 
   // 로그인 버튼
   const handleSubmit = async () => {
@@ -32,22 +48,24 @@ export default function Login() {
       localStorage.setItem(ACCESS_TOKEN, response.data.result.accessToken);
       if (response.data["isSuccess"]) {
         console.log("로그인 성공!");
-        //setIsLogin(true);
-        // alert("로그인을 성공하셨습니다.");
-        // const result = await alert('로그인', '로그인이 완료되었습니다!');
-        // if (result) {
         navigate("/");
         window.location.reload();
-        // }
-        // navigate("/");
       } else {
-        console.error("로그인 실패:", response.data);
-        alert(response.data.message || "로그인 실패"); // 실패 메시지가 없으면 기본 메시지 표시
+        // console.error("로그인 실패:", response.data);
+        setIsAlertOpen(true);
+        alert(response.data.message || "로그인 실패")
+        .then(() => {
+          setIsAlertOpen(false);
+        }); // 실패 메시지가 없으면 기본 메시지 표시
       }
     } catch (error) {
       console.error("로그인 오류:", error);
-      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result || "로그인 오류 발생"; // 객체를 문자열로 변환하거나 기본 메시지 사용
-      alert(String(errorMessage)); // 문자열로 변환 보장
+      setIsAlertOpen(true);
+      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result?.email || error.response?.data?.result || error.response?.data?.message || "로그인 오류 발생"; // 객체를 문자열로 변환하거나 기본 메시지 사용
+      alert(String(errorMessage))  // 문자열로 변환 보장
+      .then(() => {
+        setIsAlertOpen(false);
+      }); // 실패 메시지가 없으면 기본 메시지 표시
     }
   };
 

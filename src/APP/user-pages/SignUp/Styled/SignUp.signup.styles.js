@@ -405,14 +405,13 @@ export const MajorSelect = styled(Select).attrs({
   classNamePrefix: 'react-select',
 })`
 .react-select__control {
-  // width: 42px;
+  width: 160px;
   // height: 24px;
   color: ${tokens.colors.Grey_8};
   ${tokens.typography.B3_M_14};
   border: 1px solid ${tokens.colors.B_Grey_3};
   border-radius: 4px;
   text-align: center;
-  justify-content: center;
   cursor: pointer;
 }
 
@@ -420,7 +419,7 @@ export const MajorSelect = styled(Select).attrs({
   position: absolute;
   top: -10px;  
   left: -2px;
-  width: 250px;
+  width: 165px;
   height: 145px; 
   border-radius: 4px;
   border: none;

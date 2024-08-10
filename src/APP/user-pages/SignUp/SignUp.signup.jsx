@@ -22,7 +22,11 @@ const majorOptions = [
   {value: "항공물류학과", label:"항공물류학과"},
   {value: "AI자율주행시스템공학과", label:"AI자율주행시스템공학과"},
   {value: "항공운항학과", label:"항공운항학과"},
-  {value: "항공경영학과", label:"항공경영학과"}
+  {value: "전기전자공학과", label:"전기전자공학과"},
+  {value: "컴퓨터공학과", label:"컴퓨터공학과"},
+  {value: "항공우주공학과", label:"항공우주공학과"},
+  {value: "자유전공학부", label:"자유전공학부"},
+  {value: "경영학과", label:"경영학과"}
 ]
 
 const majorPlaceholderText = '학과를 선택해주세요.';
@@ -55,6 +59,10 @@ export default function Signup() {
   const [emailCode, setEmailCode] = useState('');
 
   // border색상 및 메시지 상태
+
+  // 이름 색상 및 메시지
+  const [nameBorderColor, setNameBorderColor] = useState('1px solid #CFCFCF'); 
+
   // 학년 색상
   const [gradeColor, setGradeColor] = useState('#CFCFCF'); 
 
@@ -66,7 +74,7 @@ export default function Signup() {
   const [handleMessage, setHandleMessage] = useState(''); 
 
   // 비밀번호 border 색상 
-  const [pwdborderColor, setPwdBorderColor] = useState('1px solid #CFCFCF'); 
+  const [pwdBorderColor, setPwdBorderColor] = useState('1px solid #CFCFCF'); 
 
   // 비밀번호 확인 border 색상 
   const [pwdConfirmborderColor, setPwdConfirmBorderColor] = useState('1px solid #CFCFCF'); 
@@ -85,6 +93,8 @@ export default function Signup() {
   const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
   const [emailCodeMessage, setEmailCodeMessage] = useState(''); // 메시지
 
+  // 이름 유효성 검사
+  const NameRegex = /^[a-zA-Z가-힣\s]+$/;
 
   // 비밀번호 유효성 검사
   const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,15}$/;
@@ -133,15 +143,16 @@ export default function Signup() {
 
   // 프로필 이미지 파일 업로드
   const handleFileChange = async (event) => {
+    // console.log('previousProfileUrl',previousProfileUrl);
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
   
-      if (previousProfileUrl && previousProfileUrl !== 'img/baseprofile.svg') {
-        console.log('삭제',previousProfileUrl);
-        await handleFileDelete(previousProfileUrl);
+      if (previousProfileUrl) {
+        console.log('1');
+        await handleFileDelete(profileUrl);
       }
-  
+      console.log('12');
       await handleFileUpload(selectedFile);
     }
   };
@@ -160,6 +171,7 @@ export default function Signup() {
       if (response.data.isSuccess) {
         const newProfileUrl = response.data.result[0];
         console.log('파일 업로드 성공:', newProfileUrl);
+        // console.log('이전:', profileUrl);
         setPreviousProfileUrl(profileUrl); 
         setProfileUrl(newProfileUrl);
       } else {
@@ -172,7 +184,13 @@ export default function Signup() {
   
   const handleFileDelete = async (profileUrl) => {
     try {
-      const response = await axios.delete(`https://user-dev.kau-koala.com/s3/${profileUrl}`);
+      // URL에 profileUrl을 포함시킴
+      const url = `https://user-dev.kau-koala.com/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
+  
+      // console.log('삭제 URL:', url);
+  
+      const response = await axios.delete(url);
+  
       if (response.data.isSuccess) {
         console.log('파일 삭제 성공:', profileUrl);
       } else {
@@ -191,8 +209,17 @@ export default function Signup() {
 
   // 이름 입력 change event
   const handleNameChange = (value) => {
+    console.log('aa');
     setName(value);
-    setIsNameValid(value.trim().length > 0);
+    // setIsNameValid(value.trim().length > 0);
+    setIsNameValid(NameRegex.test(value));
+    if (!NameRegex.test(value) && value.trim().length > 0) {
+      console.log('dd');
+      setNameBorderColor('1px solid #DC4A41'); // Red
+    } else {
+      console.log('ss');
+      setNameBorderColor('1px solid #555555'); // Grey_6
+    }
   }
 
   // 학년 선택 change event
@@ -501,8 +528,14 @@ export default function Signup() {
                 placeholder="이름을 입력해주세요."
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
+                style={{ border: nameBorderColor }}
               />
             </itemS.LIContainer>
+            {!isNameValid && name.length > 0 && (
+            <itemS.ErrorMessage>
+              한글 및 영문만 입력 가능합니다.
+            </itemS.ErrorMessage>
+            )}
             <itemS.LIContainer>
               <itemS.Label>학년</itemS.Label>
               <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}>
@@ -561,7 +594,7 @@ export default function Signup() {
                 placeholder="비밀번호를 입력해주세요."
                 value={password}
                 onChange={(e) => handlePasswordChange(e.target.value)}
-                style={{ border: pwdborderColor }}
+                style={{ border: pwdBorderColor }}
               />
             </itemS.LIContainer>
             {!isPasswordValid && password.length > 0 && (

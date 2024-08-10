@@ -307,14 +307,13 @@ export const GradeSelect = styled(Select).attrs({
   classNamePrefix: 'react-select',
 })`
 .react-select__control {
-  // width: 42px;
-  // height: 24px;
+  width: 590px;
+  height: 54px;
   color: ${tokens.colors.Grey_8};
   ${tokens.typography.B3_M_14};
-  border: 1px solid ${tokens.colors.B_Grey_3};
+  border: ${(props) => (props.isGradeSelected ? `1px solid ${tokens.colors.Grey_6}` : `1px solid ${tokens.colors.B_Grey_3}`)};
   border-radius: 4px;
   text-align: center;
-  justify-content: center;
   cursor: pointer;
 }
 
@@ -322,8 +321,8 @@ export const GradeSelect = styled(Select).attrs({
   position: absolute;
   top: -10px;  
   left: -2px;
-  width: 50px;
-  height: 145px; 
+  width: 595px;
+  // height: 220px; 
   border-radius: 4px;
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -334,7 +333,7 @@ export const GradeSelect = styled(Select).attrs({
 }
 
 .react-select__menu-list {
-  max-height: 145px;
+  // max-height: 220px;
   overflow-y: auto;
   /* Hide scrollbar for WebKit-based browsers (Chrome, Safari, etc.) */
   &::-webkit-scrollbar {
@@ -347,39 +346,22 @@ export const GradeSelect = styled(Select).attrs({
   -ms-overflow-style: none;
 }
 
+.react-select__option {
+  display: flex;
+  align-items: center; /* Align text vertically center */
+  justify-content: center; /* Align text horizontally center */
+  height: 54px;
+  color: ${tokens.colors.Grey_8};
+  ${tokens.typography.B3_M_14};
+  border: none;
+  text-align: center; /* Center the text */
+}
+
 .react-select__option:not(:last-child) {
   border-bottom: 1px solid ${tokens.colors.B_Grey_2};
 }
 
-.react-select__option {
-  color: ${tokens.colors.Grey_8};
-  ${tokens.typography.B3_M_14};
-  border: none;
-}
-
-.react-select__option--is-selected:first-of-type {
-  background-color: ${tokens.colors.White};
-  backdrop-filter: blur(8px);
-  color: ${tokens.colors.Grey_8};
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border: none;
-  ${tokens.typography.B3_M_14};
-  position: relative;
-  top: -4px;
-}
-
-.react-select__option--is-selected:last-of-type {
-  background-color: ${tokens.colors.White};
-  backdrop-filter: blur(8px);
-  color: ${tokens.colors.Grey_8};
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border: none;
-  ${tokens.typography.B3_M_14};
-}
-
-.react-select__option--is-selected:not(:first-of-type):not(:last-of-type) {
+.react-select__option--is-selected {
   background-color: ${tokens.colors.White};
   backdrop-filter: blur(8px);
   color: ${tokens.colors.Grey_8};
@@ -388,28 +370,27 @@ export const GradeSelect = styled(Select).attrs({
 }
 
 .react-select__option--is-focused {
-  background-color: transparent;
+  background-color: rgba(102, 201, 255, 0.2);
   cursor: pointer;
 }
 
 .react-select__option:active {
-  background-color: transparent;
+  background-color: rgba(102, 201, 255, 0.2);
 }
 
 .react-select__option:hover {
   background-color: rgba(102, 201, 255, 0.2);
 }
 `;
-
 export const MajorSelect = styled(Select).attrs({
   classNamePrefix: 'react-select',
 })`
 .react-select__control {
-  width: 160px;
-  // height: 24px;
+  width: 590px;
+  height: 54px;
   color: ${tokens.colors.Grey_8};
   ${tokens.typography.B3_M_14};
-  border: 1px solid ${tokens.colors.B_Grey_3};
+  border: ${(props) => (props.isMajorSelected ? `1px solid ${tokens.colors.Grey_6}` : `1px solid ${tokens.colors.B_Grey_3}`)};
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
@@ -419,8 +400,8 @@ export const MajorSelect = styled(Select).attrs({
   position: absolute;
   top: -10px;  
   left: -2px;
-  width: 165px;
-  height: 145px; 
+  width: 595px;
+  // height: 160px; 
   border-radius: 4px;
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -431,7 +412,7 @@ export const MajorSelect = styled(Select).attrs({
 }
 
 .react-select__menu-list {
-  max-height: 145px;
+  max-height: 220px;
   overflow-y: auto;
   /* Hide scrollbar for WebKit-based browsers (Chrome, Safari, etc.) */
   &::-webkit-scrollbar {
@@ -444,39 +425,22 @@ export const MajorSelect = styled(Select).attrs({
   -ms-overflow-style: none;
 }
 
+.react-select__option {
+  display: flex;
+  align-items: center; /* Align text vertically center */
+  justify-content: center; /* Align text horizontally center */
+  height: 54px;
+  color: ${tokens.colors.Grey_8};
+  ${tokens.typography.B3_M_14};
+  border: none;
+  text-align: center; /* Center the text */
+}
+
 .react-select__option:not(:last-child) {
   border-bottom: 1px solid ${tokens.colors.B_Grey_2};
 }
 
-.react-select__option {
-  color: ${tokens.colors.Grey_8};
-  ${tokens.typography.B3_M_14};
-  border: none;
-}
-
-.react-select__option--is-selected:first-of-type {
-  background-color: ${tokens.colors.White};
-  backdrop-filter: blur(8px);
-  color: ${tokens.colors.Grey_8};
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border: none;
-  ${tokens.typography.B3_M_14};
-  position: relative;
-  top: -4px;
-}
-
-.react-select__option--is-selected:last-of-type {
-  background-color: ${tokens.colors.White};
-  backdrop-filter: blur(8px);
-  color: ${tokens.colors.Grey_8};
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border: none;
-  ${tokens.typography.B3_M_14};
-}
-
-.react-select__option--is-selected:not(:first-of-type):not(:last-of-type) {
+.react-select__option--is-selected {
   background-color: ${tokens.colors.White};
   backdrop-filter: blur(8px);
   color: ${tokens.colors.Grey_8};
@@ -485,12 +449,12 @@ export const MajorSelect = styled(Select).attrs({
 }
 
 .react-select__option--is-focused {
-  background-color: transparent;
+  background-color: rgba(102, 201, 255, 0.2);
   cursor: pointer;
 }
 
 .react-select__option:active {
-  background-color: transparent;
+  background-color: rgba(102, 201, 255, 0.2);
 }
 
 .react-select__option:hover {

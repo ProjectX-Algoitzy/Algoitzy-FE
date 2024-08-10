@@ -6,13 +6,13 @@ import Timer from './SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
 const gradeOptions = [
-  {value: 4, label:"4"},
-  {value: 3, label:"3"},
-  {value: 2, label:"2"},
-  {value: 1, label:"1"}
+  {value: "4 학년", label:"4 학년"},
+  {value: "3 학년", label:"3 학년"},
+  {value: "2 학년", label:"2 학년"},
+  {value: "1 학년", label:"1 학년"}
 ]
 
-const gradePlaceholderText = '선택';
+const gradePlaceholderText = '학년을 선택해주세요.';
 
 const majorOptions = [
   {value: "소프트웨어학과", label:"소프트웨어학과"},
@@ -64,10 +64,12 @@ export default function Signup() {
   const [nameBorderColor, setNameBorderColor] = useState('1px solid #CFCFCF'); 
 
   // 학년 색상
-  const [gradeColor, setGradeColor] = useState('#CFCFCF'); 
+  // const [gradeColor, setGradeColor] = useState('#CFCFCF'); 
+  const [isGradeSelected, setisGradeSelected] = useState(false); 
 
   // 학과 색상
-  const [majorColor, setMajorColor] = useState('#CFCFCF'); 
+  // const [majorColor, setMajorColor] = useState('#CFCFCF'); 
+  const [isMajorSelected, setisMajorSelected] = useState(false); 
 
   // 백준 계정 색상 및 메시지
   const [handleColor, setHandleColor] = useState('#CFCFCF'); 
@@ -226,14 +228,16 @@ export default function Signup() {
   const handleGradeChange = (selectedOption) => {
     const { value } = selectedOption;
     setGrade(value);
-    setGradeColor('#555555');
+    // setGradeColor('#555555');
+    setisGradeSelected(true);
   }
 
   // 학과 입력 change event
   const handleMajorChange = (selectedOption) => {
     const { value } = selectedOption;
     setMajor(value);
-    setMajorColor('#555555');
+    // setMajorColor('#555555');
+    setisMajorSelected(true);
   }
 
   // 백준 계정 입력 change event
@@ -538,7 +542,7 @@ export default function Signup() {
             )}
             <itemS.LIContainer>
               <itemS.Label>학년</itemS.Label>
-              <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}>
+              {/* <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}> */}
                 <itemS.GradeSelect
                   options={gradeOptions}
                   placeholder={gradePlaceholderText}
@@ -546,13 +550,14 @@ export default function Signup() {
                   components={{ DropdownIndicator: null, IndicatorSeparator: null }}
                   isSearchable={false}
                   onChange={handleGradeChange}
+                  isGradeSelected={isGradeSelected}
                 />
-                <itemS.DropText>학년</itemS.DropText>
-              </itemS.SelectBoxContainer>
+                {/* <itemS.DropText>학년</itemS.DropText> */}
+              {/* </itemS.SelectBoxContainer> */}
             </itemS.LIContainer>
             <itemS.LIContainer>
               <itemS.Label>학과</itemS.Label>
-              <itemS.SelectBoxContainer style={{ border: `1px solid ${majorColor}` }}>
+              {/* <itemS.SelectBoxContainer style={{ border: `1px solid ${majorColor}` }}> */}
                 <itemS.MajorSelect
                   options={majorOptions}
                   placeholder={majorPlaceholderText}
@@ -560,8 +565,9 @@ export default function Signup() {
                   components={{ DropdownIndicator: null, IndicatorSeparator: null }}
                   isSearchable={false}
                   onChange={handleMajorChange}
+                  isMajorSelected={isMajorSelected}
                 />
-              </itemS.SelectBoxContainer>
+              {/* </itemS.SelectBoxContainer> */}
             </itemS.LIContainer>
           
             <itemS.LIContainer>

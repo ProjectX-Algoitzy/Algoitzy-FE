@@ -14,6 +14,8 @@ export default function WritingApplication() {
   const [textAnswers, setTextAnswers] = useState({});
   const [selectedOptions, setSelectedOptions] = useState({});
   const [appId, setAppId] = useState(null);
+  const [isConfirm, setIsConfirm] = useState(false);  // 해당 지원서가 이미 최종 송출되었는지 확인하고자 하는 변수입니다
+  const [studyId, setStudyId] = useState(null);
 
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
@@ -45,8 +47,9 @@ export default function WritingApplication() {
   
       if (response.isSuccess) {
         const { selectAnswerList, textAnswerList, title, studyName } = response.result;
-  
+        setStudyId(response.result.studyId);
         setAppId(response.result.applicationId);
+        setIsConfirm(response.result.confirmYN);
         console.log("selectAnswerList: ", selectAnswerList);
         // 임시 저장된 선택형 응답 상태를 설정
         const loadedSelectedOptions = {};
@@ -122,6 +125,10 @@ export default function WritingApplication() {
   }, [id, type]);
 
   const handleOptionClick = (selectQuestionId, fieldId, multiSelect) => {
+    if(isConfirm) {
+      alert("이미 지원한 스터디입니다.");
+      return;
+    } 
     setSelectedOptions(prevSelected => {
       // 이전 상태를 복사하여 새로운 상태를 생성
       const newSelectedOptions = { ...prevSelected };
@@ -151,6 +158,10 @@ export default function WritingApplication() {
   };  
   
   const handleTextChange = (questionId, text) => {
+    if(isConfirm) {
+      alert("이미 지원한 스터디입니다.");
+      return;
+    } 
     setTextAnswers(prevTextAnswers => ({
       ...prevTextAnswers,
       [questionId]: text,
@@ -190,13 +201,12 @@ export default function WritingApplication() {
 
     try {
       const response = await request.post(`/answer/${appId}`, requestData);
-      // const response = await request.post(`/answer/4`, requestData);
       console.log("post로 날릴 response", response);
 
       if (response.isSuccess) {
         console.log("지원서 " + (distribution ? "저장" : "임시저장") + " 성공");
-        // navigate(`/regularstudy/${id}`);
-        navigate(`/apply`);
+        navigate(`/regularstudy/${studyId}`);
+        // navigate(`/apply`);
       } else {
         console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 실패:", response);
         alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
@@ -204,10 +214,20 @@ export default function WritingApplication() {
     } catch (error) {
       console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 오류", error);
       alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
+
+      if(error.response.data.code === "COMMON4000") {
+        // setErrorMessage(error.response.data.message);
+        alert(error.response.data.message);
+        return;
+      }
     }
   };
 
   const handleSaveBtnClick = async () => {
+    if(isConfirm) {
+      alert("이미 지원한 스터디입니다.");
+      return;
+    } 
     const confirmation = await confirm("지원서를 저장하시겠습니까?"); 
     if (confirmation) {
       await WriteApplicationForm(true);
@@ -215,8 +235,12 @@ export default function WritingApplication() {
   };
 
   const handleTempSaveBtnClick = async () => {
-    const message = await alert('지원서 임시저장이 완료되었습니다.');
-    if (message) {
+    if(isConfirm) {
+      alert("이미 지원한 스터디입니다.");
+      return;
+    } 
+    const confirmation = await alert('지원서를 임시 저장하시겠습니까?');
+    if (confirmation) {
       await WriteApplicationForm(false);
     }
   };
@@ -293,7 +317,7 @@ export default function WritingApplication() {
       <items.BtnContainer>
         <items.BtnContainer2>
           <items.ArbitaryBtn onClick={handleTempSaveBtnClick}>임시저장</items.ArbitaryBtn>
-          <items.Btn onClick={handleSaveBtnClick}>저장하기</items.Btn>
+          <items.Btn onClick={handleSaveBtnClick}>저장하기</items.Btn> 
         </items.BtnContainer2>
       </items.BtnContainer>
     </items.Container>

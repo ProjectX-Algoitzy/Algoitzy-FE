@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
 import Signup from "./APP/user-pages/SignUp/SignUp.signup";
@@ -40,6 +40,10 @@ function App() {
     }
   }, 30000);
 
+  const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
+    return !!localStorage.getItem(ACCESS_TOKEN);
+  };
+
   return (
     <Root>
       <BrowserRouter>
@@ -47,21 +51,22 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Langding />} />
+            <Route path="*" element={<Navigate to="/" />} /> {/* 모든 다른 경로는 홈으로 리다이렉트 */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/writingapplication/:type/:id" element={<WritingApplication />}/>
-            <Route path="/studylist" element={<StudyList />} />
+            <Route path="/writingapplication/:type/:id" element={isLoggedIn() ? <WritingApplication /> : <Navigate to="/" />}/>
+            <Route path="/studylist" element={isLoggedIn() ? <StudyList /> : <Navigate to="/" />} />
             <Route path="/findemail" element={<FindEmail />} />
             <Route path="/findemailsuccess" element={<FindEmailSuccess />} />
             <Route path="/findpassword" element={<FindPassword />} />
-            <Route path="/study" element={<MakedSelfStudyList />} />
-            <Route path="/newstudy" element={<MakingSelfStudy />} />
-            <Route path="/regularstudy/:id" element={<RegularStudy />} />
-            <Route path="/curriculumcheck/:curriculumId" element={<CurriculumCheck />} />
-            <Route path="/mystudy" element={<MyStudyList />} />
-            <Route path="/apply" element={<ApplyRegularStudy />} />
-            <Route path="/enterbootlist" element={<EnterBootList />} />
-            <Route path="/institutiondetail/:institutionId" element={<InstitutionDetail />} /> {/* 기업/부트캠프 상세조회 */}
+            <Route path="/study" element={isLoggedIn() ? <MakedSelfStudyList /> : <Navigate to="/" />} />
+            <Route path="/newstudy" element={isLoggedIn() ? <MakingSelfStudy /> : <Navigate to="/" />} />
+            <Route path="/regularstudy/:id" element={isLoggedIn() ? <RegularStudy /> : <Navigate to="/" />} />
+            <Route path="/curriculumcheck/:curriculumId" element={isLoggedIn() ? <CurriculumCheck /> : <Navigate to="/" />} />
+            <Route path="/mystudy" element={isLoggedIn() ? <MyStudyList /> : <Navigate to="/" />} />
+            <Route path="/apply" element={isLoggedIn() ? <ApplyRegularStudy /> : <Navigate to="/" />} />
+            <Route path="/enterbootlist" element={isLoggedIn() ? <EnterBootList /> : <Navigate to="/" />} />
+            <Route path="/institutiondetail/:institutionId" element={isLoggedIn() ? <InstitutionDetail /> : <Navigate to="/" />} /> {/* 기업/부트캠프 상세조회 */}
           </Routes>
           <Footer />
       </BrowserRouter>

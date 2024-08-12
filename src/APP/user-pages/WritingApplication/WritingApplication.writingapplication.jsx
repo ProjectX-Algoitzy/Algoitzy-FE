@@ -27,6 +27,7 @@ export default function WritingApplication() {
       console.log("get으로 날라온 response", response);
       setDetail(response.result);
       setAppId(id);
+      setStudyId(detail.studyId)
       setLoading(false);
       if (response.isSuccess) {
         console.log("제작된 지원서 조회 성공");
@@ -213,7 +214,7 @@ export default function WritingApplication() {
       }
     } catch (error) {
       console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 오류", error);
-      alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
+      // alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
 
       if(error.response.data.code === "COMMON4000") {
         // setErrorMessage(error.response.data.message);
@@ -228,6 +229,14 @@ export default function WritingApplication() {
       alert("이미 지원한 스터디입니다.");
       return;
     } 
+    // 필수항목이 비었는지 확인
+    const hasEmptyRequiredField = detail.textQuestionList.some(question => question.required && !textAnswers[question.sequence]?.trim())
+    || detail.selectQuestionList.some(question => question.required && (!selectedOptions[question.sequence] || selectedOptions[question.sequence].length === 0));
+
+    if (hasEmptyRequiredField) {
+      alert("필수항목을 모두 작성해주세요");
+      return;
+    }
     const confirmation = await confirm("지원서를 저장하시겠습니까?"); 
     if (confirmation) {
       await WriteApplicationForm(true);

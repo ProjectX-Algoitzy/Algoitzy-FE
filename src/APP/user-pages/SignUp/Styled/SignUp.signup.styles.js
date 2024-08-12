@@ -18,7 +18,8 @@ export const InnerContainer = styled.div`
   border: 1px solid ${tokens.colors.Grey_4};
   border-radius: 20px;
   padding: 128px 305px;
-  margin-top: 60px;
+  // margin-top: 60px;
+  margin: 120px 0;
 `;
 
 // 회원가입 head
@@ -39,6 +40,14 @@ export const Label = styled.label`
 	${tokens.typography.T4_SB_20}
 	color: ${tokens.colors.Grey_8};
 	margin-top: 30px;
+	margin-bottom: 10px;
+`;
+
+// 토글 에러 메시지 아래 라벨
+export const BlankLabel = styled.label`
+	height: 24px;
+	${tokens.typography.T4_SB_20}
+	color: ${tokens.colors.Grey_8};
 	margin-bottom: 10px;
 `;
 
@@ -218,6 +227,19 @@ export const ErrorMessage = styled.div`
 	color: ${tokens.colors.Red};
 	${tokens.typography.B3_M_14}
 	margin-bottom: 14px;
+`;
+
+// 토글(on/ff) 에러 메시지
+export const ToggleErrorMessage = styled.div`
+	width: 592px;
+	color: ${tokens.colors.Red};
+	${tokens.typography.B3_M_14}
+	margin-bottom: 12px;
+`;
+
+export const Blank = styled.div`
+	width: 592px;
+	height: 30px;
 `;
 
 // 백준 계정 인증 확인 메시지

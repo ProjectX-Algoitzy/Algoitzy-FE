@@ -87,11 +87,11 @@ export default function Header() {
       {activeMenu === 'coding' && (
         <itemS.SubCodingMenu>
           <itemS.StyledLink to={isLoggedIn ? "/enterbootlist" : "/login"} onClick={handleNav}>
-            <itemS.SubMenuItem>기업 분석</itemS.SubMenuItem>
+            <itemS.SubMenuItem>기업/부트캠프 분석</itemS.SubMenuItem>
           </itemS.StyledLink>
-          <itemS.StyledLink to={isLoggedIn ? "/enterbootlist" : "/login"} onClick={handleNav}>
+          {/* <itemS.StyledLink to={isLoggedIn ? "/enterbootlist" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>부트캠프 분석</itemS.SubMenuItem>
-          </itemS.StyledLink>
+          </itemS.StyledLink> */}
         </itemS.SubCodingMenu>
       )}
     </>

@@ -211,15 +211,12 @@ export default function Signup() {
 
   // 이름 입력 change event
   const handleNameChange = (value) => {
-    console.log('aa');
     setName(value);
     // setIsNameValid(value.trim().length > 0);
     setIsNameValid(NameRegex.test(value));
     if (!NameRegex.test(value) && value.trim().length > 0) {
-      console.log('dd');
       setNameBorderColor('1px solid #DC4A41'); // Red
     } else {
-      console.log('ss');
       setNameBorderColor('1px solid #555555'); // Grey_6
     }
   }
@@ -290,7 +287,8 @@ export default function Signup() {
       setPhoneMessage('010-0000-0000 형식에 맞춰 입력해주세요.');
     } else {
       setPhoneBorderColor('#555555'); // Grey_6
-      setPhoneMessage('');
+      setPhoneMessageColor('#171717');
+      setPhoneMessage('인증하기를 진행해주세요.');
     }
   }
 
@@ -535,13 +533,15 @@ export default function Signup() {
                 style={{ border: nameBorderColor }}
               />
             </itemS.LIContainer>
-            {!isNameValid && name.length > 0 && (
-            <itemS.ErrorMessage>
+            {!isNameValid && name.length > 0 ? (
+            <itemS.ToggleErrorMessage>
               한글 및 영문만 입력 가능합니다.
-            </itemS.ErrorMessage>
-            )}
+            </itemS.ToggleErrorMessage>
+          ) : (
+            <itemS.Blank></itemS.Blank>
+          )}
             <itemS.LIContainer>
-              <itemS.Label>학년</itemS.Label>
+              <itemS.BlankLabel>학년</itemS.BlankLabel>
               {/* <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}> */}
                 <itemS.GradeSelect
                   options={gradeOptions}
@@ -603,14 +603,21 @@ export default function Signup() {
                 style={{ border: pwdBorderColor }}
               />
             </itemS.LIContainer>
-            {!isPasswordValid && password.length > 0 && (
+            {/* {!isPasswordValid && password.length > 0 && (
             <itemS.ErrorMessage>
               * 특수문자 1개 이상, 영문+숫자, 8~15자 이내로 설정해주세요.
             </itemS.ErrorMessage>
+            )} */}
+            {!isPasswordValid && password.length > 0 ? (
+              <itemS.ToggleErrorMessage>
+                * 특수문자 1개 이상, 영문+숫자, 8~15자 이내로 설정해주세요.
+              </itemS.ToggleErrorMessage>
+            ) : (
+              <itemS.Blank></itemS.Blank>
             )}
         
             <itemS.LIContainer>
-              <itemS.Label>비밀번호 확인</itemS.Label>
+              <itemS.BlankLabel>비밀번호 확인</itemS.BlankLabel>
               <itemS.InputBox
                 type="password"
                 placeholder="비밀번호 확인"
@@ -619,14 +626,21 @@ export default function Signup() {
                 style={{ border: pwdConfirmborderColor }}
               />
             </itemS.LIContainer>
-            {!isPasswordConfirmValid && passwordConfirmation.length > 0 && (
+            {/* {!isPasswordConfirmValid && passwordConfirmation.length > 0 && (
             <itemS.ErrorMessage>
               비밀번호가 일치하지 않습니다.
             </itemS.ErrorMessage>
+            )} */}
+            {!isPasswordConfirmValid && passwordConfirmation.length > 0 ? (
+              <itemS.ToggleErrorMessage>
+                비밀번호가 일치하지 않습니다.
+              </itemS.ToggleErrorMessage>
+            ) : (
+              <itemS.Blank></itemS.Blank>
             )}
         
             <itemS.LIContainer>
-              <itemS.Label>핸드폰 번호</itemS.Label>
+              <itemS.BlankLabel>핸드폰 번호</itemS.BlankLabel>
               <itemS.InputConfirmBoxWrapper>
                 <itemS.InputConfirmBox
                   type="text"

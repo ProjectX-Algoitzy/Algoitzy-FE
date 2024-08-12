@@ -63,7 +63,7 @@ export default function FindPassword() {
       const response = await axios.post('https://user-dev.kau-koala.com/sign-up/email', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
-        alert("임시 비밀번호를 회원님의 이메일로 발송 하였습니다.");
+        
         console.log("이메일 인증 성공!");
         setIsEmailCodeValid(true);
         setEmailBorderColor('#3083F7'); // Blue_3
@@ -96,6 +96,7 @@ export default function FindPassword() {
       const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
+        alert("인증번호가 이메일로 발송되었습니다.");
         console.log("이메일 인증 코드 전송 성공!");
         setIsEmailValid(true);
         setEmailBorderColor('#00A5FF'); // Blue_0_Main
@@ -116,28 +117,25 @@ export default function FindPassword() {
 
 
   const handleFindPassword = async () => {
-    // const phone = phoneNumber.replace(/-/g, '');
-   
-    // const requestData = {
-    //   name: name,
-    //   phoneNumber: phone,
-    // };
-    // console.log("requestData",requestData);
-    // try {
-    //   const response = await axios.get('https://user-dev.kau-koala.com/member/find-email', {
-    //     params: requestData,
-    //   });
-    //   console.log("response",response.data);
-    //   if (response.data["isSuccess"]) {
-    //     console.log("비밀번호 발송 성공");
+    const requestData = {
+      type: "FIND_PASSWORD",
+      emailList: [email],
+    };
+    try {
+      const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
+      console.log("response",response.data);
+      if (response.data["isSuccess"]) {
+        alert("새로운 비밀번호가 이메일로 발송되었습니다.");
+        console.log("새로운 비밀번호 이메일 전송 성공!");
         
-    //     navigate("/findemailsuccess", { state: { email: response.data.result } });
-    //   } else {
-    //     console.error("비밀번호 발송 실패:", response.data);
-    //   }
-    // } catch (error) {
-    //   console.error("비밀번호 발송 오류:", error);
-    // }
+      } else {
+        console.error("새로운 비밀번호 이메일 전송 실패:", response.data);
+      }
+    } catch (error) {
+      console.error("새로운 비밀번호 이메일 전송 오류:", error);
+      
+      
+    }
   };
 
 

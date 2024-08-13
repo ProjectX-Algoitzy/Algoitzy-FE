@@ -27,7 +27,7 @@ export default function WritingApplication() {
       console.log("get으로 날라온 response", response);
       setDetail(response.result);
       setAppId(id);
-      setStudyId(detail.studyId)
+      setStudyId(response.result.studyId)
       setLoading(false);
       if (response.isSuccess) {
         console.log("제작된 지원서 조회 성공");

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens";
-import * as tokens_ from "../../../../tokens___";
 
 export const HomeWrap = styled.div`
   margin-top: auto;

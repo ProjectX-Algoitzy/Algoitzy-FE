@@ -243,5 +243,6 @@ export const Btns = {
 		borderRadius: "0.167rem",
 		borderColor: colors.Blue_0_Main,
 		cursor: "pointer",
+    border: "0.083rem solid",
 	}
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
+import * as tokens_ from "../../../../tokens_"
 
 export const HomeWrap = styled.div`
   margin-top: auto;
@@ -29,31 +30,31 @@ export const ImgWrap = styled.div`
 export const FirstSentence = styled.div` 
   display: block;
   color: ${tokens.colors.Grey_8};
-  ${tokens.typography.H1_B_60};
+  ${tokens_.typography.H1_B_60};
 `;//NormalWrap에 들어가는 문장1
 
 export const SecondSentence = styled.div` 
   display: block;
   color: ${tokens.colors.B_Grey_6};
-  ${tokens.typography.T3_B_24};
+  ${tokens_.typography.T3_B_24};
 `;//NormalWrap에 들어가는 문장2
 
 export const BtnStudyApply = styled.div` 
-    width: 320px;
-		height: 72px;
+    width: 13.333rem;
+		height: 3rem;
 		background: ${tokens.colors.B_Grey_8};
 		color: ${tokens.colors.White};
-		border-radius: 4px;
+		border-radius: 0.167rem;
 		border: none;
 		cursor: pointer;
-    ${tokens.typography.T3_B_24};
-    margin-top: 25px;
+    ${tokens_.typography.T3_B_24};
+    margin-top: 1.042rem;
     text-align: center; 
 
     display: flex; 
     justify-content: center; 
     align-items: center;
-    height: 60px; 
+    height: 2.5rem;
 `; //이동버튼
 
 export const SecondWrapStyledImage = styled.img` 

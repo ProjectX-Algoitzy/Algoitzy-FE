@@ -9,10 +9,9 @@ export const TupleContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 1200px;
-  // height: 55px;
+  width: 50rem; 
+  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
   
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
   &:hover {
     background-color: ${tokens.colors.B_Grey_1};
   }
@@ -26,8 +25,8 @@ export const TupleNumber = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 72px;
-  height: 56px;
+  width: 3rem; 
+  height: 2.33rem; 
 `;
 
 export const TupleName = styled.div`
@@ -37,8 +36,8 @@ export const TupleName = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 1056px;
-  height: 56px;
+  width: 44rem; 
+  height: 2.33rem; 
 `;
 
 export const TupleView = styled.div`
@@ -48,8 +47,6 @@ export const TupleView = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 72px;
-  height: 56px;
+  width: 3rem;
+  height: 2.33rem; 
 `;
-
-

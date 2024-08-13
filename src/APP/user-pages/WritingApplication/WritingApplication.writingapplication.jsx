@@ -62,10 +62,23 @@ export default function WritingApplication() {
         console.log("loadedSelectedOptions: ", loadedSelectedOptions);
   
         // 임시 저장된 주관식 응답 상태를 설정
+        // const loadedTextAnswers = {};
+        // textAnswerList?.forEach(question => {
+        //   loadedTextAnswers[question.sequence] = question.text;
+        // });
+        // console.log("loadedTextAnswers: ", loadedTextAnswers);
         const loadedTextAnswers = {};
+
         textAnswerList?.forEach(question => {
-          loadedTextAnswers[question.sequence] = question.text;
+          // sequence와 text가 null이 아닌지 확인
+          if (question.sequence != null && question.text != null) {
+            loadedTextAnswers[question.sequence] = question.text;
+          } else {
+            console.warn(`Invalid data found - Sequence: ${question.sequence}, Text: ${question.text}`);
+          }
         });
+
+        // console.log("loadedTextAnswers: ", loadedTextAnswers);
   
         setSelectedOptions(loadedSelectedOptions);
         setTextAnswers(loadedTextAnswers);

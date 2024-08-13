@@ -18,10 +18,10 @@ export const CategoryContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 165, 255, 0.05);
-  width: 50rem; /* 1200px -> 50rem */
-  height: 2.29rem; /* 55px -> 2.29rem */
+  width: 50rem;
+  height: 2.29rem; 
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_4};
-  margin-bottom: 0.83rem; /* 20px -> 0.83rem */
+  margin-bottom: 0.83rem; 
 `;
 
 export const CategoryNumber = styled.div`
@@ -32,7 +32,7 @@ export const CategoryNumber = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 3rem; /* 72px -> 3rem */
+  width: 3rem; 
 `;
 
 export const CategoryName = styled.div`
@@ -43,7 +43,7 @@ export const CategoryName = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 44rem; /* 1056px -> 44rem */
+  width: 44rem;
 `;
 
 export const CategoryView = styled.div`
@@ -54,7 +54,7 @@ export const CategoryView = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 3rem; /* 72px -> 3rem */
+  width: 3rem;
 `;
 
 // 카테고리 파트 끝
@@ -63,11 +63,11 @@ export const CategoryView = styled.div`
 export const TupleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 25.46rem; /* 611px -> 25.46rem */
+  height: 25.46rem;
   overflow: auto;
 
   &::-webkit-scrollbar {
-    width: 0px; /* Chrome, Safari, Opera용 */
+    width: 0px;
   }
-  scrollbar-width: none; /* Firefox용 */
+  scrollbar-width: none;
 `;

@@ -5,10 +5,10 @@ export const CanNotEnterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 793px;
-  height: 360px;
+  width: 33.04rem;
+  height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
-  border-radius: 10px;
+  border-radius: 0.42rem;
   color: ${tokens.colors.B_Grey_5};
   ${tokens.typography.T3_B_24};
 `;
@@ -16,29 +16,29 @@ export const CanNotEnterContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 32px;
+  padding-left: 1.33rem;
   height: 100%;
 `;
 
 export const Title = styled.div`
   display: flex;
   flex-direction: row;
-  width: 793px;
+  width: 33.04rem;
   justify-content: space-between;
-  margin-top: 100px;
-  margin-bottom: 36px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_2};
+  margin-top: 4.17rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.83rem;
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
 `;
 
 export const BtnMakeCurri = styled.button`
-  width: 190px;
-  height: 47px;
+  width: 7.92rem;
+  height: 1.96rem;
   background: #00A5FF; 
   color: white;
-  border-radius: 5px; 
+  border-radius: 0.21rem; 
   border: none; 
   cursor: pointer; 
 `;
@@ -47,11 +47,11 @@ export const CurriculumContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 20px;
-  width: 793px;;
-  height: 100px;
+  margin-bottom: 0.83rem;
+  width: 33.04rem;
+  height: 4.17rem;
   background-color: ${tokens.colors.White};
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  box-shadow: 0px 0.17rem 0.42rem rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 `;
 
 export const CurriculumText = styled.div`
@@ -59,7 +59,7 @@ export const CurriculumText = styled.div`
   align-items: center;
   ${tokens.typography.T3_B_24};
   color: ${tokens.colors.Grey_8};
-  margin-left: 40px;
+  margin-left: 1.67rem;
   cursor: pointer;
 `;
 
@@ -79,22 +79,22 @@ export const Gray5Text = styled.div`
   align-items: center;
   ${tokens.typography.Sub_M_12};
   color: ${tokens.colors.Grey_5};
-  margin-top: 3px;
-  margin-left: 8px;
+  margin-top: 0.13rem;
+  margin-left: 0.33rem;
 `;
 
 export const Gray6Text = styled.div`
   ${tokens.typography.Sub_M_12};
   color: ${tokens.colors.Grey_6};
-  margin-bottom: 10px;
+  margin-bottom: 0.42rem;
 `;
 
 export const Gray7Text = styled.div`
   display: flex;
   font-family: Pretendard;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 18px;
+  font-size: 0.58rem;
+  line-height: 0.75rem;
   color: ${tokens.colors.Grey_7};
 `;
 
@@ -105,10 +105,10 @@ export const CurriculumDate = styled.div`
 
 export const DeleteIcon = styled.div`
   background-image: url('/img/GrayX.png');
-  width: 14px;
-  height: 14px;
-  margin-top: 38px;
-  margin-right: 38px;
-  margin-left: 120px;
+  width: 0.58rem;
+  height: 0.58rem;
+  margin-top: 1.58rem;
+  margin-right: 1.58rem;
+  margin-left: 5rem;
   cursor: pointer;
 `;

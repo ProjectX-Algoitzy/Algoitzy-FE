@@ -18,11 +18,11 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  /* padding: 20px; */
-  border-radius: 8px;
-  width: 987px;
-  height: 956px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* padding: 0.83rem; */
+  border-radius: 0.33rem;
+  width: 41.13rem;
+  height: 39.83rem;
+  box-shadow: 0 0.083rem 0.42rem rgba(0, 0, 0, 0.1);
   overflow-y: auto; /* 추가된 부분 */
 `;
 
@@ -30,28 +30,28 @@ export const FirstSentence = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
 `;
 
 export const BigTitle = styled.div`
   ${tokens.typography.T3_B_24};
   color: ${tokens.colors.Grey_8};
-  margin-left: 52px;
-  margin-top: 13.96px;
-  margin-bottom: 18.62px;
+  margin-left: 2.17rem;
+  margin-top: 0.58rem;
+  margin-bottom: 0.78rem;
 `;
 
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 117px;
-  padding-top: 64px;
+  padding-left: 4.88rem;
+  padding-top: 2.67rem;
 `;
 
 export const LittleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 32px;
+  margin-bottom: 1.33rem;
 `;
 
 export const SmallTitle = styled.div`
@@ -63,30 +63,30 @@ export const StyledInputContainer = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 0.167rem;
   border: none;
-  border: 1px solid ${tokens.colors.Grey_4};
-  width: 753px;
-  height: 56px; 
+  border: 0.042rem solid ${tokens.colors.Grey_4};
+  width: 31.38rem;
+  height: 2.33rem;
   background-color: ${tokens.colors.Grey_1};
 `;
 
 export const LinkImg = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-left: 16px;
-  margin-right: 16px;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.67rem;
+  margin-right: 0.67rem;
 `;
 
 export const StyledInput = styled.input`
   border: none;
-  border-left: 3px solid ${tokens.colors.B_Grey_5};
-  width: 681px;
-  height: 21px;
+  border-left: 0.13rem solid ${tokens.colors.B_Grey_5};
+  width: 28.38rem;
+  height: 0.88rem;
   color: ${tokens.colors.B_Grey_7};
   background-color: ${tokens.colors.Grey_1};
   ${tokens.typography.B3_M_14};
-  padding-left: 16px;
+  padding-left: 0.67rem;
 
   &::placeholder {
     color: ${tokens.colors.Grey_4};
@@ -99,15 +99,15 @@ export const StyledInput = styled.input`
 
 export const BtnContainer = styled.div`
   display: flex;
-  width: 753px;
+  width: 31.38rem;
   justify-content: center;
 `;
 
 export const Btn = styled.button` /*개설하기 버튼*/
-  margin-bottom: 78px;
-  width: 344px;
-  height: 48px;
-  border-radius: 4px;
+  margin-bottom: 3.25rem;
+  width: 14.33rem;
+  height: 2rem;
+  border-radius: 0.167rem;
   border: none;
   cursor: pointer;
   color: ${tokens.colors.White};

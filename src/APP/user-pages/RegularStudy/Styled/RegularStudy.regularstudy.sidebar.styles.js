@@ -2,25 +2,26 @@ import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
+  width: 14.29rem;
   display: flex;
   flex-direction: column;
-  padding-right: 32px;
-  border-right: 1px solid ${tokens.colors.Grey_4};
+  padding-right: 1.33rem;
+  border-right: 0.042rem solid ${tokens.colors.Grey_4};
 `;
 
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 4.17rem;
+  margin-bottom: 4.17rem;
 `;
 
 export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 감싸주는 컨테이너*/
   display: flex;
   flex-direction: column;
-  width: 343px;
-  height: 246px;
-  border-radius: 8px;
+  width: 14.29rem;
+  height: 10.25rem;
+  border-radius: 0.33rem;
   background-color: ${tokens.colors.Grey_4};
 `;
 
@@ -29,7 +30,7 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   color: ${tokens.colors.Black};
   ${tokens.typography.T3_B_24};
-  margin-top: 16px;
+  margin-top: 0.67rem;
   align-items: center;
 `;
 
@@ -37,7 +38,7 @@ export const CountAndOnlineContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 0.25rem;
 `;
 
 export const CountContainer = styled.div`
@@ -52,14 +53,14 @@ export const OnlineContainer = styled.div`
   flex-direction: row;
   color: #555555;
   ${tokens.typography.T5_SB_16};
-  margin-left: 14px;
-`
+  margin-left: 0.58rem;
+`;
 
 export const ManagerNameContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 21px;
+  margin-top: 0.88rem;
   color: ${tokens.colors.Grey_7};
   ${tokens.typography.B3_M_14};
 `;
@@ -67,7 +68,7 @@ export const ManagerNameContainer = styled.div`
 export const LinkContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 34px;
+  margin-top: 1.42rem;
 `;
 
 export const styledLink = styled.div`
@@ -75,9 +76,9 @@ export const styledLink = styled.div`
   flex-direction: row;
   color: ${(props) => (props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7)};
   ${tokens.typography.T5_SB_16};
-  padding-top: 17px;
-  padding-bottom: 18px;
-  border-top: 1px solid ${tokens.colors.B_Grey_2};
+  padding-top: 0.71rem;
+  padding-bottom: 0.75rem;
+  border-top: 0.042rem solid ${tokens.colors.B_Grey_2};
   justify-content: space-between;
   cursor: pointer;
 `;
@@ -87,38 +88,38 @@ export const ThirdstyledLink = styled.div`
   flex-direction: row;
   color: ${(props) => (props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7)};
   ${tokens.typography.T5_SB_16};
-  padding-top: 17px;
-  padding-bottom: 18px;
-  border-top: 1px solid ${tokens.colors.B_Grey_2};
-  border-bottom: 1px solid ${tokens.colors.B_Grey_2};
+  padding-top: 0.71rem;
+  padding-bottom: 0.75rem;
+  border-top: 0.042rem solid ${tokens.colors.B_Grey_2};
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   justify-content: space-between;
   cursor: pointer;
 `;
 
 export const ArrowImg = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 1rem;
+  height: 1rem;
 `;
 
 export const Btn = styled.button` /*지원하기 버튼*/
-  width: 344px;
-	height: 48px;
-  border-radius: 4px;
-	border: none;
-	cursor: pointer;
-	color: ${tokens.colors.White};
-	${tokens.typography.T5_SB_16}
+  width: 14.33rem;
+  height: 2rem;
+  border-radius: 0.167rem;
+  border: none;
+  cursor: pointer;
+  color: ${tokens.colors.White};
+  ${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.Blue_0_Main};
-  margin-top: 16px;
+  margin-top: 0.67rem;
 `;
 
-export const AnnouncementBlock = styled.button` /* 지원 기간이 아닙니다 전용 박스*/
-  width: 344px;
-	height: 48px;
-  border-radius: 4px;
-	border: none;
-	color: ${tokens.colors.White};
-	${tokens.typography.T5_SB_16}
+export const AnnouncementBlock = styled.button` /*지원 기간이 아닙니다 전용 박스*/
+  width: 14.33rem;
+  height: 2rem;
+  border-radius: 0.167rem;
+  border: none;
+  color: ${tokens.colors.White};
+  ${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.B_Grey_3};
-  margin-top: 16px;
+  margin-top: 0.67rem;
 `;

@@ -79,7 +79,7 @@ export default function EnterBootList() {
     } else if (tab === '부트캠프') {
       setType('CAMP');
     }
-    setCurrentPage(1); // 페이지
+    setCurrentPage(0); // 페이지
   };
 
   const toggleSortDrop = () => {

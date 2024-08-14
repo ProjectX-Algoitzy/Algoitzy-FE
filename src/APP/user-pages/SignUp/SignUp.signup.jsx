@@ -6,10 +6,10 @@ import Timer from './SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
 const gradeOptions = [
-  {value: "4 학년", label:"4 학년"},
-  {value: "3 학년", label:"3 학년"},
-  {value: "2 학년", label:"2 학년"},
-  {value: "1 학년", label:"1 학년"}
+  {value: 4, label:"4 학년"},
+  {value: 3, label:"3 학년"},
+  {value: 2, label:"2 학년"},
+  {value: 1, label:"1 학년"}
 ]
 
 const gradePlaceholderText = '학년을 선택해주세요.';

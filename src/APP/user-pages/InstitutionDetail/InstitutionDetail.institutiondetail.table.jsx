@@ -8,10 +8,10 @@ export default function InstitutionDetailTable({ itemList }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedWorkbookId(null); //TODO -  - api 연결 후 사용할 것 -> 변수명은 바꾸고
+    setSelectedWorkbookId(null); 
   };
 
-  const openModal = (workbookId) => { //TODO -  - api 연결 후 사용할 것 -> 변수명은 바꾸고
+  const openModal = (workbookId) => { 
     setIsModalOpen(true);
     setSelectedWorkbookId(workbookId);
   };
@@ -28,9 +28,9 @@ export default function InstitutionDetailTable({ itemList }) {
             <InstitutionDetailTuple
               key={item.workbookId}
               item={item}
-              isSelected={selectedWorkbookId === item.workbookId && isModalOpen}  //TODO -  - api 연결 후 사용할 것 -> 변수명은 바꾸고
+              isSelected={selectedWorkbookId === item.workbookId && isModalOpen}  
               // isSelected={isModalOpen}
-              onOpen={() => openModal(item.workbookId)} //TODO -  - api 연결 후 사용할 것 -> 변수명은 바꾸고
+              onOpen={() => openModal(item.workbookId)} 
               onClose={closeModal}
               // onOpen={openModal}
             />

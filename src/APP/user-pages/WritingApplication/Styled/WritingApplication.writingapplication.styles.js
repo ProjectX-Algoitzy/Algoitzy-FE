@@ -4,27 +4,27 @@ import * as tokens from "../../../../tokens";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items : center;
+  align-items: center;
   /* background-image: url('/img/makingapplication.png'); */
-  margin-bottom: 120px;
+  margin-bottom: 5rem;
 `;
 
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 12px;
-  margin-top: 150px;
+  gap: 0.5rem;
+  margin-top: 6.25rem;
 `;
 
 export const ContentForTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${tokens.colors.White};
-  border-radius: 4px;
-  width: 793px;
-  padding: 12px 31px 8px 14px;
-  box-shadow: 0px 2px 3px 2px #D6DaF0;
+  border-radius: 0.167rem;
+  width: 33.04rem;
+  padding: 0.5rem 1.292rem 0.333rem 0.583rem;
+  box-shadow: 0px 0.083rem 0.125rem 0.083rem #D6DaF0;
 `;
 
 export const ApplicationName = styled.div`
@@ -32,12 +32,12 @@ export const ApplicationName = styled.div`
   flex-direction: column;
   ${tokens.typography.H2_SB_48};
   color: ${tokens.colors.Grey_8};
-  margin-left: 32px;
+  margin-left: 1.333rem;
   justify-content: center; 
   background-color: ${tokens.colors.White};
-  margin-top: 44px;
-  width: 745px;
-  padding-bottom: 16px;
+  margin-top: 1.833rem;
+  width: 31.042rem;
+  padding-bottom: 0.667rem;
 `;
 
 export const StudySelectContainer = styled.div`
@@ -45,14 +45,14 @@ export const StudySelectContainer = styled.div`
   align-items: center;
   justify-content: center;
   ${tokens.typography.B3_M_14};
-  margin-left: 32px;
-  margin-bottom: 40px;
-  width: 210px;
-  height: 48px;
+  margin-left: 1.333rem;
+  margin-bottom: 1.667rem;
+  width: 8.75rem;
+  height: 2rem;
   border: none;
-  border-radius: 4px;
-  background-color: rgba(102, 201, 255, 0.2); /* 색상 코드를 rgba 형식으로 변경하고, 투명도를 20%로 설정 */
-  backdrop-filter: blur(8px); /* 필터를 원하는 것으로 설정 */
+  border-radius: 0.167rem;
+  background-color: rgba(102, 201, 255, 0.2); 
+  backdrop-filter: blur(8px); 
   color: ${tokens.colors.Blue_0_Main};
 `;
 
@@ -60,19 +60,19 @@ export const SecondInnerContainer = styled.div` /*문항들 하나하나를 감�
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 12px;
-  margin-top: 24px;
-  margin-bottom: 10px;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.417rem;
 `;
 
 export const ContentContainer = styled.div` /* 하나의 질문 전체를 담아주는 컨테이너 */
   display: flex;
   flex-direction: column;
   background-color: ${tokens.colors.White};
-  border-radius: 4px;
-  padding: 32px 31px 8px 24px;
-  width: 793px;
-  box-shadow: 0px 2px 3px 2px #D6DaF0; 
+  border-radius: 0.167rem;
+  padding: 1.333rem 1.292rem 0.333rem 1rem;
+  width: 33.04rem;
+  box-shadow: 0px 0.083rem 0.125rem 0.083rem #D6DaF0; 
 `;
 
 export const QuestionAndMultiSelectCheckContainer = styled.div` /* 질문과 그 옆의 복수 응답 부분까지를 다 감싸주는 컨테이너 */
@@ -91,14 +91,14 @@ export const QuestionContainer = styled.div` /* 질문과 필수답변 여부를
 `;
 
 export const NecessaryImg = styled.img` /*필수질문일 때 넣을 별표이미지를 꾸며주는 스타일드 컴포넌트*/
-  width: 12px;
-  height: 12px;
-  margin-left: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: 0.333rem;
 `;
 
 export const MultiselectImg = styled.img` /*객관식 복수일 때 넣을 '복수응답' 이미지를 꾸며주는 스타일드 컴포넌트 */
-  width: 76px;
-  height: 29px;
+  width: 3.167rem;
+  height: 1.208rem;
 `;
 
 export const SelectAndAnswerContainer = styled.div` /*주관식 응답과 객관식 응답(보기)부분을 모두 감싸주는 컨테이너 */
@@ -109,8 +109,8 @@ export const SelectAndAnswerContainer = styled.div` /*주관식 응답과 객관
 `;
 
 export const AnswerInputContainer = styled.input` /*스터디원이 주관식 질문에 답하기 위한 input콘테이너 */  
-  margin-top: 16px;
-  height: 48px;
+  margin-top: 0.667rem;
+  height: 2rem;
   width: 100%;
   border: none;
   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
@@ -130,7 +130,7 @@ export const SelectContainer = styled.div` /*객관식 보기 및 추가버튼�
   flex-direction: column;
   width: 100%;
   height: 100%;
-  margin-top: 16px;
+  margin-top: 0.667rem;
   align-items: center;
   justify-content: center;
 `;
@@ -142,44 +142,44 @@ export const OptionsContainer = styled.div` /*객관식 보기들과 그 보기 
   width: 100%;
   height: 100%;
   align-items: center;
-  margin-bottom: 28px;
+  margin-bottom: 1.167rem;
 `;
 
 export const SquareCheckBox = styled.input`
   appearance: none;
   border: none;
-  width: 20px;
-  height: 20px;
+  width: 0.833rem;
+  height: 0.833rem;
   cursor: pointer;
 	background-image: url('/img/checkboxicon.png');
   &:checked {
     background-image: url('/img/checkedicon.png');
-    width: 24px;
-    height: 24px;
-    margin-left: 2px;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.083rem;
   }
 `;
 
 export const CircleCheckBox = styled.input`
   appearance: none;
   border: none;
-  width: 20px;
-  height: 20px;
-  margin-right: 60px;
-  margin-left: 24px;
+  width: 0.833rem;
+  height: 0.833rem;
+  margin-right: 2.5rem;
+  margin-left: 1rem;
   cursor: pointer;
 	background-image: url('/img/iconcircle.png');
   &:checked {
     background-image: url('/img/checkedcircleicon.png');
-    width: 24px;
-    height: 24px;
-    margin-right: 58px;
-    margin-left: 22px;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 2.417rem;
+    margin-left: 0.917rem;
   }
 `;
 
 export const ChoiceForSelectQuestionContainer = styled.div` /* 객관식 문항의 보기input들을 감싸주는 컨테이너 */
-  padding-left: 12px;
+  padding-left: 0.5rem;
   border: none;
   ${tokens.typography.B3_M_14};
 `;
@@ -190,26 +190,26 @@ export const BtnContainer = styled.div`
   align-items: center;
   justify-content: center; 
   width: 100%;
-  height: 96px;
+  height: 4rem;
 
   position: fixed;
   bottom: 0; /* 아래쪽으로 고정 */
   left: 0; /* 왼쪽으로 고정 */
-  background-color: rgba(255, 255, 255, 0.1); /* 색상 코드를 rgba 형식으로 변경하고, 투명도를 20%로 설정 */
-  backdrop-filter: blur(200px); /* 필터를 원하는 것으로 설정 */
-  z-index: 1000; /* 다른 요소 위에 표시되도록 z-index 설정 */
+  background-color: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(200px); 
+  z-index: 1000; 
 `;
 
 export const BtnContainer2 = styled.div`
   display: flex;
   flex-direction: row;
-  // margin-left: 564px;
+  // margin-left: 23.5rem;
 `;
 
 export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
-  width: 388px;
-	height: 48px;
-  border-radius: 4px;
+  width: 16.167rem;
+	height: 2rem;
+  border-radius: 0.167rem;
 	border: none;
 	cursor: pointer;
 	color: ${tokens.colors.White};
@@ -218,13 +218,13 @@ export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
 `;
 
 export const Btn = styled.button` /*저장하기 버튼*/
-  width: 388px;
-	height: 48px;
-  border-radius: 4px;
+  width: 16.167rem;
+	height: 2rem;
+  border-radius: 0.167rem;
 	border: none;
 	cursor: pointer;
 	color: ${tokens.colors.White};
 	${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.Blue_0_Main};
-  margin-left: 73px;
+  margin-left: 3.042rem;
 `;

@@ -5,30 +5,30 @@ import Select, { components } from 'react-select';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 32px;
+  padding-left: 1.33rem;
   height: 100%;
 `;
 
 export const Title = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 100px;
-  margin-bottom: 36px;
-  width: 793px;
+  margin-top: 4.17rem;
+  margin-bottom: 1.5rem;
+  width: 33.04rem;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
-  padding-bottom: 16px;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_2};
+  padding-bottom: 0.67rem;
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
 `;
 
 export const ComingSoonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 793px;
-  height: 360px;
+  width: 33.04rem;
+  height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
-  border-radius: 10px;
+  border-radius: 0.42rem;
   color: ${tokens.colors.B_Grey_5};
   ${tokens.typography.T3_B_24};
 `;
@@ -39,28 +39,28 @@ export const WeeksSelectContainer = styled(Select).attrs({
   .react-select__control {
     display: flex;
     /* text-align: center; */
-    width: 142px;
-    height: 36px;
+    width: 5.92rem;
+    height: 1.5rem;
     color: ${tokens.colors.Grey_8};
     ${tokens.typography.B3_M_14};
-    border: 1px solid ${tokens.colors.B_Grey_3};
-    border-radius: 4px;
+    border: 0.042rem solid ${tokens.colors.B_Grey_3};
+    border-radius: 0.167rem;
   }
   .react-select__menu {
     position: absolute;
-    top: -10px;
-    left: -1px;
-    width: 145px;
-    height: 280px;
-    border-radius: 4px;
+    top: -0.42rem;
+    left: -0.042rem;
+    width: 6.04rem;
+    height: 11.67rem;
+    border-radius: 0.167rem;
     border: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.083rem 0.167rem rgba(0, 0, 0, 0.1);
     font-weight: 600;
     text-align: center;
     ${tokens.typography.B3_M_14};
   }
   .react-select__option:not(:last-child) {
-    border-bottom: 1px solid ${tokens.colors.B_Grey_2};
+    border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   }
   .react-select__option {
     color: ${tokens.colors.Grey_8};
@@ -71,19 +71,19 @@ export const WeeksSelectContainer = styled(Select).attrs({
     background-color: rgba(102, 201, 255, 0.2);
     backdrop-filter: blur(8px);
     color: ${tokens.colors.Grey_8};
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-top-left-radius: 0.167rem;
+    border-top-right-radius: 0.167rem;
     border: none;
     ${tokens.typography.B3_M_14};
     position: relative;
-    top: -4px;
+    top: -0.17rem;
   }
   .react-select__option--is-selected:last-of-type {
     background-color: rgba(102, 201, 255, 0.2);
     backdrop-filter: blur(8px);
     color: ${tokens.colors.Grey_8};
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 0.167rem;
+    border-bottom-right-radius: 0.167rem;
     border: none;
     ${tokens.typography.B3_M_14};
   }
@@ -104,7 +104,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
   .react-select__single-value {
     width: 100%;
     text-align: center;
-    padding-left: 27px;
+    padding-left: 1.13rem;
   }
 `;
 
@@ -114,8 +114,8 @@ export const TableContainer = styled.div`
 `;
 
 export const Table = styled.table`
-  width: 793px;
-  /* height: 447px; */
+  width: 33.04rem;
+  /* height: 18.63rem; */
   border-collapse: collapse;
   background-color: #fff;
   table-layout: fixed; /* 열 너비 고정 */
@@ -124,26 +124,26 @@ export const Table = styled.table`
 export const TableHead = styled.th`
   background-color: ${tokens.colors.Grey_1};
   color: ${tokens.colors.Black};
-  border-bottom: 1px solid ${tokens.colors.B_Grey_4};
-  padding-top: 17px;
-  padding-bottom: 17px;
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_4};
+  padding-top: 0.71rem;
+  padding-bottom: 0.71rem;
   text-align: left;
   ${tokens.typography.T5_SB_16};
   position: relative;
 
   /* 첫 번째 열: 백준 번호 */
   &:nth-child(1) {
-    padding-left: 22px;
+    padding-left: 0.92rem;
   }
 
   /* 두 번째 열: 제목 */
   &:nth-child(2) {
-    padding-left: 50px;
+    padding-left: 2.08rem;
   }
 
   /* 세 번째 열은 공백, 네 번째 열은 레벨 */
   &:nth-child(4) {
-    padding-left: 60px;
+    padding-left: 2.5rem;
   }
 `;
 
@@ -151,24 +151,24 @@ export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
   text-align: left;
-  padding-top: 17px; 
-  padding-bottom: 17px;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
+  padding-top: 0.71rem; 
+  padding-bottom: 0.71rem;
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
   ${tokens.typography.B2_M_16};
 
   /* 첫 번째 열: 백준 번호 */
   &:nth-child(1) {
-    padding-left: 22px;
+    padding-left: 0.92rem;
   }
 
   /* 두 번째 열: 제목 */
   &:nth-child(2) {
-    padding-left: 50px;
+    padding-left: 2.08rem;
   }
 
   /* 세 번째 열: 레벨 */
   &:nth-child(4) {
-    padding-left: 60px;
+    padding-left: 2.5rem;
   }
 `;
 // 테이블 스타일 끝

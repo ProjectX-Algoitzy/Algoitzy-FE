@@ -23,6 +23,7 @@ import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
 import { ACCESS_TOKEN } from "./APP/Api/request"
+import GlobalStyle from './GlobalStyles';
 
 const Root = styled.div`
   position: absolute;
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <Root>
+    <GlobalStyle />
       <BrowserRouter>
         <ScrollToTop />
           <Header />

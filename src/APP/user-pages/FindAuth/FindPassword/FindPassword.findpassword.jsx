@@ -125,8 +125,10 @@ export default function FindPassword() {
       const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
-        alert("새로운 비밀번호가 이메일로 발송되었습니다.");
-        console.log("새로운 비밀번호 이메일 전송 성공!");
+        alert("새로운 비밀번호가 이메일로 발송되었습니다.")
+        .then(() => {
+          navigate('/login');
+        }); 
         
       } else {
         console.error("새로운 비밀번호 이메일 전송 실패:", response.data);

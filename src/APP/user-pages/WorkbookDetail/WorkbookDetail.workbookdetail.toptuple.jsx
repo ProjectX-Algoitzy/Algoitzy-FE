@@ -6,6 +6,7 @@ import request from "../../Api/request";
 export default function TopTuple({ item }) {
 
   const handleRedirect = () => {
+    // console.log('item.baekjoonUrl',item.baekjoonUrl);
     window.location.href = item.baekjoonUrl;
   };
 

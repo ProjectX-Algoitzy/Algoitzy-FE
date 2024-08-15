@@ -36,7 +36,7 @@ export const TupleTitle = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 8.33rem;
+  // width: 8.33rem;
   height: 2.33rem;
   margin-left: 6.71rem;
 `;

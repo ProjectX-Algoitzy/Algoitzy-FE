@@ -24,6 +24,7 @@ import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
+import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 
 const Root = styled.div`
   position: absolute;
@@ -69,6 +70,7 @@ function App() {
             <Route path="/apply" element={isLoggedIn() ? <ApplyRegularStudy /> : <Navigate to="/" />} />
             <Route path="/enterbootlist" element={isLoggedIn() ? <EnterBootList /> : <Navigate to="/" />} />
             <Route path="/institutiondetail/:institutionId" element={isLoggedIn() ? <InstitutionDetail /> : <Navigate to="/" />} /> {/* 기업/부트캠프 상세조회 */}
+            <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
           </Routes>
           <Footer />
       </BrowserRouter>

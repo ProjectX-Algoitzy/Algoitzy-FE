@@ -22,6 +22,7 @@ import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDet
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
+import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 
@@ -35,9 +36,12 @@ const Root = styled.div`
 `;
 
 function App() {
-  useInterval(() => {
+  useInterval(async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
-      refreshToken();
+      const isTokenValid = await checkToken();
+      if (isTokenValid) {
+        await refreshToken();
+      }
     }
   }, 30000);
 

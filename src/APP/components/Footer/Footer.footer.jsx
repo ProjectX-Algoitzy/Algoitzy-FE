@@ -6,9 +6,9 @@ export default function footer() {
     <itemS.FooterContainer>
         <itemS.FooterLeftWrap>
           <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-            <itemS.Sentence1>KOALA</itemS.Sentence1><itemS.Sentence2>(한국항공대학교 알고리즘 협회)</itemS.Sentence2>
+            <itemS.Sentence1>KOALA</itemS.Sentence1><itemS.Sentence2>(한국항공대학교 알고리즘 학회)</itemS.Sentence2>
           </div>
-          <itemS.Sentence3>문의처 : engus525@naver.com</itemS.Sentence3>
+          <itemS.Sentence3>문의처 : kau-koala@naver.com</itemS.Sentence3>
           <itemS.Sentence3 style={{marginTop:"24px"}}>Copyrightⓒ2024.KOALA. All rights reserved.</itemS.Sentence3>
         </itemS.FooterLeftWrap>
 

@@ -13,6 +13,6 @@ export const refreshToken = async () => {
     request.defaults.headers.Authorization = `Bearer ${response.data.result.accessToken}`;
   } catch (error) {
     console.error('토큰 갱신 에러:', error);
-    throw error;
+    // throw error;
   }
 };

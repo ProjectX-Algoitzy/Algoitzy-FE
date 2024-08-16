@@ -16,7 +16,7 @@ export const TupleContainer = styled.div`
   cursor: pointer;
 `;
 
-export const TupleNumber = styled.div`
+export const TupleName = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -27,7 +27,7 @@ export const TupleNumber = styled.div`
   height: 2.333rem;
 `;
 
-export const TupleTitle = styled.div`
+export const TupleContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

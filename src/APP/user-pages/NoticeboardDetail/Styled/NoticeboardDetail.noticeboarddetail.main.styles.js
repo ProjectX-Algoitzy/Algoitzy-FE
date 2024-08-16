@@ -60,7 +60,8 @@ export const FirstPart = styled.div`
   ${tokens.typography.T4_SB_20};
   color: ${tokens.colors.Blue_0_Main};
   background-color: rgba(0, 165, 255, 0.1);
-  width: 43.125rem;
+  // width: 43.125rem;
+  width: 49rem;
   height: 1.667rem;
   border: none;
   border-radius: 0.25rem;
@@ -123,4 +124,36 @@ export const AddButtonBox = styled.div`
 export const AddIcon = styled.img`
   width: 0.75rem;
   height: 0.75rem;
+`;
+
+
+// 페이지
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  padding: 0.83rem;
+  list-style: none;
+`;
+
+export const PaginationArrow = styled.div`
+  width: 1rem;
+  height: 1rem;
+  background-image: url('/img/grayarrow.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: ${(props) => (props.left ? 'rotate(180deg)' : 'none')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+`;
+
+export const PaginationNumber = styled.div`
+  margin: 0 0.21rem;
+  width: 0.33rem;
+  height: 0.88rem;
+  padding: 0.42rem;
+  cursor: pointer;
+  color: ${(props) => (props.active ? tokens.colors.Blue_3 : tokens.colors.B_Grey_7)};
+  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  ${tokens.typography.B3_M_14};
 `;

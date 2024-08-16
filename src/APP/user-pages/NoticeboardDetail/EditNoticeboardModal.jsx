@@ -4,25 +4,24 @@ import * as itemS from "./Styled/EditInstitutionModal.styles";
 import request from '../../Api/request';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function EditNoticeboardModal({ isModalOpen, onClose, originName, originType, originContent, institutionId, fetchWorkbook, fetchWorkbookExplain }) {
-  const [name, setName] = useState('');
-  const [selectType, setSelectType] = useState('');
-  const [type, setType] = useState('');
+export default function EditNoticeboardModal({ isModalOpen, onClose, origintitle, origincontent, originfileUrlList, boardId, fetchCommentList, fetchBoardDetail }) {
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [fileUrlList, setFileUrlList] = useState([]);
   const { alert } = useContext(AlertContext);
 
   useEffect(() => {
     if (isModalOpen) {
-      setName(originName);
-      setSelectType(originType);
+      setTitle(origintitle);
+      setFileUrlList(originfileUrlList);
 
-      setContent(originContent);
+      setContent(origincontent);
       
     }
-  }, [isModalOpen, originName, originType, originContent]);
+  }, [isModalOpen, origintitle, origincontent, originfileUrlList]);
 
   const onChangeName = (e) => {
-    setName(e.target.value);
+    setTitle(e.target.value);
   }
 
   const handleEdit = async () => {
@@ -33,15 +32,15 @@ export default function EditNoticeboardModal({ isModalOpen, onClose, originName,
     // };
 
     // try {
-    //   const response = await request.patch(`/institution/${institutionId}`, requestData);
+    //   const response = await request.patch(`/institution/${boardId}`, requestData);
     //   console.log(response);
 
     //   if (response.isSuccess) {
     //     alert("기업/부트캠프 수정이 완료되었습니다!")
     //       .then(() => {
     //         onClose();
-    //         fetchWorkbook();
-    //         fetchWorkbookExplain();
+    //         fetchCommentList();
+    //         fetchBoardDetail();
     //       });
     //   }
     // } catch (error) {
@@ -62,7 +61,7 @@ export default function EditNoticeboardModal({ isModalOpen, onClose, originName,
 
           <itemS.LittleContainer>
             <itemS.StyledTitle>제목</itemS.StyledTitle>
-            <itemS.StyledInput type='text' value={name} onChange={onChangeName} />
+            <itemS.StyledInput type='text' value={title} onChange={onChangeName} />
           </itemS.LittleContainer>
 
           <itemS.LittleContainer>

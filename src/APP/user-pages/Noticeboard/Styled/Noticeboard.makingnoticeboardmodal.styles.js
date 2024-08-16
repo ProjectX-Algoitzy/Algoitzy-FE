@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens";
-import Select, { components } from 'react-select';
+
 
 export const ModalContainer = styled.div`
   display: flex;
@@ -91,10 +91,12 @@ export const TextArea = styled.textarea`
   border-radius: 0.167rem;
   border: 0.042rem solid ${tokens.colors.Grey_4};
   width: 24.583rem;
-  height: 2.333rem;
+  height: 4.333rem;
   color: ${tokens.colors.Grey_7};
   ${tokens.typography.B3_M_14};
   padding-left: 0.667rem;
+
+  resize: none; /* Prevents resizing */
 
   &::placeholder {
     color: ${tokens.colors.Grey_4};
@@ -113,5 +115,90 @@ export const Btn = styled.button`
   margin-bottom: 1.667rem;
   border-radius: 0.167rem;
   border: none;
+  cursor: pointer;
+`;
+
+//  파일
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  
+  // margin-top: 3rem;
+  // padding: 2rem;
+`;
+
+export const DropZone = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 24.583rem;
+  height: 5.583rem;
+  border: 2px dashed #cccccc;
+  border-radius: 10px;
+  color: #cccccc;
+  font-size: 0.75rem;
+  cursor: pointer;
+`;
+
+export const UploadFile = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 24.583rem;
+  height: 5.583rem;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  color: #cccccc;
+  font-size: 0.75rem;
+  // margin-top: 1rem;
+`;
+
+export const FileList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  // width: 100%;
+  // max-width: 580px;
+  // margin-top: 1rem;
+  overflow-y: auto;
+  max-height: 300px; /* 제한된 높이 */
+  
+`;
+
+export const FileItem = styled.li`
+
+  ${tokens.typography.B3_M_14};
+  // color: ${tokens.colors.Grey_3};
+  width: 23.083rem;
+  // padding: 0.5rem;
+  border-bottom: 1px solid #eeeeee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // margin: 0 0.3rem;
+`;
+
+export const RemoveButton = styled.button`
+  width: 2rem;
+  background-color: ${tokens.colors.White};
+  color: ${tokens.colors.Red};
+  border: 0.042rem solid ${tokens.colors.Red};
+  border-radius: 0.167rem;
+  cursor: pointer;
+  // margin-left: 0.6rem;
+  // padding: 0.25rem 0.5rem;
+`;
+
+export const UploadButton = styled.button`
+  background-color: ${tokens.colors.White};
+  color: ${tokens.colors.Blue_0_Main};
+  border: 0.042rem solid ${tokens.colors.Blue_0_Main};
+  border-radius: 0.267rem;
+  margin-top: 1rem;
+  // padding: 0.25rem 0.5rem;
   cursor: pointer;
 `;

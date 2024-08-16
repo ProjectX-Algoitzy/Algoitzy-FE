@@ -11,14 +11,14 @@ export default function NoticeboardTable({ boardList }) {
         <itemS.CategoryContainer>
           
           <itemS.CategoryNumber>번호</itemS.CategoryNumber>
-          <itemS.CategoryName>제목</itemS.CategoryName>
-          <itemS.CategoryView>최종 수정일</itemS.CategoryView>
+          <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+          <itemS.CategoryDate>최종 수정일</itemS.CategoryDate>
           
         </itemS.CategoryContainer>
         <itemS.TupleContainer>
           {boardList.map(item => (
             <NoticeboardTuple
-              key={item.institutionId}
+              key={item.boardId}
               item={item}
                 
             />

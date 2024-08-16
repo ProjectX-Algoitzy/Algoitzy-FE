@@ -27,14 +27,14 @@ export const TupleNumber = styled.div`
   height: 2.333rem;
 `;
 
-export const TupleName = styled.div`
+export const TupleTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 44rem;
+  width: 42rem;
   height: 2.333rem;
 `;
 
@@ -45,6 +45,6 @@ export const TupleView = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  width: 3rem;
+  width: 5rem;
   height: 2.333rem;
 `;

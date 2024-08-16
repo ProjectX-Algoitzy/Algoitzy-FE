@@ -5,15 +5,15 @@ import * as itemS from "./Styled/Noticeboard.noticeboard.tuple.styles";
 export default function NoticeboardTuple({ item }) {
   const navigate = useNavigate();
 
-  const onOpen = (boardId, name) => {
-    navigate(`/boarddetail/${boardId}`, { state: { name } });
+  const onOpen = (boardId) => {
+    navigate(`/boarddetail/${boardId}`);
   };
 
   return (
     <itemS.TupleContainer>
-      <itemS.TupleNumber onClick={() => onOpen(item.boardId, item.name)}>{item.boardId}</itemS.TupleNumber>
-      <itemS.TupleName onClick={() => onOpen(item.boardId, item.name)}>{item.name}</itemS.TupleName>
-      <itemS.TupleView onClick={() => onOpen(item.boardId, item.name)}>{item.viewCount}</itemS.TupleView>
+      <itemS.TupleNumber onClick={() => onOpen(item.boardId)}>{item.boardId}</itemS.TupleNumber>
+      <itemS.TupleTitle onClick={() => onOpen(item.boardId)}>{item.title}</itemS.TupleTitle>
+      <itemS.TupleView onClick={() => onOpen(item.boardId)}>{item.updatedTime}</itemS.TupleView>
     </itemS.TupleContainer>
   );
 }

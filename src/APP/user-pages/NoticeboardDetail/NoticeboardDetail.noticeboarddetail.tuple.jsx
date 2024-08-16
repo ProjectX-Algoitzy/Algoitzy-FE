@@ -6,10 +6,11 @@ import * as itemS from "./Styled/NoticeboardDetail.noticeboarddetail.tuple.style
 
 export default function NoticeboardDetailTuple({ item }) {
 
+  
   return (
     <div>
       <itemS.TupleContainer>
-        <itemS.TupleName>{item.name}</itemS.TupleName>
+        <itemS.TupleName>{item.createdName}</itemS.TupleName>
         <itemS.TupleContent>{item.content}</itemS.TupleContent>
       </itemS.TupleContainer>
     </div>

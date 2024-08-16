@@ -33,7 +33,7 @@ export const CategoryNumber = styled.div`
   width: 3rem;
 `;
 
-export const CategoryName = styled.div`
+export const CategoryTitle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,10 +41,10 @@ export const CategoryName = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 44rem;
+  width: 42rem;
 `;
 
-export const CategoryView = styled.div`
+export const CategoryDate = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -52,7 +52,7 @@ export const CategoryView = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 3rem;
+  width: 5rem;
 `;
 
 // 카테고리 파트 끝

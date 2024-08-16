@@ -38,11 +38,11 @@ const Root = styled.div`
 `;
 
 function App() {
-  useInterval(() => {
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      refreshToken();
-    }
-  }, 30000);
+  // useInterval(() => {
+  //   if (localStorage.getItem(ACCESS_TOKEN)) {
+  //     refreshToken();
+  //   }
+  // }, 30000);
 
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
     return !!localStorage.getItem(ACCESS_TOKEN);
@@ -73,8 +73,7 @@ function App() {
             <Route path="/enterbootlist" element={isLoggedIn() ? <EnterBootList /> : <Navigate to="/" />} />
             <Route path="/institutiondetail/:institutionId" element={isLoggedIn() ? <InstitutionDetail /> : <Navigate to="/" />} /> {/* 기업/부트캠프 상세조회 */}
             <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
-            <Route path="/boarddetail/:institutionId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
-            
+            <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
           </Routes>
           <Footer />

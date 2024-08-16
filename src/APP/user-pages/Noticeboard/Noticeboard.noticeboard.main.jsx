@@ -23,18 +23,18 @@ export default function Noticeboard() {
 		(_, i) => currentPageGroup * 5 + i
 	);
 
-  const fetchBoardList = async () => { // 기관 목록 조회
+  const fetchBoardList = async () => { // 게시판 목록 조회
 		try {
-			const response = await request.get(`/institution?searchKeyword=${searchKeyword}&page=${currentPage + 1}&size=${itemsPerPage}`);
+			const response = await request.get(`/board?searchKeyword=${searchKeyword}&page=${currentPage + 1}&size=${itemsPerPage}`);
 			if (response.isSuccess) {
-				console.log("기관 목록 조회 성공",response);
+				console.log("게시판 목록 조회 성공",response);
 				setBoardList(response.result.boardList);
         setTotalPages(Math.ceil(response.result.totalCount / itemsPerPage));
 			} else {
-				console.error("기관 목록 조회 실패:", response);
+				console.error("게시판 목록 조회 실패:", response);
 			}
 		} catch (error) {
-			console.error('기관 목록 조회 오류', error);
+			console.error('게시판 목록 조회 오류', error);
 		}
 	};
 

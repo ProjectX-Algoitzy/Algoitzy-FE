@@ -12,13 +12,13 @@ export default function InstitutionDetailTuple({ item, isSelected, onOpen, onClo
         <itemS.TupleTitle>{item.name}</itemS.TupleTitle>
       </itemS.TupleContainer>
       {isSelected && (
-          <WorkbookDetail
-            workbookId={item.workbookId}
-            workbookName={item.name}
-            isOpen={isSelected}
-            onClose={onClose}
-          />
-        )}
+        <WorkbookDetail
+          workbookId={item.workbookId}
+          workbookName={item.name}
+          isOpen={isSelected}
+          onClose={onClose}
+        />
+      )}
     </div>
   );
 }

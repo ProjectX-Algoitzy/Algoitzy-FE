@@ -44,6 +44,11 @@ function App() {
       }
     }
   }, 30000);
+  // useInterval(() => {
+  //   if (localStorage.getItem(ACCESS_TOKEN)) {
+  //     refreshToken();
+  //   }
+  // }, 30000);
 
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
     return !!localStorage.getItem(ACCESS_TOKEN);

@@ -40,7 +40,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
     display: flex;
     /* text-align: center; */
     width: 5.92rem;
-    height: 1.5rem;
+    min-height: 1.5rem;
     color: ${tokens.colors.Grey_8};
     ${tokens.typography.B3_M_14};
     border: 0.042rem solid ${tokens.colors.B_Grey_3};
@@ -51,7 +51,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
     top: -0.42rem;
     left: -0.042rem;
     width: 6.04rem;
-    height: 11.67rem;
+    height: auto;
     border-radius: 0.167rem;
     border: none;
     box-shadow: 0 0.083rem 0.167rem rgba(0, 0, 0, 0.1);
@@ -66,6 +66,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
     color: ${tokens.colors.Grey_8};
     ${tokens.typography.B3_M_14};
     border: none;
+    height: auto;
   }
   .react-select__option--is-selected:first-of-type {
     background-color: rgba(102, 201, 255, 0.2);
@@ -76,7 +77,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
     border: none;
     ${tokens.typography.B3_M_14};
     position: relative;
-    top: -0.17rem;
+    top: -0.17rem;  
   }
   .react-select__option--is-selected:last-of-type {
     background-color: rgba(102, 201, 255, 0.2);
@@ -93,6 +94,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
     color: ${tokens.colors.Grey_8};
     border: none;
     ${tokens.typography.B3_M_14};
+    
   }
   .react-select__option--is-focused {
     background-color: transparent;
@@ -102,7 +104,6 @@ export const WeeksSelectContainer = styled(Select).attrs({
     background-color: transparent;
   }
   .react-select__single-value {
-    width: 100%;
     text-align: center;
     padding-left: 1.13rem;
   }

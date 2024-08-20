@@ -22,6 +22,7 @@ import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDet
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
+import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 
@@ -35,11 +36,19 @@ const Root = styled.div`
 `;
 
 function App() {
-  useInterval(() => {
+  useInterval(async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
-      refreshToken();
+      const isTokenValid = await checkToken();
+      if (isTokenValid) {
+        await refreshToken();
+      }
     }
   }, 30000);
+  // useInterval(() => {
+  //   if (localStorage.getItem(ACCESS_TOKEN)) {
+  //     refreshToken();
+  //   }
+  // }, 30000);
 
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
     return !!localStorage.getItem(ACCESS_TOKEN);

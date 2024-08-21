@@ -2,11 +2,11 @@ import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
-  width: 14.29rem;
   display: flex;
   flex-direction: column;
-  padding-right: 1.33rem;
-  border-right: 0.042rem solid ${tokens.colors.Grey_4};
+  padding-right: 1.333rem;
+  border-right: 0.063rem solid ${tokens.colors.Grey_4};
+  margin-left: 15rem;
 `;
 
 export const InnerContainer = styled.div`

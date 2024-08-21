@@ -308,15 +308,15 @@ export default function WritingApplication() {
                     >
                       {selectedOptions[question.sequence] && selectedOptions[question.sequence].includes(field.fieldId) ? (
                         question.multiSelect ? (
-                          <img src="/img/checkedsquare.png" alt="복수응답" style={{ width: "0.833rem", height: "0.833rem" }} />
+                          <img src="/img/checkedsquare.png" alt="복수응답" style={{ width: "0.833rem", height: "0.833rem", cursor:"pointer" }} />
                         ) : (
-                          <img src="/img/checkedcircleicon.png" alt="단일응답" style={{ width: "0.833rem", height: "0.833rem" }} />
+                          <img src="/img/checkedcircleicon.png" alt="단일응답" style={{ width: "0.833rem", height: "0.833rem", cursor:"pointer" }} />
                         )
                       ) : (
                         question.multiSelect ? (
-                          <img src="/img/iconsquare.png" alt="복수응답" style={{ width: "0.833rem", height: "0.833rem" }} />
+                          <img src="/img/iconsquare.png" alt="복수응답" style={{ width: "0.833rem", height: "0.833rem", cursor:"pointer" }} />
                         ) : (
-                          <img src="/img/iconcircle.png" alt="단일응답" style={{ width: "0.833rem", height: "0.833rem" }} />
+                          <img src="/img/iconcircle.png" alt="단일응답" style={{ width: "0.833rem", height: "0.833rem", cursor:"pointer" }} />
                         )
                       )}
                       <items.ChoiceForSelectQuestionContainer>{field.context}</items.ChoiceForSelectQuestionContainer>

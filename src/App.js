@@ -24,6 +24,7 @@ import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDet
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
+import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
@@ -38,6 +39,14 @@ const Root = styled.div`
 `;
 
 function App() {
+useInterval(async () => {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      const isTokenValid = await checkToken();
+      if (isTokenValid) {
+        await refreshToken();
+      }
+    }
+  }, 30000);
   // useInterval(() => {
   //   if (localStorage.getItem(ACCESS_TOKEN)) {
   //     refreshToken();

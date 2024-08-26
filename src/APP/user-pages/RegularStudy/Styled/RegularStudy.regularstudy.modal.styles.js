@@ -10,26 +10,29 @@ export const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* 수직 중앙 정렬 */
   z-index: 1000;
+  padding: 1rem; /* 모달이 화면에 붙지 않도록 여백 추가 */
 `;
 
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  /* padding: 0.83rem; */
+  padding: 1rem; /* 모달 내부에 패딩 추가 */
   border-radius: 0.33rem;
   width: 41.13rem;
-  height: 39.83rem;
+  max-width: 90%; /* 화면 크기에 맞춰 모달 크기를 조정 */
+  max-height: 90%; /* 화면 크기에 맞춰 모달 크기를 조정 */
   box-shadow: 0 0.083rem 0.42rem rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* 추가된 부분 */
+  overflow-y: auto; /* 내용이 넘칠 때 스크롤 가능하도록 */
 `;
 
 export const FirstSentence = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 0.5rem; /* 내부에 패딩 추가 */
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
 `;
 
@@ -101,9 +104,10 @@ export const BtnContainer = styled.div`
   display: flex;
   width: 31.38rem;
   justify-content: center;
+  margin-top: 1rem; /* 버튼 위에 여백 추가 */
 `;
 
-export const Btn = styled.button` /*개설하기 버튼*/
+export const Btn = styled.button` /* 개설하기 버튼 */
   margin-bottom: 3.25rem;
   width: 14.33rem;
   height: 2rem;
@@ -111,6 +115,6 @@ export const Btn = styled.button` /*개설하기 버튼*/
   border: none;
   cursor: pointer;
   color: ${tokens.colors.White};
-  ${tokens.typography.T5_SB_16}
+  ${tokens.typography.T5_SB_16};
   background-color: ${tokens.colors.Blue_0_Main};
 `;

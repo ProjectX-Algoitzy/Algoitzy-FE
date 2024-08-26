@@ -19,11 +19,15 @@ import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularSt
 import CurriculumCheck from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.curriculumcheck";
 import EnterBootList from "./APP/user-pages/EnterpriseBootcampList/EnterpriseBootcampList.enterprisebootcamplist.main";
 import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
+import Noticeboard from "./APP/user-pages/Noticeboard/Noticeboard.noticeboard.main";
+import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDetail.noticeboarddetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
+import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
+import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 
 const Root = styled.div`
   position: absolute;
@@ -35,11 +39,19 @@ const Root = styled.div`
 `;
 
 function App() {
-  useInterval(() => {
+useInterval(async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
-      refreshToken();
+      const isTokenValid = await checkToken();
+      if (isTokenValid) {
+        await refreshToken();
+      }
     }
   }, 30000);
+  // useInterval(() => {
+  //   if (localStorage.getItem(ACCESS_TOKEN)) {
+  //     refreshToken();
+  //   }
+  // }, 30000);
 
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
     return !!localStorage.getItem(ACCESS_TOKEN);
@@ -69,6 +81,9 @@ function App() {
             <Route path="/apply" element={isLoggedIn() ? <ApplyRegularStudy /> : <Navigate to="/" />} />
             <Route path="/enterbootlist" element={isLoggedIn() ? <EnterBootList /> : <Navigate to="/" />} />
             <Route path="/institutiondetail/:institutionId" element={isLoggedIn() ? <InstitutionDetail /> : <Navigate to="/" />} /> {/* 기업/부트캠프 상세조회 */}
+            <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
+            <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
+            <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
           </Routes>
           <Footer />
       </BrowserRouter>

@@ -81,7 +81,7 @@ export default function AttendanceModal({ week, onClose }) {
 
                     <img 
                         src='/img/btnadd.png' 
-                        style={{ marginBottom: "32px", width: "753px", height: "56px", cursor: "pointer" }} 
+                        style={{ marginBottom: "32px", width:"31.38rem", cursor: "pointer" }} 
                         onClick={handleAddProblemItem} 
                     />
 

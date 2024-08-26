@@ -14,7 +14,7 @@ export default function RegularStudyMocktest() {
     const CustomDropdownIndicator = props => {
       return (
         <components.DropdownIndicator {...props}>
-          <img src="/img/triangle.png" alt="triangle-icon" style={{ width: "24px", height: "24px"}} />
+          <img src="/img/triangle.png" alt="triangle-icon" style={{ width: "1rem", height: "1rem"}} />
         </components.DropdownIndicator>
       );
     };
@@ -104,7 +104,7 @@ export default function RegularStudyMocktest() {
                   </itemS.TableCell>
                   <itemS.TableCell></itemS.TableCell>
                   <itemS.TableCell>
-                    <img src={row.levelImg} alt="level" style={{ width: "19.5px", height: "25px", marginLeft: "5px" }} />
+                    <img src={row.levelImg} alt="level" style={{ width: "0.813rem", height: "1.042rem", marginLeft: "0.208rem" }} />
                   </itemS.TableCell>
                 </itemS.TableRow>
               ))}

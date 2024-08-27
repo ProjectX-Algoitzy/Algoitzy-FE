@@ -27,12 +27,18 @@ export const StyledLink = styled(Link)`
 export const HeaderLeftWrap = styled.div`
   display: flex;
   margin-right: 15.92rem;
+  @media (max-width: 600px) {
+      margin: 0;
+  }
 `;
 
 export const Rabel = styled.img`
   margin-top: 0.42rem;
   width: 7.46rem;
   height: 1.67rem;
+  @media (max-width: 600px) {
+      margin: 0.5rem;
+  }
 `;
 
 export const HeaderRightWrap = styled.div`
@@ -49,6 +55,9 @@ export const PageLink = styled.div`
   height: 0.88rem;
   margin: 0 0.25rem;
   ${tokens.typography.T5_SB_16};
+  @media (max-width: 600px) {
+      margin: 0;
+  }
 `;
 
 export const AdminName = styled.div`
@@ -56,6 +65,9 @@ export const AdminName = styled.div`
   height: 0.88rem;
   ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
+  @media (max-width: 600px) {
+     margin: 0;
+  }
   cursor: pointer;
 `;
 

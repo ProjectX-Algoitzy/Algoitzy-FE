@@ -32,7 +32,7 @@ export const ApplicationName = styled.div`
   flex-direction: column;
   ${tokens.typography.H2_SB_48};
   color: ${tokens.colors.Grey_8};
-  margin-left: 1.333rem;
+  margin-left: 1rem;
   justify-content: center; 
   background-color: ${tokens.colors.White};
   margin-top: 1.833rem;
@@ -45,7 +45,7 @@ export const StudySelectContainer = styled.div`
   align-items: center;
   justify-content: center;
   ${tokens.typography.B3_M_14};
-  margin-left: 1.333rem;
+  margin-left: 1rem;
   margin-bottom: 1.667rem;
   width: 8.75rem;
   height: 2rem;
@@ -88,6 +88,7 @@ export const QuestionContainer = styled.div` /* 질문과 필수답변 여부를
   border: none;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Grey_8};
+  white-space: pre-wrap;
 `;
 
 export const NecessaryImg = styled.img` /*필수질문일 때 넣을 별표이미지를 꾸며주는 스타일드 컴포넌트*/
@@ -108,13 +109,33 @@ export const SelectAndAnswerContainer = styled.div` /*주관식 응답과 객관
   align-items: center;
 `;
 
-export const AnswerInputContainer = styled.input` /*스터디원이 주관식 질문에 답하기 위한 input콘테이너 */  
+// export const AnswerInputContainer = styled.textarea` /*스터디원이 주관식 질문에 답하기 위한 input콘테이너 */  
+//   margin-top: 0.667rem;
+//   height: 2rem;
+//   width: 100%;
+//   border: none;
+//   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
+//   ${tokens.typography.B2_M_16};
+//   resize: none;
+//   overflow: hidden; /* 스크롤 숨기기 */
+
+//   &::placeholder {
+//     color: ${tokens.colors.Grey_5};
+//   }
+
+//   &:focus {
+//     outline: none; /* 클릭 시 테두리 제거 */
+//   }
+// `;
+
+export const AnswerInputContainer = styled.textarea`
   margin-top: 0.667rem;
-  height: 2rem;
   width: 100%;
   border: none;
   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
   ${tokens.typography.B2_M_16};
+  resize: none;
+  overflow: hidden; /* 스크롤 숨기기 */
 
   &::placeholder {
     color: ${tokens.colors.Grey_5};

@@ -118,6 +118,21 @@ export default function WritingApplication() {
       setLoading(false);
     }
   };
+
+  const adjustTextAreaHeight = (id) => {
+    const textArea = document.getElementById(id);
+    if (textArea) {
+      textArea.style.height = 'auto'; // 높이 초기화
+      textArea.style.height = `${textArea.scrollHeight}px`; // 내용에 맞게 높이 조정
+    }
+  };
+  
+  useEffect(() => {
+    // 페이지가 로드된 후 모든 textarea의 높이를 조정
+    Object.keys(textAnswers).forEach(questionId => {
+      adjustTextAreaHeight(`textarea-${questionId}`);
+    });
+  }, [textAnswers]); // textAnswers가 변경될 때마다 높이 조정
   
 
   useEffect(() => {
@@ -180,6 +195,8 @@ export default function WritingApplication() {
       ...prevTextAnswers,
       [questionId]: text,
     }));
+    // 텍스트가 변경될 때마다 `textarea` 높이를 조절합니다.
+    adjustTextAreaHeight(`textarea-${questionId}`);
   };
   
   const WriteApplicationForm = async (distribution) => {
@@ -227,13 +244,6 @@ export default function WritingApplication() {
       }
     } catch (error) {
       console.error("지원서 " + (distribution ? "저장" : "임시저장") + " 오류", error);
-      // alert("지원서 " + (distribution ? "저장" : "임시저장") + " 실패하였습니다");
-
-      if(error.response.data.code === "COMMON4000") {
-        // setErrorMessage(error.response.data.message);
-        alert(error.response.data.message);
-        return;
-      }
     }
   };
 
@@ -325,7 +335,7 @@ export default function WritingApplication() {
                 </items.SelectContainer>
               ) : (
                 <items.AnswerInputContainer
-                  type='text'
+                  id={`textarea-${question.sequence}`} /* id 추가 */
                   placeholder='답변을 적어주세요'
                   value={textAnswers[question.sequence] || ''}
                   onChange={e => handleTextChange(question.sequence, e.target.value)}

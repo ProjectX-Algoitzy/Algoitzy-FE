@@ -14,7 +14,7 @@ export default function Langding() {
       try {
         // const response = await request.get(`/generation/max`);
         const response = await axios.get('https://user-dev.kau-koala.com/generation/max');
-        console.log("스터디 최신 기수 api", response);
+        // console.log("스터디 최신 기수 api", response);
         setDetailRecentGeneration(response.data.result);
         if (response.data["isSuccess"]) {
           console.log("api 연동 성공");

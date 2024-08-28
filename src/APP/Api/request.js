@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getAlertFunction } from '../Common/Alert/alertSingleton';
 
 export const ACCESS_TOKEN = 'accessToken';
 
@@ -17,7 +18,26 @@ request.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (error) => {
+  async (error) => {
+    // Use the singleton to access the alert function
+    const alert = getAlertFunction();
+    
+    if (error.response && error.response.data) {
+      const { data, status } = error.response;
+      const code = data.code;
+      const message = data.message;
+
+      switch (code) {
+        case 'NOTICE':
+          console.error(`노티스 에러: ${message}`, error);
+          await alert(message);
+          break;
+        default:
+          console.error(`Unexpected error: ${message}`, error);
+          break;
+      }
+    }
+
     return Promise.reject(error);
   }
 );

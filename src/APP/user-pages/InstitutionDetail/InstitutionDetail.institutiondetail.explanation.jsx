@@ -5,8 +5,10 @@ export default function InstitutionDetailExplanation({ content }) {
    
     
   return (
-    <itemS.CategoryContainer>
-      <div dangerouslySetInnerHTML={{ __html: content }}></div>
-    </itemS.CategoryContainer>
+    <itemS.Container>
+        <itemS.CategoryContainer>
+          <div dangerouslySetInnerHTML={{ __html: content }}></div>
+        </itemS.CategoryContainer>
+    </itemS.Container>
   );
 }

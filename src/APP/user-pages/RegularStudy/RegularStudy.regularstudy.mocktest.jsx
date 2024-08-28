@@ -9,6 +9,7 @@ export default function RegularStudyMocktest() {
   const [week, setWeek] = useState(1);
   const [weekData, setWeekData] = useState({});
   const [workbookId, setWorkbookId] = useState(null);
+  const [errorMesssage, setErrorMesssage] = useState(null);
 
   const WeeksSelect = ({ value, onChange }) => {
     const CustomDropdownIndicator = props => {
@@ -71,6 +72,7 @@ export default function RegularStudyMocktest() {
       }
     } catch (error) {
       console.error('API error:', error);
+      setErrorMesssage(error.response.data.message);
     }
   };
 
@@ -113,7 +115,7 @@ export default function RegularStudyMocktest() {
         </>
       ) : (
         <>
-          <itemS.ComingSoonContainer>준비 중입니다.</itemS.ComingSoonContainer>
+          <itemS.ComingSoonContainer>{errorMesssage}</itemS.ComingSoonContainer>
         </>
       )}
         

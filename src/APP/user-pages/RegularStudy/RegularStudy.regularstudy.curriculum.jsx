@@ -39,7 +39,7 @@ export default function RegularStudyCurriculum() {
   if (error) return (
     <itemS.Container>
       <itemS.Title>커리큘럼</itemS.Title>
-      <itemS.CanNotEnterContainer>todo</itemS.CanNotEnterContainer>
+      <itemS.CanNotEnterContainer>{error}</itemS.CanNotEnterContainer>
     </itemS.Container>
   );
 

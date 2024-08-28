@@ -339,6 +339,8 @@ export default function Signup() {
       }
     } catch (error) {
       console.error("회원가입 오류:", error);
+      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result?.email || error.response?.data?.result?.password || error.response?.data?.result || error.response?.data?.message || "회원가입 오류 발생";
+      alert(String(errorMessage))  // 문자열로 변환 보장
     }
   };
 

@@ -13,7 +13,7 @@ export default function Langding() {
     const getRecentGeneration = async() => {
       try {
         // const response = await request.get(`/generation/max`);
-        const response = await axios.get('https://user-dev.kau-koala.com/generation/max');
+        const response = await axios.get('https://user-api.kau-koala.com/generation/max');
         // console.log("스터디 최신 기수 api", response);
         setDetailRecentGeneration(response.data.result);
         if (response.data["isSuccess"]) {
@@ -28,7 +28,7 @@ export default function Langding() {
     const getStudyCount = async() => {
       try {
         // const response = await request.get(`study/count`);
-        const response = await axios.get('https://user-dev.kau-koala.com/study/count');
+        const response = await axios.get('https://user-api.kau-koala.com/study/count');
         console.log("최신 기수 스터디 개수 api", response);
         setDetailStudyCount(response.data.result);
         if (response.data["isSuccess"]) {

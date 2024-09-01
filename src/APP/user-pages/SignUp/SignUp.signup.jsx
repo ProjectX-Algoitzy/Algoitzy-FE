@@ -169,7 +169,7 @@ export default function Signup() {
     formData.append('multipartFileList', file);
   
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
+      const response = await axios.post('https://user-api.kau-koala.com/s3', formData);
       if (response.data.isSuccess) {
         const newProfileUrl = response.data.result[0];
         console.log('파일 업로드 성공:', newProfileUrl);
@@ -187,7 +187,7 @@ export default function Signup() {
   const handleFileDelete = async (profileUrl) => {
     try {
       // URL에 profileUrl을 포함시킴
-      const url = `https://user-dev.kau-koala.com/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
+      const url = `https://user-api.kau-koala.com/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
   
       // console.log('삭제 URL:', url);
   
@@ -326,7 +326,7 @@ export default function Signup() {
     };
     console.log("requestData",requestData);
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/sign-up', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("회원가입 성공!");
@@ -350,7 +350,7 @@ export default function Signup() {
       handle: handle,
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/handle', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/sign-up/handle', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("백준 유효 계정 인증 성공!");
@@ -379,7 +379,7 @@ export default function Signup() {
       code: SMSCode
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/phone-number', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/sign-up/phone-number', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
@@ -413,7 +413,7 @@ export default function Signup() {
       code: emailCode
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/email', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/sign-up/email', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("이메일 인증 성공!");
@@ -445,7 +445,7 @@ export default function Signup() {
       emailList: [email],
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/email', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("이메일 인증 코드 전송 성공!");
@@ -474,7 +474,7 @@ export default function Signup() {
       phoneNumber: phone,
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sms/certification', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/sms/certification', requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("SMS 인증 코드 전송 성공!");

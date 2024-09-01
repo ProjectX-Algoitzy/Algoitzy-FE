@@ -5,7 +5,7 @@ export const checkToken = async () => {
     const requestData = {
       accessToken: `${window.localStorage.getItem(ACCESS_TOKEN)}`,
     };
-    const response = await request.post('https://user-dev.kau-koala.com/member/check-token', requestData);
+    const response = await request.post('https://user-api.kau-koala.com/member/check-token', requestData);
     console.log("토큰 체크 성공", response);
     const isTokenValid = response.result;
     return isTokenValid;

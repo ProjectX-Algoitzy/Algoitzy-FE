@@ -51,7 +51,7 @@ export default function AttendanceModal({ week, onClose }) {
                 }
             } catch (error) {
                 console.error('출석 인증 요청 실패:', error);
-                alert(error.response.data.result.problemUrlListValidate);
+                // alert(error.response.data.result.problemUrlListValidate);
             }
         }
     };

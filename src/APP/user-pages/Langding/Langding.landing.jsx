@@ -62,7 +62,7 @@ export default function Langding() {
   return (
     <itemS.HomeWrap>
       <itemS.NormalWrap>
-        <itemS.FirstSentence>코딩테스트 준비해!!!!!!</itemS.FirstSentence>
+        <itemS.FirstSentence>코딩테스트 준비,</itemS.FirstSentence>
         <itemS.FirstSentence>KOALA와 함께 하세요</itemS.FirstSentence>
         <itemS.SecondSentence>{detailStudyCount}개의 스터디가 당신을 기다리고 있어요!</itemS.SecondSentence>
         <Link style={{textDecoration:"none"}} to={isLoggedIn ? "/apply" : "/login"}><itemS.BtnStudyApply>{detailRecentGeneration}기 스터디 지원하기</itemS.BtnStudyApply></Link>

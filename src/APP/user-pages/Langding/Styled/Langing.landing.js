@@ -5,7 +5,7 @@ export const HomeWrap = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: column; 
-  background-color: white;
+  background-image: url('/img/landing-background.png');
 `;
 
 export const NormalWrap = styled.div` 

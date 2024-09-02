@@ -59,7 +59,7 @@ export const Icon = styled.img`
 
 // 입력 박스
 export const InputBox = styled.input`
-	width: 13.5rem;
+	width: 16.083rem;
 	height: 2.33rem;
 	border: 0.042rem solid ${tokens.colors.Grey_4};
 	border-radius: 0.17rem;

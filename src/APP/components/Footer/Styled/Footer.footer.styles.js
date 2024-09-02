@@ -1,12 +1,23 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
+// export const FooterContainer = styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     width: 100%;
+//     height: 9.17rem;
+//     background-color: #F6F9FB;
+//     align-items: center;
+//     justify-content: space-between;
+// `;
+
 export const FooterContainer = styled.div`
-    display: flex;
-    flex-direction: row;
+    position: absolute;
+    bottom: 0;
     width: 100%;
     height: 9.17rem;
     background-color: #F6F9FB;
+    display: flex;
     align-items: center;
     justify-content: space-between;
 `;

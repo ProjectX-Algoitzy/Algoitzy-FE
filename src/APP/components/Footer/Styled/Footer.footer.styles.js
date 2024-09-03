@@ -25,13 +25,19 @@ export const FooterContainer = styled.div`
 export const FooterLeftWrap = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: 15rem;
+    margin-left: 12rem;
+    @media (max-width: 600px) {
+        margin-left: 5rem;
+    }
 `;
 
 export const FooterRightWrap = styled.div`
     display: flex;
     flex-direction: row;
-    margin-right: 15rem;
+    margin-right: 12rem;
+    @media (max-width: 600px) {
+        margin-right: 5rem;
+    }
 `;
 
 export const Sentence1 = styled.div`

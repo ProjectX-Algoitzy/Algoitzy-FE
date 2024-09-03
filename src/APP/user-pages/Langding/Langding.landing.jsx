@@ -23,7 +23,7 @@ export default function Langding() {
         console.error('스터디 최근 기수 조회 오류', error);
       }
     };
-    const getStudyCount = async() => {
+    const getStudyCount = async() => { 
       try {
         const response = await axios.get('https://user-api.kau-koala.com/study/count');
         setDetailStudyCount(response.data.result);

@@ -17,7 +17,8 @@ export const HeaderWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 0 1rem;
 `;
 
 export const StyledLink = styled(Link)`
@@ -26,13 +27,18 @@ export const StyledLink = styled(Link)`
 
 export const HeaderLeftWrap = styled.div`
   display: flex;
-  margin-right: 15.92rem;
+  @media (max-width: 600px) {
+      margin: 0;
+  }
 `;
 
 export const Rabel = styled.img`
   margin-top: 0.42rem;
   width: 7.46rem;
   height: 1.67rem;
+  @media (max-width: 600px) {
+      margin: 0.5rem;
+  }
 `;
 
 export const HeaderRightWrap = styled.div`
@@ -49,6 +55,9 @@ export const PageLink = styled.div`
   height: 0.88rem;
   margin: 0 0.25rem;
   ${tokens.typography.T5_SB_16};
+  @media (max-width: 600px) {
+      margin: 0;
+  }
 `;
 
 export const AdminName = styled.div`
@@ -56,6 +65,11 @@ export const AdminName = styled.div`
   height: 0.88rem;
   ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
+  margin-right: 2.08rem;
+  @media (max-width: 600px) {
+     margin-left: 1rem;
+     margin-right: 0;
+  }
   cursor: pointer;
 `;
 
@@ -63,6 +77,12 @@ export const Btn = styled.button`
   ${tokens.Btns.Btn_ghost_default}
   ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
+  @media (max-width: 600px) {
+     ${tokens.typography.T6_SB_14};
+  }
+  @media (max-width: 300px) {
+     ${tokens.typography.T7_SB_12};
+  }
 `;
 
 export const SubStudyMenu = styled.div`
@@ -70,11 +90,14 @@ export const SubStudyMenu = styled.div`
   align-items: center;
   width: 100%;
   height: 2.5rem;
-  padding-left: 45.63rem;
+  padding-left: 69vw;
   background-color: ${tokens.colors.B_Grey_1};
   position: fixed;
   top: 3.33rem;
   z-index: 999;
+  @media (max-width: 600px) {
+    padding-left: 18rem;
+  }
 `;
 
 export const SubCodingMenu = styled.div`
@@ -82,11 +105,14 @@ export const SubCodingMenu = styled.div`
   align-items: center;
   width: 100%;
   height: 2.5rem;
-  padding-left: 52.08rem;
+  padding-left: 78vw;
   background-color: ${tokens.colors.B_Grey_1};
   position: fixed;
   top: 3.33rem;
   z-index: 999;
+  @media (max-width: 600px) {
+    padding-left: 24rem;
+  }
 `;
 
 export const SubMenuItem = styled.div`

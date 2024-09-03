@@ -38,6 +38,7 @@ import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 //   width: 100%;
 // `;
 
+
 const Root = styled.div`
   position: absolute;
   top: 0;

@@ -29,13 +29,25 @@ import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 
+// const Root = styled.div`
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   right: 0;
+//   left: 0;
+//   width: 100%;
+// `;
+
 const Root = styled.div`
   position: absolute;
   top: 0;
-  bottom: 0;
-  right: 0;
   left: 0;
   width: 100%;
+  min-height: 100vh; /* Root가 화면의 전체 높이를 차지하도록 설정 */
+`;
+
+const ContentWrapper = styled.div`
+  padding-bottom: 9.17rem; /* 푸터 높이만큼의 여백을 추가 */
 `;
 
 function App() {
@@ -63,6 +75,7 @@ useInterval(async () => {
       <BrowserRouter>
         <ScrollToTop />
           <Header />
+          <ContentWrapper>
           <Routes>
             <Route path="/" element={<Langding />} />
             <Route path="*" element={<Navigate to="/" />} /> {/* 모든 다른 경로는 홈으로 리다이렉트 */}
@@ -85,6 +98,7 @@ useInterval(async () => {
             <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
           </Routes>
+          </ContentWrapper>
           <Footer />
       </BrowserRouter>
     </Root>

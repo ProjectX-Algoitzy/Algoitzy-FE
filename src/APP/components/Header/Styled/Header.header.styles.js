@@ -66,7 +66,7 @@ export const AdminName = styled.div`
   ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
   @media (max-width: 600px) {
-     margin: 0;
+     margin: 0 1.25rem;
   }
   cursor: pointer;
 `;
@@ -75,6 +75,15 @@ export const Btn = styled.button`
   ${tokens.Btns.Btn_ghost_default}
   ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 600px) {
+     ${tokens.typography.T6_SB_14};
+  }
+  @media (max-width: 300px) {
+     ${tokens.typography.T7_SB_12};
+  }
 `;
 
 export const SubStudyMenu = styled.div`

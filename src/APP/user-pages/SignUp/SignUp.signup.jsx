@@ -48,7 +48,8 @@ export default function Signup() {
   // 프로필 이미지 
   const fileInputRef = useRef(null);
   const [file, setFile] = useState(null);
-  const [profileUrl, setProfileUrl] = useState('img/baseprofile.svg');
+  const [profileUrl, setProfileUrl] = useState('img/baseprofile.svg'); // 렌더링용
+  const [profile, setProfile] = useState(null); // api용
   const [previousProfileUrl, setPreviousProfileUrl] = useState(null);
 
   const [timerStarted, setTimerStarted] = useState(false);
@@ -185,6 +186,7 @@ export default function Signup() {
         // console.log('이전:', profileUrl);
         setPreviousProfileUrl(profileUrl); 
         setProfileUrl(newProfileUrl);
+        setProfile(newProfileUrl);
       } else {
         console.error('파일 업로드 실패:', response.data);
       }
@@ -323,7 +325,7 @@ export default function Signup() {
   const handleSubmit = async () => {
    
     const requestData = {
-      profileUrl: profileUrl,
+      profileUrl: profile,
       email: email,
       password: password,
       checkPassword: passwordConfirmation, 

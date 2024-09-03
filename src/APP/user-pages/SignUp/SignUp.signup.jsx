@@ -15,18 +15,27 @@ const gradeOptions = [
 const gradePlaceholderText = '학년을 선택해주세요.';
 
 const majorOptions = [
-  {value: "소프트웨어학과", label:"소프트웨어학과"},
-  {value: "기계항공학과", label:"기계항공학과"},
+  {value: "항공우주공학과", label:"항공우주공학과"},
+  {value: "기계항공공학과", label:"기계항공공학과"},
   {value: "신소재공학과", label:"신소재공학과"},
+  {value: "항공우주 및 기계공학부", label:"항공우주 및 기계공학부"},
+  {value: "항공전자정보공학부", label:"항공전자정보공학부"},
   {value: "스마트드론공학과", label:"스마트드론공학과"},
-  {value: "항공물류학과", label:"항공물류학과"},
-  {value: "AI자율주행시스템공학과", label:"AI자율주행시스템공학과"},
-  {value: "항공운항학과", label:"항공운항학과"},
+  {value: "공과대학 융합전공", label:"공과대학 융합전공"},
+  {value: "소프트웨어학과", label:"소프트웨어학과"},
   {value: "전기전자공학과", label:"전기전자공학과"},
   {value: "컴퓨터공학과", label:"컴퓨터공학과"},
-  {value: "항공우주공학과", label:"항공우주공학과"},
+  {value: "AI자율주행시스템공학과", label:"AI자율주행시스템공학과"},
+  {value: "AI융합대학 융합전공", label:"AI융합대학 융합전공"},
+  {value: "항공교통물류학부", label:"항공교통물류학부"},
+  {value: "항공경영학과", label:"항공경영학과"},
+  {value: "경영학과", label:"경영학과"},
+  {value: "항공운항학과", label:"항공운항학과"},
+  {value: "국제교류학부", label:"국제교류학부"},
+  {value: "경영학부", label:"경영학부"},
+  {value: "항공ㆍ경영대학 융합전공", label:"항공ㆍ경영대학 융합전공"},
   {value: "자유전공학부", label:"자유전공학부"},
-  {value: "경영학과", label:"경영학과"}
+  {value: "인문자연학부", label:"인문자연학부"}
 ]
 
 const majorPlaceholderText = '학과를 선택해주세요.';

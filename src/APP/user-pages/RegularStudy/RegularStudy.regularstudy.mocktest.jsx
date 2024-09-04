@@ -9,7 +9,7 @@ export default function RegularStudyMocktest() {
   const [week, setWeek] = useState(1);
   const [weekData, setWeekData] = useState({});
   const [workbookId, setWorkbookId] = useState(null);
-  const [errorMesssage, setErrorMesssage] = useState(null);
+  const [errorMesssage, setErrorMesssage] = useState("아직 준비중입니다");
 
   const WeeksSelect = ({ value, onChange }) => {
     const CustomDropdownIndicator = props => {
@@ -72,7 +72,9 @@ export default function RegularStudyMocktest() {
       }
     } catch (error) {
       console.error('API error:', error);
-      setErrorMesssage(error.response.data.message);
+      if(error?.response?.data?.code === "NOTICE") {
+        setErrorMesssage(error.response.data.message);
+      }
     }
   };
 
@@ -93,7 +95,7 @@ export default function RegularStudyMocktest() {
         <>
           <itemS.TableContainer>
             <itemS.Table>
-              <itemS.TableHead>백준번호</itemS.TableHead>
+              <itemS.TableHead>백준 번호</itemS.TableHead>
               <itemS.TableHead>제목</itemS.TableHead>
               <itemS.TableHead></itemS.TableHead>
               <itemS.TableHead>레벨</itemS.TableHead>
@@ -102,7 +104,7 @@ export default function RegularStudyMocktest() {
                 <itemS.TableRow key={index}>
                   <itemS.TableCell>{row.id}</itemS.TableCell>
                   <itemS.TableCell>
-                    <a href={row.baekjoonUrl} target="_blank" rel="noopener noreferrer">{row.title}</a>
+                    <a href={row.baekjoonUrl} style={{ textDecoration: 'none'}} target="_blank" rel="noopener noreferrer">{row.title}</a>
                   </itemS.TableCell>
                   <itemS.TableCell></itemS.TableCell>
                   <itemS.TableCell>

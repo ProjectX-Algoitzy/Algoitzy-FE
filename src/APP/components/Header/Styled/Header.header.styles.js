@@ -18,7 +18,10 @@ export const HeaderWrap = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 5rem;
+  @media (max-width: 600px) {
+      padding: 0 0.33rem;
+  }
 `;
 
 export const StyledLink = styled(Link)`

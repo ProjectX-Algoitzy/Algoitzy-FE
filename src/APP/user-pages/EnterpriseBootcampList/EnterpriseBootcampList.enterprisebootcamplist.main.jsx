@@ -164,3 +164,4 @@ export default function EnterBootList() {
     </itemS.OuterContainer>
   );
 }
+

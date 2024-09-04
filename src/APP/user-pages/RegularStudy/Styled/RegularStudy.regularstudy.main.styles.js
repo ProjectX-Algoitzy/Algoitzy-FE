@@ -10,6 +10,7 @@ export const Container = styled.div`
   display: flex;
   margin-top: 3.33rem;
   overflow: auto; 
+  padding-left: 2rem;
   padding-right: 15rem;
   justify-content: center; 
   

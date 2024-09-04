@@ -131,6 +131,7 @@ export const SelectAndAnswerContainer = styled.div` /*주관식 응답과 객관
 export const AnswerInputContainer = styled.textarea`
   margin-top: 0.667rem;
   width: 100%;
+  height: auto;
   border: none;
   border-bottom: 1px solid ${tokens.colors.B_Grey_4};
   ${tokens.typography.B2_M_16};

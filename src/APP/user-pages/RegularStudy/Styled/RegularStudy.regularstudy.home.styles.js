@@ -7,6 +7,11 @@ export const Container = styled.div`
   padding-left: 1.33rem;
   height: 100%;
   width: 33.04rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    padding-right: 1.33rem;
+  }
 `;
 
 export const Title = styled.div`

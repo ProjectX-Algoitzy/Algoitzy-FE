@@ -6,6 +6,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 1.33rem;
+  padding-bottom: 1.33rem;
   height: 100%;
 `;
 
@@ -112,10 +113,9 @@ export const WeeksSelectContainer = styled(Select).attrs({
   classNamePrefix: 'react-select',
 })`
   .react-select__control {
-    padding-left: 7px;
     display: flex;
     width: 5.92rem;
-    height: 1.5rem;
+    height: 2rem;
     color: ${tokens.colors.Grey_8};
     ${tokens.typography.B3_M_14};
     border: 0.042rem solid ${tokens.colors.B_Grey_3};
@@ -179,6 +179,22 @@ export const WeeksSelectContainer = styled(Select).attrs({
     width: 100%;
     text-align: center;
     padding-left: 0.5rem;
+  }
+  .react-select__indicatorContainer {
+    width: 1rem; 
+    height: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+  .css-1xc3v61-indicatorContainer {
+      padding: 0; /* 패딩을 제거하여 여백 없애기 */
+      height: auto; /* 높이를 자동으로 조정, 필요 시 특정 높이 지정 가능 */
+      width: auto; /* 너비를 자동으로 조정, 필요 시 특정 너비 지정 가능 */
+      display: flex; /* 플렉스 레이아웃 유지 */
+      align-items: center; /* 아이콘을 수직 중앙에 정렬 */
+      justify-content: center; /* 아이콘을 수평 중앙에 정렬 */
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as itemS from './Styled/RegularStudy.regularstudy.modal.styles';
 import request from '../../Api/request';
 import { useParams } from 'react-router-dom';
@@ -7,12 +7,30 @@ import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
 export default function AttendanceModal({ week, onClose }) {
     const { id } = useParams(); // 스터디 id이다
-    const [problemItems, setProblemItems] = useState([
-        { id: 1, title: '' }
-    ]);
+    const [problemItems, setProblemItems] = useState([{ id: 1, title: '' }]);
     const [blogUrl, setBlogUrl] = useState('');
     const { alert } = useContext(AlertContext);
     const { confirm } = useContext(ConfirmContext);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await request.get(`/study/${id}/attendance-request`);
+                if (response.isSuccess) {
+                    const { problemUrlList, blogUrl } = response.result;
+                    setProblemItems(
+                        problemUrlList.length > 0
+                            ? problemUrlList.map((url, index) => ({ id: index + 1, title: url }))
+                            : [{ id: 1, title: '' }]
+                    );
+                    setBlogUrl(blogUrl || '');
+                }
+            } catch (error) {
+                console.error('데이터 로드 실패:', error);
+            }
+        };
+        fetchData();
+    }, [id])
 
     const handleCloseModal = () => {
         onClose(); // 모달 닫기
@@ -51,7 +69,6 @@ export default function AttendanceModal({ week, onClose }) {
                 }
             } catch (error) {
                 console.error('출석 인증 요청 실패:', error);
-                // alert(error.response.data.result.problemUrlListValidate);
             }
         }
     };

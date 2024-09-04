@@ -79,9 +79,9 @@ export default function Header() {
           <itemS.StyledLink to={isLoggedIn ? "/apply" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
-          { <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
+          {/* { <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
             <itemS.SubMenuItem>자율 스터디</itemS.SubMenuItem>
-          </itemS.StyledLink> }
+          </itemS.StyledLink> } */}
         </itemS.SubStudyMenu>
       )}
       {activeMenu === 'coding' && (

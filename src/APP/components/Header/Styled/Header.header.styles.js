@@ -82,6 +82,7 @@ export const Btn = styled.button`
   margin-left: 2.08rem;
   @media (max-width: 600px) {
      ${tokens.typography.T6_SB_14};
+     margin-left: 1rem;
   }
   @media (max-width: 300px) {
      ${tokens.typography.T7_SB_12};

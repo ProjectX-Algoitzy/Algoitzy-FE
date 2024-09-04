@@ -12,11 +12,11 @@ export default function TopTuple({ item }) {
 
   return (
     <itemS.Container>
-      <itemS.Tuple>
-        <itemS.TupleNumber onClick={handleRedirect}>{item.number}</itemS.TupleNumber>
-        <itemS.TupleTitle onClick={handleRedirect}>{item.name}</itemS.TupleTitle>
+      <itemS.Tuple onClick={handleRedirect}>
+        <itemS.TupleNumber>{item.number}</itemS.TupleNumber>
+        <itemS.TupleTitle>{item.name}</itemS.TupleTitle>
         <itemS.TupleLevel>
-          <itemS.Level src={item.levelUrl} alt='레벨' onClick={handleRedirect}/>
+          <itemS.Level src={item.levelUrl} alt='레벨'/>
         </itemS.TupleLevel>
         
       </itemS.Tuple>

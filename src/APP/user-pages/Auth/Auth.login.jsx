@@ -382,8 +382,9 @@ export default function Login() {
             <itemS.RouteSignup onClick={() => navigate("/signup")}>
               회원가입
             </itemS.RouteSignup>
-            <itemS.UtilText onClick={() => navigate("/findemail")}>아이디</itemS.UtilText>
-            <itemS.UtilText>/</itemS.UtilText>
+            <itemS.UtilText>|</itemS.UtilText>
+            <itemS.UtilText onClick={() => navigate("/findemail")}>아이디 찾기</itemS.UtilText>
+            <itemS.UtilText>|</itemS.UtilText>
             <itemS.UtilText onClick={() => navigate("/findpassword")}>
               비밀번호 찾기
             </itemS.UtilText>

@@ -335,7 +335,7 @@ export default function WritingApplication() {
                 </items.SelectContainer>
               ) : (
                 <items.AnswerInputContainer
-                  id={`textarea-${question.sequence}`} /* id 추가 */
+                  id={`textarea-${question.sequence}`} 
                   placeholder='답변을 적어주세요'
                   value={textAnswers[question.sequence] || ''}
                   onChange={e => handleTextChange(question.sequence, e.target.value)}
@@ -349,7 +349,7 @@ export default function WritingApplication() {
       <items.BtnContainer>
         <items.BtnContainer2>
           <items.ArbitaryBtn onClick={handleTempSaveBtnClick}>임시저장</items.ArbitaryBtn>
-          <items.Btn onClick={handleSaveBtnClick}>저장하기</items.Btn> 
+          <items.Btn onClick={handleSaveBtnClick}>제출하기</items.Btn> 
         </items.BtnContainer2>
       </items.BtnContainer>
     </items.Container>

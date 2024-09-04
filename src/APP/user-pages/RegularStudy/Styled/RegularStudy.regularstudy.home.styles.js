@@ -29,6 +29,7 @@ export const ContentContainer = styled.div`
   width: 100%;
   height: 100%;
   margin-bottom: 4.21rem;
+  font-size: 0.75rem; /* 24px 기준 18px 크기, 에디터 수정 시 비율 조정 필요 */
 `;
 
 export const BlueContainer = styled.div`

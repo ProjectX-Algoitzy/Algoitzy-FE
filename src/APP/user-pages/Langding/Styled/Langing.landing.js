@@ -5,7 +5,6 @@ export const HomeWrap = styled.div`
   margin-top: auto;
   display: flex;
   flex-direction: column; 
-  background-image: url('/img/landing-background.png');
 `;
 
 export const NormalWrap = styled.div` 
@@ -14,8 +13,13 @@ export const NormalWrap = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-top: 20%;
-  margin-bottom: 20%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+
+  background-image: url('/img/landing-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;//이동버튼이 있을 경우, 이미지가 아닌 직접 css를 수정해서 코딩했기에 해당 부분들을 감까주는 Wrap입니다
 
 export const ImgWrap = styled.div` 

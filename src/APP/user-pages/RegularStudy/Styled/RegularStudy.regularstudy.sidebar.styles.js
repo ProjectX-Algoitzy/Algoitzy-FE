@@ -7,6 +7,13 @@ export const Container = styled.div`
   padding-right: 1.333rem;
   border-right: 0.063rem solid ${tokens.colors.Grey_4};
   margin-left: 15rem;
+
+  @media (max-width: 600px) {
+    margin-left: 1.33rem;
+    margin-right: 1.33rem;
+    padding: 0;
+    border-right: 0;
+  }
 `;
 
 export const InnerContainer = styled.div`
@@ -23,6 +30,9 @@ export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 
   height: 10.25rem;
   border-radius: 0.33rem;
   background-color: ${tokens.colors.Grey_4};
+  @media (max-width: 600px) {
+  
+  }
 `;
 
 export const TitleContainer = styled.div` 
@@ -32,6 +42,7 @@ export const TitleContainer = styled.div`
   ${tokens.typography.T3_B_24};
   margin-top: 0.67rem;
   align-items: center;
+  
 `;
 
 export const CountAndOnlineContainer = styled.div`
@@ -111,6 +122,10 @@ export const Btn = styled.button` /*지원하기 버튼*/
   ${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.Blue_0_Main};
   margin-top: 0.67rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const AnnouncementBlock = styled.button` /*지원 기간이 아닙니다 전용 박스*/
@@ -122,4 +137,8 @@ export const AnnouncementBlock = styled.button` /*지원 기간이 아닙니다 
   ${tokens.typography.T5_SB_16}
   background-color: ${tokens.colors.B_Grey_3};
   margin-top: 0.67rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;

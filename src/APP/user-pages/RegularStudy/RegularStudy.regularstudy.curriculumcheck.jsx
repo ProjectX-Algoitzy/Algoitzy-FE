@@ -38,6 +38,7 @@ export default function RegularStudyCurriculumCheck() {
     if (error) return <div>{error}</div>;
   
     return (
+      <itemS.ContentWrapper>
       <itemS.Container>
         <itemS.Title>{title}</itemS.Title>
         <itemS.SecondContainer>
@@ -48,5 +49,6 @@ export default function RegularStudyCurriculumCheck() {
             <div dangerouslySetInnerHTML={{ __html: content }} />
         </itemS.ContentsContainer>
       </itemS.Container>
+      </itemS.ContentWrapper>
     );
 }

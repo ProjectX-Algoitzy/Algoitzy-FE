@@ -23,8 +23,8 @@ export const CategoryContainer = styled.div`
   //   height: auto;
   // }
   overflow: auto;
-
   @media (max-width: 600px) {
     width: 32rem;
   }
+  font-size: 0.75rem;
 `;

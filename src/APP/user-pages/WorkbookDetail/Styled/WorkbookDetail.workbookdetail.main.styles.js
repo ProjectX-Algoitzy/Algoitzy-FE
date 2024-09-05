@@ -34,7 +34,7 @@ export const TopBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 37.96rem;
+  width: 41.13rem;
   padding: 0.625rem 1rem 0.875rem 2.167rem; 
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
   margin-bottom: 2.083rem;

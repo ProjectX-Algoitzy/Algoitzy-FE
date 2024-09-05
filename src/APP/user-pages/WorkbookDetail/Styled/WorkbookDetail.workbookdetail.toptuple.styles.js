@@ -11,9 +11,16 @@ export const Tuple = styled.div`
   flex-direction: row;
   align-items: center;
   height: 2.292rem; 
+  
   @media (max-width: 600px) {
     width: 29.6rem;
   }
+  
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
+  &:hover {
+    background-color: ${tokens.colors.B_Grey_1};
+  }
+  cursor: pointer;
 `;
 
 export const TupleNumber = styled.div`
@@ -25,7 +32,6 @@ export const TupleNumber = styled.div`
   text-align: center;
   width: 8.75rem;
   margin-left: 0.958rem;
-  cursor: pointer;
 `;
 
 export const TupleTitle = styled.div`
@@ -36,7 +42,6 @@ export const TupleTitle = styled.div`
   color: ${tokens.colors.Black};
   text-align: center;
   width: 17.5rem;
-  cursor: pointer;
 `;
 
 export const TupleLevel = styled.div`
@@ -44,7 +49,6 @@ export const TupleLevel = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 4.083rem;
-  cursor: pointer;
 `;
 
 export const Level = styled.img`

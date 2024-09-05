@@ -13,7 +13,7 @@ const request = axios.create({
     Authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
   },
 });
-
+ 
 request.interceptors.response.use(
   (response) => {
     return response.data;

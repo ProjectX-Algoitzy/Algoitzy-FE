@@ -24,4 +24,7 @@ export const Group = styled.div`
   align-items: flex-start; 
   width: 50.83rem;
   padding-top: 1.83rem;
+  @media (max-width: 600px) {
+    width: 33.8rem;
+  }
 `;

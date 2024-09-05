@@ -30,6 +30,9 @@ export const TitleBox = styled.div`
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
+  @media (max-width: 600px) {
+    width: 65%;
+  }
 `;
 
 export const Title = styled.div`
@@ -53,6 +56,9 @@ export const PartBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 0.67rem;
+  @media (max-width: 600px) {
+    width: 65%
+  }
 `;
 
 // 첫번째 파트 

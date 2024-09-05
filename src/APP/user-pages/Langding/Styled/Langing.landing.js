@@ -12,7 +12,7 @@ export const NormalWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   padding-top: 20%;
   padding-bottom: 20%;
 
@@ -27,7 +27,7 @@ export const ImgWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
 `;//이미지들을 감싸주기 위한 Wrap입니다
 
 export const FirstSentence = styled.div` 

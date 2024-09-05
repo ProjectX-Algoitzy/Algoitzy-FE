@@ -11,6 +11,11 @@ export const Tuple = styled.div`
   flex-direction: row;
   align-items: center;
   height: 2.292rem; 
+  
+  @media (max-width: 600px) {
+    width: 29.6rem;
+  }
+  
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
   &:hover {
     background-color: ${tokens.colors.B_Grey_1};

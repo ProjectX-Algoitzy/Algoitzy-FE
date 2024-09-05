@@ -24,7 +24,9 @@ export default function RegularStudyCurriculum() {
       }
     } catch (error) {
       console.error("정규스터디 커리큘럼 목록 조회 실패:", error);
-      setError(error.response.data.message);
+      if(error?.response?.data?.code === "NOTICE") {
+        setError(error.response.data.message);
+      }
     } finally {
       setLoading(false);
     }

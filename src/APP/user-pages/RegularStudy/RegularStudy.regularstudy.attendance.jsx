@@ -176,6 +176,7 @@ export default function RegularStudyAttendance() {
   const [week, setWeek] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [showCertificationBtn, setShowCertificationBtn] = useState(false);
+  const [noticeMessage, setNoticeMessage] = useState(null);
 
   useEffect(() => {
     const fetchAttendance = async () => {
@@ -191,6 +192,9 @@ export default function RegularStudyAttendance() {
       } catch (error) {
         console.error("정규스터디 출석부 조회 오류", error);
         setShowCertificationBtn(false);
+        if(error?.response?.data?.code === "NOTICE") {
+          setNoticeMessage(error.response.data.message);
+        }
       }
     };
     const fetchWeek = async () => {
@@ -205,6 +209,9 @@ export default function RegularStudyAttendance() {
         }
       } catch (error) {
         console.error("현재 주차 정보 조회 실패: ", error);
+        if(error?.response?.data?.code === "NOTICE") {
+          setNoticeMessage(error.response.data.message);
+        }
       }
     }
     fetchAttendance();
@@ -232,7 +239,7 @@ export default function RegularStudyAttendance() {
       {Object.keys(data).length > 0 ? (
         <Table currentTab={currentTab} onArrowClick={handleArrowClick} data={data} />
       ) : (
-        <itemS.CanNotEnterContainer>Todo</itemS.CanNotEnterContainer>
+        <itemS.CanNotEnterContainer>{noticeMessage}</itemS.CanNotEnterContainer>
       )}
       <itemS.BtnContainer>
         {showCertificationBtn && <itemS.CertificationBtn onClick={openModal}>출석 인증하기</itemS.CertificationBtn>}

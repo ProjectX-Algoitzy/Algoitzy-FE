@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
+export const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33.08rem;
-  margin-left: 23.46rem;
+  width: 63.08rem;
 `;
 
 export const Title = styled.div`
@@ -27,7 +31,7 @@ export const SecondContainer = styled.div`
 `;
 
 export const WhiteBox = styled.div`
-  width: 16.25rem;
+  width: 31.25rem;
   height: 2.33rem;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
@@ -47,4 +51,6 @@ export const ContentsContainer = styled.div`
   width: 100%;
   height: 28.29rem;
   overflow: auto;
+  font-size: 0.75rem;
+  padding: 0.5rem;
 `;

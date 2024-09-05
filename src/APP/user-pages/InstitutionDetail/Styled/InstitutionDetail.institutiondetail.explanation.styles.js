@@ -23,4 +23,5 @@ export const CategoryContainer = styled.div`
   //   height: auto;
   // }
   overflow: auto;
+  font-size: 0.75rem;
 `;

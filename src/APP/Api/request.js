@@ -29,7 +29,6 @@ request.interceptors.response.use(
 
       switch (code) {
         case 'NOTICE':
-          console.error(`노티스 에러: ${message}`, error);
           await alert(message);
           break;
         default:

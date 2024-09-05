@@ -9,7 +9,7 @@ export const ContentWrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33.08rem;
+  width: 63.08rem;
 `;
 
 export const Title = styled.div`
@@ -31,7 +31,7 @@ export const SecondContainer = styled.div`
 `;
 
 export const WhiteBox = styled.div`
-  width: 16.25rem;
+  width: 31.25rem;
   height: 2.33rem;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */

@@ -4,11 +4,13 @@ import * as tokens from "../../../../tokens"
 export const OuterContainer = styled.div`
   position: relative;
   width: 100%;
+
 `;
 
 export const Container = styled.div`
   display: flex;
   justify-content: center; 
+  
 `;
 
 export const InnerContainer = styled.div`
@@ -25,6 +27,9 @@ export const TopContainer = styled.div`
   justify-content: space-between;
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
+  @media (max-width: 600px) {
+    width: 47%;
+  }
 `;
 
 export const HeadContainer = styled.div`
@@ -77,6 +82,9 @@ export const TabSortContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 50rem;
+  @media (max-width: 600px) {
+    width: 47%;
+  }
 `;
 
 // 탭 컨테이너

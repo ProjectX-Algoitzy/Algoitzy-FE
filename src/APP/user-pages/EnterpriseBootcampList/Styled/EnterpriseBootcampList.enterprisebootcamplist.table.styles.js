@@ -9,6 +9,7 @@ export const Container = styled.div`
 export const Table = styled.div`
   display: flex;
   flex-direction: column;
+  
 `;
 
 // 카테고리 파트 시작
@@ -22,6 +23,11 @@ export const CategoryContainer = styled.div`
   height: 2.29rem; 
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_4};
   margin-bottom: 0.83rem; 
+  
+  @media (max-width: 600px) {
+    width: 47%;
+    margin-left: 18rem;
+  }
 `;
 
 export const CategoryNumber = styled.div`

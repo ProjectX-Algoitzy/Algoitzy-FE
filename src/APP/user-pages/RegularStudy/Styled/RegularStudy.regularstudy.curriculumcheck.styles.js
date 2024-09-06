@@ -10,6 +10,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 50rem;
+    @media (max-width: 600px) {
+    width: 34rem;
+  }
 `;
 
 export const Title = styled.div`

@@ -463,7 +463,7 @@ export default function Signup() {
         setIsEmailValid(true);
         setEmailBorderColor('#00A5FF'); // Blue_0_Main
         setEmailMessageColor('#00A5FF'); // Blue_0_Main
-        setEmailMessage('인증번호가 발송되었습니다.');
+        setEmailMessage('이메일로 인증번호가 발송되었습니다. 확인되지 않은 경우 스팸함을 확인해주세요.');
       } else {
         console.error("이메일 인증 코드 전송 실패:", response.data);
       }

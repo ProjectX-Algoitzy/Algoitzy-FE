@@ -5,6 +5,8 @@ import * as itemS from "./Styled/InstitutionDetail.institutiondetail.main.styles
 import InstitutionDetailTable from './InstitutionDetail.institutiondetail.table';
 import InstitutionDetailExplanation from './InstitutionDetail.institutiondetail.explanation';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
 
 export default function InstitutionDetail() {
@@ -48,6 +50,15 @@ export default function InstitutionDetail() {
     fetchWorkbookExplain();
     fetchWorkbook();
   }, [institutionId]);
+
+  useEffect(() => {
+    // 코드블록에 하이라이트 적용
+    if (content) {
+      document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  }, [content]);
   
   return (
     <itemS.OuterContainer>

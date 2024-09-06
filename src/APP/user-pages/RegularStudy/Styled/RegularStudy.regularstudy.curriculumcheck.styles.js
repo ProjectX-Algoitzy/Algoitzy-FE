@@ -53,4 +53,22 @@ export const ContentsContainer = styled.div`
   overflow: auto;
   font-size: 0.75rem;
   padding: 0.5rem;
+
+    pre {
+    background-color: #282c34;  /* 배경색 검정 */
+    color: #abb2bf;  /* 텍스트 색 회색 */
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    display: block;
+    overflow-x: auto;
+  }
+
+  code {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+  }
 `;

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import * as itemS from "./Styled/RegularStudy.regularstudy.curriculumcheck.styles"
 import request from '../../Api/request'
 import { useParams } from 'react-router-dom';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
 export default function RegularStudyCurriculumCheck() {
     const { curriculumId } = useParams();
@@ -34,9 +36,18 @@ export default function RegularStudyCurriculumCheck() {
       fetchData();
     }, [curriculumId]);
   
+    useEffect(() => {
+      // 코드블록에 하이라이트 적용
+      if (content) {
+        document.querySelectorAll('pre').forEach((block) => {
+          hljs.highlightBlock(block);
+        });
+      }
+    }, [content]);
+
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
-  
+
     return (
       <itemS.ContentWrapper>
       <itemS.Container>

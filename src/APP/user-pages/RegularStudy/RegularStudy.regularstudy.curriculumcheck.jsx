@@ -54,6 +54,7 @@ export default function RegularStudyCurriculumCheck() {
         <itemS.Title>{title}</itemS.Title>
         <itemS.SecondContainer>
           <itemS.WhiteBox>{data.studyName}</itemS.WhiteBox>
+          <itemS.Blank></itemS.Blank>
           <itemS.WhiteBox>{week}주차</itemS.WhiteBox>
         </itemS.SecondContainer>
         <itemS.ContentsContainer>

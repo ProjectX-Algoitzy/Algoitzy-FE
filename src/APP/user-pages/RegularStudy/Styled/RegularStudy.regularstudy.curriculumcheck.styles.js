@@ -9,7 +9,7 @@ export const ContentWrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 63.08rem;
+  width: 50rem;
 `;
 
 export const Title = styled.div`
@@ -31,7 +31,7 @@ export const SecondContainer = styled.div`
 `;
 
 export const WhiteBox = styled.div`
-  width: 31.25rem;
+  width: 24.5rem;
   height: 2.33rem;
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
@@ -40,6 +40,14 @@ export const WhiteBox = styled.div`
   border: 0.042rem solid ${tokens.colors.Grey_4};
   color: ${tokens.colors.Grey_7};
   ${tokens.typography.B2_M_16};
+`;
+
+export const Blank = styled.div`
+  width: 0.5rem;
+  height: 2.33rem;
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
 `;
 
 export const ContentsContainer = styled.div`

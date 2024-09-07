@@ -50,3 +50,15 @@ code {
   font-family: 'Courier New', Courier, monospace;
 }
 `;
+
+export const ComingSoonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 49.17rem;
+  height: 10.75rem;
+  background-color: ${tokens.colors.B_Grey_1};
+  border-radius: 0.42rem;
+  color: ${tokens.colors.B_Grey_5};
+  ${tokens.typography.T3_B_24};
+`;

@@ -65,6 +65,7 @@ export default function Signup() {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [SMSCode, setSMSCode] = useState('');
+  const [userRandomId, setUserRandomId] = useState('');
   const [email, setEmail] = useState('');
   const [emailCode, setEmailCode] = useState('');
 
@@ -483,6 +484,7 @@ export default function Signup() {
    
     const requestData = {
       phoneNumber: phone,
+      userRandomId: userRandomId
     };
     try {
       const response = await axios.post('https://user-dev.kau-koala.com/sms/certification', requestData);
@@ -492,6 +494,7 @@ export default function Signup() {
         setIsPhoneNumberValid(true);
         setPhoneBorderColor('#00A5FF'); // Blue_0_Main
         setPhoneMessageColor('#00A5FF'); // Blue_0_Main
+        setUserRandomId(response.data.result); // sms 인증코드 랜덤 string
         // setPhoneMessage('인증번호가 발송되었습니다.');
         setCount((prevCount) => {
           const newCount = prevCount + 1;

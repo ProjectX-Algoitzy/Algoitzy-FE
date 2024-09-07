@@ -13,6 +13,7 @@ export default function InstitutionDetail() {
   const { institutionId } = useParams();
   const [name, setName] = useState(''); 
   const [content, setContent] = useState(''); 
+  const [contentEmptyMessage, setContentEmptyMessage] = useState(false); // 열람 권한 여부
   
   const [itemList, setItemList] = useState([]); // 문제집
 
@@ -29,6 +30,10 @@ export default function InstitutionDetail() {
       }
     } catch (error) {
       console.error('추천 문제집 분석 조회 오류', error);
+
+      if (error.response?.data?.code === 'NOTICE') {
+        setContentEmptyMessage(error.response.data.message);
+      }
     }
   };
 
@@ -72,6 +77,7 @@ export default function InstitutionDetail() {
           </itemS.PartBox>
           <InstitutionDetailExplanation
             content={content}
+            contentEmptyMessage={contentEmptyMessage}
           />
           <itemS.PartBox>
             <itemS.Part>추천 문제집</itemS.Part>

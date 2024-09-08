@@ -27,7 +27,7 @@ export const ImgWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 `;//이미지들을 감싸주기 위한 Wrap입니다
 
 export const FirstSentence = styled.div` 

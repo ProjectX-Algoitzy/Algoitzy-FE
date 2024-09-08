@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
+// export const Container = styled.div`
+//   display: flex;
+//   justify-content: center; 
+//   background-image: url('/img/landing-background.png');
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center;
+// `;
+
 export const Container = styled.div`
   display: flex;
   justify-content: center; 
   background-image: url('/img/landing-background.png');
-  background-size: cover;
+  background-size: cover; /* 이미지가 컨테이너 안에 맞춰 조정됨 */
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed; /* 스크롤 시 배경 고정 */
 `;
 
 export const InnerContainer = styled.div`

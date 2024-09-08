@@ -8,6 +8,7 @@ export const Container = styled.div`
 export const Table = styled.div`
   display: flex;
   flex-direction: column;
+  
 `;
 
 // 카테고리 파트 시작
@@ -21,6 +22,9 @@ export const CategoryContainer = styled.div`
   height: 2.292rem; 
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_4};
   // margin-bottom: 20px;
+  @media (max-width: 600px) {
+    width: 31rem;
+  }
 `;
 
 export const CategoryNumber = styled.div`
@@ -32,6 +36,7 @@ export const CategoryNumber = styled.div`
   text-align: center;
   width: 8.75rem;
   margin-left: 0.958rem; 
+  
 `;
 
 export const CategoryTitle = styled.div`
@@ -65,4 +70,5 @@ export const TupleContainer = styled.div`
     width: 0px; /* Chrome, Safari, Opera용 */
   }
   scrollbar-width: none; /* Firefox용 */
+  
 `;

@@ -11,6 +11,11 @@ export const Tuple = styled.div`
   flex-direction: row;
   align-items: center;
   height: 2.292rem; 
+  
+  @media (max-width: 600px) {
+    width: 31rem;
+  }
+  
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
   &:hover {
     background-color: ${tokens.colors.B_Grey_1};
@@ -25,8 +30,8 @@ export const TupleNumber = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 8.75rem;
-  margin-left: 0.958rem;
+  width: 7.75rem;
+  margin-left: 1.4rem;
 `;
 
 export const TupleTitle = styled.div`
@@ -36,7 +41,7 @@ export const TupleTitle = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 17.5rem;
+  width: 16.55rem;
 `;
 
 export const TupleLevel = styled.div`

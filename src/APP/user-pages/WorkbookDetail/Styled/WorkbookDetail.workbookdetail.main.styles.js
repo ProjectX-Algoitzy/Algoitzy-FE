@@ -9,6 +9,9 @@ export const ModalContainer = styled.div`
   width: 41.13rem;
   background-color: white;
   border-radius: 0.167rem;
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 // 모달 외부  #121721 49%
@@ -35,6 +38,10 @@ export const TopBox = styled.div`
   padding: 0.625rem 1rem 0.875rem 2.167rem; 
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
   margin-bottom: 2.083rem;
+
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 // 지원서 보기
@@ -58,5 +65,5 @@ export const InnerContainer = styled.div`
   justify-content: flex-start;
   align-items: center; 
   min-height: 29.167rem; 
-  margin-bottom: 2.083rem; 
+  margin-bottom: 2.083rem;
 `;

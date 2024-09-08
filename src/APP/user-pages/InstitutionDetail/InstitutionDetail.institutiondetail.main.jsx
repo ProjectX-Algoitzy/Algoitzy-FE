@@ -5,12 +5,15 @@ import * as itemS from "./Styled/InstitutionDetail.institutiondetail.main.styles
 import InstitutionDetailTable from './InstitutionDetail.institutiondetail.table';
 import InstitutionDetailExplanation from './InstitutionDetail.institutiondetail.explanation';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
 
 export default function InstitutionDetail() {
   const { institutionId } = useParams();
   const [name, setName] = useState(''); 
   const [content, setContent] = useState(''); 
+  const [contentEmptyMessage, setContentEmptyMessage] = useState(false); // 열람 권한 여부
   
   const [itemList, setItemList] = useState([]); // 문제집
 
@@ -27,6 +30,10 @@ export default function InstitutionDetail() {
       }
     } catch (error) {
       console.error('추천 문제집 분석 조회 오류', error);
+
+      if (error.response?.data?.code === 'NOTICE') {
+        setContentEmptyMessage(error.response.data.message);
+      }
     }
   };
 
@@ -48,6 +55,15 @@ export default function InstitutionDetail() {
     fetchWorkbookExplain();
     fetchWorkbook();
   }, [institutionId]);
+
+  useEffect(() => {
+    // 코드블록에 하이라이트 적용
+    if (content) {
+      document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  }, [content]);
   
   return (
     <itemS.OuterContainer>
@@ -61,6 +77,7 @@ export default function InstitutionDetail() {
           </itemS.PartBox>
           <InstitutionDetailExplanation
             content={content}
+            contentEmptyMessage={contentEmptyMessage}
           />
           <itemS.PartBox>
             <itemS.Part>추천 문제집</itemS.Part>

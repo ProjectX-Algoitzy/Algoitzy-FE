@@ -16,6 +16,10 @@ export const TupleContainer = styled.div`
     background-color: ${tokens.colors.B_Grey_1};
   }
   cursor: pointer;
+  
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const TupleNumber = styled.div`

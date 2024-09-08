@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import * as itemS from "../RegularStudy/Styled/RegularStudy.regularstudy.home.styles"
 import request from '../../Api/request';
 import { useParams } from 'react-router-dom';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
 export default function RegularStudyHome() {
   const { id } = useParams();
@@ -23,6 +25,16 @@ export default function RegularStudyHome() {
     }
     fetchRegularStudyHome();
   }, []);
+
+  useEffect(() => {
+    // 코드블록에 하이라이트 적용
+    if (regularStudyHome) {
+      document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
+    }
+  }, [regularStudyHome]);
+
   return (
     <itemS.Container>
       <itemS.Title>홈</itemS.Title>

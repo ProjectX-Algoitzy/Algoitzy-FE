@@ -21,6 +21,10 @@ export const CategoryContainer = styled.div`
   width: 50rem;
   height: 2.29rem;
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_4};
+  
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 export const CategoryNumber = styled.div`

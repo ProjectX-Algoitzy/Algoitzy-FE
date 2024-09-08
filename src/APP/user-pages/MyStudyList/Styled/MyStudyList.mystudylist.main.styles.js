@@ -4,7 +4,10 @@ import * as tokens from "../../../../tokens"
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center; 
+  justify-content: center;
+  @media (max-width: 600px) {
+    padding-left: 4rem;
+  }
 `;
 
 export const InnerContainer = styled.div`
@@ -13,6 +16,9 @@ export const InnerContainer = styled.div`
   align-items: center; 
   border-radius: 0.83rem;
   padding: 6.58rem 15rem;
+  @media (max-width: 600px) {
+    padding-right: 1rem;
+  }
 `;
 
 export const TitleContainer = styled.div`
@@ -20,7 +26,7 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   justify-content: space-between; 
   align-items: flex-end;
-  width: 50rem;
+  width: 100%;
   border-bottom: 0.04rem solid ${tokens.colors.Grey_4};
   padding-bottom: 0.5rem;
 `;

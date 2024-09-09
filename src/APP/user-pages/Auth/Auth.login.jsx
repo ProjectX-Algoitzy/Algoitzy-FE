@@ -100,7 +100,7 @@ export default function Login() {
             </itemS.LoginIContainer>
 						
           <itemS.Btn onClick={handleSubmit}>
-            로그인
+            Login
           </itemS.Btn>
           <itemS.UtilBox>
             <itemS.RouteSignup onClick={() => navigate("/signup")}>

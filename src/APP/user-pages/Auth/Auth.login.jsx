@@ -376,7 +376,7 @@ export default function Login() {
             </itemS.LoginIContainer>
 						
           <itemS.Btn onClick={handleSubmit}>
-            Login
+            LOGIN
           </itemS.Btn>
           <itemS.UtilBox>
             <itemS.RouteSignup onClick={() => navigate("/signup")}>

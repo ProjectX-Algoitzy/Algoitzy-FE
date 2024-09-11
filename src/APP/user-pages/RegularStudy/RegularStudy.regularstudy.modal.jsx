@@ -78,7 +78,7 @@ export default function AttendanceModal({ week, onClose }) {
             <itemS.ModalContent onClick={(e) => e.stopPropagation()}>
                 <itemS.FirstSentence>
                     <itemS.BigTitle>{week}주차 출석 인증</itemS.BigTitle>
-                    <img src="/img/imgX.png" alt="X" onClick={handleCloseModal} style={{width:"20px", height:"20px", marginRight:"30px", cursor:"pointer"}} />
+                    <img src="/img/imgX.png" alt="X" onClick={handleCloseModal} style={{width:"0.833rem", height:"0.833rem", marginRight:"1.25rem", cursor:"pointer"}} />
                 </itemS.FirstSentence>
 
                 <itemS.ContentContainer>
@@ -96,9 +96,9 @@ export default function AttendanceModal({ week, onClose }) {
                         </itemS.LittleContainer>
                     ))}
 
-                    <img 
+                    <itemS.StyledAddButton 
                         src='/img/btnadd.png' 
-                        style={{ marginBottom: "32px", width:"31.38rem", cursor: "pointer" }} 
+                        alt="문제 인증 추가하기"
                         onClick={handleAddProblemItem} 
                     />
 

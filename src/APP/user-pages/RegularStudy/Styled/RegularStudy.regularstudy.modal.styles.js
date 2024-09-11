@@ -47,8 +47,8 @@ export const BigTitle = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 4.88rem;
   padding-top: 2.67rem;
+  align-items: center;
 `;
 
 export const LittleContainer = styled.div`
@@ -72,6 +72,9 @@ export const StyledInputContainer = styled.div`
   width: 31.38rem;
   height: 2.33rem;
   background-color: ${tokens.colors.Grey_1};
+  @media (max-width: 600px) {
+    width: 26rem;
+  }
 `;
 
 export const LinkImg = styled.img`
@@ -98,11 +101,15 @@ export const StyledInput = styled.input`
   &:focus {
     outline: none;
   }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const BtnContainer = styled.div`
   display: flex;
-  width: 31.38rem;
+  width: 80%;
   justify-content: center;
   margin-top: 1rem; /* 버튼 위에 여백 추가 */
 `;
@@ -117,4 +124,13 @@ export const Btn = styled.button` /* 개설하기 버튼 */
   color: ${tokens.colors.White};
   ${tokens.typography.T5_SB_16};
   background-color: ${tokens.colors.Blue_0_Main};
+`;
+
+export const StyledAddButton = styled.img`
+  margin-bottom: 1.333rem;
+  width: 80%;
+  cursor: pointer;
+  @media (max-width: 600px) {
+    width: 26rem;
+  }
 `;

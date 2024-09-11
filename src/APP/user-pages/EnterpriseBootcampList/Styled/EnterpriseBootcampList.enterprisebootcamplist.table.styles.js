@@ -3,7 +3,9 @@ import * as tokens from "../../../../tokens"
 
 
 export const Container = styled.div`
-  
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 export const Table = styled.div`
@@ -25,8 +27,7 @@ export const CategoryContainer = styled.div`
   margin-bottom: 0.83rem; 
   
   @media (max-width: 600px) {
-    width: 47%;
-    margin-left: 18rem;
+    width: 100%;
   }
 `;
 

@@ -21,6 +21,7 @@ import EnterBootList from "./APP/user-pages/EnterpriseBootcampList/EnterpriseBoo
 import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
 import Noticeboard from "./APP/user-pages/Noticeboard/Noticeboard.noticeboard.main";
 import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDetail.noticeboarddetail.main";
+import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -97,6 +98,7 @@ useInterval(async () => {
             <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
             <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
+            <Route path="/mypage" element={<MyPage />} /> {/* 마이페이지 */}
           </Routes>
           </ContentWrapper>
           <Footer />

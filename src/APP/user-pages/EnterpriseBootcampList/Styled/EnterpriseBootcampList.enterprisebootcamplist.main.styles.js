@@ -3,14 +3,11 @@ import * as tokens from "../../../../tokens"
 
 export const OuterContainer = styled.div`
   position: relative;
-  width: 100%;
-
 `;
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center; 
-  
+  justify-content: center;
 `;
 
 export const InnerContainer = styled.div`
@@ -18,8 +15,11 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  padding: 6.58rem 15rem 0 15rem;
+  padding: 6.58rem 0;
   margin-bottom: 4.08rem;
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 export const TopContainer = styled.div`
@@ -28,7 +28,7 @@ export const TopContainer = styled.div`
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
   @media (max-width: 600px) {
-    width: 47%;
+    width: 100%;
   }
 `;
 
@@ -37,6 +37,9 @@ export const HeadContainer = styled.div`
   justify-content: flex-start;
   width: 14.58rem;
   margin-bottom: 0.83rem;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const Head = styled.div`
@@ -83,7 +86,7 @@ export const TabSortContainer = styled.div`
   justify-content: space-between;
   width: 50rem;
   @media (max-width: 600px) {
-    width: 47%;
+    width: 100%;
   }
 `;
 

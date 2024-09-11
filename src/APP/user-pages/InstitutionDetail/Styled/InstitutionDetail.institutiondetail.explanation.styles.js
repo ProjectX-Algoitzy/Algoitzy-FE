@@ -26,8 +26,7 @@ export const CategoryContainer = styled.div`
 
   overflow: auto;
     @media (max-width: 600px) {
-    margin-left: 8.6rem;
-    width: 65%;
+    width: 100%;
   }
 
   font-size: 0.75rem;

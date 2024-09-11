@@ -12,6 +12,7 @@ export const HeaderContainer = styled.div`
 export const HeaderWrap = styled.div`
   background-color: rgba(255, 255, 255, 0.05); 
   backdrop-filter: blur(200px);
+  -webkit-backdrop-filter: blur(200px);
   height: 3.33rem;
   margin: 0 auto;
   display: flex;
@@ -125,7 +126,7 @@ export const SubMenuItem = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.B_Grey_5};
-  width: 5.83rem;
+  width: auto;
   margin: 0 0.83rem;
   cursor: pointer;
   margin: 0 0.25rem;

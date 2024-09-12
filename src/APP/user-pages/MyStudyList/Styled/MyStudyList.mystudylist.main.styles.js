@@ -5,9 +5,6 @@ import * as tokens from "../../../../tokens"
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  @media (max-width: 600px) {
-    padding-left: 4rem;
-  }
 `;
 
 export const InnerContainer = styled.div`
@@ -15,10 +12,7 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  padding: 6.58rem 15rem;
-  @media (max-width: 600px) {
-    padding-right: 1rem;
-  }
+  padding: 6.58rem 0;
 `;
 
 export const TitleContainer = styled.div`
@@ -52,4 +46,8 @@ export const Group = styled.div`
   background-color: ${tokens.colors.White};
   width: 50.83rem;
   padding-top: 1.83rem;
+
+  @media (max-width: 600px) {
+    width: 33.8rem;
+  }
 `;

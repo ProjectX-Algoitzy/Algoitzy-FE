@@ -25,7 +25,7 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  padding: 6.58rem 15rem;
+  padding: 6.58rem 0;
 `;
 
 export const Group = styled.div`

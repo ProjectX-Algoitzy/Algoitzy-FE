@@ -16,10 +16,8 @@ export const TupleContainer = styled.div`
     background-color: ${tokens.colors.B_Grey_1};
   }
   cursor: pointer;
-
-  @media screen and (max-width: 600px) {
-    width: 32rem;
-    margin-left: 18rem;
+  @media (max-width: 600px) {
+    width: 100%;
   }
 `;
 

@@ -109,6 +109,7 @@ export default function Header() {
                     userName={userName} 
                     profileUrl={profileUrl} 
                     setIsLoggedIn={setIsLoggedIn} 
+                    setShowProfileModal={setShowProfileModal}
                   />
                 )}
               </div>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Header.profile.modal.styles";
 import request from '../../Api/request';
 
-const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
+const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal }) => {
 
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
   };
 
   const handleMyPage = () => {
-    
     navigate('/mypage');
+    setShowProfileModal(false);
   };
 
   return (

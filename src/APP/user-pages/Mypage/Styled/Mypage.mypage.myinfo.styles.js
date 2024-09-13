@@ -21,7 +21,6 @@ export const ProfileBox = styled.div`
 export const Profile = styled.img`
   width: 5.2rem;
   height: 5.2rem;
-  border: 1px solid ${tokens.colors.Grey_4};
   border-radius: 2.6rem;
   margin-right: 1.1rem;
 `;

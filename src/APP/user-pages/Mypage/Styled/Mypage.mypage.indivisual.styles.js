@@ -29,21 +29,16 @@ export const TopImg = styled.img`
 	margin: 0.67rem 0.67rem 0.42rem 0.67rem;
 `;
 
-export const TopInner = styled.div`
-`;
-
-export const ProfileIcon = styled.div`
-  background-image: url('/img/test.png');
-	width: 0.75rem;
-	height: 0.75rem;
-	margin-right: 0.33rem;
-	border-radius: 0.75rem;
-`;
-
 export const PeopleIcon = styled.img`
 	width: 1rem;
 	height: 1rem;
-	margin-right: 0.33rem;
+	margin-right: 0.25rem;
+`;
+
+export const ProfileIcon = styled.img`
+	width: 0.75rem;
+	height: 0.75rem;
+	border-radius: 0.5rem
 `;
 
 export const BottomContainer = styled.div`
@@ -83,6 +78,13 @@ export const BottomBottom = styled.div`
 	justify-content: space-between;
 `;
 
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+	align-items: center;  
+`;
+
 export const Title = styled.div`
 	${tokens.typography.T3_B_24};
 	font-size: 0.875rem;
@@ -92,20 +94,36 @@ export const Title = styled.div`
 	cursor: pointer;
 `;
 
+export const Type = styled.div`
+	display: flex;
+  justify-content: center;
+	align-items: center;  
+	${tokens.typography.B3_M_14};
+	background-color: ${tokens.colors.B_Grey_2};
+	color: ${tokens.colors.B_Grey_7};
+	width: 2.17rem;
+	height: 1.34rem;
+	border: none;
+	border-radius: 0.33rem;
+`;
+
 export const HeadCount = styled.div`
 	font-family: "Pretendard";
 	font-weight: 600;
 	font-size: 0.67rem;
 	line-height: 0.875rem;
-	color: ${tokens.colors.Grey_6};
+	color: ${tokens.colors.B_Grey_6};
 `;
 
 export const Total = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;  
 	font-family: "Pretendard";
 	font-weight: 600;
 	font-size: 0.67rem;
 	line-height: 0.875rem;
-	color: ${tokens.colors.Grey_4};
+	color: ${tokens.colors.B_Grey_6};
 	margin-left: 0.17rem;
 `;
 
@@ -131,4 +149,8 @@ export const CreatedDate = styled.div`
 	font-size: 0.58rem;
 	line-height: 0.75rem;
 	color: ${tokens.colors.Grey_6};
+`;
+
+export const Blank = styled.div`
+	
 `;

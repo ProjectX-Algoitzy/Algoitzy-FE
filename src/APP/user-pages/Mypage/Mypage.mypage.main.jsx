@@ -6,64 +6,57 @@ import request from '../../Api/request';
 import { mystudydata, applystudydata, myinfodata } from './dummy';
 
 export default function MyPage() {
-  const [myInfoData, setMyInfoData] = useState([]);
-  const [myStudyList, setMyStudyList] = useState([]);
+  const [myInfoData, setMyInfoData] = useState({});
+  const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
 
-  useEffect(() => {
-    setMyStudyList(mystudydata);
-    setApplyStudyList(applystudydata);
-    setMyInfoData(myinfodata);
-  }, []);
-
-  // const fetchStudyLists = async () => {
-  //   try {
-  //     const [regularResponse, tempResponse] = await Promise.all([
-  //       request.get(`/study/regular`),
-  //       request.get(`/study/temp`)
-  //     ]);
-
-  //     if (regularResponse.isSuccess && tempResponse.isSuccess) {
-  //       console.log("정규 스터디 조회 성공");
-  //       console.log("자율 스터디 조회 성공");
-  //       // Combine the study lists
-  //       const combinedStudyList = [
-  //         ...regularResponse.result.studyList,
-  //         ...tempResponse.result.studyList
-  //       ];
-  //       setStudyList(combinedStudyList);
-  //     } else {
-  //       if (!regularResponse.isSuccess) {
-  //         console.error("정규 스터디 조회 실패:", regularResponse);
-  //       }
-  //       if (!tempResponse.isSuccess) {
-  //         console.error("자율 스터디 조회 실패:", tempResponse);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('스터디 조회 오류', error);
-  //   }
-  // };
-
-  // const fetchStudyList = async () => { // 나의 스터디 가져오기
-  //   try {
-  //     const response = await request.get(`/study/my`);
-
-  //     if (response.isSuccess) {
-  //       console.log("나의 스터디 목록 조회 성공",response);
-  //       setStudyList(response.result.studyList);
-
-  //     } else {
-  //       console.error("나의 스터디 목록 조회 실패:", response);
-  //     }
-  //   } catch (error) {
-  //     console.error('나의 스터디 목록 조회 오류', error);
-  //   }
-  // };
+  const [memberID, setMemberID] = useState(1);
 
   // useEffect(() => {
-  //   fetchStudyList();
+  //   setMyStudyList(mystudydata);
+  //   setApplyStudyList(applystudydata);
+  //   setMyInfoData(myinfodata);
   // }, []);
+
+  const fetchMyInfo = async () => {
+    try {
+      const response = await request.get(`/member/${memberID}/info`);
+
+      if (response.isSuccess) {
+        console.log("나의 정보 조회 성공",response);
+        setMyInfoData(response.result);
+
+      } else {
+        console.error("나의 정보 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('나의 정보 조회 오류', error);
+    }
+      
+  };
+
+  const fetchMyStudy = async () => {
+    try {
+      const response = await request.get(`/member/${memberID}/study`);
+
+      if (response.isSuccess) {
+        console.log("나의 스터디 조회 성공",response); 
+        setPassStudyList(response.result.passStudyList);
+        setApplyStudyList(response.result.applyStudyList);
+
+      } else {
+        console.error("나의 스터디 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('나의 스터디 조회 오류', error);
+    }
+      
+  };
+
+  useEffect(() => {
+    fetchMyInfo();
+    fetchMyStudy()
+  }, []);
 
   return (
     <itemS.Container>
@@ -87,7 +80,7 @@ export default function MyPage() {
             </itemS.Head>
           </itemS.StudyHeadBox>
           <itemS.Group>
-            {myStudyList.map((item) => (
+            {passStudyList.map((item) => (
               <MyPageIndividual 
                 key={item.studyId} 
                 studyList={item} 

@@ -5,7 +5,7 @@ import * as itemS from "./Styled/Mypage.mypage.myinfo.styles";
 export default function MyInfo({ item }) {
 
   const navigate = useNavigate();
-  const HANDLE = '/<>  ';
+  const GIHO = '/<>  ';
   // const [myStudyList, setMyStudyList] = useState([]);
   // const [applyStudyList, setApplyStudyList] = useState([]);
   // const [myInfoData, setMyInfoData] = useState([]);
@@ -16,6 +16,11 @@ export default function MyInfo({ item }) {
   //   setMyInfoData(myinfodata);
   // }, []);
 
+  const handleRedirect = () => {
+    // console.log('item.baekjoonUrl',item.baekjoonUrl);
+    window.location.href = item.baekjoonUrl;
+  };
+
   const handleMyInfo = () => {
     
     navigate('/myinfo');
@@ -24,10 +29,10 @@ export default function MyInfo({ item }) {
   return (
     <itemS.Container>
       <itemS.ProfileBox>
-        <itemS.Profile src='/img/close.png' alt='프로필'/>
+        <itemS.Profile src={item.profileUrl} alt='프로필'/>
         <itemS.NameBox>
-          <itemS.Name>{item.name}민중원</itemS.Name>
-          <itemS.Handle>{HANDLE}킹갓제너럴GTA</itemS.Handle>
+          <itemS.Name>{item.name}</itemS.Name>
+          <itemS.Handle onClick={handleRedirect}>{GIHO}{item.handle}</itemS.Handle>
         </itemS.NameBox>
       </itemS.ProfileBox>
       <itemS.EditButton onClick={handleMyInfo}>내 정보 수정</itemS.EditButton>

@@ -9,11 +9,11 @@ export default function MyPage() {
   const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
 
-  const [memberID, setMemberID] = useState(20);
+  const [memberId, setMemberId] = useState(localStorage.getItem('memberId'));
 
   const fetchMyInfo = async () => {
     try {
-      const response = await request.get(`/member/${memberID}/info`);
+      const response = await request.get(`/member/${memberId}/info`);
 
       if (response.isSuccess) {
         console.log("나의 정보 조회 성공",response);
@@ -27,21 +27,10 @@ export default function MyPage() {
     }
       
   };
-  // "result": {
-  //   "memberId": 0,
-  //   "profileUrl": "string",
-  //   "name": "string",
-  //   "email": "string",
-  //   "grade": 0,
-  //   "major": "string",
-  //   "handle": "string",
-  //   "phoneNumber": "string",
-  //   "role": "ROLE_USER"
-  // },
-
+  
   const fetchMyStudy = async () => {
     try {
-      const response = await request.get(`/member/${memberID}/study`);
+      const response = await request.get(`/member/${memberId}/study`);
 
       if (response.isSuccess) {
         console.log("나의 스터디 조회 성공",response); 
@@ -59,7 +48,7 @@ export default function MyPage() {
 
   useEffect(() => {
     fetchMyInfo();
-    fetchMyStudy()
+    fetchMyStudy();
   }, []);
 
   return (

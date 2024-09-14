@@ -3,20 +3,13 @@ import MyPageIndividual from './Mypage.mypage.indivisual';
 import MyInfo from './Mypage.mypage.myinfo';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from '../../Api/request';
-import { mystudydata, applystudydata, myinfodata } from './dummy';
 
 export default function MyPage() {
   const [myInfoData, setMyInfoData] = useState({});
   const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
 
-  const [memberID, setMemberID] = useState(1);
-
-  // useEffect(() => {
-  //   setMyStudyList(mystudydata);
-  //   setApplyStudyList(applystudydata);
-  //   setMyInfoData(myinfodata);
-  // }, []);
+  const [memberID, setMemberID] = useState(20);
 
   const fetchMyInfo = async () => {
     try {
@@ -34,6 +27,17 @@ export default function MyPage() {
     }
       
   };
+  // "result": {
+  //   "memberId": 0,
+  //   "profileUrl": "string",
+  //   "name": "string",
+  //   "email": "string",
+  //   "grade": 0,
+  //   "major": "string",
+  //   "handle": "string",
+  //   "phoneNumber": "string",
+  //   "role": "ROLE_USER"
+  // },
 
   const fetchMyStudy = async () => {
     try {

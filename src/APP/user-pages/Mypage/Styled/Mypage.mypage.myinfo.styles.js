@@ -40,7 +40,7 @@ export const Name = styled.div`
 export const Handle = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Blue_0_Main};
-  
+  cursor: pointer;
 `;
 
 export const EditButton = styled.button`

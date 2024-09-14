@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext, useRef  } from 'react';
 import axios from 'axios';
+import request from '../../Api/request';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as itemS from "./Styled/EditMyInfo.editmyinfo.main.styles"
 import Timer from '../SignUp/SignUp.timer';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-const HANDLE = '/<>  ';
+const GIHO = '/<>  ';
 
 const gradeOptions = [
   {value: 4, label:"4 학년"},
@@ -13,8 +14,6 @@ const gradeOptions = [
   {value: 2, label:"2 학년"},
   {value: 1, label:"1 학년"}
 ]
-
-const gradePlaceholderText = '학년을 선택해주세요.';
 
 const majorOptions = [
   {value: "항공우주공학과", label:"항공우주공학과"},
@@ -40,8 +39,6 @@ const majorOptions = [
   {value: "인문자연학부", label:"인문자연학부"}
 ]
 
-const majorPlaceholderText = '학과를 선택해주세요.';
-
 export default function EditMyInfo() {
   
   const navigate = useNavigate();
@@ -60,16 +57,17 @@ export default function EditMyInfo() {
   const [count, setCount] = useState(0); // 인증번호 발송 count
 
   const [name, setName] = useState('');
+  const [fixName, setFixName] = useState('');
   const [grade, setGrade] = useState(gradeOptions[0]);
   const [major, setMajor] = useState('');
   const [handle, setHandle] = useState(''); 
+  const [fixHandle, setFixHandle] = useState(''); 
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [SMSCode, setSMSCode] = useState('');
   const [userRandomId, setUserRandomId] = useState('');
   const [email, setEmail] = useState('');
-  const [emailCode, setEmailCode] = useState('');
 
   // border색상 및 메시지 상태
 
@@ -101,13 +99,6 @@ export default function EditMyInfo() {
   const [SMSColor, setSMSColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
   const [SMSMessage, setSMSMessage] = useState(''); // 메시지
 
-  // 이메일 및 인증코드 색상 및 메시지
-  const [emailBorderColor, setEmailBorderColor] = useState('#CFCFCF'); // Grey_4 border 색상
-  const [emailMessageColor, setEmailMessageColor] = useState('#171717'); // Grey_8 메시지 색상
-  const [emailMessage, setEmailMessage] = useState('인증받을 유효한 이메일을 입력해주세요.'); // 메시지
-  const [emailCodeColor, setEmailCodeColor] = useState('#CFCFCF'); // Grey_4 border 및 메시지 색상
-  const [emailCodeMessage, setEmailCodeMessage] = useState(''); // 메시지
-
   // 이름 유효성 검사
   const NameRegex = /^[a-zA-Z가-힣\s]+$/;
 
@@ -134,10 +125,6 @@ export default function EditMyInfo() {
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false); // 핸드폰 번호 실제 사용 여부
   const [isSMSValid, setIsSMSValid] = useState(false);
 
-  // 이메일 및 인증 코드 유효성 확인
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isEmailCodeValid, setIsEmailCodeValid] = useState(false);
-
   // 회원가입 버튼 색상 및 활성화/비활성화
   const [btnSubmitColor, setBtnSubmitColor] = useState(); // B_Grey_3
   const [isAbled, setIsAbled] = useState(false); 
@@ -146,19 +133,52 @@ export default function EditMyInfo() {
   // 핸드폰 번호 '인증하기' text
   const [phoneConfirmBtnText, setPhoneConfirmBtnText] = useState("인증하기"); 
 
-  // 이메일 '인증하기' text
-  const [emailConfirmBtnText, setemailConfirmBtnText] = useState("인증하기"); 
+  // 개인정보 조회
+  const fetchMyInfo = async () => {
+    try {
+      const response = await request.get(`/member/my-info`);
+
+      if (response.isSuccess) {
+        console.log("내 개인정보 조회 성공",response);
+        setName(response.result.name);
+        setFixName(response.result.name);
+        setGrade(response.result.grade);
+        setMajor(response.result.major);
+        setHandle(response.result.handle);
+        setFixHandle(response.result.handle);
+        setProfileUrl(response.result.profileUrl);
+        setPhoneNumber(response.result.phoneNumber);
+        setEmail(response.result.email);
+
+        setIsNameValid(NameRegex.test(response.result.name));
+        if (!NameRegex.test(response.result.name) && response.result.name.trim().length > 0) {
+          setNameBorderColor('1px solid #DC4A41'); // Red
+        } else {
+          setNameBorderColor('1px solid #555555'); // Grey_6
+        }
+        
+
+      } else {
+        console.error("내 개인정보 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error('내 개인정보 조회 오류', error);
+    }
+      
+  };
 
   useEffect(() => {
-    const isAllValid = isNameValid && isHandleValid && isPasswordValid && isPasswordConfirmValid && isPhoneNumberValid && isSMSValid && isEmailValid && isEmailCodeValid;
+    fetchMyInfo();
+  }, []);
+
+  useEffect(() => {
+    const isAllValid = isNameValid && isHandleValid && isPasswordValid && isPasswordConfirmValid && isPhoneNumberValid && isSMSValid;
     setBtnSubmitColor(isAllValid ? '#00A5FF' : '#D2D9E5');
     setIsAbled(isAllValid);
-  }, [isNameValid, isHandleValid, isPasswordValid, isPasswordConfirmValid, isPhoneNumberValid, isSMSValid, isEmailValid, isEmailCodeValid]);
-
+  }, [isNameValid, isHandleValid, isPasswordValid, isPasswordConfirmValid, isPhoneNumberValid, isSMSValid]);
 
   // 프로필 이미지 파일 업로드
   const handleFileChange = async (event) => {
-    // console.log('previousProfileUrl',previousProfileUrl);
     const selectedFile = event.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
@@ -203,8 +223,6 @@ export default function EditMyInfo() {
       // URL에 profileUrl을 포함시킴
       const url = `https://user-dev.kau-koala.com/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
   
-      // console.log('삭제 URL:', url);
-  
       const response = await axios.delete(url);
   
       if (response.data.isSuccess) {
@@ -228,11 +246,11 @@ export default function EditMyInfo() {
     setName(value);
     // setIsNameValid(value.trim().length > 0);
     setIsNameValid(NameRegex.test(value));
-    if (!NameRegex.test(value) && value.trim().length > 0) {
-      setNameBorderColor('1px solid #DC4A41'); // Red
-    } else {
-      setNameBorderColor('1px solid #555555'); // Grey_6
-    }
+    // if (!NameRegex.test(value) && value.trim().length > 0) {
+    //   setNameBorderColor('1px solid #DC4A41'); // Red
+    // } else {
+    //   setNameBorderColor('1px solid #555555'); // Grey_6
+    // }
   }
 
   // 학년 선택 change event
@@ -279,7 +297,6 @@ export default function EditMyInfo() {
     }
   }
 
-
   // 핸드폰 번호 입력 change event
   const handlePhoneNumberChange = (value) => {
     const numericValue = value.replace(/\D/g, ''); // 숫자가 아닌 문자 제거
@@ -312,18 +329,6 @@ export default function EditMyInfo() {
     setSMSColor('#555555'); // Grey_6
   }
 
-  // 이메일 입력 change event
-  const handleEmailChange = (value) => {
-    setEmail(value);
-    setEmailBorderColor('#555555'); // Grey_6
-  }
-
-  // 이메일 인증 코드 입력 change event
-  const handleEmailCodeChange = (value) => {
-    setEmailCode(value);
-    setEmailCodeColor('#555555'); // Grey_6
-  }
-
   // 회원가입 버튼
   const handleSubmit = async () => {
    
@@ -353,7 +358,7 @@ export default function EditMyInfo() {
       }
     } catch (error) {
       console.error("회원가입 오류:", error);
-      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result?.email || error.response?.data?.result?.password || error.response?.data?.result || error.response?.data?.message || "회원가입 오류 발생";
+      const errorMessage = error.response?.data?.result?.message || error.response?.data?.result?.password || error.response?.data?.result || error.response?.data?.message || "회원가입 오류 발생";
       alert(String(errorMessage))  // 문자열로 변환 보장
     }
   };
@@ -413,70 +418,8 @@ export default function EditMyInfo() {
       console.error("핸드폰 번호 인증 오류:", error);
       setIsSMSValid(false);
       setSMSColor('#DC4A41'); // REd
-      // setSMSMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
       setSMSMessage(error.response.data.message);
       setPhoneConfirmBtnText("다시 인증하기");
-    }
-  };
-  
-  // 이메일 인증번호 확인 버튼
-  const handleConfirmEmail = async () => {
-   
-    const requestData = {
-      email: email,
-      code: emailCode
-    };
-    try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/email', requestData);
-      console.log("response",response.data);
-      if (response.data["isSuccess"]) {
-        console.log("이메일 인증 성공!");
-        setIsEmailCodeValid(true);
-        setEmailBorderColor('#3083F7'); // Blue_3
-        setEmailMessageColor('#3083F7'); // Blue_3
-        setEmailMessage('인증이 완료되었습니다.');
-        setEmailCodeMessage('');
-        setEmailCodeColor('#555555'); // grey_6
-      } else {
-        console.error("이메일 인증 실패:", response.data);
-        setEmailCodeColor('#DC4A41'); // REd
-        setEmailCodeMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
-      }
-    } catch (error) {
-      console.error("이메일 인증 오류:", error);
-      setIsEmailCodeValid(false);
-      setEmailCodeColor('#DC4A41'); // REd
-      setEmailCodeMessage('인증번호가 일치하지 않습니다. 다시 인증을 진행해주세요.');
-      setemailConfirmBtnText("다시 인증하기");
-    }
-  };
-
-  // 이메일 인증 코드 전송 버튼 {인증하기 버튼}
-  const handleSubmitEmail = async () => {
-   
-    const requestData = {
-      type: "CERTIFICATION",
-      emailList: [email],
-    };
-    try {
-      const response = await axios.post('https://user-dev.kau-koala.com/email', requestData);
-      console.log("response",response.data);
-      if (response.data["isSuccess"]) {
-        console.log("이메일 인증 코드 전송 성공!");
-        setIsEmailValid(true);
-        setEmailBorderColor('#00A5FF'); // Blue_0_Main
-        setEmailMessageColor('#00A5FF'); // Blue_0_Main
-        setEmailMessage('이메일로 인증번호가 발송되었습니다. 확인되지 않은 경우 스팸함을 확인해주세요.');
-      } else {
-        console.error("이메일 인증 코드 전송 실패:", response.data);
-      }
-    } catch (error) {
-      console.error("이메일 인증 코드 전송 오류:", error);
-      setIsEmailValid(false);
-      setEmailBorderColor('#DC4A41'); // Red
-      setEmailMessageColor('#DC4A41'); // Red
-      setEmailMessage('사용할 수 없는 이메일입니다.');
-      
     }
   };
 
@@ -515,14 +458,9 @@ export default function EditMyInfo() {
       setPhoneBorderColor('#DC4A41'); // Red
       setPhoneMessageColor('#DC4A41'); // Red
       setPhoneMessage(error.response?.data?.result?.phoneNumber || error.response?.data?.message);
-      
-      // setPhoneMessage('사용할 수 없는 핸드폰 번호입니다.');
-      // console.log(error.response.data.result.phoneNumber);
-      
+
     }
   };
-
-  
 
   return (
     <div>
@@ -534,17 +472,15 @@ export default function EditMyInfo() {
               <itemS.Label>프로필 이미지</itemS.Label>
               <itemS.ProfileContainer>
                 <itemS.ProfileBox>
-                  <itemS.Profile src='/img/close.png' alt='프로필이미지' />
+                  <itemS.Profile src={profileUrl} alt='프로필이미지' />
                   <itemS.Upload src='/img/camera.svg' alt='업로드' onClick={handleClick} />
                 </itemS.ProfileBox>
                 <itemS.NameBox>
-                  <itemS.Name>민중원</itemS.Name>
-                  <itemS.Handle>{HANDLE}킹갓제너럴GTA</itemS.Handle>
+                  <itemS.Name>{fixName}</itemS.Name>
+                  <itemS.Handle>{GIHO}{fixHandle}</itemS.Handle>
                 </itemS.NameBox>
               </itemS.ProfileContainer>
-              
-              
-             
+  
               <itemS.HiddenFileInput
                 type="file"
                 ref={fileInputRef}
@@ -570,12 +506,10 @@ export default function EditMyInfo() {
             )}
             <itemS.LIContainer>
               <itemS.BlankLabel>이메일</itemS.BlankLabel>
-              <itemS.InputBox
+              <itemS.EmailBox
                 type="text"
-                placeholder="이메일 고정"
-                value={name}
-                onChange={(e) => handleNameChange(e.target.value)}
-                style={{ border: nameBorderColor }}
+                value={email}
+                readOnly 
               />
             </itemS.LIContainer>
             <itemS.LIContainer>
@@ -583,8 +517,8 @@ export default function EditMyInfo() {
               {/* <itemS.SelectBoxContainer style={{ border: `1px solid ${gradeColor}` }}> */}
                 <itemS.GradeSelect
                   options={gradeOptions}
-                  placeholder={gradePlaceholderText}
-                  // defaultValue={gradeOptions[0]}
+                  // placeholder={gradePlaceholderText}
+                  value={gradeOptions.find(option => option.value === grade)}
                   components={{ DropdownIndicator: null, IndicatorSeparator: null }}
                   isSearchable={false}
                   onChange={handleGradeChange}
@@ -596,15 +530,15 @@ export default function EditMyInfo() {
             <itemS.LIContainer>
               <itemS.Label>학과</itemS.Label>
               {/* <itemS.SelectBoxContainer style={{ border: `1px solid ${majorColor}` }}> */}
-                <itemS.MajorSelect
-                  options={majorOptions}
-                  placeholder={majorPlaceholderText}
-                  // defaultValue={gradeOptions[0]}
-                  components={{ DropdownIndicator: null, IndicatorSeparator: null }}
-                  isSearchable={false}
-                  onChange={handleMajorChange}
-                  isMajorSelected={isMajorSelected}
-                />
+              <itemS.MajorSelect
+                options={majorOptions}
+                value={majorOptions.find(option => option.value === major)} 
+                components={{ DropdownIndicator: null, IndicatorSeparator: null }}
+                isSearchable={false}
+                onChange={handleMajorChange}
+                isMajorSelected={isMajorSelected}
+              />
+
               {/* </itemS.SelectBoxContainer> */}
             </itemS.LIContainer>
           
@@ -634,16 +568,16 @@ export default function EditMyInfo() {
             <itemS.LIContainer>
               <itemS.Label>비밀번호</itemS.Label>
               <itemS.InputConfirmBoxWrapper>
-                <itemS.InputConfirmBox
+                <itemS.InputPwdBox
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
                   value={password}
                   onChange={(e) => handlePasswordChange(e.target.value)}
                   style={{ border: pwdBorderColor }}
                 />
-                <itemS.BtnConfirm>
+                <itemS.BtnEdit>
                   변경
-                </itemS.BtnConfirm>
+                </itemS.BtnEdit>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
             {!isPasswordValid && password.length > 0 ? (

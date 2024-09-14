@@ -51,6 +51,23 @@ export const BlankLabel = styled.label`
 `;
 
 // 입력 박스
+export const EmailBox = styled.input`
+  width: 23.75rem;
+  height: 2.27rem;
+  border: 0.042rem solid ${tokens.colors.Grey_4};
+  border-radius: 0.17rem;
+  ${tokens.typography.B2_M_16}
+  color: ${tokens.colors.B_Grey_5};
+  padding: 0 0.42rem;
+  margin-bottom: 0.17rem;
+  cursor: default;
+
+  &:focus {
+    border: 0.042rem solid ${tokens.colors.Grey_4}; 
+    outline: none; // 기본 outline 제거
+  
+`;
+
 export const InputBox = styled.input`
   width: 23.75rem;
   height: 2.27rem;
@@ -122,7 +139,34 @@ export const InputConfirmBox = styled.input`
   }
 
   // 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
-  &:not(:placeholder-shown) + button {
+  &:focus + button {
+    background-color: ${tokens.colors.B_Grey_7};
+  }
+  
+`;
+
+// 비밀번호 입력+인증 박스
+export const InputPwdBox = styled.input`
+  width: 19.7rem;
+  height: 2.27rem;
+  border: 0.042rem solid ${tokens.colors.Grey_4};
+  border-radius: 0.17rem;
+  ${tokens.typography.B2_M_16}
+  color: ${tokens.colors.Grey_8};
+  padding: 0 0.42rem;
+  margin-bottom: 0.17rem;
+
+  &::placeholder {
+    color: ${tokens.colors.Grey_4}; 
+  }
+
+  // 텍스트 입력되어 있을 경우 border 색상변경
+  &:not(:placeholder-shown) { 
+    border: 0.042rem solid ${tokens.colors.Grey_6};
+  }
+
+  // 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
+  &:focus + button {
     background-color: ${tokens.colors.B_Grey_7};
   }
   
@@ -156,7 +200,7 @@ export const InputConfirmTimerBox = styled.input`
     }
 
   // 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
-  &:not(:placeholder-shown) + button {
+  &:focus + button {
     background-color: ${tokens.colors.B_Grey_7};
   }
   
@@ -210,10 +254,24 @@ export const Btn = styled.button`
 // 인증하기 버튼
 export const BtnConfirm = styled.button`
   ${tokens.Btns.Btn_fill_certi_disable}
+  // background-color: ${tokens.colors.B_Grey_3};
   color: ${tokens.colors.White};
   ${tokens.typography.B2_M_16}
   margin-left: 0.67rem;
   margin-bottom: 0.17rem;
+`;
+
+// 변경 버튼
+export const BtnEdit = styled.button`
+  width: 3.417rem;
+  height: 2.34rem;
+  background-color: ${tokens.colors.White};
+  color: ${tokens.colors.Grey_8};
+  ${tokens.typography.B2_M_16}
+  border-radius: 0.17rem;
+  margin-left: 0.67rem;
+  margin-bottom: 0.17rem;
+  cursor: pointer;
 `;
 
 // 입력값 설명
@@ -314,7 +372,7 @@ export const Profile = styled.img`
   height: 5.2rem;
   border-radius: 4.67rem;
   
-  border: 1px solid ${tokens.colors.Grey_4};
+  // border: 1px solid ${tokens.colors.Grey_4};
 `;
 
 export const Upload = styled.img`

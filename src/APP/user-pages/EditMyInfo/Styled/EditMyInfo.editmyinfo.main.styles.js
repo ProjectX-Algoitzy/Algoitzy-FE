@@ -245,6 +245,7 @@ export const Timer = styled.div`
 // 회원가입 버튼
 export const Btn = styled.button`
   ${tokens.Btns.Btn_fill_disable}
+  background-color: ${tokens.colors.Blue_0_Main};
   color: ${tokens.colors.White};
   ${tokens.typography.T4_SB_20}
   margin-top: 4.17rem;
@@ -293,12 +294,12 @@ export const ToggleErrorMessage = styled.div`
   width: 24.67rem;
   color: ${tokens.colors.Red};
   ${tokens.typography.B3_M_14}
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1rem;
 `;
 
 export const Blank = styled.div`
   width: 24.67rem;
-  height: 1.25rem;
+  height: 0.85rem;
 `;
 
 // 백준 계정 인증 확인 메시지

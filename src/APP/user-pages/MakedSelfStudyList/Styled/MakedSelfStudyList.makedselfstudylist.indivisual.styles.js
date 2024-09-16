@@ -106,15 +106,6 @@ export const HeadCount = styled.div`
   color: ${tokens.colors.Grey_6};
 `;
 
-// 전체 인원수 글자
-export const Total = styled.div`
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-size: 0.67rem;
-  line-height: 0.88rem;
-  color: ${tokens.colors.Grey_4};
-`;
-
 // 제작일 글자
 export const LocationText = styled.div`
   font-family: "Pretendard";

@@ -31,7 +31,7 @@ export default function MakedSelfStudyList() {
   }, []);
 
   const MakeSelfStudy = () => { // 보기 추가 함수
-		navigate(`/makingselfstudy`);
+		navigate(`/newstudy`);
 	}
     
   return (

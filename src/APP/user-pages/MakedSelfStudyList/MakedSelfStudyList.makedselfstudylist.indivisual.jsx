@@ -9,7 +9,7 @@ export default function MakedSelfStudyListIndividual({ application, setCntApp })
 
 	
 	const moveToDetail = (id) => { // 보기 추가 함수
-		navigate(`/makedapplicationdetail/${id}`);
+		navigate(`/study/${id}`);
 	}
 
 	// 스터디 제목 글자수 자르기
@@ -34,12 +34,12 @@ export default function MakedSelfStudyListIndividual({ application, setCntApp })
 
 			<itemS.BottomContainer>
 				<itemS.Bottom>
-					<itemS.Title onClick={() => moveToDetail(application.applicationId)}>{truncateStudyName(application.title)}</itemS.Title>
+					{/* <itemS.Title onClick={() => moveToDetail(application.applicationId)}>{truncateStudyName(application.title)}</itemS.Title> */}
+					<itemS.Title onClick={() => moveToDetail(1)}>{truncateStudyName(application.title)}</itemS.Title>
 					<itemS.BottomHeadCount>
 						<itemS.PeopleIcon></itemS.PeopleIcon>		
 						<itemS.BottomInner>
 							<itemS.HeadCount>1</itemS.HeadCount>
-							<itemS.Total>/10</itemS.Total>
 						</itemS.BottomInner>
 					</itemS.BottomHeadCount>
 					
@@ -57,5 +57,3 @@ export default function MakedSelfStudyListIndividual({ application, setCntApp })
 	)
     
 };
-
-

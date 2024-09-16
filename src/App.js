@@ -13,7 +13,8 @@ import FindEmailSuccess from "./APP/user-pages/FindAuth/FindEmailSuccess/FindAut
 import FindPassword from "./APP/user-pages/FindAuth/FindPassword/FindPassword.findpassword";
 import MakedSelfStudyList from "./APP/user-pages/MakedSelfStudyList/MakedSelfStudyList.makedselfstudylist.main";
 import MakingSelfStudy from "./APP/user-pages/MakingSelfStudy/MakingSelfStudy.makingselfstudy";
-import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main"
+import RegularStudy from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.main";
+import SelftStudyMain from "./APP/user-pages/SelfStudy/SelftStudy.selfstudy.main";
 import MyStudyList from "./APP/user-pages/MyStudyList/MyStudyList.mystudylist.main";
 import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularStudy.applyregularstudy.main";
 import CurriculumCheck from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.curriculumcheck";
@@ -88,6 +89,7 @@ useInterval(async () => {
             <Route path="/findpassword" element={<FindPassword />} />
             <Route path="/study" element={isLoggedIn() ? <MakedSelfStudyList /> : <Navigate to="/" />} />
             <Route path="/newstudy" element={isLoggedIn() ? <MakingSelfStudy /> : <Navigate to="/" />} />
+            <Route path="/study/:id" element={isLoggedIn() ? <SelftStudyMain /> : <Navigate to="/" />} />
             <Route path="/regularstudy/:id" element={isLoggedIn() ? <RegularStudy /> : <Navigate to="/" />} />
             <Route path="/curriculumcheck/:curriculumId" element={isLoggedIn() ? <CurriculumCheck /> : <Navigate to="/" />} />
             <Route path="/mystudy" element={isLoggedIn() ? <MyStudyList /> : <Navigate to="/" />} />

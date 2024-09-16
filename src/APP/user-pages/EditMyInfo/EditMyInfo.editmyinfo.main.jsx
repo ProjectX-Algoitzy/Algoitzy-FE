@@ -715,6 +715,7 @@ export default function EditMyInfo() {
             수정 완료
           </itemS.Btn>
         </itemS.InnerContainer>
+        <itemS.DeleteInfo>계정 삭제하기</itemS.DeleteInfo>
       </itemS.Container>
     </div>
   );

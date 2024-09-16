@@ -5,8 +5,10 @@ import Select from 'react-select';
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center; 
-  background-image: url('/img/login.png');
+  align-items: center;
+  background-image: url('/img/bg-myinfo.svg');
   
 `;
 
@@ -15,10 +17,19 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   background-color: ${tokens.colors.White};
-  border: 0.042rem solid ${tokens.colors.Grey_4};
+  border: 0.042rem solid ${tokens.colors.B_Grey_4};
   border-radius: 0.83rem;
   padding: 5.33rem 12.71rem;
-  margin: 5rem 0;
+  margin: 5rem 0 2.7rem 0;
+  box-shadow: 0 0.125rem 0.75rem 0 rgba(0, 0, 0, 0.08);
+`;
+
+export const DeleteInfo = styled.div`
+  ${tokens.typography.T5_SB_16}
+  color: ${tokens.colors.Black};
+  border-bottom: 0.042rem solid ${tokens.colors.Black};
+  margin-bottom: 5.875rem;
+  cursor: pointer;
 `;
 
 // 회원가입 head

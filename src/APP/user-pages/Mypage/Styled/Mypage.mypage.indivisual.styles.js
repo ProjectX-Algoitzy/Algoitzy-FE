@@ -6,7 +6,7 @@ export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;  
-  width: 11.88rem;
+  width: 11.85rem;
   height: 15rem;
   background-color: ${tokens.colors.White};
   // border: 1px solid ${tokens.colors.Grey_4};
@@ -17,7 +17,7 @@ export const InnerContainer = styled.div`
 
 export const TopContainer = styled.div`
   display: flex;
-	width: 11.88rem;
+	width: 11.85rem;
   height: 8.75rem;
 	border-radius: 0.33rem 0.33rem 0 0;
 `;
@@ -44,7 +44,7 @@ export const ProfileIcon = styled.img`
 export const BottomContainer = styled.div`
 	display: flex;
 	flex-direction: column; 
-	width: 11.88rem;
+	width: 11.85rem;
 	height: 6.25rem;
 	border-radius: 0 0 0.33rem 0.33rem;
 `;

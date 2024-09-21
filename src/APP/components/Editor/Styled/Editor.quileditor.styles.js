@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 1.667rem;
+  width: 100%;
 `;
 
 export const EditorWrapper = styled.div`

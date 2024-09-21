@@ -38,9 +38,7 @@ export const StyledTd = styled.td`
     return 'white';
   }};
   border-top: ${({ rowIndex }) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
-  /* height: ${({ rowIndex }) => (rowIndex === 0 ? '1.88rem' : '2.29rem')};
-  width: ${({ colIndex }) => (colIndex === 0 ? '7.33rem' : '2.29rem')}; */
-  width: ${({ colIndex }) => (colIndex === 0 ? '7.33rem' : 'auto')};
+  width: ${({ colIndex }) => (colIndex === 0 ? '12px' : 'auto')};
   height: ${({ rowIndex }) => (rowIndex === 0 ? '1.88rem' : '2.5rem')};
 `;
 

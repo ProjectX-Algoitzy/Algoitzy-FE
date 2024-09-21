@@ -59,14 +59,6 @@ export const CountContainer = styled.div`
   color: ${tokens.colors.B_Grey_4};
 `;
 
-export const OnlineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  color: #555555;
-  ${tokens.typography.T5_SB_16};
-  margin-left: 0.58rem;
-`;
-
 export const ManagerNameContainer = styled.div`
   display: flex;
   flex-direction: row;

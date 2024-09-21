@@ -21,7 +21,7 @@ export const TopContainer = styled.div`
   border-radius: 0.33rem 0.33rem 0 0;
 `;
 
-export const TopImg = styled.div`
+export const TopImg = styled.img`
   width: 10.54rem;
   height: 7.58rem;
   background-image: url('/img/selfstudy.png');
@@ -32,8 +32,7 @@ export const TopImg = styled.div`
 export const TopInner = styled.div``;
 
 // icon들
-export const ProfileIcon = styled.div`
-  background-image: url('/img/test.png');
+export const ProfileIcon = styled.img`
   width: 0.75rem;
   height: 0.75rem;
   margin-right: 0.33rem;

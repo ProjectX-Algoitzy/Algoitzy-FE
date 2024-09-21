@@ -105,12 +105,14 @@ import request from '../../Api/request';
 import QuilEditor from '../../components/Editor/Editor.quileditor';
 import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
+import { AlertContext } from '../../Common/Alert/AlertContext';
 
 export default function MakingSelfStudy() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
+  const { alert } = useContext(AlertContext);
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -162,23 +164,23 @@ export default function MakingSelfStudy() {
   };
 
   const handleSave = async () => {
-    console.log("아직 api 없음 ㅋ");
-    // const requestData = {
-    //   profileUrl: imageUrl,
-    //   name: name,
-    //   content: content
-    // };
+    const requestData = {
+      profileUrl: imageUrl,
+      name: name,
+      content: content
+    };
 
-    // try {
-    //   const response = await request.post('/study', requestData)
-    //   console.log(response);
+    try {
+      const response = await request.post('/study', requestData)
+      console.log("자율 스터디 생성 성공: ", response);
 
-    //   if (response["isSuccess"]) {
-    //       navigate("/regularstudylist");
-    //   } 
-    // } catch (error) {
-    //   console.error('정규스터디 저장과정에서 에러', error);
-    // }
+      if (response["isSuccess"]) {
+        alert("자율 스터디가 생성되었습니다.");
+        navigate("/study");
+      } 
+    } catch (error) {
+      console.error('자율스터디 저장과정에서 에러', error);
+    }
   };
 
 

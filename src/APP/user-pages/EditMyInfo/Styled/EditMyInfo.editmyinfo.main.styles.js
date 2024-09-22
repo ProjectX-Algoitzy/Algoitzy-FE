@@ -177,9 +177,9 @@ export const InputPwdBox = styled.input`
   }
 
   // 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
-  &:focus + button {
-    background-color: ${tokens.colors.B_Grey_7};
-  }
+  // &:focus + button {
+  //   background-color: ${tokens.colors.B_Grey_7};
+  // }
   
 `;
 

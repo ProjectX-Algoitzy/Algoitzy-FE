@@ -69,7 +69,8 @@ export default function EditMyInfo() {
   const [SMSCode, setSMSCode] = useState('');
   const [userRandomId, setUserRandomId] = useState('');
   const [email, setEmail] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // 비밀번호 변경 토글
+  const [editText, setEditText] = useState('변경'); // 비밀번호 변경 버튼 텍스트 변경
 
   // border색상 및 메시지 상태
 
@@ -367,7 +368,7 @@ export default function EditMyInfo() {
         console.log("개인정보 수정 성공!");
         const result = await alert('수정 완료되었습니다.');
         if (result) {
-          navigate("/");
+          window.location.replace('/');
         }
       } else {
         console.error("개인정보 수정 실패:", response.data);
@@ -481,9 +482,37 @@ export default function EditMyInfo() {
     }
   };
 
-  const toggleEditMode = () => {
-    setIsEditing((prev) => !prev); // '변경'과 '취소' 상태를 토글
+  const toggleEditMode = async (text, password) => {
+    // const requestData = {
+    //   password
+    // };
+    // 조건 분기문을 try 블록 외부로 이동
+    if (text === '변경') {
+      try {
+        const response = await request.post(`/member/check-password`, password, {
+          headers: {
+              'Content-Type': 'text/plain'
+          }
+        });
+        
+        if (response.isSuccess) {
+          console.log("비밀번호 일치 여부 성공", response);
+          setEditText('취소');  // 버튼 텍스트를 '취소'로 변경
+          setIsEditing((prev) => !prev); // 편집 모드 토글
+        } else {
+          console.error("내 개인정보 조회 실패:", response);
+        }
+      } catch (error) {
+        console.error('내 개인정보 조회 오류', error);
+      }
+    } else if (text === '취소') {
+      // 텍스트가 '취소'일 경우 API 요청 없이 상태를 '변경'으로 토글
+      setEditText('변경');  // 버튼 텍스트를 다시 '변경'으로 설정
+      setIsEditing((prev) => !prev); // 편집 모드 토글
+    }
   };
+  
+  
 
   return (
     <div>
@@ -598,8 +627,8 @@ export default function EditMyInfo() {
                   onChange={(e) => handlePasswordChange(e.target.value)}
                   style={{ border: pwdBorderColor }}
                 />
-                <itemS.BtnEdit onClick={toggleEditMode}>
-                  {isEditing ? "취소" : "변경"}
+                <itemS.BtnEdit onClick={() => toggleEditMode(editText, password)}>
+                  {/* {isEditing ? "취소" : "변경"} */}{editText}
                 </itemS.BtnEdit>
               </itemS.InputConfirmBoxWrapper>
             </itemS.LIContainer>
@@ -715,7 +744,7 @@ export default function EditMyInfo() {
             수정 완료
           </itemS.Btn>
         </itemS.InnerContainer>
-        <itemS.DeleteInfo>계정 삭제하기</itemS.DeleteInfo>
+        {/* <itemS.DeleteInfo>계정 삭제하기</itemS.DeleteInfo> */}
       </itemS.Container>
     </div>
   );

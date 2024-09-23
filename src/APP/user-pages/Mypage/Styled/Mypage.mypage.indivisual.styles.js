@@ -38,7 +38,8 @@ export const PeopleIcon = styled.img`
 export const ProfileIcon = styled.img`
 	width: 0.75rem;
 	height: 0.75rem;
-	border-radius: 0.5rem
+	border-radius: 0.5rem;
+	margin-right: 0.33rem;
 `;
 
 export const BottomContainer = styled.div`

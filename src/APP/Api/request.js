@@ -31,7 +31,7 @@ request.interceptors.response.use(
         case 'NOTICE':
           await alert(message);
           break;
-        case 'TOKEN_EXPIRE':
+        case 'TOKEN_EXPIRED':
           window.localStorage.clear();
           window.location.href = '/login';
           break;

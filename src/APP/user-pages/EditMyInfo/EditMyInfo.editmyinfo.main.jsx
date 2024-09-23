@@ -482,18 +482,14 @@ export default function EditMyInfo() {
     }
   };
 
-  const toggleEditMode = async (text, password) => {
-    // const requestData = {
-    //   password
-    // };
+  const toggleEditMode = async (text) => {
+    const requestData = {
+      password: password
+    };
     // 조건 분기문을 try 블록 외부로 이동
     if (text === '변경') {
       try {
-        const response = await request.post(`/member/check-password`, password, {
-          headers: {
-              'Content-Type': 'text/plain'
-          }
-        });
+        const response = await request.post(`/member/check-password`, requestData);
         
         if (response.isSuccess) {
           console.log("비밀번호 일치 여부 성공", response);
@@ -627,7 +623,7 @@ export default function EditMyInfo() {
                   onChange={(e) => handlePasswordChange(e.target.value)}
                   style={{ border: pwdBorderColor }}
                 />
-                <itemS.BtnEdit onClick={() => toggleEditMode(editText, password)}>
+                <itemS.BtnEdit onClick={() => toggleEditMode(editText)}>
                   {/* {isEditing ? "취소" : "변경"} */}{editText}
                 </itemS.BtnEdit>
               </itemS.InputConfirmBoxWrapper>

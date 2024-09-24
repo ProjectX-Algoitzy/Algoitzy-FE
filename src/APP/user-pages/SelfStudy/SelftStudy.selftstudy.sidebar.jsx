@@ -59,14 +59,14 @@ export default function SelftStudySidebar({selfStudyInfo, setActiveComponent, ac
             <itemS.CountAndOnlineContainer>
               <itemS.CountContainer>
                 <img src="/img/iconpeople.png" alt="사람아이콘" style={{ width: "1rem", height: "1rem", marginRight: "0.333rem" }} />
-                {selfStudyInfo.memberCount}명
+                <itemS.CountDiv>{selfStudyInfo.memberCount}명</itemS.CountDiv>
               </itemS.CountContainer>
             </itemS.CountAndOnlineContainer>
             <itemS.ManagerNameContainer>
                 <itemS.ManagerNameContainerBoxLeft>
-                    <img src={selfStudyInfo.leaderProfileUrl} alt="회색동그라미" style={{width:"18px", height:"18px", marginRight:"8px"}} />
-                    {selfStudyInfo.leaderName}
-                    <img src="/img/iconstudymanager.png" alt="스터디장" style={{width:"58px", height:"19px", marginLeft:"8px"}} />
+                  <img src={selfStudyInfo.leaderProfileUrl} alt="회색동그라미" style={{width:"18px", height:"18px", marginRight:"8px"}} />
+                  <itemS.ManagerNameDiv>{selfStudyInfo.leaderName}</itemS.ManagerNameDiv>
+                  <img src="/img/iconstudymanager.png" alt="스터디장" style={{width:"58px", height:"19px", marginLeft:"8px"}} />
                 </itemS.ManagerNameContainerBoxLeft>
                 <itemS.ManagerNameContainerBoxRight>{formatDate(selfStudyInfo.createdTime)} 개설</itemS.ManagerNameContainerBoxRight>
             </itemS.ManagerNameContainer>

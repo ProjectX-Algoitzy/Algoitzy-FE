@@ -70,14 +70,15 @@ export default function SelfStudyMemberList() {
             <tr key={index}>
               <itemS.StyledTd rowIndex={index + 1} colIndex={0}>
                 {member.memberRole === "LEADER" && (
-                  <img 
-                    src="/img/crown.svg" 
-                    alt="crown" 
-                    style={{ width: '20px', height: '20px', marginRight: '8px', marginTop: '5px' }}
-                  />
+                  <img src="/img/crown.svg" alt="crown" style={{marginTop:"3px"}}/>
                 )}
               </itemS.StyledTd>
-              <itemS.StyledTd rowIndex={index + 1} colIndex={1}>{member.name}</itemS.StyledTd>
+              <itemS.StyledTd rowIndex={index + 1} colIndex={1}>
+                {/* {member.memberRole === "LEADER" && (
+                  <img src="/img/crown.svg" alt="crown" />
+                )} */}
+                {member.name}
+              </itemS.StyledTd>
               <itemS.StyledTd rowIndex={index + 1} colIndex={2}>{formatPhoneNumber(member.phoneNumber)}</itemS.StyledTd>
               <itemS.StyledTd rowIndex={index + 1} colIndex={3}>
                 {renderStatusButton(member.status, member.studyMemberId)}

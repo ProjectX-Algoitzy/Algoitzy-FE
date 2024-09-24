@@ -66,7 +66,7 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
             <itemS.ModalHeader>
                 <img src="/img/close.png" onClick={onClose} style={{ marginTop: "0.667rem", marginRight: "1rem", cursor: "pointer" }} alt="x" />
             </itemS.ModalHeader>
-            <p dangerouslySetInnerHTML={{ __html: getMessage() }} />
+            <itemS.ModalSentence dangerouslySetInnerHTML={{ __html: getMessage() }} />
             <itemS.BtnContainer>
                 <itemS.CancelBtn onClick={onClose}>취소</itemS.CancelBtn>
                 <itemS.ConfirmBtn onClick={handleConfirm}>확인</itemS.ConfirmBtn>

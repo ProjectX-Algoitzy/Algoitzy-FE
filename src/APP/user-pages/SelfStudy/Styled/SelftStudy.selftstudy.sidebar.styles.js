@@ -37,12 +37,9 @@ export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 
 
 export const TitleContainer = styled.div` 
   display: flex;
-  flex-direction: row;
   color: ${tokens.colors.Black};
   ${tokens.typography.T3_B_24};
   margin-top: 0.67rem;
-  align-items: center;
-  
 `;
 
 export const CountAndOnlineContainer = styled.div`
@@ -55,8 +52,12 @@ export const CountAndOnlineContainer = styled.div`
 export const CountContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+`;
+
+export const CountDiv = styled.div`
   ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.B_Grey_4};
+  color: ${tokens.colors.B_Grey_6};
 `;
 
 export const ManagerNameContainer = styled.div`
@@ -70,8 +71,12 @@ export const ManagerNameContainer = styled.div`
 export const ManagerNameContainerBoxLeft = styled.div`
   display: flex;
   flex-direction: row;
-  color: ${tokens.colors.Grey_6};
-  ${tokens.typography.B2_M_16};
+  align-items: center;
+`;
+
+export const ManagerNameDiv = styled.div`
+  color: ${tokens.colors.Grey_7};
+  ${tokens.typography.T5_SB_16};
 `;
 
 export const ManagerNameContainerBoxRight = styled.div`
@@ -84,7 +89,7 @@ export const ManagerNameContainerBoxRight = styled.div`
 export const LinkContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1.42rem;
+  margin-top: 0.42rem;
 `;
 
 export const styledLink = styled.div`
@@ -94,7 +99,7 @@ export const styledLink = styled.div`
   ${tokens.typography.T5_SB_16};
   padding-top: 0.71rem;
   padding-bottom: 0.75rem;
-  border-top: 0.042rem solid ${tokens.colors.B_Grey_2};
+  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   justify-content: space-between;
   cursor: pointer;
 `;
@@ -105,6 +110,9 @@ export const ArrowImg = styled.img`
 `;
 
 export const BlueBtn = styled.button` 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -121,6 +129,9 @@ export const BlueBtn = styled.button`
 `;
 
 export const Gray3Block = styled.button` 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -136,6 +147,9 @@ export const Gray3Block = styled.button`
 `;
 
 export const Gray4Block = styled.button` 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -151,6 +165,9 @@ export const Gray4Block = styled.button`
 `;
 
 export const Gray7Btn = styled.button` 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -167,6 +184,9 @@ export const Gray7Btn = styled.button`
 `;
 
 export const RedBtn = styled.button` 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -174,7 +194,7 @@ export const RedBtn = styled.button`
   cursor: pointer;
   color: ${tokens.colors.White};
   ${tokens.typography.T5_SB_16}
-  background-color: #F04438;
+  background-color: #DC4A41;
   margin-top: 0.67rem;
 
   @media (max-width: 600px) {

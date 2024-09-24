@@ -15,14 +15,9 @@ export const ModalBackground = styled.div`
   z-index: 9999;
 `;
 
-export const ModalHeader = styled.div`
-  display: flex;
-  justify-content: end;
-`;
-
 export const ModalContent = styled.div`
   background: #fff;
-  padding: 20px;
+  padding-bottom: 30px;
   border-radius: 5px;
   width: 770px;
   height: 348px;
@@ -32,6 +27,19 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* 콘텐츠를 위와 아래로 배치 */
+`;
+
+export const ModalHeader = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+export const ModalSentence = styled.div`
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  color: ${tokens.colors.Black};
+  ${tokens.typography.B1_M_20};
 `;
 
 // 모달 외부 클릭을 차단하는 투명한 배경
@@ -49,7 +57,6 @@ export const DisableBackground = styled.div`
 export const BtnContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: auto; /* 상단 공간을 밀어내어 바닥에 붙이기 */
 `;
 
 export const ConfirmBtn = styled.button`

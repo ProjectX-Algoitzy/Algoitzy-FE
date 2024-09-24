@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MakedSelfStudyListIndividual from './MakedSelfStudyList.makedselfstudylist.indivisual';
 import * as itemS from "../../user-pages/MakedSelfStudyList/Styled/MakedSelfStudyList.makedselfstudylist.main.styles";
-import { dummyData } from './dummy';
 import request from '../../Api/request';
 
 export default function MakedSelfStudyList() {

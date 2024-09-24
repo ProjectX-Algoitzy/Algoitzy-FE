@@ -44,7 +44,7 @@ export const Group = styled.div`
   flex-wrap: wrap;
   align-items: flex-start; 
   background-color: ${tokens.colors.White};
-  width: 50.83rem;
+  width: 50.88rem;
   padding-top: 1.83rem;
 
   @media (max-width: 600px) {

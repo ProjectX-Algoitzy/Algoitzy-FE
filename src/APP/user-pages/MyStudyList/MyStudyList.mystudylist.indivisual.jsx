@@ -4,12 +4,17 @@ import * as itemS from "../MyStudyList/Styled/MyStudyList.mystudylist.indivisual
 
 
 export default function MyStudyListIndividual({ studyList }){
-
 	const navigate = useNavigate();
 
 	
-	const moveToDetail = (id) => { // 보기 추가 함수
-		navigate(`/regularstudy/${id}`);  // 정규스터디에 맞게 이동하도록 수정
+	const moveToDetail = (studyInfo) => { // 보기 추가 함수
+		if(studyInfo.studyType === "TEMP") {
+			navigate(`/study/${studyInfo.studyId}`);
+		} 
+
+		if (studyInfo.studyType === "REGULAR") {
+			navigate(`/regularstudy/${studyInfo.studyId}`);  // 정규스터디에 맞게 이동하도록 수정
+		}
 	}
 
 	// 스터디 제목 글자수 자르기
@@ -33,7 +38,7 @@ export default function MyStudyListIndividual({ studyList }){
 
 			<itemS.BottomContainer>
 				<itemS.Bottom>
-					<itemS.Title onClick={() => moveToDetail(studyList.studyId)}>{truncateStudyName(studyList.studyName)}</itemS.Title>
+					<itemS.Title onClick={() => moveToDetail(studyList)}>{truncateStudyName(studyList.studyName)}</itemS.Title>
 					<itemS.BottomHeadCount>
 						<itemS.PeopleIcon src='/img/people.png' alt='아이콘'></itemS.PeopleIcon>		
 						<itemS.BottomInner>

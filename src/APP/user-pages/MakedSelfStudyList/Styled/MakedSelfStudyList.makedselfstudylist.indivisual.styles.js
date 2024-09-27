@@ -21,7 +21,7 @@ export const TopContainer = styled.div`
   border-radius: 0.33rem 0.33rem 0 0;
 `;
 
-export const TopImg = styled.div`
+export const TopImg = styled.img`
   width: 10.54rem;
   height: 7.58rem;
   background-image: url('/img/selfstudy.png');
@@ -32,8 +32,7 @@ export const TopImg = styled.div`
 export const TopInner = styled.div``;
 
 // icon들
-export const ProfileIcon = styled.div`
-  background-image: url('/img/test.png');
+export const ProfileIcon = styled.img`
   width: 0.75rem;
   height: 0.75rem;
   margin-right: 0.33rem;
@@ -104,15 +103,6 @@ export const HeadCount = styled.div`
   font-size: 0.67rem;
   line-height: 0.88rem;
   color: ${tokens.colors.Grey_6};
-`;
-
-// 전체 인원수 글자
-export const Total = styled.div`
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-size: 0.67rem;
-  line-height: 0.88rem;
-  color: ${tokens.colors.Grey_4};
 `;
 
 // 제작일 글자

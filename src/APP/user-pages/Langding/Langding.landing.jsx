@@ -45,7 +45,7 @@ export default function Langding() {
       }
     };
     const checkLoginStatus = async () => {
-      setLoading(true);
+      
       try {
         const response = await request.get('/member/info');
         console.log("로그인 멤버 정보 조회", response);

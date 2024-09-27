@@ -35,7 +35,7 @@ export default function Header() {
     if (accessToken) {
       checkLoginStatus();
     }
-  });
+  }, []);
 
   // Toggle Profile Modal
   const toggleProfileModal = () => {

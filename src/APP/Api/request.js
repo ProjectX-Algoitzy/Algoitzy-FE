@@ -3,8 +3,7 @@ import { getAlertFunction } from '../Common/Alert/alertSingleton';
 
 export const ACCESS_TOKEN = 'accessToken';
 
-//앞으로 토큰은 여기서 사용하시면 됩니다.
-// Authorization 에 토큰 자동으로 들어가도록 설정하였습니다.
+// Authorization에 토큰 자동으로 설정
 const request = axios.create({
   baseURL: 'https://user-dev.kau-koala.com',
   headers: {
@@ -14,14 +13,37 @@ const request = axios.create({
   },
 });
 
+// LoadingContext를 사용해서 로딩 상태 제어 (로딩 상태 함수는 호출 시점에서 정의)
+let loadingFunctions = { showLoading: () => {}, hideLoading: () => {} };
+
+export const setLoadingFunctions = (show, hide) => {
+  loadingFunctions = { showLoading: show, hideLoading: hide };
+};
+
+// 요청 인터셉터
+request.interceptors.request.use(
+  (config) => {
+    loadingFunctions.showLoading(); // 요청 시작 시 로딩 상태 표시
+    return config;
+  },
+  (error) => {
+    loadingFunctions.hideLoading(); // 요청 실패 시 로딩 상태 숨김
+    return Promise.reject(error);
+  }
+);
+
+// 응답 인터셉터
 request.interceptors.response.use(
   (response) => {
+    loadingFunctions.hideLoading(); // 응답이 오면 로딩 상태 숨김
     return response.data;
   },
   async (error) => {
-    // Use the singleton to access the alert function
+    loadingFunctions.hideLoading(); // 에러 발생 시 로딩 상태 숨김
+
+    // 알림 함수 가져오기
     const alert = getAlertFunction();
-    
+
     if (error.response && error.response.data) {
       const { data, status } = error.response;
       const code = data.code;
@@ -37,6 +59,10 @@ request.interceptors.response.use(
           break;
         default:
           console.error(`Unexpected error: ${message}`, error);
+          if (message === '만료된 토큰입니다.') {
+            window.localStorage.clear();
+            window.location.href = '/login';
+          }
           break;
       }
     }
@@ -46,50 +72,3 @@ request.interceptors.response.use(
 );
 
 export default request;
-
-
-// import axios from 'axios';
-// import { getAlertFunction } from '../Common/Alert/alertSingleton';
-
-// export const ACCESS_TOKEN = 'accessToken';
-
-// // Authorization 에 토큰 자동으로 들어가도록 설정하였습니다.
-// const request = axios.create({
-//   baseURL: 'https://admin-dev.kau-koala.com', //변경된 url입니다
-//   headers: {
-//     withCredentials: true,
-//     transformRequest: true,
-//     Authorization: `Bearer ${window.localStorage.getItem(ACCESS_TOKEN)}`,
-//   },
-// });
-
-// request.interceptors.response.use(
-//   (response) => {
-//     return response.data;
-//   },
-//   async (error) => {
-//     // Use the singleton to access the alert function
-//     const alert = getAlertFunction();
-    
-//     if (error.response && error.response.data) {
-//       const { data, status } = error.response;
-//       const code = data.code;
-//       const message = data.message;
-
-//       switch (code) {
-//         case 'NOTICE':
-//           // console.error(`Unexpected error: ${message}`, error);
-//           await alert(message);
-//           break;
-//         default:
-//           console.error(`Unexpected error: ${message}`, error);
-//           break;
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default request;
-

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
@@ -30,6 +29,8 @@ import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
+import { useLoading } from "./APP/Common/Loading/LoadingContext";
+import { setLoadingFunctions } from "./APP/Api/request";
 
 // const Root = styled.div`
 //   position: absolute;
@@ -53,7 +54,11 @@ const ContentWrapper = styled.div`
 `;
 
 function App() {
-useInterval(async () => {
+  const { showLoading, hideLoading } = useLoading(); 
+
+  setLoadingFunctions(showLoading, hideLoading);
+
+  useInterval(async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
       const isTokenValid = await checkToken();
       if (isTokenValid) {
@@ -61,17 +66,14 @@ useInterval(async () => {
       }
     }
   }, 30000);
-  // useInterval(() => {
-  //   if (localStorage.getItem(ACCESS_TOKEN)) {
-  //     refreshToken();
-  //   }
-  // }, 30000);
 
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다. 
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
 
   return (
+    
+
     <Root>
     <GlobalStyle />
       <BrowserRouter>
@@ -106,6 +108,7 @@ useInterval(async () => {
           <Footer />
       </BrowserRouter>
     </Root>
+    
   );
 }
 

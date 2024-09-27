@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
-
-
 export const OuterContainer = styled.div`
   position: relative;
   width: 100%;
@@ -19,8 +17,11 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  padding: 6.58rem 15rem 0 15rem;
+  padding: 6.58rem 0;
   margin-bottom: 4.08rem;
+  @media (max-width: 600px) {
+    width: 32rem;
+  }
 `;
 
 export const TitleBox = styled.div`
@@ -31,7 +32,7 @@ export const TitleBox = styled.div`
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
   @media (max-width: 600px) {
-    width: 65%;
+    width: 100%;
   }
 `;
 
@@ -57,7 +58,7 @@ export const PartBox = styled.div`
   align-items: center;
   margin-bottom: 0.67rem;
   @media (max-width: 600px) {
-    width: 65%
+    width: 100%;
   }
 `;
 

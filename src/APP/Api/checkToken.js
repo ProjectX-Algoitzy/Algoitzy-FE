@@ -11,6 +11,7 @@ export const checkToken = async () => {
     return isTokenValid;
   } catch (error) {
     console.error('토큰 체크 에러:', error);
+    
     return false; // return false if there's an error
   }
 };

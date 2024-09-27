@@ -3,6 +3,7 @@ import * as itemS from "./Styled/Langing.landing"
 import request from '../../Api/request';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+// import Loading from '../../Common/Loading/LoadingOverlay';
 
 export default function Langding() {
   const [detailRecentGeneration, setDetailRecentGeneration] = useState(null);
@@ -11,6 +12,7 @@ export default function Langding() {
 
   useEffect(() => {
     const getRecentGeneration = async() => {
+      
       try {
         // const response = await request.get(`/generation/max`);
         const response = await axios.get('https://user-dev.kau-koala.com/generation/max');
@@ -18,6 +20,7 @@ export default function Langding() {
         setDetailRecentGeneration(response.data.result);
         if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
+          
         } else {
             console.error("api 연동 실패:", response);
         }
@@ -26,6 +29,7 @@ export default function Langding() {
       }
     };
     const getStudyCount = async() => {
+      
       try {
         // const response = await request.get(`study/count`);
         const response = await axios.get('https://user-dev.kau-koala.com/study/count');
@@ -33,6 +37,7 @@ export default function Langding() {
         setDetailStudyCount(response.data.result);
         if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
+          
         } else {
             console.error("api 연동 실패:", response);
         }
@@ -41,11 +46,13 @@ export default function Langding() {
       }
     };
     const checkLoginStatus = async () => {
+      setLoading(true);
       try {
         const response = await request.get('/member/info');
         console.log("로그인 멤버 정보 조회", response);
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
+          setLoading(false);
         }
       } catch (error) {
         console.error("로그인 멤버 정보 조회 실패", error);
@@ -58,6 +65,7 @@ export default function Langding() {
     getRecentGeneration();
     getStudyCount();
   }, []);
+
 
   return (
     <itemS.HomeWrap>

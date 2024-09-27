@@ -27,6 +27,8 @@ import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
 import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
+import { useLoading } from "./APP/Common/Loading/LoadingContext";
+import { setLoadingFunctions } from "./APP/Api/request";
 
 // const Root = styled.div`
 //   position: absolute;
@@ -50,6 +52,10 @@ const ContentWrapper = styled.div`
 `;
 
 function App() {
+  const { showLoading, hideLoading } = useLoading(); 
+
+  setLoadingFunctions(showLoading, hideLoading);
+
   useInterval(async () => {
     if (localStorage.getItem(ACCESS_TOKEN)) {
       const isTokenValid = await checkToken();
@@ -64,6 +70,8 @@ function App() {
   };
 
   return (
+    
+
     <Root>
     <GlobalStyle />
       <BrowserRouter>
@@ -96,6 +104,7 @@ function App() {
           <Footer />
       </BrowserRouter>
     </Root>
+    
   );
 }
 

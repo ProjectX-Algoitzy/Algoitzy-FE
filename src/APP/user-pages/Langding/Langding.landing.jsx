@@ -3,7 +3,6 @@ import * as itemS from "./Styled/Langing.landing"
 import request from '../../Api/request';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import Loading from '../../Common/Loading/LoadingOverlay';
 
 export default function Langding() {
   const [detailRecentGeneration, setDetailRecentGeneration] = useState(null);
@@ -52,7 +51,8 @@ export default function Langding() {
         console.log("로그인 멤버 정보 조회", response);
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
-          setLoading(false);
+          localStorage.setItem('memberId', response.result.memberId);
+
         }
       } catch (error) {
         console.error("로그인 멤버 정보 조회 실패", error);

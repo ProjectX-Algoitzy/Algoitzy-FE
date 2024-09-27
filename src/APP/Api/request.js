@@ -48,10 +48,14 @@ request.interceptors.response.use(
       const { data, status } = error.response;
       const code = data.code;
       const message = data.message;
-
+      
       switch (code) {
         case 'NOTICE':
           await alert(message);
+          break;
+        case 'TOKEN_EXPIRED':
+          window.localStorage.clear();
+          window.location.href = '/login';
           break;
         default:
           console.error(`Unexpected error: ${message}`, error);

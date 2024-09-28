@@ -347,7 +347,7 @@ export default function EditMyInfo() {
     setSMSColor('#555555'); // Grey_6
   }
 
-  // 회원가입 버튼
+  // 수정완료 버튼
   const handleSubmit = async () => {
    
     const requestData = {
@@ -368,7 +368,7 @@ export default function EditMyInfo() {
         console.log("개인정보 수정 성공!");
         const result = await alert('수정 완료되었습니다.');
         if (result) {
-          window.location.replace('/');
+          window.location.replace('/mypage');
         }
       } else {
         console.error("개인정보 수정 실패:", response.data);
@@ -514,7 +514,7 @@ export default function EditMyInfo() {
     <div>
       <itemS.Container>
         <itemS.InnerContainer>
-          <itemS.Head3>회원가입</itemS.Head3>
+          <itemS.Head3>내 정보 수정</itemS.Head3>
           <div>
             <itemS.LIContainer>
               <itemS.Label>프로필 이미지</itemS.Label>

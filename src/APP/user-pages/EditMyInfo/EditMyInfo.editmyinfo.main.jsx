@@ -57,15 +57,16 @@ export default function EditMyInfo() {
   const [count, setCount] = useState(0); // 인증번호 발송 count
 
   const [name, setName] = useState('');
-  const [fixName, setFixName] = useState('');
+  const [fixName, setFixName] = useState(''); // 고정 이름
   const [grade, setGrade] = useState(gradeOptions[0]);
   const [major, setMajor] = useState('');
   const [handle, setHandle] = useState(''); 
-  const [fixHandle, setFixHandle] = useState(''); 
+  const [fixHandle, setFixHandle] = useState(''); // 고정 닉네임
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [fixPhoneNumber, setFixPhoneNumber] = useState(''); // 고정 번호
   const [SMSCode, setSMSCode] = useState('');
   const [userRandomId, setUserRandomId] = useState('');
   const [email, setEmail] = useState('');
@@ -155,6 +156,7 @@ export default function EditMyInfo() {
         setFixHandle(response.result.handle);
         setProfileUrl(response.result.profileUrl);
         setPhoneNumber(response.result.phoneNumber);
+        setFixPhoneNumber(response.result.phoneNumber);
         setEmail(response.result.email);
 
         setIsNameValid(NameRegex.test(response.result.name));
@@ -280,6 +282,13 @@ export default function EditMyInfo() {
   const handleHandleChange = (value) => {
     setHandle(value);
     setHandleColor('#555555'); // Grey_6
+    if (value === fixHandle) {
+      setIsAbled(true);
+      setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+    } else {
+      setIsAbled(false);
+      setBtnSubmitColor('#D2D9E5'); // B_Grey_3
+    }
   }
 
   // 비밀번호 입력 change event
@@ -307,8 +316,8 @@ export default function EditMyInfo() {
   // 비밀번호 확인 입력 change event
   const handleNewPasswordConfirmChange = (value) => {
     setNewPasswordConfirmation(value);
-    setIsNewPasswordConfirmValid(value === password);
-    if (value !== password && value.trim().length > 0) {
+    setIsNewPasswordConfirmValid(value === newPassword);
+    if (value !== newPassword && value.trim().length > 0) {
       setNewPwdConfirmBorderColor('1px solid #DC4A41'); // Red
     } else {
       setNewPwdConfirmBorderColor('1px solid #555555'); // Grey_6
@@ -338,6 +347,14 @@ export default function EditMyInfo() {
       setPhoneBorderColor('#555555'); // Grey_6
       setPhoneMessageColor('#171717');
       setPhoneMessage('인증하기를 진행해주세요.');
+    }
+
+    if (value.replace(/-/g, '') === fixPhoneNumber) {
+      setIsAbled(true);
+      setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+    } else {
+      setIsAbled(false);
+      setBtnSubmitColor('#D2D9E5'); // B_Grey_3
     }
   }
 
@@ -392,6 +409,8 @@ export default function EditMyInfo() {
         setIsHandleValid(true);
         setHandleColor('#3083F7'); // Blue_3
         setHandleMessage('인증이 완료되었습니다.');
+        setIsAbled(true); // 기존이랑 다르더라고 인증 성공시 수정 버튼 활성화
+        setBtnSubmitColor('#00A5FF'); // Blue_Main_0
       } else { // 이 경우는 없느건가?
         console.error("백준 유효 계정 인증 실패:", response.data);
         
@@ -491,12 +510,13 @@ export default function EditMyInfo() {
       try {
         const response = await request.post(`/member/check-password`, requestData);
         
-        if (response.isSuccess) {
+        if (response.result) {
           console.log("비밀번호 일치 여부 성공", response);
           setEditText('취소');  // 버튼 텍스트를 '취소'로 변경
           setIsEditing((prev) => !prev); // 편집 모드 토글
         } else {
           console.error("내 개인정보 조회 실패:", response);
+          alert('잘못된 비밀번호입니다.');
         }
       } catch (error) {
         console.error('내 개인정보 조회 오류', error);

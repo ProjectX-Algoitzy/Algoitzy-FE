@@ -6,9 +6,14 @@ export default function MyPageIndividual({ studyList }){
 
 	const navigate = useNavigate();
 	
-	const moveToDetail = (id) => {
-		navigate(`/regularstudy/${id}`);  // 정규스터디에 맞게 이동하도록 수정
-	}
+	const moveToDetail = (type, id) => {
+		if (type === '정규') {
+			navigate(`/regularstudy/${id}`);  
+		} else if (type === '자율') {
+			navigate(`/study/${id}`); 
+		}
+	};
+	
 
 	// 스터디 제목 글자수 자르기
 	const truncateStudyName = (name) => {
@@ -32,7 +37,7 @@ export default function MyPageIndividual({ studyList }){
 			<itemS.BottomContainer>
 				<itemS.Bottom>
 					<itemS.TitleContainer>
-						<itemS.Title onClick={() => moveToDetail(studyList.studyId)}>
+						<itemS.Title onClick={() => moveToDetail(studyList.studyType, studyList.studyId)}>
 							{truncateStudyName(studyList.studyName)}
 						</itemS.Title>
 						<itemS.Type>{studyList.studyType}</itemS.Type>

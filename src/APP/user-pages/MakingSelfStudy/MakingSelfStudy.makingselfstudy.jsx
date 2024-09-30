@@ -175,7 +175,7 @@ export default function MakingSelfStudy() {
       console.log("자율 스터디 생성 성공: ", response);
 
       if (response["isSuccess"]) {
-        alert("자율 스터디가 생성되었습니다.");
+        await alert("자율 스터디가 생성되었습니다.");
         navigate("/study");
       } 
     } catch (error) {

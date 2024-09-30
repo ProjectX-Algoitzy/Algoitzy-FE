@@ -3,6 +3,7 @@ import * as itemS from "./Styled/SelfStudy.selftstudy.modal.styles";
 import request from '../../Api/request';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function SelfStudyModal({ modalType, onClose, memberId }) {
   const { id } = useParams();
@@ -15,10 +16,12 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
         const response = await request.post(`/study/${id}/apply`);
         console.log('스터디 참여 신청 성공:', response);
         if (response.isSuccess) {
-          // alert('스터디 지원을 완료했습니다.');
+          onClose(); // 모달 닫기
+          await alert('스터디 지원을 완료했습니다.');
           window.location.reload();
         } 
       } catch (error) {
+        onClose(); // 모달 닫기
         console.error('스터디 참여 API 요청 오류:', error);
       }
     }
@@ -27,22 +30,71 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
         const response = await request.patch(`/study/${id}/end`);
         console.log("자율스터디 삭제 api응답: ", response);
         if (response.isSuccess) {
-          alert("자율 스터디가 삭제되었습니다.");
+          onClose(); // 모달 닫기
+          await alert("자율 스터디가 삭제되었습니다.");
           navigate(`/study`);
         }
-      }catch(error) {
+      } catch(error) {
         console.error('자율스터디 삭제 중 오류:', error);
       }
     }
     if (modalType === 'TEMP_APPLY') {
+      // try {
+      //   const response = await request.post(`study/${memberId}/pass`);
+      //   console.log("자율 스터디원 수락 api응답: ", response);
+      //   if (response.isSuccess) {
+      //     window.location.reload();
+      //   }
+      // } catch (error) {
+      //   onClose(); // 모달 닫기
+      //   console.error('자율 스터디원 수락 중 오류:', error);
+      // }
       try {
-        const response = await request.post(`study/${memberId}/pass`);
+        // 직접 axios 요청을 보낼 때, request.js의 설정을 고려하여 인증 헤더와 baseURL을 설정
+        const token = window.localStorage.getItem('accessToken'); // request.js와 동일한 토큰 가져오기
+        const response = await axios.post(
+          `https://user-dev.kau-koala.com/study/${memberId}/pass`,
+          {}, 
+          {
+            headers: {
+              withCredentials: true,
+              transformRequest: true,
+              Authorization: `Bearer ${token}`, // 인증 토큰 설정
+            },
+          }
+        );
+    
         console.log("자율 스터디원 수락 api응답: ", response);
-        if (response.isSuccess) {
-          window.location.reload();
+        if (response.data.isSuccess) {
+          window.location.reload(); // 성공 시 페이지 리로드
         }
       } catch (error) {
+        onClose(); // 모달 닫기
         console.error('자율 스터디원 수락 중 오류:', error);
+    
+        // request.js의 인터셉터와 유사한 에러 처리 로직 추가
+        if (error.response && error.response.data) {
+          const { data, status } = error.response;
+          const code = data.code;
+          const message = data.message;
+    
+          switch (code) {
+            case 'NOTICE':
+              await alert(message);
+              break;
+            case 'TOKEN_EXPIRED':
+              window.localStorage.clear();
+              window.location.href = '/login';
+              break;
+            default:
+              console.error(`Unexpected error: ${message}`, error);
+              if (message === '만료된 토큰입니다.') {
+                window.localStorage.clear();
+                window.location.href = '/login';
+              }
+              break;
+          }
+        }
       }
     }
     onClose(); // 모달 닫기

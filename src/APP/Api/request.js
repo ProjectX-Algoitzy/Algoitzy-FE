@@ -52,6 +52,7 @@ request.interceptors.response.use(
       switch (code) {
         case 'NOTICE':
           await alert(message);
+          // alert(message);
           break;
         case 'TOKEN_EXPIRED':
           window.localStorage.clear();

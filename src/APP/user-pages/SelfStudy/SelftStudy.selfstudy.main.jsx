@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as itemS from "./Styled/SelftStudy.selfstudy.main.styles";
 import SelftStudySidebar from './SelftStudy.selftstudy.sidebar';
 import SelftStudyHome from './SelftStudy.selftstudy.home';
 import SelfStudyMemberList from './SelfStudy.selfstudy.memberlist';
-import { useParams } from 'react-router-dom';
+import { AlertContext } from '../../Common/Alert/AlertContext';
+import { useNavigate, useParams } from 'react-router-dom';
 import request from '../../Api/request';
 
 export default function SelftStudyMain() {
   const { id } = useParams();  // 정규스터디 ID 가져오기
+  const navigate = useNavigate();
   const [selfStudyInfo, setSelfStudyInfo] = useState(null);
   const [selftStudyContent, setSelftStudyContent] = useState(null);
+  const { alert } = useContext(AlertContext);
 
   useEffect(() => {
     const fetchSelfStudyInfo = async () => {
@@ -19,6 +22,14 @@ export default function SelftStudyMain() {
         if (response["isSuccess"]) {
           setSelfStudyInfo(response.result);
           setSelftStudyContent(response.result.content);
+
+          if(response.result.endYN) {
+            if (response.result.memberRole === null) {
+              await alert("권한이 없습니다.");
+              navigate(-1); // 이전 페이지로 이동
+              return; // 함수 종료
+            }
+          }
         }
       } catch (err) {
         console.error("자율스터디 정보 조회 오류", err);

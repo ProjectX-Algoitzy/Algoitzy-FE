@@ -8,7 +8,7 @@ export default function footer() {
           <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
             <itemS.Sentence1>KOALA</itemS.Sentence1><itemS.Sentence2>(한국항공대학교 알고리즘 학회)</itemS.Sentence2>
           </div>
-          <itemS.Sentence3>문의처 : kau-koala@naver.com</itemS.Sentence3>
+          <itemS.Sentence3>문의처 : kau-koala@naver.com |<itemS.NoteLink href='https://kimdoohyeon.notion.site/Koala-11167ca5ea7a803da0dcd4b6a7caa303' target='_blank'>업데이트 노트 <img src="/img/link.png" alt="링크" style={{width:"19px", height:"19px"}} /></itemS.NoteLink></itemS.Sentence3>
           <itemS.Sentence3 style={{marginTop:"24px"}}>Copyrightⓒ2024.KOALA. All rights reserved.</itemS.Sentence3>
         </itemS.FooterLeftWrap>
 

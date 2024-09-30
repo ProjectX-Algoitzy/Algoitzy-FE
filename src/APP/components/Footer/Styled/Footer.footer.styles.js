@@ -60,10 +60,23 @@ export const Sentence2 = styled.div`
 `;
 
 export const Sentence3 = styled.div`
+    display: flex;
+    align-items: center;
     font-family: "Pretendard";
     font-weight: 500; 
     font-size: 0.75rem;
     line-height: normal;
+    color: ${tokens.colors.B_Grey_6};
+`;
+
+export const NoteLink = styled.a`
+    display: flex;
+    align-items: center;
+    font-family: "Pretendard";
+    font-weight: 500; 
+    font-size: 0.75rem;
+    line-height: normal;
+    margin-left: 6px;
     color: ${tokens.colors.B_Grey_6};
 `;
 

@@ -18,7 +18,7 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed; /* 스크롤 시 배경 고정 */
-`;
+`; 
 
 export const InnerContainer = styled.div`
   display: flex;

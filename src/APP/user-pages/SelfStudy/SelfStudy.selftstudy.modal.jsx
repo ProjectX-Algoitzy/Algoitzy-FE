@@ -53,7 +53,7 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
         // 직접 axios 요청을 보낼 때, request.js의 설정을 고려하여 인증 헤더와 baseURL을 설정
         const token = window.localStorage.getItem('accessToken'); // request.js와 동일한 토큰 가져오기
         const response = await axios.post(
-          `https://user-dev.kau-koala.com/study/${memberId}/pass`,
+          `https://user-api.kau-koala.com/study/${memberId}/pass`,
           {}, 
           {
             headers: {

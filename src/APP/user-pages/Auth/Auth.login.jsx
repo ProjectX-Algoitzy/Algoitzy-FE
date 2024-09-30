@@ -43,7 +43,7 @@ export default function Login() {
       password: password,
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/member/login', requestData);
+      const response = await axios.post('https://user-api.kau-koala.com/member/login', requestData);
       console.log("response",response);
       localStorage.setItem(ACCESS_TOKEN, response.data.result.accessToken);
       if (response.data["isSuccess"]) {

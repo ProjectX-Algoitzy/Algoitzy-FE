@@ -103,7 +103,7 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
   const getMessage = () => {
     switch(modalType) {
         case 'participation':
-            return '스터디 참여 시, 스터디장에게 휴대폰 번호가 전달됩니다.<br>스터디에 참여하시겠습니까?';
+            return '스터디 지원 시, 스터디장에게 휴대폰 번호가 전달됩니다.<br>스터디에 지원하시겠습니까?';
         case 'endStudy':
             return '스터디 종료 시, 스터디 수정과 스터디원 모집이 불가능합니다.<br>스터디를 정말로 종료하시겠습니까?';
         case 'TEMP_APPLY':

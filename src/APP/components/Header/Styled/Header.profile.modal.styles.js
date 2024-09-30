@@ -42,7 +42,8 @@ export const ArrowBubble = styled.div`
 export const TopContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  // justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -90,7 +91,8 @@ export const BottomContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 4.5rem;
+  // width: 4.5rem;
+  width: 9rem;
   height: 1.5rem;
   background-color: ${tokens.colors.B_Grey_1};
   color: ${tokens.colors.Grey_8};

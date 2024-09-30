@@ -35,7 +35,7 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal
         </itemS.TopContainer>
         <itemS.BottomContainer>
           <itemS.Button onClick={handleMyPage}>마이페이지</itemS.Button>
-          <itemS.Button>문의하기</itemS.Button>
+          {/* <itemS.Button>문의하기</itemS.Button> */}
         </itemS.BottomContainer>
       </itemS.ArrowBubble>
   );

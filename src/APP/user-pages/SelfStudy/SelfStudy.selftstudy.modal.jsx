@@ -31,7 +31,7 @@ export default function SelfStudyModal({ modalType, onClose, memberId }) {
         console.log("자율스터디 삭제 api응답: ", response);
         if (response.isSuccess) {
           onClose(); // 모달 닫기
-          await alert("자율 스터디가 삭제되었습니다.");
+          await alert("자율 스터디가 종료되었습니다.");
           navigate(`/study`);
         }
       } catch(error) {

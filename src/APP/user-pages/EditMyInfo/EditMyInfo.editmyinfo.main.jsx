@@ -135,6 +135,8 @@ export default function EditMyInfo() {
 
   // 수정완료 버튼 색상 및 활성화/비활성화
   const [btnSubmitColor, setBtnSubmitColor] = useState(); // B_Grey_3
+  const [isHandleAbled, setIsHandleAbled] = useState(true);  // 백준 닉네임
+  const [isPhoneAbled, setIsPhoneAbled] = useState(true);  // 핸드폰 번호
   const [isAbled, setIsAbled] = useState(true); 
   // Blue_0_Main
 
@@ -180,11 +182,11 @@ export default function EditMyInfo() {
     fetchMyInfo();
   }, []);
 
-  // useEffect(() => {
-  //   const isAllValid = isNameValid && isHandleValid && isPasswordValid && isNewPasswordValid && isNewPasswordConfirmValid && isPhoneNumberValid && isSMSValid;
-  //   setBtnSubmitColor(isAllValid ? '#00A5FF' : '#D2D9E5');
-  //   setIsAbled(isAllValid);
-  // }, [isNameValid, isHandleValid, isPasswordValid, isNewPasswordValid, isNewPasswordConfirmValid, isPhoneNumberValid, isSMSValid]);
+  useEffect(() => {
+    const isAllValid = isHandleAbled && isPhoneAbled;
+    setBtnSubmitColor(isAllValid ? '#00A5FF' : '#D2D9E5');
+    setIsAbled(isAllValid);
+  }, [isHandleAbled, isPhoneAbled]);
 
   // 프로필 이미지 파일 업로드
   const handleFileChange = async (event) => {
@@ -283,11 +285,11 @@ export default function EditMyInfo() {
     setHandle(value);
     setHandleColor('#555555'); // Grey_6
     if (value === fixHandle) {
-      setIsAbled(true);
-      setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+      setIsHandleAbled(true);
+      // setBtnSubmitColor('#00A5FF'); // Blue_Main_0
     } else {
-      setIsAbled(false);
-      setBtnSubmitColor('#D2D9E5'); // B_Grey_3
+      setIsHandleAbled(false);
+      // setBtnSubmitColor('#D2D9E5'); // B_Grey_3
     }
   }
 
@@ -350,11 +352,11 @@ export default function EditMyInfo() {
     }
 
     if (value.replace(/-/g, '') === fixPhoneNumber) {
-      setIsAbled(true);
-      setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+      setIsPhoneAbled(true);
+      // setBtnSubmitColor('#00A5FF'); // Blue_Main_0
     } else {
-      setIsAbled(false);
-      setBtnSubmitColor('#D2D9E5'); // B_Grey_3
+      setIsPhoneAbled(false);
+      // setBtnSubmitColor('#D2D9E5'); // B_Grey_3
     }
   }
 
@@ -409,8 +411,8 @@ export default function EditMyInfo() {
         setIsHandleValid(true);
         setHandleColor('#3083F7'); // Blue_3
         setHandleMessage('인증이 완료되었습니다.');
-        setIsAbled(true); // 기존이랑 다르더라고 인증 성공시 수정 버튼 활성화
-        setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+        setIsHandleAbled(true); // 기존이랑 다르더라고 인증 성공시 수정 버튼 활성화
+        // setBtnSubmitColor('#00A5FF'); // Blue_Main_0
       } else { // 이 경우는 없느건가?
         console.error("백준 유효 계정 인증 실패:", response.data);
         
@@ -444,8 +446,8 @@ export default function EditMyInfo() {
         setPhoneMessage('인증이 완료되었습니다.');
         setSMSMessage('');
         setSMSColor('#555555'); // grey_6
-        setIsAbled(true); // 수정 완료 버튼 활성화
-        setBtnSubmitColor('#00A5FF'); // Blue_Main_0
+        setIsPhoneAbled(true); // 수정 완료 버튼 활성화
+        // setBtnSubmitColor('#00A5FF'); // Blue_Main_0
       } else {
         console.error("핸드폰 번호 인증 실패:", response.data);
         setSMSColor('#DC4A41'); // REd
@@ -486,8 +488,8 @@ export default function EditMyInfo() {
         setTimerStarted(true); // 타이머 시작
         setTimerKey((prevKey) => prevKey + 1); // 타이머 리셋
         setIsSMSValid(false); // 인증코드 입력 활성화
-        setIsAbled(false); // 수정 완료 버튼 비활성화
-        setBtnSubmitColor('#D2D9E5'); // B_Grey_3
+        setIsPhoneAbled(false); // 수정 완료 버튼 비활성화 
+        // setBtnSubmitColor('#D2D9E5'); // B_Grey_3
       } else {
         console.error("SMS 인증 코드 전송 실패:", response.data);
       }

@@ -1,5 +1,4 @@
 import request, { ACCESS_TOKEN } from './request';
-
 import axios from 'axios';
 
 export const refreshToken = async () => {

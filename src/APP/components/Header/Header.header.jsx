@@ -35,7 +35,7 @@ export default function Header() {
     if (accessToken) {
       checkLoginStatus();
     }
-  });
+  }, []);
 
   // Toggle Profile Modal
   const toggleProfileModal = () => {
@@ -136,7 +136,7 @@ export default function Header() {
           </itemS.StyledLink>
 
           <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
-            <itemS.SubMenuItem>자율 스터디</itemS.SubMenuItem>
+            <itemS.SubMenuItem style={{marginLeft:"30px"}}>자율 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
 
         </itemS.SubStudyMenu>

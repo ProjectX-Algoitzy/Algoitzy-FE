@@ -12,18 +12,17 @@ export const ModalBackground = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 1001;
 `;
 
 export const ModalContent = styled.div`
-  background: #fff;
+  background: white;
   padding-bottom: 30px;
   border-radius: 5px;
   width: 770px;
   height: 348px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  z-index: 10000; /* 모달이 다른 요소들 위에 나타나게 */
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* 콘텐츠를 위와 아래로 배치 */

@@ -11,11 +11,15 @@ export default function Langding() {
 
   useEffect(() => {
     const getRecentGeneration = async() => {
+      
       try {
+        // const response = await request.get(`/generation/max`);
         const response = await axios.get('https://user-api.kau-koala.com/generation/max');
+        // console.log("스터디 최신 기수 api", response);
         setDetailRecentGeneration(response.data.result);
         if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
+          
         } else {
             console.error("api 연동 실패:", response);
         }
@@ -23,12 +27,16 @@ export default function Langding() {
         console.error('스터디 최근 기수 조회 오류', error);
       }
     };
-    const getStudyCount = async() => { 
+    const getStudyCount = async() => {
+      
       try {
+        // const response = await request.get(`study/count`);
         const response = await axios.get('https://user-api.kau-koala.com/study/count');
+        console.log("최신 기수 스터디 개수 api", response);
         setDetailStudyCount(response.data.result);
         if (response.data["isSuccess"]) {
           console.log("api 연동 성공");
+          
         } else {
             console.error("api 연동 실패:", response);
         }
@@ -39,9 +47,11 @@ export default function Langding() {
     const checkLoginStatus = async () => {
       try {
         const response = await request.get('/member/info');
-        // console.log("로그인 멤버 정보 조회", response);
+        console.log("로그인 멤버 정보 조회", response);
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
+          localStorage.setItem('memberId', response.result.memberId);
+
         }
       } catch (error) {
         console.error("로그인 멤버 정보 조회 실패", error);
@@ -54,6 +64,7 @@ export default function Langding() {
     getRecentGeneration();
     getStudyCount();
   }, []);
+
 
   return (
     <itemS.HomeWrap>

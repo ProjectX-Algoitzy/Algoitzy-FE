@@ -64,10 +64,12 @@ export const PageLink = styled.div`
   }
 `;
 
-export const AdminName = styled.div`
-  color: ${tokens.colors.Blue_0_Main};
+export const ProfileBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
   height: 0.88rem;
-  ${tokens.typography.T5_SB_16};
   margin-left: 2.08rem;
   margin-right: 2.08rem;
   @media (max-width: 600px) {
@@ -75,6 +77,18 @@ export const AdminName = styled.div`
      margin-right: 0;
   }
   cursor: pointer;
+`;
+
+export const AdminName = styled.div`
+  color: ${tokens.colors.Blue_0_Main};
+  ${tokens.typography.T5_SB_16};
+  margin-right: 0.3rem;
+  // cursor: pointer;
+`;
+
+export const Arrow = styled.img`
+  // width: 0.3rem;
+  // height: 0.46rem;
 `;
 
 export const Btn = styled.button`
@@ -95,7 +109,7 @@ export const SubStudyMenu = styled.div`
   align-items: center;
   width: 100%;
   height: 2.5rem;
-  padding-left: 69vw;
+  padding-left: 53vw;
   background-color: ${tokens.colors.B_Grey_1};
   position: fixed;
   top: 3.33rem;
@@ -110,7 +124,7 @@ export const SubCodingMenu = styled.div`
   align-items: center;
   width: 100%;
   height: 2.5rem;
-  padding-left: 78vw;
+  padding-left: 63vw;
   background-color: ${tokens.colors.B_Grey_1};
   position: fixed;
   top: 3.33rem;

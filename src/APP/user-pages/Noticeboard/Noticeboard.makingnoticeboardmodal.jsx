@@ -3,7 +3,7 @@ import * as itemS from "./Styled/Noticeboard.makingnoticeboardmodal.styles"
 import request from '../../Api/request';
 import axios from 'axios';
 import { AlertContext } from '../../Common/Alert/AlertContext';
-
+// 
 export default function MakingNoticeboardModal({ onClose, isModalOpen, fetchBoardList }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');

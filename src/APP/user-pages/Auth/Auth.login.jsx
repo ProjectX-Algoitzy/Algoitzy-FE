@@ -48,8 +48,9 @@ export default function Login() {
       localStorage.setItem(ACCESS_TOKEN, response.data.result.accessToken);
       if (response.data["isSuccess"]) {
         console.log("로그인 성공!");
-        navigate("/");
-        window.location.reload();
+        // navigate("/");
+        // window.location.reload('/');
+        window.location.replace('/');
       } else {
         // console.error("로그인 실패:", response.data);
         setIsAlertOpen(true);

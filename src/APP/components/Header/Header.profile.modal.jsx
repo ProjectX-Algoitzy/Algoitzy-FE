@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Header.profile.modal.styles";
 import request from '../../Api/request';
 
-const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
+const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal }) => {
 
   const navigate = useNavigate();
 
@@ -21,10 +21,10 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
     }
   };
 
-  // const handleStudyNavigation = () => {
-    
-  //   navigate('/regularstudy');
-  // };
+  const handleMyPage = () => {
+    navigate('/mypage');
+    setShowProfileModal(false);
+  };
 
   return (
       <itemS.ArrowBubble onClick={e => e.stopPropagation()}>
@@ -33,10 +33,10 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn }) => {
           <itemS.Name>{userName} 님</itemS.Name>
           <itemS.Logout onClick={handleLogout}>로그아웃</itemS.Logout>
         </itemS.TopContainer>
-        {/* <itemS.BottomContainer>
-          <itemS.Button>개인 정보 수정</itemS.Button>
-          <itemS.Button onClick={handleStudyNavigation}>나의 스터디</itemS.Button>
-        </itemS.BottomContainer> */}
+        <itemS.BottomContainer>
+          <itemS.Button onClick={handleMyPage}>마이페이지</itemS.Button>
+          {/* <itemS.Button>문의하기</itemS.Button> */}
+        </itemS.BottomContainer>
       </itemS.ArrowBubble>
   );
 };

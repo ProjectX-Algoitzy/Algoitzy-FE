@@ -46,30 +46,3 @@ export const ContentContainer = styled.div`
   }
 
 `;
-
-export const BlueContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 2.08rem;
-  background-color: ${tokens.colors.B_Grey_1};
-  color: ${tokens.colors.Grey_8};
-  ${tokens.typography.T4_SB_20};
-  padding-left: 0.67rem;
-`; 
-
-export const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: auto;
-  color: ${tokens.colors.Grey_6};
-  ${tokens.typography.B2_M_16};
-  padding-left: 0.67rem;
-  margin-top: 1rem;
-  border: none;
-
-  &::placeholder {
-    color: ${tokens.colors.Grey_6};
-  }
-`;

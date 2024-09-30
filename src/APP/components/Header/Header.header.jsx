@@ -16,20 +16,20 @@ export default function Header() {
   const codingMenuRef = useRef(null);
 
   // Fetch login status on component mount
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const response = await request.get('/member/info');
-        console.log("로그인 멤버 정보 조회", response);
-        if (response["isSuccess"]) {
-          setUserName(response.result.name);
-          setProfileUrl(response.result.profileUrl);
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error("로그인 멤버 정보 조회 실패", error);
+  const checkLoginStatus = async () => {
+    try {
+      const response = await request.get('/member/info');
+      console.log("로그인 멤버 정보 조회", response);
+      if (response["isSuccess"]) {
+        setUserName(response.result.name);
+        setProfileUrl(response.result.profileUrl);
+        setIsLoggedIn(true);
       }
-    };
+    } catch (error) {
+      console.error("로그인 멤버 정보 조회 실패", error);
+    }
+  };
+  useEffect(() => {
 
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
@@ -103,12 +103,16 @@ export default function Header() {
             </itemS.StyledLink>
             {isLoggedIn ? (
               <div style={{ position: 'relative' }} ref={modalRef}>
-                <itemS.AdminName onClick={toggleProfileModal}>안녕하세요, {userName} 님</itemS.AdminName>
+                <itemS.ProfileBox onClick={toggleProfileModal}>
+                  <itemS.AdminName>안녕하세요, {userName} 님</itemS.AdminName>
+                  <itemS.Arrow src='/img/arrow-bt.svg' alt='화살표' />
+                </itemS.ProfileBox>
                 {showProfileModal && (
                   <ProfileModal 
                     userName={userName} 
                     profileUrl={profileUrl} 
                     setIsLoggedIn={setIsLoggedIn} 
+                    setShowProfileModal={setShowProfileModal}
                   />
                 )}
               </div>
@@ -131,9 +135,9 @@ export default function Header() {
             <itemS.SubMenuItem>정규 스터디</itemS.SubMenuItem>
           </itemS.StyledLink>
 
-          {/* { <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
-            <itemS.SubMenuItem>자율 스터디</itemS.SubMenuItem>
-          </itemS.StyledLink> } */}
+          <itemS.StyledLink to={isLoggedIn ? "/study" : "/login"} onClick={handleNav}>
+            <itemS.SubMenuItem style={{marginLeft:"30px"}}>자율 스터디</itemS.SubMenuItem>
+          </itemS.StyledLink>
 
         </itemS.SubStudyMenu>
       )}

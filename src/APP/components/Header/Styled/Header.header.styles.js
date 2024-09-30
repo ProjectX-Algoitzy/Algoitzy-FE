@@ -109,7 +109,7 @@ export const SubStudyMenu = styled.div`
   align-items: center;
   width: 100%;
   height: 2.5rem;
-  padding-left: 69vw;
+  padding-left: 53vw;
   background-color: ${tokens.colors.B_Grey_1};
   position: fixed;
   top: 3.33rem;

@@ -5,7 +5,7 @@ export const ACCESS_TOKEN = 'accessToken';
 
 // Authorization에 토큰 자동으로 설정
 const request = axios.create({
-  baseURL: 'https://user-api.kau-koala.com',
+  baseURL: 'https://user-dev.kau-koala.com',
   headers: {
     withCredentials: true,
     transformRequest: true,

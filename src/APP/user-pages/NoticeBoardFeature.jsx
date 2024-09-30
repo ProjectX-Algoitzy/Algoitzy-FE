@@ -98,7 +98,7 @@ export default function NoticeBoardFeature() {
     });
 
     try {
-      const response = await axios.post('https://user-api.kau-koala.com/s3', formData);
+      const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
       if (response.data.isSuccess) {
         const newProfileUrls = response.data.result;
         console.log('파일 업로드 성공:', newProfileUrls);
@@ -117,7 +117,7 @@ export default function NoticeBoardFeature() {
 
   const handleFileDelete = async (fileUrl) => {
     try {
-      const url = `https://user-api.kau-koala.com/s3?fileUrl=${encodeURIComponent(fileUrl)}`;
+      const url = `https://user-dev.kau-koala.com/s3?fileUrl=${encodeURIComponent(fileUrl)}`;
       const response = await axios.delete(url);
 
       if (response.data.isSuccess) {

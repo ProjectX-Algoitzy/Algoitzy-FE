@@ -213,7 +213,7 @@ export default function EditMyInfo() {
     formData.append('multipartFileList', file);
   
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/s3', formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/s3`, formData);
       if (response.data.isSuccess) {
         const newProfileUrl = response.data.result[0];
         console.log('파일 업로드 성공:', newProfileUrl);
@@ -232,7 +232,7 @@ export default function EditMyInfo() {
   const handleFileDelete = async (profileUrl) => {
     try {
       // URL에 profileUrl을 포함시킴
-      const url = `https://user-dev.kau-koala.com/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
+      const url = `${process.env.REACT_APP_API_URL}/s3?fileUrl=${encodeURIComponent(profileUrl)}`;
   
       const response = await axios.delete(url);
   
@@ -404,7 +404,7 @@ export default function EditMyInfo() {
       handle: handle,
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/handle', requestData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up/handle`, requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("백준 유효 계정 인증 성공!");
@@ -435,7 +435,7 @@ export default function EditMyInfo() {
       code: SMSCode
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sign-up/phone-number', requestData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up/phone-number`, requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("핸드폰 번호 인증 성공!");
@@ -471,7 +471,7 @@ export default function EditMyInfo() {
       userRandomId: userRandomId
     };
     try {
-      const response = await axios.post('https://user-dev.kau-koala.com/sms/certification', requestData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/sms/certification`, requestData);
       console.log("response",response.data);
       if (response.data["isSuccess"]) {
         console.log("SMS 인증 코드 전송 성공!");

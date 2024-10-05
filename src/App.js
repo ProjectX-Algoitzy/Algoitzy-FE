@@ -24,6 +24,7 @@ import Noticeboard from "./APP/user-pages/Noticeboard/Noticeboard.noticeboard.ma
 import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDetail.noticeboarddetail.main";
 import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
+import Community from "./APP/user-pages/Community/Community.community.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -108,6 +109,7 @@ function App() {
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
             <Route path="/mypage" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
+            <Route path="/community" element={<Community />} /> {/* 커뮤니티 */}
           </Routes>
           </ContentWrapper>
           <Footer />

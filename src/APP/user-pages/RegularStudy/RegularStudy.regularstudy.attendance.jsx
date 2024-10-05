@@ -199,7 +199,7 @@ export default function RegularStudyAttendance() {
     };
     const fetchWeek = async () => {
       try {
-        const response = await request.get('/week');
+        const response = await request.get('/week/current');
         console.log("현재 주차 정보 조회: ", response);
         if(response["isSuccess"]){
           setShowCertificationBtn(true);

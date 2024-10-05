@@ -46,12 +46,19 @@ export const BtnMakeCurri = styled.button`
 export const CurriculumContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 0.83rem;
   width: 33.04rem;
   height: 4.17rem;
-  background-color: ${tokens.colors.White};
+  background-color: ${(props) => (props.isCurrentWeek ? tokens.colors.White : tokens.colors.Grey_2)}; /* props로 배경색 변경 */
   box-shadow: 0px 0.17rem 0.42rem rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
 `;
 
 export const CurriculumText = styled.div`
@@ -61,6 +68,17 @@ export const CurriculumText = styled.div`
   color: ${tokens.colors.Grey_8};
   margin-left: 1.67rem;
   cursor: pointer;
+`;
+
+export const HighlightBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${tokens.typography.T5_SB_16};
+  padding: 2px 15px 2px 15px;
+  background-color: rgba(251, 170, 132, 0.2); 
+  color: #F88F78;
+  border-radius: 4px; 
 `;
 
 export const MiddleCurriculumContainer = styled.div`
@@ -96,19 +114,4 @@ export const Gray7Text = styled.div`
   font-size: 0.58rem;
   line-height: 0.75rem;
   color: ${tokens.colors.Grey_7};
-`;
-
-export const CurriculumDate = styled.div`
-  ${tokens.typography.B3_M_14};
-  color: #A2A2A2;
-`;
-
-export const DeleteIcon = styled.div`
-  background-image: url('/img/GrayX.png');
-  width: 0.58rem;
-  height: 0.58rem;
-  margin-top: 1.58rem;
-  margin-right: 1.58rem;
-  margin-left: 5rem;
-  cursor: pointer;
 `;

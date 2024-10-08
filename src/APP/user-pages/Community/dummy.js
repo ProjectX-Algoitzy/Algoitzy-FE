@@ -7,6 +7,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": true,
+    "fix": true, // 고정된 공지사항
   },
   {
     "postId": 2,
@@ -16,6 +17,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 3,
@@ -25,6 +27,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": true,
+    "fix": false,
   },
   {
     "postId": 4,
@@ -34,6 +37,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": true,
+    "fix": false,
   },
   {
     "postId": 1115,
@@ -43,6 +47,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 6,
@@ -52,6 +57,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": true,
+    "fix": false,
   },
   {
     "postId": 7,
@@ -61,6 +67,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 8,
@@ -70,6 +77,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 9,
@@ -79,6 +87,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 10,
@@ -88,6 +97,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 11,
@@ -97,6 +107,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 12,
@@ -106,6 +117,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 13,
@@ -115,6 +127,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 14,
@@ -124,6 +137,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 15,
@@ -133,6 +147,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 16,
@@ -142,6 +157,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 17,
@@ -151,6 +167,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 18,
@@ -160,6 +177,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 19,
@@ -169,6 +187,7 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   },
   {
     "postId": 20,
@@ -178,5 +197,6 @@ export const dummyData = [
     "date": "2024.08.31",
     "view": 20,
     "new": false,
+    "fix": false,
   }
 ];

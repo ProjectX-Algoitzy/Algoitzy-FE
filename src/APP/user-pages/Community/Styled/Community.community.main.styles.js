@@ -4,7 +4,7 @@ import * as tokens from "../../../../tokens"
 
 
 export const OuterContainer = styled.div`
-  background: linear-gradient(to bottom, #EFF1FD, #E8F7FF);
+  // background: linear-gradient(to bottom, #EFF1FD, #E8F7FF);
   // position: relative;
   width: 100%;
 `;
@@ -23,7 +23,7 @@ export const InnerContainer = styled.div`
   padding: 1.4rem 15rem 4rem 15rem;
   margin-top: 5.583rem;
   margin-bottom: 4.083rem;
-  box-shadow: 0 0.17rem 1rem 0.17rem rgba(0, 0, 0, 0.04);
+  // box-shadow: 0 0.17rem 1rem 0.17rem rgba(0, 0, 0, 0.04);
 `;
 
 export const TopContainer = styled.div`

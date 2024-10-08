@@ -14,9 +14,9 @@ export const TupleContainer = styled.div`
   align-items: center;
   width: 50rem;
   border-bottom: 1px solid ${tokens.colors.B_Grey_3};
-  background-color: ${({ type }) => (type === '공지사항' ? tokens.colors.B_Grey_1 : 'transparent')};
+  background-color: ${({ fix }) => (fix ? tokens.colors.B_Grey_1 : 'transparent')};
   &:hover {
-    background-color: ${tokens.colors.B_Grey_1};
+    background-color: ${tokens.colors.B_Grey_2};
   }
 `;
 
@@ -58,7 +58,7 @@ export const NewIcon = styled.div`
    border: none;
    border-radius: 0.17rem;
    margin-left: 0.17rem;
-   text-decoration: underline;
+  //  text-decoration: underline;
 `;
 
 export const TupleWriter = styled.div`

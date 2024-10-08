@@ -19,7 +19,7 @@ export default function Community() {
 	// const [tabs, setTabs] = useState(['전체']);
 	const [selectedTab, setSelectedTab] = useState('전체');
 
-	const [content, setContent] = useState('');
+	const [content, setContent] = useState('커뮤니티 내의 모든 글을 볼 수 있습니다.');
 
 	const [sortText, setSortText] = useState('최신순');
 	const [isSortDropVisible, setIsSortDropVisible] = useState(false); // 정렬 드롭박스 열기/닫기
@@ -95,7 +95,7 @@ export default function Community() {
 		if (tab === '전체') {
 			setIsTabClick(false);
 			setFilteredPosts(posts);
-			setContent('');
+			setContent('커뮤니티 내의 모든 글을 볼 수 있습니다.');
 		} else if (tab === '공지사항') {
 			setIsTabClick(true);
 			setFilteredPosts(posts.filter(post => post.type === '공지사항'));

@@ -7,18 +7,21 @@ export const HeaderContainer = styled.div`
   position: fixed;
   top: 0;
   z-index: 1000;
-`;
-
-export const HeaderWrap = styled.div`
   background-color: rgba(255, 255, 255, 0.05); 
   backdrop-filter: blur(200px);
   -webkit-backdrop-filter: blur(200px);
+  height: ${({ activeMenu }) => ['study', 'coding'].includes(activeMenu) ? '10rem' : 'auto'};
+`;
+
+// HeaderWrap부분이 admin이랑 약간 다른 듯
+export const HeaderWrap = styled.div`  
   height: 3.33rem;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
   padding: 0 5rem;
   @media (max-width: 600px) {
       padding: 0 0.33rem;
@@ -82,13 +85,18 @@ export const ProfileBox = styled.div`
 export const AdminName = styled.div`
   color: ${tokens.colors.Blue_0_Main};
   ${tokens.typography.T5_SB_16};
+  max-width: 5.83rem;
   margin-right: 0.3rem;
+  @media (max-width: 600px) {
+    display: none;
+    margin-right: 0;
+  }
   // cursor: pointer;
 `;
 
 export const Arrow = styled.img`
-  // width: 0.3rem;
-  // height: 0.46rem;
+  /* width: 0.3rem;
+  height: 0.46rem; */
 `;
 
 export const Btn = styled.button`
@@ -104,34 +112,23 @@ export const Btn = styled.button`
   }
 `;
 
-export const SubStudyMenu = styled.div`
+// user의 경우에는 @media를 통해 모바일 버젼 만드는 것도 고려해서 수정이 필요함
+export const SubMenuContaier = styled.div`
   display: flex;
-  align-items: center;
-  width: 100%;
-  height: 2.5rem;
-  padding-left: 53vw;
-  background-color: ${tokens.colors.B_Grey_1};
+  flex-direction: column;
+  /* background-color: rgba(255, 255, 255, 0.05); */
+  height: 6.77777rem;
   position: fixed;
-  top: 3.33rem;
-  z-index: 999;
-  @media (max-width: 600px) {
-    padding-left: 18rem;
-  }
+  top: 3.3333333333333333rem; 
 `;
 
-export const SubCodingMenu = styled.div`
+export const SubMenu = styled.div`
   display: flex;
-  align-items: center;
-  width: 100%;
-  height: 2.5rem;
-  padding-left: 63vw;
-  background-color: ${tokens.colors.B_Grey_1};
-  position: fixed;
-  top: 3.33rem;
-  z-index: 999;
-  @media (max-width: 600px) {
-    padding-left: 24rem;
-  }
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  border-top: 1px solid ${tokens.colors.Blue_3};
+  margin-top: -1px;
 `;
 
 export const SubMenuItem = styled.div`
@@ -140,8 +137,8 @@ export const SubMenuItem = styled.div`
   align-items: center;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.B_Grey_5};
-  width: auto;
-  margin: 0 0.83rem;
+  width: 5.833rem;
+  margin: 0 0.833rem;
   cursor: pointer;
   margin: 0 0.25rem;
 

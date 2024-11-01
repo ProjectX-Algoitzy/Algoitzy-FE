@@ -106,6 +106,8 @@ import QuilEditor from '../../components/Editor/Editor.quileditor';
 import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
 import { AlertContext } from '../../Common/Alert/AlertContext';
+import EditorSection from '../../components/Editor/EditorSection';
+import PreviewSection from '../../components/Editor/PreviewSection';
 
 export default function MakingSelfStudy() {
   const navigate = useNavigate();

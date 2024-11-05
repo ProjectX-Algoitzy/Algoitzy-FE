@@ -184,15 +184,17 @@ export default function Editor({
         <Styled.CategorySelect>카테고리 선택 ▼</Styled.CategorySelect>
 
         {/* 선택된 파일 목록 표시 */}
+        {selectedFiles.length > 0 && (
         <Styled.FileContainer>
           <Styled.FileLabel>첨부파일 :</Styled.FileLabel>
           <Styled.FileList>
             {selectedFiles.map((file, index) => (
-            <Styled.FileItem key={index}>{file.name}</Styled.FileItem>
+              <Styled.FileItem key={index}>{file.name}</Styled.FileItem>
             ))}
           </Styled.FileList>
         </Styled.FileContainer>
-      </Styled.EditorHeader>
+      )}
+    </Styled.EditorHeader>
 
       <Styled.Toolbar>
         <button onClick={() => applyMarkdownSyntax('heading1')}><img src='/img/toolbar_H1.svg' alt="Heading 1"/></button>

@@ -1,12 +1,11 @@
-// EditorSection.js
 import React, { useState, useEffect, useRef } from 'react';
 import { EditorState, EditorSelection } from '@codemirror/state';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { markdown } from '@codemirror/lang-markdown';
 import { defaultKeymap } from '@codemirror/commands';
-import * as Styled from './Styled/WritePost.writepost.styles';
+import * as Styled from './Styled/WritePost.writepost.editor.styles';
 
-export default function EditorSection({
+export default function Editor({
   title,
   setTitle,
   setMarkdownContent,

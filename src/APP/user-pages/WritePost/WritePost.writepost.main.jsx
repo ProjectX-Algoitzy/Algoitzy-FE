@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import EditorSection from './WritePost.writepost.EditorSection';
-import PreviewSection from './WritePost.writepost.PreviewSection';
+import Editor from './WritePost.writepost.editor';
+import Preview from './WritePost.writepost.preview';
 import * as Styled from './Styled/WritePost.writepost.styles';
 
 export default function WritePost() {
@@ -9,12 +9,12 @@ export default function WritePost() {
 
   return (
     <Styled.MarkdownEditorContainer>
-      <EditorSection
+      <Editor
         title={title}
         setTitle={setTitle}
         setMarkdownContent={setMarkdownContent}
       />
-      <PreviewSection title={title} markdownContent={markdownContent} />
+      <Preview title={title} markdownContent={markdownContent} />
     </Styled.MarkdownEditorContainer>
   );
 }

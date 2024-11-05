@@ -1,9 +1,8 @@
-// PreviewSection.js
 import React from 'react';
 import { marked } from 'marked';
-import * as Styled from './Styled/WritePost.writepost.styles';
+import * as Styled from './Styled/WritePost.writepost.preview.styles';
 
-export default function PreviewSection({ title, markdownContent }) {
+export default function Preview({ title, markdownContent }) {
   const renderPreview = () => {
     const previewTitle = title || '제목을 입력하세요';
     return { __html: marked(`# ${previewTitle}\n${markdownContent}`) };

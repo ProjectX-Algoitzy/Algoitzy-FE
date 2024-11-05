@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
 import Signup from "./APP/user-pages/SignUp/SignUp.signup";
@@ -76,6 +76,7 @@ function App() {
   const isLoggedIn = () => {  //로그인 확인 유무를 토큰으로 확인하고자 했습니다
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
+  const hideHeader = window.location.pathname === '/writepost';
 
   return (
     
@@ -84,7 +85,7 @@ function App() {
     <GlobalStyle />
       <BrowserRouter>
         <ScrollToTop />
-          <Header />
+        {!hideHeader && <Header />}
           <ContentWrapper>
           <Routes>
             <Route path="/" element={<Langding />} />

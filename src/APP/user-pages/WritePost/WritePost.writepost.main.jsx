@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Editor from './WritePost.writepost.editor';
 import Preview from './WritePost.writepost.preview';
-import * as Styled from './Styled/WritePost.writepost.styles';
+import * as Styled from './Styled/WritePost.writepost.main.styles';
 
 export default function WritePost() {
   const [markdownContent, setMarkdownContent] = useState('');

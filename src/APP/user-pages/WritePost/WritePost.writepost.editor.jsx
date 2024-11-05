@@ -11,10 +11,12 @@ export default function Editor({
   setMarkdownContent,
 }) {
   const editorRef = useRef(null);
+  const fileInputRef = useRef(null); // 파일 입력창을 제어할 useRef
   const [editorView, setEditorView] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkURL, setLinkURL] = useState('');
   const [isImageUploadOpen, setIsImageUploadOpen] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -123,7 +125,7 @@ export default function Editor({
   
     const linkText = "링크 텍스트";
     const markdownLink = `[${linkText}](${linkURL})`;
-    const linkTextStart = 1; // [ 뒤의 시작 인덱스
+    const linkTextStart = 1;
     const linkTextEnd = linkTextStart + linkText.length;
   
     editorView.dispatch(
@@ -158,27 +160,63 @@ export default function Editor({
     setIsImageUploadOpen(false);
   };
 
+  const openFileExplorer = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files); // 선택된 파일 배열로 변환
+    setSelectedFiles(files); // 상태에 파일 목록 저장
+  };
+
   return (
     <Styled.LeftContainer>
-      <Styled.TitleInput
-        placeholder="제목을 입력하세요"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <Styled.EditorHeader>
+        <Styled.TitleInput
+          placeholder="제목을 입력하세요"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          hasText={title.length > 0}
+        />
+
+        <Styled.Divider/>
+
+        <Styled.CategorySelect>카테고리 선택 ▼</Styled.CategorySelect>
+
+        {/* 선택된 파일 목록 표시 */}
+        <Styled.FileContainer>
+          <Styled.FileLabel>첨부파일 :</Styled.FileLabel>
+          <Styled.FileList>
+            {selectedFiles.map((file, index) => (
+            <Styled.FileItem key={index}>{file.name}</Styled.FileItem>
+            ))}
+          </Styled.FileList>
+        </Styled.FileContainer>
+      </Styled.EditorHeader>
+
       <Styled.Toolbar>
-        <button onClick={() => applyMarkdownSyntax('heading1')}>H<sub>1</sub></button>
-        <button onClick={() => applyMarkdownSyntax('heading2')}>H<sub>2</sub></button>
-        <button onClick={() => applyMarkdownSyntax('heading3')}>H<sub>3</sub></button>
+        <button onClick={() => applyMarkdownSyntax('heading1')}><img src='/img/toolbar_H1.svg' alt="Heading 1"/></button>
+        <button onClick={() => applyMarkdownSyntax('heading2')}><img src='/img/toolbar_H2.svg' alt="Heading 2"/></button>
+        <button onClick={() => applyMarkdownSyntax('heading3')}><img src='/img/toolbar_H3.svg' alt="Heading 3"/></button>
         <span>|</span>
-        <button onClick={() => applyMarkdownSyntax('bold')}>B</button>
-        <button onClick={() => applyMarkdownSyntax('italic')}>I</button>
-        <button onClick={() => applyMarkdownSyntax('strikethrough')}>T</button>
+        <button onClick={() => applyMarkdownSyntax('bold')}><img src='/img/toolbar_bold.svg' alt="Bold"/></button>
+        <button onClick={() => applyMarkdownSyntax('italic')}><img src='/img/toolbar_italic.svg' alt="Italic"/></button>
+        <button onClick={() => applyMarkdownSyntax('strikethrough')}><img src='/img/toolbar_strikethrough.svg' alt="Strikethrough"/></button>
         <span>|</span>
-        <button onClick={() => applyMarkdownSyntax('blockquote')}>“ ”</button>
-        <button onClick={() => applyMarkdownSyntax('link')}>🔗</button>
-        <button onClick={() => applyMarkdownSyntax('image')}>이미지</button>
-        <button onClick={() => applyMarkdownSyntax('code')}>&lt;/&gt;</button>
+        <button onClick={() => applyMarkdownSyntax('blockquote')}><img src='/img/toolbar_blockquote.svg' alt="Blockquote"/></button>
+        <button onClick={openFileExplorer}><img src='/img/toolbar_attach.svg' alt="Attach"/></button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          multiple
+          onChange={handleFileChange}
+        />
+        <button onClick={() => applyMarkdownSyntax('link')}><img src='/img/toolbar_link.svg' alt="Link"/></button>
+        <button onClick={() => applyMarkdownSyntax('image')}><img src='/img/toolbar_image.svg' alt="Image"/></button>
+        <button onClick={() => applyMarkdownSyntax('code')}><img src='/img/toolbar_code.svg' alt="Code"/></button>
       </Styled.Toolbar>
+
       <Styled.EditorContainer ref={editorRef} />
 
       {isModalOpen && (
@@ -210,6 +248,7 @@ export default function Editor({
           </Styled.ModalContent>
         </Styled.ModalOverlay>
       )}
+
     </Styled.LeftContainer>
   );
 }

@@ -76,7 +76,7 @@ function App() {
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
 
-  const hideHeader = window.location.pathname === '/writepost';
+  const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
 
   return (
 

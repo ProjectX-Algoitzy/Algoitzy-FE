@@ -84,6 +84,18 @@ export default function Editor({
     } else if (syntax === 'file') {
       openFileExplorer(); // 일반 파일 선택창 열기
       return;
+    } else if (syntax === 'code') {
+      // 코드 블록 추가
+      editorView.dispatch(
+        editorView.state.changeByRange((range) => {
+          const codeBlock = `\`\`\`\n${editorView.state.sliceDoc(range.from, range.to)}\n\`\`\``;
+          return {
+            changes: { from: range.from, to: range.to, insert: codeBlock },
+            range: EditorSelection.cursor(range.from + codeBlock.length),
+          };
+        })
+      );
+      return;
     }
 
     editorView.dispatch(
@@ -171,7 +183,7 @@ export default function Editor({
     const reader = new FileReader();
     reader.onloadend = () => {
       const imageURL = reader.result;
-      const markdownImage = `<img src="${imageURL}" alt="이미지 설명" style="width:100%;" />`;
+      const markdownImage = `<img src="${imageURL}" alt="" style="width:100%;" />`;
 
       editorView.dispatch(
         editorView.state.changeByRange((range) => ({
@@ -248,27 +260,23 @@ export default function Editor({
         <button onClick={() => applyMarkdownSyntax('strikethrough')}><img src='/img/toolbar_strikethrough.svg' alt="Strikethrough"/></button>
         <span>|</span>
         <button onClick={() => applyMarkdownSyntax('blockquote')}><img src='/img/toolbar_blockquote.svg' alt="Blockquote"/></button>
-        <button onClick={() => fileInputRef.current?.click()}>
-    <img src='/img/toolbar_attach.svg' alt="Attach" />
-  </button>
-  <input
-    type="file"
-    ref={fileInputRef} // 첨부파일 업로드용 ref
-    style={{ display: 'none' }}
-    multiple
-    onChange={handleFileChange} // 모든 형식 허용
-  />
+        <button onClick={() => fileInputRef.current?.click()}><img src='/img/toolbar_attach.svg' alt="Attach" /></button>
+          <input
+            type="file"
+            ref={fileInputRef} // 첨부파일 업로드용 ref
+            style={{ display: 'none' }}
+            multiple
+            onChange={handleFileChange} // 모든 형식 허용
+          />
         <button onClick={() => applyMarkdownSyntax('link')}><img src='/img/toolbar_link.svg' alt="Link"/></button>
-        <button onClick={() => imageInputRef.current?.click()}>
-    <img src='/img/toolbar_image.svg' alt="Image" />
-  </button>
-  <input
-    type="file"
-    ref={imageInputRef} // 이미지 업로드용 ref
-    style={{ display: 'none' }}
-    onChange={handleImageUpload}
-    accept="image/*"
-  />
+        <button onClick={() => imageInputRef.current?.click()}><img src='/img/toolbar_image.svg' alt="Image" /></button>
+          <input
+            type="file"
+            ref={imageInputRef} // 이미지 업로드용 ref
+            style={{ display: 'none' }}
+            onChange={handleImageUpload}
+            accept="image/*"
+          />
         <button onClick={() => applyMarkdownSyntax('code')}><img src='/img/toolbar_code.svg' alt="Code"/></button>
       </Styled.Toolbar>
 

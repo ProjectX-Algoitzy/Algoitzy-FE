@@ -5,18 +5,40 @@ import { markdown } from '@codemirror/lang-markdown';
 import { defaultKeymap } from '@codemirror/commands';
 import * as Styled from './Styled/WritePost.writepost.editor.styles';
 
+
+const gradeOptions = [
+  {value: "공지사항", label:"공지사항"},
+  {value: "자유", label:"자유"},
+  {value: "질문", label:"질문"},
+  {value: "정보 공유", label:"정보 공유"},
+  {value: "홍보", label:"홍보"},
+]
+
+const gradePlaceholderText = '게시판 선택';
+
+
 export default function Editor({
   title,
   setTitle,
   setMarkdownContent,
 }) {
   const editorRef = useRef(null);
-  const fileInputRef = useRef(null); // 파일 입력창을 제어할 useRef
+  const imageInputRef = useRef(null); // 이미지 파일 입력창을 제어할 useRef
+  const fileInputRef = useRef(null); // 일반 파일 입력창을 제어할 useRef
   const [editorView, setEditorView] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkURL, setLinkURL] = useState('');
-  const [isImageUploadOpen, setIsImageUploadOpen] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
+  const [isGradeSelected, setisGradeSelected] = useState(false); 
+  const [grade, setGrade] = useState(gradeOptions[0]);
+
+  // 학년 선택 change event
+  const handleGradeChange = (selectedOption) => {
+    const { value } = selectedOption;
+    setGrade(value);
+    // setGradeColor('#555555');
+    setisGradeSelected(true);
+  }
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -52,11 +74,15 @@ export default function Editor({
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
 
+
     if (syntax === 'link') {
       setIsModalOpen(true);
       return;
     } else if (syntax === 'image') {
-      setIsImageUploadOpen(true);
+      openImageFileExplorer(); // 이미지 파일 선택창 열기
+      return;
+    } else if (syntax === 'file') {
+      openFileExplorer(); // 일반 파일 선택창 열기
       return;
     }
 
@@ -135,7 +161,6 @@ export default function Editor({
       }))
     );
   
-    setIsModalOpen(false);
     setLinkURL('');
   };
 
@@ -146,7 +171,7 @@ export default function Editor({
     const reader = new FileReader();
     reader.onloadend = () => {
       const imageURL = reader.result;
-      const markdownImage = `![이미지 설명](${imageURL})`;
+      const markdownImage = `<img src="${imageURL}" alt="이미지 설명" style="width:100%;" />`;
 
       editorView.dispatch(
         editorView.state.changeByRange((range) => ({
@@ -156,12 +181,17 @@ export default function Editor({
       );
     };
     reader.readAsDataURL(file);
-
-    setIsImageUploadOpen(false);
   };
-
+  const openImageFileExplorer = () => {
+    if (imageInputRef.current) {
+      imageInputRef.current.click(); // 이미지 파일 탐색기 열기
+    }
+  };
+  
   const openFileExplorer = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // 일반 파일 탐색기 열기
+    }
   };
 
   const handleFileChange = (event) => {
@@ -181,7 +211,19 @@ export default function Editor({
 
         <Styled.Divider/>
 
-        <Styled.CategorySelect>카테고리 선택 ▼</Styled.CategorySelect>
+        <Styled.LIContainer>
+        <Styled.BlankLabel>게시판 선택</Styled.BlankLabel>
+        <Styled.GradeSelect
+          options={gradeOptions}
+          placeholder={gradePlaceholderText}
+          // defaultValue={gradeOptions[0]}
+          components={{ DropdownIndicator: null, IndicatorSeparator: null }}
+          isSearchable={false}
+          onChange={handleGradeChange}
+          isGradeSelected={isGradeSelected}
+
+        />
+        </Styled.LIContainer>
 
         {/* 선택된 파일 목록 표시 */}
         {selectedFiles.length > 0 && (
@@ -206,16 +248,27 @@ export default function Editor({
         <button onClick={() => applyMarkdownSyntax('strikethrough')}><img src='/img/toolbar_strikethrough.svg' alt="Strikethrough"/></button>
         <span>|</span>
         <button onClick={() => applyMarkdownSyntax('blockquote')}><img src='/img/toolbar_blockquote.svg' alt="Blockquote"/></button>
-        <button onClick={openFileExplorer}><img src='/img/toolbar_attach.svg' alt="Attach"/></button>
-        <input
-          type="file"
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-          multiple
-          onChange={handleFileChange}
-        />
+        <button onClick={() => fileInputRef.current?.click()}>
+    <img src='/img/toolbar_attach.svg' alt="Attach" />
+  </button>
+  <input
+    type="file"
+    ref={fileInputRef} // 첨부파일 업로드용 ref
+    style={{ display: 'none' }}
+    multiple
+    onChange={handleFileChange} // 모든 형식 허용
+  />
         <button onClick={() => applyMarkdownSyntax('link')}><img src='/img/toolbar_link.svg' alt="Link"/></button>
-        <button onClick={() => applyMarkdownSyntax('image')}><img src='/img/toolbar_image.svg' alt="Image"/></button>
+        <button onClick={() => imageInputRef.current?.click()}>
+    <img src='/img/toolbar_image.svg' alt="Image" />
+  </button>
+  <input
+    type="file"
+    ref={imageInputRef} // 이미지 업로드용 ref
+    style={{ display: 'none' }}
+    onChange={handleImageUpload}
+    accept="image/*"
+  />
         <button onClick={() => applyMarkdownSyntax('code')}><img src='/img/toolbar_code.svg' alt="Code"/></button>
       </Styled.Toolbar>
 
@@ -233,20 +286,6 @@ export default function Editor({
             />
             <button onClick={handleLinkInsert}>확인</button>
             <button onClick={() => setIsModalOpen(false)}>취소</button>
-          </Styled.ModalContent>
-        </Styled.ModalOverlay>
-      )}
-
-      {isImageUploadOpen && (
-        <Styled.ModalOverlay>
-          <Styled.ModalContent>
-            <h3>이미지 업로드</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-            />
-            <button onClick={() => setIsImageUploadOpen(false)}>취소</button>
           </Styled.ModalContent>
         </Styled.ModalOverlay>
       )}

@@ -43,7 +43,7 @@ export const BtnContainer2 = styled.div`
 `;
 
 export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
-  width: 6.56rem;
+  width: 6.67rem;
   height: 2rem;
   border-radius: 0.167rem;
   border: none;
@@ -54,7 +54,7 @@ export const ArbitaryBtn = styled.button` /* 임시 저장하기 버튼*/
 `;
 
 export const Btn = styled.button` /*저장하기 버튼*/
-  width: 6.56rem;
+  width: 6.67rem;
   height: 2rem;
   border-radius: 0.167rem;
   border: none;

@@ -135,19 +135,6 @@ export const GradeSelect = styled(Select).attrs({
 }
 `;
 
-export const CategorySelect = styled.div`
-  width: 100%;
-  color: ${tokens.colors.B_Grey_8};
-	${tokens.typography.B2_M_16}
-  padding: 10px;
-  border: 1px solid ${tokens.colors.B_Grey_3};
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Toolbar = styled.div`
   position: sticky; /* 스크롤 시 상단 고정 */
   padding: 1rem;
@@ -189,54 +176,45 @@ export const EditorContainer = styled.div`
   }
 `;
 
-export const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+export const UrlContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  gap: 0.3rem;
 `;
 
 export const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  background: #ffffff;
+  padding: 0.8rem;
+  border-radius: 4px;
+  width: 12rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  h3 {
-    margin-top: 0;
+  align-items: center;
+  justify-content: space-between;
+  p{
+    margin: 0 0 0.2rem 0 ;
+    color: ${tokens.colors.B_Grey_8};
+	  ${tokens.typography.B2_M_16}
   }
   input {
+    flex: 1;
     width: 100%;
-    padding: 8px;
-    margin: 10px 0;
-    font-size: 16px;
+    color: ${tokens.colors.B_Grey_8};
+	  ${tokens.typography.B3_M_14}
     border: 1px solid #ddd;
     border-radius: 4px;
   }
   button {
-    margin: 5px;
-    padding: 8px 12px;
+    padding: 0.2rem 0.4rem;
     font-size: 16px;
     cursor: pointer;
     border: none;
     border-radius: 4px;
-    &:first-of-type {
-      background-color: #00A5FF;
-      color: white;
-    }
-    &:last-of-type {
-      background-color: #5A677A;
-      color: white;
-    }
+    background-color: ${tokens.colors.Blue_0_Main};
+    color: ${tokens.colors.White};
+    ${tokens.typography.T5_SB_16};
   }
 `;
+
+
 
 export const FileContainer = styled.div`
   display: flex;

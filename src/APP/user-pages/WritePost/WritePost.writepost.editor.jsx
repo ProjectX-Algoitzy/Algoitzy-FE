@@ -25,8 +25,10 @@ export default function Editor({
   const editorRef = useRef(null);
   const imageInputRef = useRef(null); // 이미지 파일 입력창을 제어할 useRef
   const fileInputRef = useRef(null); // 일반 파일 입력창을 제어할 useRef
+  const modalRef = useRef(null);
   const [editorView, setEditorView] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
   const [linkURL, setLinkURL] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
   const [isGradeSelected, setisGradeSelected] = useState(false); 
@@ -73,9 +75,10 @@ export default function Editor({
 
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
-
-
+    
     if (syntax === 'link') {
+      const { top, left } = editorView.coordsAtPos(editorView.state.selection.main.head);
+      setModalPosition({ top, left });
       setIsModalOpen(true);
       return;
     } else if (syntax === 'image') {
@@ -172,9 +175,27 @@ export default function Editor({
         range: EditorSelection.range(range.from + linkTextStart, range.from + linkTextEnd),
       }))
     );
-  
     setLinkURL('');
+    setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isModalOpen]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -283,19 +304,18 @@ export default function Editor({
       <Styled.EditorContainer ref={editorRef} />
 
       {isModalOpen && (
-        <Styled.ModalOverlay>
-          <Styled.ModalContent>
-            <h3>링크 추가</h3>
-            <input
-              type="text"
-              placeholder="URL을 입력하세요"
-              value={linkURL}
-              onChange={(e) => setLinkURL(e.target.value)}
-            />
-            <button onClick={handleLinkInsert}>확인</button>
-            <button onClick={() => setIsModalOpen(false)}>취소</button>
-          </Styled.ModalContent>
-        </Styled.ModalOverlay>
+        <Styled.ModalContent ref={modalRef} style={{ position: 'absolute', top: modalPosition.top, left: modalPosition.left }}>
+          <p>링크 등록</p>
+          <Styled.UrlContainer>
+          <input
+            type="text"
+            placeholder="URL을 입력하세요"
+            value={linkURL}
+            onChange={(e) => setLinkURL(e.target.value)}
+          />
+          <button onClick={handleLinkInsert}>확인</button>
+          </Styled.UrlContainer>
+        </Styled.ModalContent>
       )}
 
       <Styled.BtnContainer>

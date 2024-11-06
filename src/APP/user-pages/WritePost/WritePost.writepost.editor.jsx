@@ -297,11 +297,12 @@ export default function Editor({
           </Styled.ModalContent>
         </Styled.ModalOverlay>
       )}
+
       <Styled.BtnContainer>
       <Styled.ExitButton>← 나가기</Styled.ExitButton>
         <Styled.BtnContainer2>
           <Styled.ArbitaryBtn>임시저장</Styled.ArbitaryBtn>
-          <Styled.Btn>제출하기</Styled.Btn> 
+          <Styled.Btn>등록하기</Styled.Btn> 
         </Styled.BtnContainer2>
       </Styled.BtnContainer>
     </Styled.LeftContainer>

@@ -3,14 +3,16 @@ import * as tokens from "../../../../tokens";
 
 export const PreviewContainer = styled.div`
   width: 50%;
-  padding: 20px;
-  border: 1px solid #ffffff;
+  padding: 1.25rem;
+  border: 0.0417rem solid #ffffff;
   background-color: #F5FBFF;
   font-family: 'Pretendard', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   overflow-y: auto;
   height: 100%;
+  word-wrap: break-word; /* 줄바꿈 설정 */
+  white-space: pre-wrap; /* 긴 문자열이 줄바꿈되도록 설정 */
   
   h1 {
     font-size: 2rem;

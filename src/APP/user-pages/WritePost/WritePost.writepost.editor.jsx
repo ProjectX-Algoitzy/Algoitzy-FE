@@ -42,6 +42,11 @@ export default function Editor({
     setisGradeSelected(true);
   }
 
+  const resizeTextarea = (e) => {
+    e.target.style.height = 'auto'; // 높이 초기화
+    e.target.style.height = `${e.target.scrollHeight}px`; // 내용에 맞게 높이 조정
+  };
+
   useEffect(() => {
     if (!editorRef.current) return;
 
@@ -75,7 +80,7 @@ export default function Editor({
 
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
-    
+
     if (syntax === 'link') {
       const { top, left } = editorView.coordsAtPos(editorView.state.selection.main.head);
       setModalPosition({ top, left });
@@ -235,12 +240,15 @@ export default function Editor({
   return (
     <Styled.LeftContainer>
       <Styled.EditorHeader>
-        <Styled.TitleInput
-          placeholder="제목을 입력하세요"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          hasText={title.length > 0}
-        />
+      <Styled.TitleInput
+        placeholder="제목을 입력하세요"
+        value={title}
+        onChange={(e) => {
+          setTitle(e.target.value);
+          resizeTextarea(e);
+        }}
+        hasText={title.length > 0}
+      />
 
         <Styled.Divider/>
 

@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import * as itemS from "./Styled/Community.community.table.styles";
 import CommunityTuple from './Community.community.tuple';
 
-export default function CommunityTable({ items, isTabClick }) {
-    const [selectedApplicationId, setSelectedApplicationId] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+export default function CommunityTable({ items, isTabClick, searchKeyword }) {
+    // const [selectedApplicationId, setSelectedApplicationId] = useState(null);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const closeModal = () => {
-			setIsModalOpen(false);
-			setSelectedApplicationId(null);
-    };
+    // const closeModal = () => {
+		// 	setIsModalOpen(false);
+		// 	setSelectedApplicationId(null);
+    // };
 
-    const openModal = (applicationId) => {
-			setIsModalOpen(true);
-			setSelectedApplicationId(applicationId);
-    };
+    // const openModal = (applicationId) => {
+		// 	setIsModalOpen(true);
+		// 	setSelectedApplicationId(applicationId);
+    // };
 
     return (
         <itemS.Container>
@@ -29,12 +29,13 @@ export default function CommunityTable({ items, isTabClick }) {
 						<itemS.TupleContainer>
 							{items.map(item => (
 								<CommunityTuple
-									key={item.postId}
+									key={item.boardId}
 									item={item}
 									isTabClick={isTabClick}
-									isSelected={selectedApplicationId === item.answerId && isModalOpen}
-									onOpen={() => openModal(item.answerId)}
-									onClose={closeModal}
+									searchKeyword={searchKeyword}
+									// isSelected={selectedApplicationId === item.answerId && isModalOpen}
+									// onOpen={() => openModal(item.answerId)}
+									// onClose={closeModal}
 								/>
 							))}
 						</itemS.TupleContainer>

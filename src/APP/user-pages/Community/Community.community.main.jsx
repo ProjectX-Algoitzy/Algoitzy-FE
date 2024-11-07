@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import request from '../../Api/request';
 import * as itemS from "./Styled/Community.community.main.styles";
 import CommunityTable from './Community.community.table';
@@ -7,7 +8,8 @@ import { dummyData } from './dummy';
 
 export default function Community() {
 	const { alert } = useContext(AlertContext);
-	
+	const navigate = useNavigate();
+
 	const [posts, setPosts] = useState([]);
 	const tabs = ['전체', '공지사항', '자유', '질문', '정보 공유', '홍보'];
 	// api 요청 파라미터
@@ -159,6 +161,9 @@ export default function Community() {
 		
   };
 
+  const handleWriteClick = () => {
+	navigate('/writepost'); // Navigate to the /writepost route
+};
 
 	return (
 		<itemS.OuterContainer>
@@ -235,7 +240,7 @@ export default function Community() {
 							/>
 						</itemS.Pagination>
 
-						<itemS.WriteBtn>+ 글쓰기</itemS.WriteBtn>
+						<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
 					</itemS.PaginationContainer>
 				</itemS.InnerContainer>
 			</itemS.Container>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
 import Signup from "./APP/user-pages/SignUp/SignUp.signup";
@@ -82,7 +82,6 @@ function App() {
 
     <Root>
     <GlobalStyle />
-      <BrowserRouter>
         <ScrollToTop />
         {!hideHeader && <Header />}
           <ContentWrapper>
@@ -117,7 +116,6 @@ function App() {
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}
-      </BrowserRouter>
     </Root>
     
   );

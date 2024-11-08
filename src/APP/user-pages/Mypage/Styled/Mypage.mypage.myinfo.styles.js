@@ -44,6 +44,31 @@ export const Handle = styled.div`
   cursor: pointer;
 `;
 
+export const TabBtnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+  justify-content: space-between;
+  width: 20.416rem;
+  height: 2rem;
+`;
+
+export const TabBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+  justify-content: space-around;
+  width: 11.666rem;
+  height: 2rem;
+`;
+
+export const Tab = styled.div`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.B_Grey_6};
+  text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  cursor: pointer;
+`;
+
 export const EditButton = styled.button`
   width: 6.67rem;
   height: 2rem;
@@ -51,5 +76,6 @@ export const EditButton = styled.button`
   color: ${tokens.colors.White};
   border: none;
   border-radius: 0.125rem;
+  margin-right: 0.458rem;
   cursor: pointer;
 `;

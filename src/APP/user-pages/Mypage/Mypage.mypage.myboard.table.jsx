@@ -28,23 +28,27 @@ export default function MyBoardTable({ items }) {
   return (
     <itemS.Container>
       <itemS.Table>
-        <itemS.Head>내가 쓴 글</itemS.Head>
-        <itemS.CategoryContainer>
-          <itemS.BlankBox></itemS.BlankBox>
-          <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-          <itemS.CategoryDate>작성일</itemS.CategoryDate>
-          <itemS.CategoryView>조회수</itemS.CategoryView>
-        </itemS.CategoryContainer>
-        <itemS.TupleContainer>
-          {items.map(item => (
-            <MyBoardTuple
-              key={item.boardId}
-              item={item}
-              isChecked={checkedItems[item.boardId] || false}
-              onCheckChange={() => handleCheckChange(item.boardId)}
-            />
-          ))}
-        </itemS.TupleContainer>
+        <itemS.StudyHeadBox>
+          <itemS.Head>내가 쓴 글</itemS.Head>
+        </itemS.StudyHeadBox>
+        <itemS.TableContainer>
+          <itemS.CategoryContainer>
+            <itemS.BlankBox></itemS.BlankBox>
+            <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+            <itemS.CategoryDate>작성일</itemS.CategoryDate>
+            <itemS.CategoryView>조회수</itemS.CategoryView>
+          </itemS.CategoryContainer>
+          <itemS.TupleContainer>
+            {items.map(item => (
+              <MyBoardTuple
+                key={item.boardId}
+                item={item}
+                isChecked={checkedItems[item.boardId] || false}
+                onCheckChange={() => handleCheckChange(item.boardId)}
+              />
+            ))}
+          </itemS.TupleContainer>
+        </itemS.TableContainer>
       </itemS.Table>
       <itemS.ButtonContainer>
         <itemS.AllCheckBox>

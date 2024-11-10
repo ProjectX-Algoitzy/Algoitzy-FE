@@ -7,6 +7,7 @@ export const Container = styled.div`
     width: 32rem;
   }
   // background-color: ${tokens.colors.White};
+  
 `;
 
 export const Table = styled.div`
@@ -14,24 +15,41 @@ export const Table = styled.div`
   flex-direction: column;
 `;
 
-export const Head = styled.div`
-  ${tokens.typography.T3_B_24};
+export const StudyHeadBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; 
+  align-items: flex-end;
   width: 100%;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
   padding-bottom: 0.5rem;
   margin-top: 4rem;
+  margin-bottom: 1.83rem;
+`;
+
+export const Head = styled.div`
+  ${tokens.typography.T3_B_24};
+  
 `;
 
 // 카테고리 파트 시작
+export const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.17rem 0.42rem 0 rgba(77, 114, 158, 0.25);
+  border-radius: 0 0 0.32rem 0.32rem;
+`;
+
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 165, 255, 0.05);
+  background-color: #DFE8F1;
   width: 50rem;
   height: 2.292rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_4};
+  border-radius: 0.32rem 0.32rem 0 0;
   @media (max-width: 600px) {
     width: 100%;
   }
@@ -69,7 +87,8 @@ export const CategoryView = styled.div`
 export const TupleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 24rem;
+  background-color: ${tokens.colors.White};
+  height: 19rem;
   // min-height: 24rem;
   overflow: auto;
 
@@ -77,6 +96,7 @@ export const TupleContainer = styled.div`
     width: 0px; /* Chrome, Safari, Opera용 */
   }
   scrollbar-width: none; /* Firefox용 */
+  border-radius: 0 0 0.32rem 0.32rem;
 `;
 
 export const ButtonContainer = styled.div`

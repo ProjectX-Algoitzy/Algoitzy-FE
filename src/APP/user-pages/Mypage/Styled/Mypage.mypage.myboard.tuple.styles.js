@@ -69,9 +69,17 @@ export const TupleTitleBox = styled.div`
   cursor: pointer;
 `;
 
+
+export const DeletedIcon = styled.img`
+  width: 0.833rem;
+  height: 0.833rem;
+  margin-right: 0.16rem;
+`;
+
+
 export const TupleTitle = styled.span`
   ${tokens.typography.B2_M_16};
-  color: ${tokens.colors.Black};
+  color: ${({ deleteYn }) => (deleteYn ? tokens.colors.Sub_3 : tokens.colors.Black)};
 `;
 
 export const HighlightedText = styled.span`

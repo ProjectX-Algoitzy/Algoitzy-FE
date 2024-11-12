@@ -35,10 +35,16 @@ export default function MyBoardTuple({ item, isChecked, onCheckChange }) {
         }}
 			/>
       <itemS.TupleId>{item.category}</itemS.TupleId>
-      <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-        <itemS.TupleTitle>{truncateTitle(item.title)}</itemS.TupleTitle>
-          {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
-      </itemS.TupleTitleBox>
+      {item.deleteYn ? (
+        <itemS.TupleTitleBox>
+          <itemS.DeletedIcon src='/img/deleted_icon.svg' alt='삭제된 글' />
+          <itemS.TupleTitle deleteYn={item.deleteYn}>{truncateTitle(item.title)}</itemS.TupleTitle>
+        </itemS.TupleTitleBox>
+      ) : (
+        <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
+          <itemS.TupleTitle deleteYn={item.deleteYn}>{truncateTitle(item.title)}</itemS.TupleTitle>
+        </itemS.TupleTitleBox>
+      )}
       <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
       <itemS.TupleView>{item.viewCount}</itemS.TupleView>
     </itemS.TupleContainer>

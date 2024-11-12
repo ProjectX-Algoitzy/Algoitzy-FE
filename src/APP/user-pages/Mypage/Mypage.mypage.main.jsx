@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import MyInfo from './Mypage.mypage.myinfo';
 import ParticipatedStudyList from './Mypage.mypage.participatedstudylist';
 import AppliedStudyList from './Mypage.mypage.appliedstudylist';
 import MyBoardTable from './Mypage.mypage.myboard.table';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from '../../Api/request';
-import { dummyData } from './dummy';
+
 
 export default function MyPage() {
+  const { memberId } = useParams();
+  const isMemberMatch = memberId === localStorage.getItem('memberId');
+
   const [myInfoData, setMyInfoData] = useState({});
   const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
   const [boards, setBoards] = useState([]); // 내가 쓴 글
-  const [memberId, setMemberId] = useState(localStorage.getItem('memberId'));
-
+  const [boardCount, setBoardCount] = useState(0);
+  
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
 
@@ -64,6 +68,7 @@ export default function MyPage() {
 			if (response.isSuccess) {
 				// console.log("내 게시글 목록 조회 성공");
 				setBoards(response.result.boardList);
+        setBoardCount(response.result.totalCount);
 			} else {
 				console.error("내 게시글 목록 조회 실패:", response);
 			}
@@ -125,7 +130,7 @@ export default function MyPage() {
           <itemS.HeadBox>
             <itemS.Head>마이페이지</itemS.Head>
           </itemS.HeadBox>
-          <MyInfo item={myInfoData} onSelectTab={setSelectedTab} />
+          <MyInfo item={myInfoData} boardCount={boardCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
         </itemS.MyInfoContainer>
 
         {selectedTab === "study" ? (
@@ -137,13 +142,15 @@ export default function MyPage() {
               handlePrevPagePassStudy={handlePrevPagePassStudy}
               handleNextPagePassStudy={handleNextPagePassStudy}
             />
-            <AppliedStudyList
-              currentApplyItems={currentApplyItems}
-              totalPagesApplyStudy={totalPagesApplyStudy}
-              currentPageApplyStudy={currentPageApplyStudy}
-              handlePrevPageApplyStudy={handlePrevPageApplyStudy}
-              handleNextPageApplyStudy={handleNextPageApplyStudy}
-            />
+            {isMemberMatch && (
+              <AppliedStudyList
+                currentApplyItems={currentApplyItems}
+                totalPagesApplyStudy={totalPagesApplyStudy}
+                currentPageApplyStudy={currentPageApplyStudy}
+                handlePrevPageApplyStudy={handlePrevPageApplyStudy}
+                handleNextPageApplyStudy={handleNextPageApplyStudy}
+              />
+            )}
           </>
         ) : (
           <MyBoardTable 

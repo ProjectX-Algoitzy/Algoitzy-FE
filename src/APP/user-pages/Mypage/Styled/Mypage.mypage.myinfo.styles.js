@@ -79,3 +79,7 @@ export const EditButton = styled.button`
   margin-right: 0.458rem;
   cursor: pointer;
 `;
+
+export const Blank = styled.div`
+  width: 11.666rem;
+`;

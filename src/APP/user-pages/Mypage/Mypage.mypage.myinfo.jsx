@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Mypage.mypage.myinfo.styles";
 
-export default function MyInfo({ item, onSelectTab }) {
+export default function MyInfo({ item, boardCount, onSelectTab, isMemberMatch }) {
 
   const navigate = useNavigate();
   const GIHO = '/<>  ';
-  const [postCount, setPostCount] = useState(0);
   const [activeTab, setActiveTab] = useState("study");
 
   const handleRedirect = () => {
@@ -32,21 +31,27 @@ export default function MyInfo({ item, onSelectTab }) {
         </itemS.NameBox>
       </itemS.ProfileBox>
       <itemS.TabBtnContainer>
-      <itemS.TabBox>
-          <itemS.Tab 
-            onClick={() => handleTabClick("study")} 
-            active={activeTab === "study"}
-          >
-            스터디 현황
-          </itemS.Tab>
-          <itemS.Tab 
-            onClick={() => handleTabClick("posts")} 
-            active={activeTab === "posts"}
-          >
-            내가 쓴 글 {postCount}
-          </itemS.Tab>
-        </itemS.TabBox>
-        <itemS.EditButton onClick={handleMyInfo}>내 정보 수정</itemS.EditButton>
+        {isMemberMatch && 
+        <>
+          <itemS.TabBox>
+            <itemS.Tab 
+              onClick={() => handleTabClick("study")} 
+              active={activeTab === "study"}
+            >
+              스터디 현황
+            </itemS.Tab>
+            <itemS.Tab 
+              onClick={() => handleTabClick("posts")} 
+              active={activeTab === "posts"}
+            >
+              내가 쓴 글 {boardCount}
+            </itemS.Tab>
+          </itemS.TabBox>
+          <itemS.EditButton onClick={handleMyInfo}>내 정보 수정</itemS.EditButton>
+        </>
+        }
+        
+        
       </itemS.TabBtnContainer>
       
     </itemS.Container>

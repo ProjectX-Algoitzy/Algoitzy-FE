@@ -60,12 +60,12 @@ export const Profile = styled.img`
 
 export const Name = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 3.5rem;
   height: 1.67rem;
   color: ${tokens.colors.B_Grey_7};
-  ${tokens.typography.B2_M_16};
+  ${tokens.typography.B3_M_14}; // B2_M_16
   font-weight: 800;
   margin: 0.75rem 0.13rem 0.13rem 0;
 `;

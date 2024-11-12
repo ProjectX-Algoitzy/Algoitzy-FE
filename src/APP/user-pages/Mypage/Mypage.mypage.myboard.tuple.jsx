@@ -34,10 +34,10 @@ export default function MyBoardTuple({ item, isChecked, onCheckChange }) {
           onCheckChange();
         }}
 			/>
-      <itemS.TupleId>{item.boardId}</itemS.TupleId>
+      <itemS.TupleId>{item.category}</itemS.TupleId>
       <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-      <itemS.TupleTitle>{truncateTitle(item.title)}</itemS.TupleTitle>
-        {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
+        <itemS.TupleTitle>{truncateTitle(item.title)}</itemS.TupleTitle>
+          {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
       </itemS.TupleTitleBox>
       <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
       <itemS.TupleView>{item.viewCount}</itemS.TupleView>

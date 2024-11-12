@@ -56,25 +56,26 @@ export default function MyPage() {
     }
   };
 
-  // const fetchBoard = async () => {
-	// 	try {
-	// 		const response = await request.get(`/board?searchKeyword=${searchKeyword}&category=${selectedTab}&sort=${sortType}&page=${currentPage + 1}&size=${itemsPerPage}`);
-	// 		console.log("response", response);
+  const fetchBoard = async () => {
+		try {
+			const response = await request.get(`/member/${memberId}/board?page=1&size=100`);
+			console.log("내 게시글 목록 조회 성공", response);
 
-	// 		if (response.isSuccess) {
-	// 			console.log("게시글 목록 조회 성공");
-	// 			setPosts(response.result.boardList);
-	// 		} else {
-	// 			console.error("게시글 목록 조회 실패:", response);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('게시글 목록 조회 오류', error);
-	// 	}
-	// };
+			if (response.isSuccess) {
+				// console.log("내 게시글 목록 조회 성공");
+				setBoards(response.result.boardList);
+			} else {
+				console.error("내 게시글 목록 조회 실패:", response);
+			}
+		} catch (error) {
+			console.error('내 게시글 목록 조회 오류', error);
+		}
+	};
 
   useEffect(() => {
     fetchMyInfo();
     fetchMyStudy();
+    fetchBoard();
   }, []);
 
   // useEffect(() => {
@@ -146,7 +147,7 @@ export default function MyPage() {
           </>
         ) : (
           <MyBoardTable 
-            items={dummyData}
+            items={boards}
           />
         )}
 

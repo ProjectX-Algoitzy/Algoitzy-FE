@@ -88,7 +88,7 @@ export const TupleContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${tokens.colors.White};
-  height: 19rem;
+  max-height: 19rem;
   // min-height: 24rem;
   overflow: auto;
 

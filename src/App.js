@@ -106,7 +106,7 @@ function App() {
             <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
             <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
-            <Route path="/mypage/:memberId" element={<MyPage />} /> {/* 마이페이지 */}
+            <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
           </Routes>
           </ContentWrapper>

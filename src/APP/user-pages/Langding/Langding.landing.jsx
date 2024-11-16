@@ -50,7 +50,7 @@ export default function Langding() {
         console.log("로그인 멤버 정보 조회", response);
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
-          localStorage.setItem('memberId', response.result.memberId);
+          localStorage.setItem('handle', response.result.handle);
 
         }
       } catch (error) {

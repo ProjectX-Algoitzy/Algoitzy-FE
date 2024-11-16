@@ -9,8 +9,8 @@ import request from '../../Api/request';
 
 
 export default function MyPage() {
-  const { memberId } = useParams();
-  const isMemberMatch = memberId === localStorage.getItem('memberId');
+  const { handle } = useParams();
+  const isMemberMatch = handle === localStorage.getItem('handle');
 
   const [myInfoData, setMyInfoData] = useState({});
   const [passStudyList, setPassStudyList] = useState([]);
@@ -31,7 +31,7 @@ export default function MyPage() {
 
   const fetchMyInfo = async () => {
     try {
-      const response = await request.get(`/member/${memberId}/info`);
+      const response = await request.get(`/member/${handle}/info`);
 
       if (response.isSuccess) {
         console.log("나의 정보 조회 성공",response);
@@ -46,7 +46,7 @@ export default function MyPage() {
   
   const fetchMyStudy = async () => {
     try {
-      const response = await request.get(`/member/${memberId}/study`);
+      const response = await request.get(`/member/${handle}/study`);
 
       if (response.isSuccess) {
         console.log("나의 스터디 조회 성공",response); 
@@ -62,7 +62,7 @@ export default function MyPage() {
 
   const fetchBoard = async () => {
 		try {
-			const response = await request.get(`/member/${memberId}/board?page=1&size=100`);
+			const response = await request.get(`/member/${handle}/board?page=1&size=100`);
 			console.log("내 게시글 목록 조회 성공", response);
 
 			if (response.isSuccess) {

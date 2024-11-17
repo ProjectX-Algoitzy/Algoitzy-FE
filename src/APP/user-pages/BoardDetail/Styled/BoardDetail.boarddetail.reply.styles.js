@@ -25,7 +25,7 @@ export const CommentContainer = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-left: 104px;
+  margin-left: 94px;
   // margin-left: 54px;
 `;
 
@@ -46,9 +46,10 @@ export const CommentBox = styled.div`
 
 export const WriterBox = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
-  flex-direction: column;
+  flex-direction: row;
+  width: 960px;
 `;
 
 export const WriterName = styled.div`
@@ -59,6 +60,57 @@ export const WriterName = styled.div`
   margin: 0 10px 6px 0;
 `;
 
+export const DotBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  position: relative;
+  cursor: pointer;
+`;
+
+export const DotButton = styled.img`
+  width: 3px;
+  height: 15px;
+`;
+
+export const UtilButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: ${tokens.colors.White};
+  position: absolute;
+  left: 10px;
+  top: 27px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 10px 5px rgba(58, 107, 135, 0.08);
+  cursor: pointer;
+`;
+
+export const UtilBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 142px;
+  height: 36px;
+`;
+
+export const Hr = styled.div`
+  width: 142px;
+  height: 0.2px;
+  background-color: #E9EEF6;
+`;
+
+export const UtilIcon = styled.img`
+  width: 17px;
+  height: 17px;
+  margin-right: 6px;
+`;
+
+export const UtilText = styled.div`
+  ${tokens.typography.B3_M_14};
+  color: ${tokens.colors.Grey_8};
+`;
 // export const ContentBox = styled.div`
 //   display: flex;
 //   justify-content: flex-start;

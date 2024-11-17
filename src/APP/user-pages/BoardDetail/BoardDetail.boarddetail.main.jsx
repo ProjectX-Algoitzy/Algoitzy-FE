@@ -69,9 +69,9 @@ export default function BoardDetail() {
 		fetchBoard();
 	}, []);
 
-	// useEffect(() => {
-	// 	fetchComment();
-	// }, []);
+	useEffect(() => {
+		fetchComment();
+	}, []);
 
 	const handleFix = async () => {
 
@@ -151,7 +151,7 @@ export default function BoardDetail() {
 					</itemS.CountContainer>
 
 					<itemS.Body>댓글</itemS.Body>
-					{/* <itemS.ContentContainer>
+					<itemS.ContentContainer>
 						<itemS.WriteContainer>
 							<itemS.CommentProfile src='/img/people.png' alt='프로필' />
 							<WriteBox />
@@ -188,7 +188,7 @@ export default function BoardDetail() {
 							</itemS.Pagination>
 
 						</itemS.PaginationContainer>
-					</itemS.ContentContainer> */}
+					</itemS.ContentContainer>
 
 				</itemS.InnerContainer>
 			</itemS.Container>

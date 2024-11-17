@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as itemS from "./Styled/BoardDetail.boarddetail.comment.styles";
 import WriteBox from './WriteBox';
 import Reply from './BoardDetail.boarddetail.reply';
+import request from '../../Api/request';
 
-export default function Comment({ item, formatDate }) {
+export default function Comment({ item, formatDate, fetchComment }) {
 	const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
   const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
 
   const modalRef = useRef(null); 
 
@@ -20,6 +22,22 @@ export default function Comment({ item, formatDate }) {
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setIsUtilBoxVisible(false); // 외부 클릭 시 UtilBox 닫기
+    }
+  };
+
+  const toggleLike = async () => {
+    try {
+      const response = await request.put(`/reply/${item.replyId}/like`); // 좋아요 API 호출
+      
+      if (response.isSuccess) {
+        console.log("좋아요 토글 성공", response);
+        setLikeStatus(!likeStatus); // 상태 업데이트
+        fetchComment();
+      } else {
+        console.error("좋아요 토글 실패:", response);
+      }
+    } catch (error) {
+      console.error("Error liking the reply:", error);
     }
   };
 
@@ -62,6 +80,7 @@ export default function Comment({ item, formatDate }) {
               <itemS.CommentLike
                 src={item.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
                 alt='하뚜'
+                onClick={toggleLike} // 클릭 시 좋아요 토글
               />
             </itemS.InfoBottomBox>
           </itemS.CommentBox>
@@ -75,13 +94,14 @@ export default function Comment({ item, formatDate }) {
         )}
 
         {item.childrenReplyList.map(reply => (
-							<Reply
-								key={reply.replyId}
-								item={reply}
-                parentName={item.createdName}
-								formatDate={formatDate}
-							/>
-						))}
+          <Reply
+            key={reply.replyId}
+            item={reply}
+            parentName={item.createdName}
+            formatDate={formatDate}
+            fetchComment={fetchComment}
+          />
+        ))}
       </itemS.WriteContainer>
     </itemS.Container>
   );

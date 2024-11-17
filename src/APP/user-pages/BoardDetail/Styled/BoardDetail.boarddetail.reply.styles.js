@@ -158,6 +158,7 @@ export const CommentLike = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 0.5rem;
+  cursor: pointer;
 `;
 
 export const WriteBox = styled.div`

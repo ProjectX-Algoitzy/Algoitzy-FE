@@ -8,6 +8,13 @@ export default function MyBoardTable({ items }) {
   const [checkedItems, setCheckedItems] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(false);
 
+  // 게시글, 임시저장글 탭 변경
+  const [selectedTab, setSelectedTab] = useState("board");
+
+  const handleTabClick = (tab) => {
+    setSelectedTab(tab);  
+  };
+
   const handleCheckChange = (boardId) => {
     setCheckedItems((prev) => ({
       ...prev,
@@ -28,27 +35,67 @@ export default function MyBoardTable({ items }) {
   return (
     <itemS.Container>
       <itemS.Table>
-        <itemS.StudyHeadBox>
-          <itemS.Head>내가 쓴 글</itemS.Head>
-        </itemS.StudyHeadBox>
-        <itemS.TableContainer>
-          <itemS.CategoryContainer>
-            <itemS.BlankBox></itemS.BlankBox>
-            <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-            <itemS.CategoryDate>작성일</itemS.CategoryDate>
-            <itemS.CategoryView>조회수</itemS.CategoryView>
-          </itemS.CategoryContainer>
-          <itemS.TupleContainer>
-            {items.map(item => (
-              <MyBoardTuple
-                key={item.boardId}
-                item={item}
-                isChecked={checkedItems[item.boardId] || false}
-                onCheckChange={() => handleCheckChange(item.boardId)}
-              />
-            ))}
-          </itemS.TupleContainer>
-        </itemS.TableContainer>
+        <itemS.TabBtnContainer>
+          <itemS.TabBox>
+            <itemS.Tab 
+              onClick={() => handleTabClick("board")} 
+              active={selectedTab === "board"}
+            >
+              게시한 글
+            </itemS.Tab>
+            <itemS.Tab 
+              onClick={() => handleTabClick("temp")} 
+              active={selectedTab === "temp"}
+            >
+              임시저장한 글
+            </itemS.Tab>
+          </itemS.TabBox>
+        </itemS.TabBtnContainer>
+        
+        {selectedTab === "board" ? ( // 게시한 글
+            <itemS.TableContainer>
+              <itemS.CategoryContainer>
+                <itemS.BlankBox></itemS.BlankBox>
+                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+                <itemS.CategoryDate>작성일</itemS.CategoryDate>
+                <itemS.CategoryView>조회수</itemS.CategoryView>
+              </itemS.CategoryContainer>
+              <itemS.TupleContainer>
+                {items
+                .filter(item => !item.saveYn) // 조건에 따라 배열을 필터링
+                .map(item => (
+                  <MyBoardTuple
+                    key={item.boardId}
+                    selectedTab={selectedTab}
+                    item={item}
+                    isChecked={checkedItems[item.boardId] || false}
+                    onCheckChange={() => handleCheckChange(item.boardId)}
+                  />
+                ))}
+              </itemS.TupleContainer>
+            </itemS.TableContainer>
+          ) : (  // 임시저장한 글
+            <itemS.TableContainer>
+              <itemS.CategoryContainer>
+                <itemS.BlankBox></itemS.BlankBox>
+                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+                <itemS.CategoryTempDate>작성일</itemS.CategoryTempDate>
+              </itemS.CategoryContainer>
+              <itemS.TupleContainer>
+                {items
+                .filter(item => item.saveYn) // 조건에 따라 배열을 필터링
+                .map(item => (
+                  <MyBoardTuple
+                    key={item.boardId}
+                    selectedTab={selectedTab}
+                    item={item}
+                    isChecked={checkedItems[item.boardId] || false}
+                    onCheckChange={() => handleCheckChange(item.boardId)}
+                  />
+                ))}
+              </itemS.TupleContainer>
+            </itemS.TableContainer>
+          )}
       </itemS.Table>
       <itemS.ButtonContainer>
         <itemS.AllCheckBox>

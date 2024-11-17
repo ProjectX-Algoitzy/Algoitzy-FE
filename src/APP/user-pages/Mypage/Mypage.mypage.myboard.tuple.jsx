@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Mypage.mypage.myboard.tuple.styles";
 
-export default function MyBoardTuple({ item, isChecked, onCheckChange }) {
+export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChange }) {
   const navigate = useNavigate();
 
   const formatDate = (createdTime) => {
@@ -24,8 +24,9 @@ export default function MyBoardTuple({ item, isChecked, onCheckChange }) {
     navigate(`/board/${id}`);
   };
 
+
   return (
-    <itemS.TupleContainer>
+    <itemS.TupleContainer deleteYn={item.deleteYn}>
       <itemS.CheckBox
 				type="checkbox"
 				checked={isChecked}
@@ -34,19 +35,39 @@ export default function MyBoardTuple({ item, isChecked, onCheckChange }) {
           onCheckChange();
         }}
 			/>
-      <itemS.TupleId>{item.category}</itemS.TupleId>
-      {item.deleteYn ? (
-        <itemS.TupleTitleBox>
-          <itemS.DeletedIcon src='/img/deleted_icon.svg' alt='삭제된 글' />
-          <itemS.TupleTitle deleteYn={item.deleteYn}>{truncateTitle(item.title)}</itemS.TupleTitle>
-        </itemS.TupleTitleBox>
+      {selectedTab === "board" ? (
+        <>
+          <itemS.TupleId>{item.category}</itemS.TupleId>
+          {item.deleteYn ? (
+            <itemS.TupleTitleBox>
+              <itemS.DeletedIcon src='/img/deleted_icon.svg' alt='삭제된 글' />
+              <itemS.TupleTitle deleteYn={item.deleteYn}>
+                {truncateTitle(item.title)}
+              </itemS.TupleTitle>
+            </itemS.TupleTitleBox>
+          ) : (
+            <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
+              <itemS.TupleTitle deleteYn={item.deleteYn}>
+                {truncateTitle(item.title)}
+              </itemS.TupleTitle>
+            </itemS.TupleTitleBox>
+          )}
+          <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
+          <itemS.TupleView>{item.viewCount}</itemS.TupleView>
+        </>
       ) : (
-        <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-          <itemS.TupleTitle deleteYn={item.deleteYn}>{truncateTitle(item.title)}</itemS.TupleTitle>
-        </itemS.TupleTitleBox>
+        // 임시저장 글 탭
+        <>
+          <itemS.TupleId>{item.category}</itemS.TupleId>
+          <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
+            <itemS.TupleTitle deleteYn={item.deleteYn}>
+              {truncateTitle(item.title)}
+            </itemS.TupleTitle>
+          </itemS.TupleTitleBox>
+          <itemS.TupleTempDate>{formatDate(item.createdTime)}</itemS.TupleTempDate>
+        </>
       )}
-      <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
-      <itemS.TupleView>{item.viewCount}</itemS.TupleView>
+      
     </itemS.TupleContainer>
   );
 }

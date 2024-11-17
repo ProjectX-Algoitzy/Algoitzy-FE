@@ -15,9 +15,10 @@ export const TupleContainer = styled.div`
   align-items: center;
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
-  background-color: ${({ fixyn }) => (fixyn ? tokens.colors.B_Grey_1 : 'transparent')};
+  // background-color: ${({ fixyn }) => (fixyn ? tokens.colors.B_Grey_1 : 'transparent')};
   &:hover {
     background-color: ${tokens.colors.B_Grey_2};
+    cursor: ${({ deleteYn }) => (deleteYn ? 'not-allowed' : 'pointer')};
   }
 `;
 
@@ -56,7 +57,7 @@ export const TupleId = styled.div`
   color: ${tokens.colors.Black};
   width: 5rem;
   min-height: 2.333rem;
-  cursor: pointer;
+  // cursor: pointer;
 `;
 
 export const TupleTitleBox = styled.div`
@@ -66,7 +67,7 @@ export const TupleTitleBox = styled.div`
   width: 29rem;
   min-height: 2.333rem;
   margin-left: 3.417rem;
-  cursor: pointer;
+  // cursor: pointer;
 `;
 
 
@@ -109,7 +110,7 @@ export const TupleWriter = styled.div`
   color: ${tokens.colors.Black};
   width: 4.667rem;
   min-height: 2.333rem;
-  cursor: pointer;
+  // cursor: pointer;
 `;
 
 export const TupleDate = styled.div`
@@ -120,7 +121,7 @@ export const TupleDate = styled.div`
   color: ${tokens.colors.Black};
   width: 5.75rem;
   min-height: 2.333rem;
-  cursor: pointer;
+  // cursor: pointer;
 `;
 
 export const TupleView = styled.div`
@@ -132,6 +133,17 @@ export const TupleView = styled.div`
   width: 3.833rem;
   min-height: 2.333rem;
   // margin-right: 1.667rem;
-  cursor: pointer;
+  // cursor: pointer;
+`;
+
+export const TupleTempDate = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.Black};
+  width: 9.6rem;
+  min-height: 2.333rem;
+  // cursor: pointer;
 `;
 // 튜플 파트 끝

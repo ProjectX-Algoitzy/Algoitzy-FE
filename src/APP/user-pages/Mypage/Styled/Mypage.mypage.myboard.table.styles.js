@@ -15,11 +15,11 @@ export const Table = styled.div`
   flex-direction: column;
 `;
 
-export const StudyHeadBox = styled.div`
+export const TabBtnContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between; 
-  align-items: flex-end;
+  justify-content: flex-start; 
+  align-items: center;
   width: 100%;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
   padding-bottom: 0.5rem;
@@ -27,9 +27,19 @@ export const StudyHeadBox = styled.div`
   margin-bottom: 1.83rem;
 `;
 
-export const Head = styled.div`
-  ${tokens.typography.T3_B_24};
+export const TabBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+  justify-content: space-between;
+  width: 12rem;
   
+`;
+
+export const Tab = styled.div`
+  ${tokens.typography.T3_B_24};
+  text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  cursor: pointer;
 `;
 
 // 카테고리 파트 시작
@@ -80,6 +90,13 @@ export const CategoryView = styled.div`
   text-align: center;
   width: 3.833rem;
   // margin-right: 1.667rem;
+`;
+
+export const CategoryTempDate = styled.div`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Black};
+  text-align: center;
+  width: 9.6rem;
 `;
 
 // 카테고리 파트 끝

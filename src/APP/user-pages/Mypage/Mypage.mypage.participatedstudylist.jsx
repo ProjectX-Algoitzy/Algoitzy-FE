@@ -1,4 +1,3 @@
-// ParticipatedStudyList.js
 import React from 'react';
 import StudyList from './Mypage.mypage.studylist';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";

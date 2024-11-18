@@ -89,7 +89,11 @@ export default function Comment({ item, formatDate, fetchComment }) {
         {isReplyBoxVisible && (
           <itemS.WriteBox>
             <itemS.Blank></itemS.Blank>
-            <WriteBox />
+            <WriteBox
+              parentId={item.replyId}
+              fetchComment={fetchComment} 
+              handleLoad={handleReplyClick}
+            />
           </itemS.WriteBox>
         )}
 

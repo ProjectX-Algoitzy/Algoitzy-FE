@@ -91,7 +91,11 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
         {isReplyBoxVisible && (
           <itemS.WriteBox>
             <itemS.Blank></itemS.Blank>
-            <WriteBox />
+            <WriteBox
+              parentId={item.replyId}
+              fetchComment={fetchComment} 
+              handleLoad={handleReplyClick}
+            />
           </itemS.WriteBox>
         )}
 
@@ -102,6 +106,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
               item={reply}
               parentName={item.createdName} // Pass the current reply's profile as parentProfile for child replies
               formatDate={formatDate}
+              fetchComment={fetchComment}
             />
           ))}
       </itemS.WriteContainer>

@@ -150,7 +150,9 @@ export default function BoardDetail() {
 					<itemS.ContentContainer>
 						<itemS.WriteContainer>
 							<itemS.CommentProfile src='/img/people.png' alt='프로필' />
-							<WriteBox />
+							<WriteBox
+								fetchComment={fetchComment} 
+							/>
 						</itemS.WriteContainer>
 						
 						{comment.map(item => (

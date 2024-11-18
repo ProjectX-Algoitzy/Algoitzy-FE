@@ -48,7 +48,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
   // 댓글 삭제
   const handleDelete = async () => {
     const confirmed = await confirm("정말로 삭제하시겠습니까?");
-    
+
     if (confirmed) { 
       try {
         const response = await request.delete(`/reply/${item.replyId}`); 
@@ -97,7 +97,16 @@ export default function Comment({ item, formatDate, fetchComment }) {
                 )}
               </itemS.DotBox>
             </itemS.WriterBox>
-            <itemS.Content>{item.content}</itemS.Content>
+            {item.deleteYn || item.deleteByAdminYn ? (
+              <itemS.ContentBox>
+                <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />
+                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.deleteYn ? '작성자에 의해 삭제된 댓글 입니다.' : '관리자에 의해 삭제된 댓글 입니다.'}</itemS.Content>
+              </itemS.ContentBox>
+            ) : (
+              <itemS.ContentBox>
+                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.content}</itemS.Content>
+              </itemS.ContentBox>
+            )}
             <itemS.InfoBottomBox>
               <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
               <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>

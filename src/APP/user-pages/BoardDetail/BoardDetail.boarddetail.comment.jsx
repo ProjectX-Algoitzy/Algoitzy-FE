@@ -1,15 +1,18 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import * as itemS from "./Styled/BoardDetail.boarddetail.comment.styles";
 import WriteBox from './WriteBox';
 import Reply from './BoardDetail.boarddetail.reply';
 import request from '../../Api/request';
+import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
 export default function Comment({ item, formatDate, fetchComment }) {
+  const { confirm } = useContext(ConfirmContext);
+  const modalRef = useRef(null); 
+
 	const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
   const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
   const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
 
-  const modalRef = useRef(null); 
 
   const handleReplyClick = () => {
     setIsReplyBoxVisible(!isReplyBoxVisible);
@@ -25,6 +28,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
     }
   };
 
+  // 댓글 좋아요 토글
   const toggleLike = async () => {
     try {
       const response = await request.put(`/reply/${item.replyId}/like`); // 좋아요 API 호출
@@ -38,6 +42,26 @@ export default function Comment({ item, formatDate, fetchComment }) {
       }
     } catch (error) {
       console.error("Error liking the reply:", error);
+    }
+  };
+
+  // 댓글 삭제
+  const handleDelete = async () => {
+    const confirmed = await confirm("정말로 삭제하시겠습니까?");
+    
+    if (confirmed) { 
+      try {
+        const response = await request.delete(`/reply/${item.replyId}`); 
+  
+        if (response.isSuccess) {
+          console.log("댓글 삭제 성공", response);
+          fetchComment();
+        } else {
+          console.error("댓글 삭제 실패:", response.message);
+        }
+      } catch (error) {
+        console.error("댓글 삭제 오류:", error);
+      }
     }
   };
 
@@ -65,7 +89,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
                       <itemS.UtilText>수정하기</itemS.UtilText>
                     </itemS.UtilBox>
                     <itemS.Hr></itemS.Hr>
-                    <itemS.UtilBox>
+                    <itemS.UtilBox onClick={handleDelete}>
                       <itemS.UtilIcon src='/img/trash.svg' alt='쓰레기통' />
                       <itemS.UtilText>삭제하기</itemS.UtilText>
                     </itemS.UtilBox>

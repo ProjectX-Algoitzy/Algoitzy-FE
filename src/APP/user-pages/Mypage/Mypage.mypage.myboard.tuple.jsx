@@ -26,7 +26,8 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
 
 
   return (
-    <itemS.TupleContainer deleteYn={item.deleteYn}>
+    <itemS.TupleContainer data-delete-yn={item.deleteYn ? true : undefined}>
+
       <itemS.CheckBox
 				type="checkbox"
 				checked={isChecked}
@@ -41,13 +42,13 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
           {item.deleteYn ? (
             <itemS.TupleTitleBox>
               <itemS.DeletedIcon src='/img/deleted_icon.svg' alt='삭제된 글' />
-              <itemS.TupleTitle deleteYn={item.deleteYn}>
+              <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
                 {truncateTitle(item.title)}
               </itemS.TupleTitle>
             </itemS.TupleTitleBox>
           ) : (
             <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-              <itemS.TupleTitle deleteYn={item.deleteYn}>
+              <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
                 {truncateTitle(item.title)}
               </itemS.TupleTitle>
             </itemS.TupleTitleBox>
@@ -60,7 +61,7 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
         <>
           <itemS.TupleId>{item.category}</itemS.TupleId>
           <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-            <itemS.TupleTitle deleteYn={item.deleteYn}>
+            <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
               {truncateTitle(item.title)}
             </itemS.TupleTitle>
           </itemS.TupleTitleBox>

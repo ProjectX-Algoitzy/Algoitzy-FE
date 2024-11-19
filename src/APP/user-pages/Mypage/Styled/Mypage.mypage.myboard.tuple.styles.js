@@ -15,12 +15,13 @@ export const TupleContainer = styled.div`
   align-items: center;
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
-  // background-color: ${({ fixyn }) => (fixyn ? tokens.colors.B_Grey_1 : 'transparent')};
+
   &:hover {
     background-color: ${tokens.colors.B_Grey_2};
-    cursor: ${({ deleteYn }) => (deleteYn ? 'not-allowed' : 'pointer')};
+    cursor: ${(props) => (props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
   }
 `;
+
 
 export const CheckBox = styled.input`
   width: 0.875rem;
@@ -80,7 +81,7 @@ export const DeletedIcon = styled.img`
 
 export const TupleTitle = styled.span`
   ${tokens.typography.B2_M_16};
-  color: ${({ deleteYn }) => (deleteYn ? tokens.colors.Sub_3 : tokens.colors.Black)};
+  color: ${(props) => (props['data-delete-yn']? tokens.colors.Sub_3 : tokens.colors.Black)};
 `;
 
 export const HighlightedText = styled.span`

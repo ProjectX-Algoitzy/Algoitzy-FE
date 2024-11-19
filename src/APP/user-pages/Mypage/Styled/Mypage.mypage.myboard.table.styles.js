@@ -15,6 +15,11 @@ export const Table = styled.div`
   flex-direction: column;
 `;
 
+export const TableContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const TabBtnContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -45,6 +50,7 @@ export const Tab = styled.div`
 // 카테고리 파트 시작
 export const TableContainer = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   box-shadow: 0 0.17rem 0.42rem 0 rgba(77, 114, 158, 0.25);
   border-radius: 0 0 0.32rem 0.32rem;
@@ -100,21 +106,94 @@ export const CategoryTempDate = styled.div`
 `;
 
 // 카테고리 파트 끝
- 
+export const TupleContainerWrapper = styled.div`
+  display: flex;
+  
+`;
 export const TupleContainer = styled.div`
+  flex: 1;
+  overflow: auto;
+  max-height: 19rem;
   display: flex;
   flex-direction: column;
-  background-color: ${tokens.colors.White};
-  max-height: 19rem;
-  // min-height: 24rem;
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 0px; /* Chrome, Safari, Opera용 */
-  }
-  scrollbar-width: none; /* Firefox용 */
-  border-radius: 0 0 0.32rem 0.32rem;
+  scrollbar-width: none;
 `;
+
+export const ScrollbarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+`;
+
+export const ScrollTopArrow = styled.img`
+  margin-top: 2.292rem;
+`;
+
+export const ScrollBottomArrow = styled.img`
+  
+`;
+
+export const ScrollbarWrapper = styled.div`
+  // position: absolute;
+  // right: -20px;
+  overflow-y: auto;
+  height: 18.417rem;
+  width: 6px;
+  background-color: ${tokens.colors.B_Grey_3};
+  border-radius: 3px;
+  // margin-left: 20px;
+  // margin-top: 2.292rem;
+  // margin: 2.292rem 0 0 20px;
+  margin: 1px 0;
+`;
+
+export const ScrollbarThumb = styled.div`
+  width: 100%;
+  height: 96px;
+  background: ${tokens.colors.B_Grey_6};
+  border-radius: 3px;
+  position: relative; // 위치 설정
+  top: 0; // 초기 위치
+  cursor: pointer;
+`;
+// export const TupleContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   background-color: ${tokens.colors.White};
+//   max-height: 19rem;
+//   // min-height: 24rem;
+//   overflow: auto;
+
+//   &::-webkit-scrollbar {
+//     width: 0px; /* Chrome, Safari, Opera용 */
+
+//   }
+//   scrollbar-width: none; /* Firefox용 */
+//   border-radius: 0 0 0.32rem 0.32rem;
+// `;
+
+// export const TupleContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   background-color: ${tokens.colors.White};
+//   max-height: 19rem;
+//   overflow: auto;
+
+//   &::-webkit-scrollbar {
+//     width: 6px; 
+//     border-radius: 3px; 
+//     background: ${tokens.colors.B_Grey_3};
+
+//   }
+//   &::-webkit-scrollbar-thumb {
+//     background: ${tokens.colors.B_Grey_6}; 
+//     border-radius: 3px; 
+//     // background-clip: padding-box; 
+//     // border: 2px solid transparent; 
+//   }
+//   // scrollbar-width: none; /* Firefox용 */
+//   border-radius: 0 0 0.32rem 0.32rem;
+// `;
 
 export const ButtonContainer = styled.div`
   display: flex;

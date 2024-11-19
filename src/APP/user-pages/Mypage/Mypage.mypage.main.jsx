@@ -6,6 +6,7 @@ import AppliedStudyList from './Mypage.mypage.appliedstudylist';
 import MyBoardTable from './Mypage.mypage.myboard.table';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from '../../Api/request';
+import { dummyData } from './dummy';
 
 
 export default function MyPage() {
@@ -16,7 +17,8 @@ export default function MyPage() {
   const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
   const [boards, setBoards] = useState([]); // 내가 쓴 글
-  const [boardCount, setBoardCount] = useState(0);
+  const [boardCount, setBoardCount] = useState(0); // 내 게시글
+  const [tempCount, setTempCount] = useState(0); // 임시저장 글
   
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -154,7 +156,10 @@ export default function MyPage() {
           </>
         ) : (
           <MyBoardTable 
-            items={boards}
+            // items={boards}
+            items={dummyData}
+            boardCount={boardCount}
+            tempCount={tempCount}
           />
         )}
 

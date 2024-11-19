@@ -78,8 +78,9 @@ export default function Comment({ item, formatDate, fetchComment }) {
         <itemS.CommentContainer>
           <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
           <itemS.CommentBox>
-            <itemS.WriterBox>
-              <itemS.WriterName>{item.createdName}</itemS.WriterName>
+          <itemS.WriterBox>
+            <itemS.WriterName>{item.createdName}</itemS.WriterName>
+            {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
               <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                 <itemS.DotButton src='/img/hamberg.svg' alt='...' />
                 {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
@@ -96,7 +97,8 @@ export default function Comment({ item, formatDate, fetchComment }) {
                   </itemS.UtilButtonBox>
                 )}
               </itemS.DotBox>
-            </itemS.WriterBox>
+            )}
+          </itemS.WriterBox>
             {item.deleteYn || item.deleteByAdminYn ? (
               <itemS.ContentBox>
                 <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />

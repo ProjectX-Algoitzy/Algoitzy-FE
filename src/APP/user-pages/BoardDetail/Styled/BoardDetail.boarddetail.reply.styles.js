@@ -120,6 +120,20 @@ export const UtilText = styled.div`
 //   margin-bottom: 12px;
 // `;
 
+export const ContentBox = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 957px;
+  margin-bottom: 6px;
+`;
+
+export const DeletedIcon = styled.img`
+  width: 0.833rem;
+  height: 0.833rem;
+  margin-right: 0.16rem;
+`;
+
 export const Mention = styled.span`
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Blue_0_Main};
@@ -128,9 +142,7 @@ export const Mention = styled.span`
 
 export const Content = styled.div`
   ${tokens.typography.B2_M_16};
-  color: ${tokens.colors.Black};
-  width: 957px;
-  margin-bottom: 6px;
+  color: ${({ deleteYn }) => (deleteYn ? '#888888' : tokens.colors.Black)};
 `;
 
 export const InfoBottomBox = styled.div`

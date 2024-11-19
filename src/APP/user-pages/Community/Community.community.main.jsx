@@ -174,7 +174,7 @@ export default function Community() {
 						{/* )} */}
 					</itemS.TabSortContainer>
 					<CommunityTable 
-						items={posts} 
+						items={posts.filter(item => item.saveYn)}
 						isTabClick={isTabClick}
 						searchKeyword={searchKeyword}
 					/>

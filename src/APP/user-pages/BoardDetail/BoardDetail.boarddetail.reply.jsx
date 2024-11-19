@@ -77,8 +77,9 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
         <itemS.CommentContainer>
           <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
           <itemS.CommentBox>
-            <itemS.WriterBox>
-              <itemS.WriterName>{item.createdName}</itemS.WriterName>
+          <itemS.WriterBox>
+            <itemS.WriterName>{item.createdName}</itemS.WriterName>
+            {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
               <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                 <itemS.DotButton src='/img/hamberg.svg' alt='...' />
                 {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
@@ -95,11 +96,19 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
                   </itemS.UtilButtonBox>
                 )}
               </itemS.DotBox>
-            </itemS.WriterBox>
-            {/* <itemS.ContentBox> */}
-              
-            <itemS.Content><itemS.Mention>@{parentName} </itemS.Mention>{item.content}</itemS.Content>
-            {/* </itemS.ContentBox> */}
+            )}
+          </itemS.WriterBox>
+            {item.deleteYn || item.deleteByAdminYn ? (
+              <itemS.ContentBox>
+                <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />
+                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.deleteYn ? '작성자에 의해 삭제된 댓글 입니다.' : '관리자에 의해 삭제된 댓글 입니다.'}</itemS.Content>
+              </itemS.ContentBox>
+            ) : (
+              <itemS.ContentBox>
+                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}><itemS.Mention>@{parentName} </itemS.Mention>{item.content}</itemS.Content>
+              </itemS.ContentBox>
+            )}
+            
             <itemS.InfoBottomBox>
               <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
               <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>

@@ -79,7 +79,10 @@ export default function Comment({ item, formatDate, fetchComment }) {
           <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
           <itemS.CommentBox>
           <itemS.WriterBox>
-            <itemS.WriterName>{item.createdName}</itemS.WriterName>
+            <itemS.WriterNameBox>
+              <itemS.WriterName>{item.createdName}</itemS.WriterName>
+              {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
+            </itemS.WriterNameBox>
             {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
               <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                 <itemS.DotButton src='/img/hamberg.svg' alt='...' />

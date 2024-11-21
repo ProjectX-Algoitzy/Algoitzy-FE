@@ -63,7 +63,6 @@ export const NewIcon = styled.div`
    border: none;
    border-radius: 0.17rem;
    margin-left: 0.17rem;
-  //  text-decoration: underline;
 `;
 
 export const TupleWriter = styled.div`

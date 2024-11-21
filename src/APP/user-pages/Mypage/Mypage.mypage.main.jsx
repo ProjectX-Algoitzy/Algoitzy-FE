@@ -70,7 +70,8 @@ export default function MyPage() {
 			if (response.isSuccess) {
 				// console.log("내 게시글 목록 조회 성공");
 				setBoards(response.result.boardList);
-        setBoardCount(response.result.totalCount);
+        setBoardCount(response.result.saveCount);
+        setTempCount(response.result.tempSaveCount);
 			} else {
 				console.error("내 게시글 목록 조회 실패:", response);
 			}
@@ -132,7 +133,7 @@ export default function MyPage() {
           <itemS.HeadBox>
             <itemS.Head>마이페이지</itemS.Head>
           </itemS.HeadBox>
-          <MyInfo item={myInfoData} boardCount={boardCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
+          <MyInfo item={myInfoData} boardCount={boardCount+tempCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
         </itemS.MyInfoContainer>
 
         {selectedTab === "study" ? (
@@ -156,8 +157,8 @@ export default function MyPage() {
           </>
         ) : (
           <MyBoardTable 
-            // items={boards}
-            items={dummyData}
+            items={boards}
+            // items={dummyData}
             boardCount={boardCount}
             tempCount={tempCount}
           />

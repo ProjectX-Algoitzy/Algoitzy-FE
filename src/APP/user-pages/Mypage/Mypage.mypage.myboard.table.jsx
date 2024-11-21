@@ -6,7 +6,7 @@ import * as itemS from "./Styled/Mypage.mypage.myboard.table.styles";
 export default function MyBoardTable({ items, boardCount, tempCount }) {
   const [checkedItems, setCheckedItems] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [count, setCount] = useState(10); //TODO -  - 임시로 10 넣음
+  const [count, setCount] = useState(boardCount); //TODO -  - 임시로 10 넣음
 
   // 게시글, 임시저장글 탭 변경
   const [selectedTab, setSelectedTab] = useState("board");
@@ -50,7 +50,7 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);  
-    setCount(tab === 'board' ? 10 : tempCount); //TODO - 임시로 10 넣음
+    setCount(tab === 'board' ? boardCount : tempCount); //TODO - 임시로 10 넣음
     setThumbTop(0);
   };
 
@@ -105,7 +105,7 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
                   onScroll={handleScrollSync}
                 >
                   {items
-                    .filter((item) => !item.saveYn) // 조건에 따라 배열을 필터링
+                    .filter((item) => item.saveYn) // 조건에 따라 배열을 필터링
                     .map((item) => (
                       <MyBoardTuple
                         key={item.boardId}
@@ -134,9 +134,12 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
                 <itemS.CategoryTitle>제목</itemS.CategoryTitle>
                 <itemS.CategoryTempDate>작성일</itemS.CategoryTempDate>
               </itemS.CategoryContainer>
-              <itemS.TupleContainer>
+              <itemS.TupleContainer
+                ref={contentRef}
+                onScroll={handleScrollSync}
+              >
                 {items
-                .filter(item => item.saveYn) // 조건에 따라 배열을 필터링
+                .filter(item => !item.saveYn) // 조건에 따라 배열을 필터링
                 .map(item => (
                   <MyBoardTuple
                     key={item.boardId}
@@ -175,10 +178,15 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
           />
           <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
         </itemS.AllCheckBox>
-        <itemS.ButtonBox>
+        {selectedTab === 'board' ? (
+          <itemS.ButtonBox>
+            <itemS.DeleteButton>삭제</itemS.DeleteButton>
+            <itemS.WriteButton>글쓰기</itemS.WriteButton>
+          </itemS.ButtonBox>
+        ) : (
           <itemS.DeleteButton>삭제</itemS.DeleteButton>
-          <itemS.WriteButton>글쓰기</itemS.WriteButton>
-        </itemS.ButtonBox>
+        )}
+        
       </itemS.ButtonContainer>
       
     </itemS.Container>

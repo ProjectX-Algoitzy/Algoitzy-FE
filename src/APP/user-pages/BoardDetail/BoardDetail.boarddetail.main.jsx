@@ -9,6 +9,7 @@ import WriteBox from './WriteBox';
 export default function BoardDetail() {
 	const { id } = useParams();  // 게시글 ID 가져오기
 	const memberId = +localStorage.getItem('memberId');
+	const profileUrl = localStorage.getItem('profileUrl');
 
 	const [board, setBoard] = useState({});
 	const [comment, setComment] = useState([]);
@@ -133,7 +134,7 @@ export default function BoardDetail() {
 					<itemS.Body>댓글</itemS.Body>
 					<itemS.ContentContainer>
 						<itemS.WriteContainer>
-							<itemS.CommentProfile src='/img/people.png' alt='프로필' />
+							<itemS.CommentProfile src={profileUrl} alt='프로필' />
 							<WriteBox
 								fetchComment={fetchComment} 
 							/>

@@ -51,7 +51,7 @@ export default function Langding() {
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
           localStorage.setItem('memberId', response.result.memberId);
-
+          localStorage.setItem('profileUrl', response.result.profileUrl);
         }
       } catch (error) {
         console.error("로그인 멤버 정보 조회 실패", error);

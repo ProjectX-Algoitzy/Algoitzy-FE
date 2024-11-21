@@ -16,7 +16,6 @@ export default function CommunityTuple({ item, isTabClick, searchKeyword }) {
     return `${year}.${month}.${day}`;
   };
 
-  // Highlight rendering function
   const renderHighlight = (text) => {
     if (!searchKeyword) return text;
 
@@ -33,10 +32,13 @@ export default function CommunityTuple({ item, isTabClick, searchKeyword }) {
   const renderTupleTitle = (title) => {
     const maxLength = 36;
 
-    // Truncate title if it exceeds maxLength
+    if (!title) {
+      // title이 null, undefined, 또는 빈 문자열일 경우 처리
+      return <itemS.TupleTitle>제목 없음</itemS.TupleTitle>;
+    }
+
     const truncatedTitle = title.length > maxLength ? title.slice(0, maxLength - 1) + '...' : title;
 
-    // Apply highlight rendering to the truncated title
     return (
       <itemS.TupleTitle>
         {renderHighlight(truncatedTitle)}

@@ -32,6 +32,11 @@ export const InputBox = styled.input`
     outline: none; /* 포커스 시 outline 제거 */
     border: none;  /* 포커스 시 border 제거 */
   }
+
+  // 텍스트 입력되어 있을 경우 해당 InputConfirmBox 구성 요소 바로 뒤에 오는 버튼 색상 변경
+  &:not(:placeholder-shown) + button {
+    background-color: ${tokens.colors.B_Grey_7};
+  }
 `;
 
 export const SubmitBtn = styled.button`

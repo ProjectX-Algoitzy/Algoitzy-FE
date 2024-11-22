@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding-right: 1.333rem;
   border-right: 0.063rem solid ${tokens.colors.Grey_4};
-  margin-left: 15rem;
+  /* margin-left: 15rem; */
 
   @media (max-width: 600px) {
     margin-left: 1.33rem;
@@ -37,6 +37,7 @@ export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 
 
 export const TitleContainer = styled.div` 
   display: flex;
+  max-width: 14.29rem;
   color: ${tokens.colors.Black};
   ${tokens.typography.T3_B_24};
   margin-top: 0.67rem;

@@ -61,9 +61,11 @@ export default function SelftStudyMain() {
   }
 
   return (
-    <itemS.Container>
-      <SelftStudySidebar selfStudyInfo={selfStudyInfo} setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
-      <itemS.Content>{renderComponent()}</itemS.Content>
-    </itemS.Container>
+    <itemS.OutsideContainer>
+      <itemS.Container>
+        <SelftStudySidebar selfStudyInfo={selfStudyInfo} setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
+        <itemS.Content>{renderComponent()}</itemS.Content>
+      </itemS.Container>
+    </itemS.OutsideContainer>
   )
 }

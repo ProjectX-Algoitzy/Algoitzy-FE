@@ -6,13 +6,20 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 1.33rem;
   height: 100%;
+  width: 39.042rem;
+
+  @media (max-width: 600px) {
+    width: 33.04rem;
+    padding-right: 1.33rem;
+  }
 `;
 
 export const Title = styled.div`
   display: flex;
   margin-top: 4.17rem;
   margin-bottom: 1.5rem;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
   padding-bottom: 0.67rem;
@@ -23,7 +30,8 @@ export const CanNotEnterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
   border-radius: 0.42rem;
@@ -32,7 +40,8 @@ export const CanNotEnterContainer = styled.div`
 `;
 
 export const StyledTable = styled.table`
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   /* height: 11.54rem; */
   border-collapse: collapse;
 `;
@@ -66,7 +75,8 @@ export const ImgIcon = styled.img`
 export const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   margin-top: 1.5rem;
 `;
 

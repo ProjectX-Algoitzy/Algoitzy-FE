@@ -142,7 +142,6 @@ export default function Community() {
 									placeholder='제목, 내용, 작성자 검색'
 								/>
 								<itemS.SearchIcon onClick={() => handleSearch()} src='/img/search.svg' alt='돋보기' />
-								{/* <itemS.SearchIcon onClick={() => fetchInstitutionList()} src='/img/search.svg' alt='돋보기' /> */}
 							</itemS.SearchContainer>
 					</itemS.TopContainer>
 					<itemS.TabSortContainer>
@@ -159,25 +158,23 @@ export default function Community() {
                 )
               ))}
 						</itemS.TabContainer>
-						{/* {isTabClick && ( */}
-							<itemS.SortContainer>
-								<itemS.CategoryDrop onClick={toggleSortDrop}>{sortText}</itemS.CategoryDrop>
-								<itemS.SortIcon src="/img/sorticon.svg" alt="Sort Icon" onClick={toggleSortDrop} />
-								{isSortDropVisible && (
-									<itemS.SortDrop>
-										<itemS.SortText onClick={() => onSortType('LATEST')}>최신순</itemS.SortText>
-										<itemS.SortText onClick={() => onSortType('VIEW_COUNT')}>조회수</itemS.SortText>
-										<itemS.SortText onClick={() => onSortType('LIKE')}>좋아요</itemS.SortText>
-									</itemS.SortDrop>
-								)}
-							</itemS.SortContainer>
-						{/* )} */}
+						<itemS.SortContainer>
+							<itemS.CategoryDrop onClick={toggleSortDrop}>{sortText}</itemS.CategoryDrop>
+							<itemS.SortIcon src="/img/sorticon.svg" alt="Sort Icon" onClick={toggleSortDrop} />
+							{isSortDropVisible && (
+								<itemS.SortDrop>
+									<itemS.SortText onClick={() => onSortType('LATEST')}>최신순</itemS.SortText>
+									<itemS.SortText onClick={() => onSortType('VIEW_COUNT')}>조회수</itemS.SortText>
+									<itemS.SortText onClick={() => onSortType('LIKE')}>좋아요</itemS.SortText>
+								</itemS.SortDrop>
+							)}
+						</itemS.SortContainer>
 					</itemS.TabSortContainer>
 					<CommunityTable 
-						items={posts.filter(item => item.saveYn)}
+						items={posts}
 						isTabClick={isTabClick}
 						searchKeyword={searchKeyword}
-					/>
+						/>
 					<itemS.PaginationContainer>
 						<itemS.BlankBtn></itemS.BlankBtn>
 

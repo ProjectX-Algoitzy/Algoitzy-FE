@@ -87,6 +87,22 @@ export default function BoardDetail() {
       setCurrentPage((currentPageGroup - 1) * 5); // 새로운 그룹의 첫 번째 페이지로 이동
     }
 	};
+
+	// 댓글 좋아요 토글
+  const toggleLike = async () => {
+    try {
+      const response = await request.put(`/board/${board.boardId}/like`); // 좋아요 API 호출
+      
+      if (response.isSuccess) {
+        console.log("좋아요 토글 성공", response);
+				fetchBoard()
+      } else {
+        console.error("좋아요 토글 실패:", response);
+      }
+    } catch (error) {
+      console.error("Error liking the reply:", error);
+    }
+  };
 	
 
 	return (
@@ -125,9 +141,13 @@ export default function BoardDetail() {
 						files={board.boardFileList}
 					/>
 					<itemS.CountContainer>
-						<itemS.LC_Icon src='/img/like-md.svg' alt='하뚜' />
+						<itemS.LikeIcon
+							src={board.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
+							alt='하뚜'
+							onClick={toggleLike} // 클릭 시 좋아요 토글
+						/>
 						<itemS.CountText>좋아요 {board.likeCount}</itemS.CountText>
-						<itemS.LC_Icon src='/img/comment.svg' alt='댓글' />
+						<itemS.CommentIcon src='/img/comment.svg' alt='댓글' />
 						<itemS.CountText>댓글 {board.replyCount}</itemS.CountText>
 					</itemS.CountContainer>
 

@@ -11,7 +11,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
 
 	const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
   const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
-  const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
+  // const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
 
 
   const handleReplyClick = () => {
@@ -35,7 +35,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
       
       if (response.isSuccess) {
         console.log("좋아요 토글 성공", response);
-        setLikeStatus(!likeStatus); // 상태 업데이트
+        // setLikeStatus(!likeStatus); // 상태 업데이트
         fetchComment();
       } else {
         console.error("좋아요 토글 실패:", response);

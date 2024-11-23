@@ -77,30 +77,30 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
         <itemS.CommentContainer>
           <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
           <itemS.CommentBox>
-          <itemS.WriterBox>
-            <itemS.WriterNameBox>
-              <itemS.WriterName>{item.createdName}</itemS.WriterName>
-              {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
-            </itemS.WriterNameBox>
-            {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
-              <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
-                <itemS.DotButton src='/img/hamberg.svg' alt='...' />
-                {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
-                  <itemS.UtilButtonBox>
-                    <itemS.UtilBox>
-                      <itemS.UtilIcon src='/img/edit.svg' alt='수정' />
-                      <itemS.UtilText>수정하기</itemS.UtilText>
-                    </itemS.UtilBox>
-                    <itemS.Hr></itemS.Hr>
-                    <itemS.UtilBox onClick={handleDelete}>
-                      <itemS.UtilIcon src='/img/trash.svg' alt='쓰레기통' />
-                      <itemS.UtilText>삭제하기</itemS.UtilText>
-                    </itemS.UtilBox>
-                  </itemS.UtilButtonBox>
-                )}
-              </itemS.DotBox>
-            )}
-          </itemS.WriterBox>
+            <itemS.WriterBox>
+              <itemS.WriterNameBox>
+                <itemS.WriterName>{item.createdName}</itemS.WriterName>
+                {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
+              </itemS.WriterNameBox>
+              {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
+                  <itemS.DotButton src='/img/hamberg.svg' alt='...' />
+                  {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
+                    <itemS.UtilButtonBox>
+                      <itemS.UtilBox>
+                        <itemS.UtilIcon src='/img/edit.svg' alt='수정' />
+                        <itemS.UtilText>수정하기</itemS.UtilText>
+                      </itemS.UtilBox>
+                      <itemS.Hr></itemS.Hr>
+                      <itemS.UtilBox onClick={handleDelete}>
+                        <itemS.UtilIcon src='/img/trash.svg' alt='쓰레기통' />
+                        <itemS.UtilText>삭제하기</itemS.UtilText>
+                      </itemS.UtilBox>
+                    </itemS.UtilButtonBox>
+                  )}
+                </itemS.DotBox>
+              )}
+            </itemS.WriterBox>
             {item.deleteYn || item.deleteByAdminYn ? (
               <itemS.ContentBox>
                 <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />

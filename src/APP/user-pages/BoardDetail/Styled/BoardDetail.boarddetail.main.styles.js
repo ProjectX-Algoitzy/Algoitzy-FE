@@ -164,7 +164,14 @@ export const CountContainer = styled.div`
   margin: 0 0 1rem 0.625rem;
 `;
 
-export const LC_Icon = styled.img`
+export const LikeIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+`;
+
+export const CommentIcon = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 0.5rem;

@@ -7,6 +7,12 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 1.33rem;
   height: 100%;
+  width: 39.042rem;
+
+  @media (max-width: 600px) {
+    width: 33.04rem;
+    padding-right: 1.33rem;
+  }
 `;
 
 export const Title = styled.div`
@@ -14,7 +20,8 @@ export const Title = styled.div`
   justify-content: space-between;
   margin-top: 4.17rem;
   margin-bottom: 1.5rem;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
   padding-bottom: 0.67rem;
@@ -25,88 +32,14 @@ export const ComingSoonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
   border-radius: 0.42rem;
   color: ${tokens.colors.B_Grey_5};
   ${tokens.typography.T3_B_24};
 `;
-
-// export const WeeksSelectContainer = styled(Select).attrs({
-//   classNamePrefix: 'react-select',
-// })`
-//   .react-select__control {
-//     display: flex;
-//     /* text-align: center; */
-//     width: 5.92rem;
-//     height: 1.5rem;
-//     color: ${tokens.colors.Grey_8};
-//     ${tokens.typography.B3_M_14};
-//     border: 0.042rem solid ${tokens.colors.B_Grey_3};
-//     border-radius: 0.167rem;
-//   }
-//   .react-select__menu {
-//     position: absolute;
-//     top: -0.42rem;
-//     left: -0.042rem;
-//     width: 6.04rem;
-//     height: 11.67rem;
-//     border-radius: 0.167rem;
-//     border: none;
-//     box-shadow: 0 0.083rem 0.167rem rgba(0, 0, 0, 0.1);
-//     font-weight: 600;
-//     text-align: center;
-//     ${tokens.typography.B3_M_14};
-//   }
-//   .react-select__option:not(:last-child) {
-//     border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
-//   }
-//   .react-select__option {
-//     color: ${tokens.colors.Grey_8};
-//     ${tokens.typography.B3_M_14};
-//     border: none;
-//   }
-//   .react-select__option--is-selected:first-of-type {
-//     background-color: rgba(102, 201, 255, 0.2);
-//     backdrop-filter: blur(8px);
-//     color: ${tokens.colors.Grey_8};
-//     border-top-left-radius: 0.167rem;
-//     border-top-right-radius: 0.167rem;
-//     border: none;
-//     ${tokens.typography.B3_M_14};
-//     position: relative;
-//     top: -0.17rem;
-//   }
-//   .react-select__option--is-selected:last-of-type {
-//     background-color: rgba(102, 201, 255, 0.2);
-//     backdrop-filter: blur(8px);
-//     color: ${tokens.colors.Grey_8};
-//     border-bottom-left-radius: 0.167rem;
-//     border-bottom-right-radius: 0.167rem;
-//     border: none;
-//     ${tokens.typography.B3_M_14};
-//   }
-//   .react-select__option--is-selected:not(:first-of-type):not(:last-of-type) {
-//     background-color: rgba(102, 201, 255, 0.2);
-//     backdrop-filter: blur(8px);
-//     color: ${tokens.colors.Grey_8};
-//     border: none;
-//     ${tokens.typography.B3_M_14};
-//   }
-//   .react-select__option--is-focused {
-//     background-color: transparent;
-//     cursor: pointer;
-//   }
-//   .react-select__option:active {
-//     background-color: transparent;
-//   }
-//   .react-select__single-value {
-//     width: 100%;
-//     text-align: center;
-//     padding-left: 1.13rem;
-//   }
-// `;
 
 export const WeeksSelectContainer = styled(Select).attrs({
   classNamePrefix: 'react-select',
@@ -125,7 +58,7 @@ export const WeeksSelectContainer = styled(Select).attrs({
   .react-select__menu {
     position: absolute;
     top: -0.5rem;
-    left: 0.03rem;
+    /* left: 0.03rem; */
     width: 100%;
     max-height: 14.5rem; /* Adjusted height to fit 8 items */
     border-radius: 0.167rem;
@@ -204,7 +137,8 @@ export const TableContainer = styled.div`
 `;
 
 export const Table = styled.table`
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 100%;
   /* height: 18.63rem; */
   border-collapse: collapse;
   background-color: #fff;

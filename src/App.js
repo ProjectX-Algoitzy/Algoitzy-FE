@@ -76,6 +76,7 @@ function App() {
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
 
+  const location = useLocation(); // 현재 경로 확인
   const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
 
   return (

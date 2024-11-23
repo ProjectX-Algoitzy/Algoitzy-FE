@@ -11,7 +11,13 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  padding: 6.58rem 15rem;
+  /* padding: 6.58rem 15rem; */
+  padding: 6.58rem 0rem;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    /* padding-right: 1.33rem; */
+  }
 `;
 
 export const TitleContainer = styled.div`
@@ -22,6 +28,10 @@ export const TitleContainer = styled.div`
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.Grey_4};
   padding-bottom: 0.5rem;
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export const ApplicationText = styled.div`
@@ -46,4 +56,8 @@ export const Group = styled.div`
   background-color: ${tokens.colors.White};
   width: 50.88rem;
   padding-top: 1.83rem;
+
+  @media (max-width: 600px) {
+    width: 33.8rem;
+  }
 `;

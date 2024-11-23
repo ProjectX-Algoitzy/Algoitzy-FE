@@ -28,6 +28,10 @@ export const TitleContainer = styled.div`
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.Grey_4};
   padding-bottom: 0.5rem;
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 export const ApplicationText = styled.div`
@@ -52,4 +56,8 @@ export const Group = styled.div`
   background-color: ${tokens.colors.White};
   width: 50.88rem;
   padding-top: 1.83rem;
+
+  @media (max-width: 600px) {
+    width: 33.8rem;
+  }
 `;

@@ -24,7 +24,6 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
     navigate(`/board/${id}`);
   };
 
-
   return (
     <itemS.TupleContainer data-delete-yn={item.deleteYn ? true : undefined}>
 

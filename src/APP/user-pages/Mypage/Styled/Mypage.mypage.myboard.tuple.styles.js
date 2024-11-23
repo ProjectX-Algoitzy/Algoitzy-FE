@@ -148,3 +148,4 @@ export const TupleTempDate = styled.div`
   // cursor: pointer;
 `;
 // 튜플 파트 끝
+

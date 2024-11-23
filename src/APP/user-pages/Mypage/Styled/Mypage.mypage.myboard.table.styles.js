@@ -270,3 +270,14 @@ export const WriteButton = styled.button`
   border-radius: 0.16rem;
   cursor: pointer;
 `;
+
+
+export const NoItemsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.B_Grey_5};
+  min-height: 2.333rem;
+  
+`;

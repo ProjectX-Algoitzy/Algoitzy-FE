@@ -50,7 +50,7 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);  
-    setCount(tab === 'board' ? boardCount : tempCount); //TODO - 임시로 10 넣음
+    setCount(tab === 'board' ? boardCount : tempCount); 
     setThumbTop(0);
   };
 
@@ -100,11 +100,16 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
                 <itemS.CategoryView>조회수</itemS.CategoryView>
               </itemS.CategoryContainer>
               <itemS.TupleContainerWrapper>
-                <itemS.TupleContainer
-                  ref={contentRef}
-                  onScroll={handleScrollSync}
-                >
-                  {items
+              <itemS.TupleContainer
+                ref={contentRef}
+                onScroll={handleScrollSync}
+              >
+                {items.filter((item) => item.saveYn).length === 0 ? (
+                  <itemS.NoItemsContainer>
+                    아직 작성된 글이 없습니다.
+                  </itemS.NoItemsContainer>
+                ) : (
+                  items
                     .filter((item) => item.saveYn) // 조건에 따라 배열을 필터링
                     .map((item) => (
                       <MyBoardTuple
@@ -114,8 +119,9 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
                         isChecked={checkedItems[item.boardId] || false}
                         onCheckChange={() => handleCheckChange(item.boardId)}
                       />
-                    ))}
-                </itemS.TupleContainer>
+                    ))
+                )}
+              </itemS.TupleContainer>
                 {/* <itemS.ScrollbarContainer
                   ref={scrollRef}
                   // onScroll={handleScrollSync}
@@ -138,17 +144,23 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
                 ref={contentRef}
                 onScroll={handleScrollSync}
               >
-                {items
-                .filter(item => !item.saveYn) // 조건에 따라 배열을 필터링
-                .map(item => (
-                  <MyBoardTuple
-                    key={item.boardId}
-                    selectedTab={selectedTab}
-                    item={item}
-                    isChecked={checkedItems[item.boardId] || false}
-                    onCheckChange={() => handleCheckChange(item.boardId)}
-                  />
-                ))}
+                {items.filter((item) => !item.saveYn).length === 0 ? (
+                  <itemS.NoItemsContainer>
+                    아직 작성된 글이 없습니다.
+                  </itemS.NoItemsContainer>
+                ) : (
+                  items
+                    .filter((item) => !item.saveYn) // 조건에 따라 배열을 필터링
+                    .map((item) => (
+                      <MyBoardTuple
+                        key={item.boardId}
+                        selectedTab={selectedTab}
+                        item={item}
+                        isChecked={checkedItems[item.boardId] || false}
+                        onCheckChange={() => handleCheckChange(item.boardId)}
+                      />
+                    ))
+                )}
               </itemS.TupleContainer>
             </itemS.TableContainer>
           )}

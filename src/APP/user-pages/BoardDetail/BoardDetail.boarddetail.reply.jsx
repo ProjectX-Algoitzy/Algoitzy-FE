@@ -11,6 +11,8 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
 	const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
   const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
 	const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
+  const [isEditing, setIsEditing] = useState(false); 
+  const [editContent, setEditContent] = useState('');
 
 
   const handleReplyClick = () => {
@@ -25,6 +27,16 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       setIsUtilBoxVisible(false); // 외부 클릭 시 UtilBox 닫기
     }
+  };
+
+  const handleEditClick = () => {
+    setEditContent(item.content); 
+    setIsEditing(true); 
+  };
+
+  const handleEditComplete = () => {
+    setIsEditing(false); 
+    fetchComment(); 
   };
 
   // 댓글 좋아요 토글
@@ -46,7 +58,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
 
   // 댓글 삭제
   const handleDelete = async () => {
-    const confirmed = await confirm("정말로 삭제하시겠습니까?");
+    const confirmed = await confirm("정말 삭제하시겠습니까?");
     
     if (confirmed) { 
       try {
@@ -76,52 +88,62 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
       <itemS.WriteContainer>
         <itemS.CommentContainer>
           <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
-          <itemS.CommentBox>
-            <itemS.WriterBox>
-              <itemS.WriterNameBox>
-                <itemS.WriterName>{item.createdName}</itemS.WriterName>
-                {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
-              </itemS.WriterNameBox>
-              {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
-                <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
-                  <itemS.DotButton src='/img/hamberg.svg' alt='...' />
-                  {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
-                    <itemS.UtilButtonBox>
-                      <itemS.UtilBox>
-                        <itemS.UtilIcon src='/img/edit.svg' alt='수정' />
-                        <itemS.UtilText>수정하기</itemS.UtilText>
-                      </itemS.UtilBox>
-                      <itemS.Hr></itemS.Hr>
-                      <itemS.UtilBox onClick={handleDelete}>
-                        <itemS.UtilIcon src='/img/trash.svg' alt='쓰레기통' />
-                        <itemS.UtilText>삭제하기</itemS.UtilText>
-                      </itemS.UtilBox>
-                    </itemS.UtilButtonBox>
-                  )}
-                </itemS.DotBox>
+          {isEditing ? (
+            <WriteBox
+              parentId={item.replyId}
+              fetchComment={fetchComment}
+              handleLoad={handleEditComplete}
+              isEditing={true} // 수정 여부 전달
+              editContent={editContent} // 수정할 초기 내용 전달
+              replyId={item.replyId} // 수정 대상 댓글 ID 전달
+            />
+          ) : (
+            <itemS.CommentBox>
+              <itemS.WriterBox>
+                <itemS.WriterNameBox>
+                  <itemS.WriterName>{item.createdName}</itemS.WriterName>
+                  {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
+                </itemS.WriterNameBox>
+                {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                  <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
+                    <itemS.DotButton src='/img/hamberg.svg' alt='...' />
+                    {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
+                      <itemS.UtilButtonBox>
+                        <itemS.UtilBox onClick={handleEditClick}>
+                          <itemS.UtilIcon src='/img/edit.svg' alt='수정' />
+                          <itemS.UtilText>수정하기</itemS.UtilText>
+                        </itemS.UtilBox>
+                        <itemS.Hr></itemS.Hr>
+                        <itemS.UtilBox onClick={handleDelete}>
+                          <itemS.UtilIcon src='/img/trash.svg' alt='쓰레기통' />
+                          <itemS.UtilText>삭제하기</itemS.UtilText>
+                        </itemS.UtilBox>
+                      </itemS.UtilButtonBox>
+                    )}
+                  </itemS.DotBox>
+                )}
+              </itemS.WriterBox>
+              {item.deleteYn || item.deleteByAdminYn ? (
+                <itemS.ContentBox>
+                  <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />
+                  <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.deleteYn ? '작성자에 의해 삭제된 댓글 입니다.' : '관리자에 의해 삭제된 댓글 입니다.'}</itemS.Content>
+                </itemS.ContentBox>
+              ) : (
+                <itemS.ContentBox>
+                  <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}><itemS.Mention>@{parentName} </itemS.Mention>{item.content}</itemS.Content>
+                </itemS.ContentBox>
               )}
-            </itemS.WriterBox>
-            {item.deleteYn || item.deleteByAdminYn ? (
-              <itemS.ContentBox>
-                <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />
-                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.deleteYn ? '작성자에 의해 삭제된 댓글 입니다.' : '관리자에 의해 삭제된 댓글 입니다.'}</itemS.Content>
-              </itemS.ContentBox>
-            ) : (
-              <itemS.ContentBox>
-                <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}><itemS.Mention>@{parentName} </itemS.Mention>{item.content}</itemS.Content>
-              </itemS.ContentBox>
-            )}
-            
-            <itemS.InfoBottomBox>
-              <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
-              <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
-              <itemS.CommentLike
-                src={item.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
-                alt='하뚜'
-                onClick={toggleLike}
-              />
-            </itemS.InfoBottomBox>
-          </itemS.CommentBox>
+              <itemS.InfoBottomBox>
+                <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
+                <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
+                <itemS.CommentLike
+                  src={item.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
+                  alt='하뚜'
+                  onClick={toggleLike} // 클릭 시 좋아요 토글
+                />
+              </itemS.InfoBottomBox>
+            </itemS.CommentBox>
+          )}
         </itemS.CommentContainer>
 
         {isReplyBoxVisible && (
@@ -131,6 +153,9 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
               parentId={item.replyId}
               fetchComment={fetchComment} 
               handleLoad={handleReplyClick}
+              isEditing={false} // 수정 여부 전달
+              editContent={editContent} // 수정할 초기 내용 전달
+              replyId={item.replyId} // 수정 대상 댓글 ID 전달
             />
           </itemS.WriteBox>
         )}
@@ -140,7 +165,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
             <Reply
               key={reply.replyId}
               item={reply}
-              parentName={item.createdName} // Pass the current reply's profile as parentProfile for child replies
+              parentName={item.createdName} 
               formatDate={formatDate}
               fetchComment={fetchComment}
             />

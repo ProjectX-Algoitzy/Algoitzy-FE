@@ -403,10 +403,12 @@ export default function Editor({
       const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     
       const requestData = {
+        category: grade?.value || "NOTICE", // 선택된 카테고리
         title: title.trim() || '제목 없음',
         content: content || '',
         fileUrlList: fileUrls,
         saveYn: false, // 임시저장
+        memberId: 0,
       };
     
       try {
@@ -448,10 +450,12 @@ export default function Editor({
   const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
 
   const requestData = {
-    title: "안녕하세요",//title.trim(),
-    content: "안녕하세요",
+    category: /*grade?.value ||*/ "NOTICE", // 선택된 카테고리
+    title: title.trim() || '제목 없음',
+    content: content || '',
     fileUrlList: fileUrls,
-    saveYn: true,
+    saveYn: false, // 임시저장
+    memberId: 0,
   };
 
   console.log('요청 데이터:', requestData);

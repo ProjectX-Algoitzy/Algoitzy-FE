@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as itemS from "../Mypage/Styled/Mypage.mypage.indivisual.styles";
+import * as itemS from "./Styled/Mypage.mypage.studylist.styles";
 
-export default function MyPageIndividual({ studyList }){
+export default function StudyList({ studyList }){
 
 	const navigate = useNavigate();
 	

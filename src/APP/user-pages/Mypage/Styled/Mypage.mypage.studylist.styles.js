@@ -9,7 +9,6 @@ export const InnerContainer = styled.div`
   width: 11.85rem;
   height: 15rem;
   background-color: ${tokens.colors.White};
-  // border: 1px solid ${tokens.colors.Grey_4};
   border-radius: 0.33rem;
   margin: 0 0.42rem 0.83rem 0.42rem;
 	box-shadow: rgba(58, 107, 135, 0.08) 0 0.17rem 0.42rem 0.17rem;

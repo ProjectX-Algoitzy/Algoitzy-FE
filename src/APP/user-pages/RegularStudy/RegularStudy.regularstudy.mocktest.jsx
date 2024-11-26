@@ -9,7 +9,7 @@ export default function RegularStudyMocktest() {
   const [week, setWeek] = useState(1);
   const [weekData, setWeekData] = useState({});
   const [workbookId, setWorkbookId] = useState(null);
-  const [errorMesssage, setErrorMesssage] = useState("준비중입니다");
+  const [errorMesssage, setErrorMesssage] = useState("준비 중입니다.");
 
   const WeeksSelect = ({ value, onChange }) => {
     const CustomDropdownIndicator = props => {

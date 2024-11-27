@@ -31,24 +31,22 @@ export default function MyInfo({ item, boardCount, onSelectTab, isMemberMatch })
         </itemS.NameBox>
       </itemS.ProfileBox>
       <itemS.TabBtnContainer>
+        <itemS.TabBox>
+          <itemS.Tab 
+            onClick={() => handleTabClick("study")} 
+            active={activeTab === "study"}
+          >
+            스터디 현황
+          </itemS.Tab>
+          <itemS.Tab 
+            onClick={() => handleTabClick("posts")} 
+            active={activeTab === "posts"}
+          >
+            작성한 글 {boardCount}
+          </itemS.Tab>
+        </itemS.TabBox>
         {isMemberMatch && 
-        <>
-          <itemS.TabBox>
-            <itemS.Tab 
-              onClick={() => handleTabClick("study")} 
-              active={activeTab === "study"}
-            >
-              스터디 현황
-            </itemS.Tab>
-            <itemS.Tab 
-              onClick={() => handleTabClick("posts")} 
-              active={activeTab === "posts"}
-            >
-              내가 쓴 글 {boardCount}
-            </itemS.Tab>
-          </itemS.TabBox>
           <itemS.EditButton onClick={handleMyInfo}>내 정보 수정</itemS.EditButton>
-        </>
         }
         
         

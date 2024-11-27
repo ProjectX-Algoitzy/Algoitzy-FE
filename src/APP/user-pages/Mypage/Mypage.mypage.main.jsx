@@ -6,8 +6,6 @@ import AppliedStudyList from './Mypage.mypage.appliedstudylist';
 import MyBoardTable from './Mypage.mypage.myboard.table';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from '../../Api/request';
-import { dummyData } from './dummy';
-
 
 export default function MyPage() {
   const { handle } = useParams();
@@ -86,10 +84,6 @@ export default function MyPage() {
     fetchBoard();
   }, []);
 
-  // useEffect(() => {
-	// 	fetchBoard();
-	// },[ selectedTab, sortType, currentPage, searchKeyword]);
-
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
   const indexOfLastPassItem = currentPagePassStudy * itemsPerPage;
   const indexOfFirstPassItem = indexOfLastPassItem - itemsPerPage;
@@ -158,7 +152,6 @@ export default function MyPage() {
         ) : (
           <MyBoardTable 
             items={boards}
-            // items={dummyData}
             boardCount={boardCount}
             tempCount={tempCount}
           />

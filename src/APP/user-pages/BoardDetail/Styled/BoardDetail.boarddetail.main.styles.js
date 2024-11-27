@@ -120,6 +120,7 @@ export const Profile = styled.img`
   border-radius: 20px;
   border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
   margin-right: 12px;
+  cursor: pointer;
 `;
 
 export const InfoBox = styled.div`
@@ -134,6 +135,7 @@ export const WriterName = styled.div`
   font-weight: bold;
   color: ${tokens.colors.Blue_0_Main};
   margin-bottom: 1.5px;
+  cursor: pointer;
 `;
 
 export const InfoBottomBox = styled.div`

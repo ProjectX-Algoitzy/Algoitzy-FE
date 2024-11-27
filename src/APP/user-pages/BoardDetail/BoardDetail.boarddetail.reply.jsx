@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/BoardDetail.boarddetail.reply.styles";
 import WriteBox from './WriteBox';
 import request from '../../Api/request';
@@ -7,6 +8,7 @@ import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 export default function Reply({ item, parentName, formatDate, fetchComment }) {
   const { confirm } = useContext(ConfirmContext);
   const modalRef = useRef(null); 
+  const navigate = useNavigate();
 
 	const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
   const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
@@ -83,11 +85,16 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
     };
   }, []);
 
+  // 계정 링크 이동
+	const handlePage = (handle) => {
+    navigate(`/mypage/${handle}`);
+  };
+
 	return (
     <itemS.Container>
       <itemS.WriteContainer>
         <itemS.CommentContainer>
-          <itemS.CommentProfile src={item.profileUrl} alt='프로필' />
+          <itemS.CommentProfile onClick={() => handlePage(item.handle)} src={item.profileUrl} alt='프로필' />
           {isEditing ? (
             <WriteBox
               parentId={item.replyId}
@@ -101,7 +108,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
             <itemS.CommentBox>
               <itemS.WriterBox>
                 <itemS.WriterNameBox>
-                  <itemS.WriterName>{item.createdName}</itemS.WriterName>
+                  <itemS.WriterName onClick={() => handlePage(item.handle)}>{item.createdName}</itemS.WriterName>
                   {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
                 </itemS.WriterNameBox>
                 {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링

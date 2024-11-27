@@ -7,6 +7,7 @@ import Comment from './BoardDetail.boarddetail.comment';
 import WriteBox from './WriteBox';
 
 export default function BoardDetail() {
+	const navigate = useNavigate();
 	const { id } = useParams();  // 게시글 ID 가져오기
 	const memberId = +localStorage.getItem('memberId');
 	const profileUrl = localStorage.getItem('profileUrl');
@@ -103,8 +104,12 @@ export default function BoardDetail() {
       console.error("Error liking the reply:", error);
     }
   };
-	
 
+	// 계정 링크 이동
+	const handlePage = (handle) => {
+    navigate(`/mypage/${handle}`);
+  };
+	
 	return (
 		<itemS.OuterContainer>
 			<itemS.Container>
@@ -127,9 +132,9 @@ export default function BoardDetail() {
 						</itemS.ButtonBox>
 					</itemS.TitleContainer>
 					<itemS.WriterInfoContainer>
-						<itemS.Profile src={board.profileUrl} alt='프로필'/>
+						<itemS.Profile onClick={() => handlePage(board.handle)} src={board.profileUrl} alt='프로필'/>
 						<itemS.InfoBox>
-							<itemS.WriterName>{board.createdName}</itemS.WriterName>
+							<itemS.WriterName onClick={() => handlePage(board.handle)}>{board.createdName}</itemS.WriterName>
 							<itemS.InfoBottomBox>
 								<itemS.CreatedTime>{formatDate(board.createdTime)}</itemS.CreatedTime>
 								<itemS.ViewCnt>조회수 {board.viewCount}</itemS.ViewCnt>

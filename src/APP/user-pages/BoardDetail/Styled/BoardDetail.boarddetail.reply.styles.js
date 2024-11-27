@@ -35,6 +35,7 @@ export const CommentProfile = styled.img`
   border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
   border-radius: 20px;
   margin-right: 17px;
+  cursor: pointer;
 `;
 
 export const CommentBox = styled.div`
@@ -82,6 +83,7 @@ export const WriterName = styled.div`
   font-weight: semibold;
   color: ${tokens.colors.Black};
   margin: 0 10px 0 0;
+  cursor: pointer;
 `;
 
 export const DotBox = styled.div`

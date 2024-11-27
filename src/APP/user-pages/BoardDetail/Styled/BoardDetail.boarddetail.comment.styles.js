@@ -32,6 +32,7 @@ export const CommentProfile = styled.img`
   border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
   border-radius: 32px;
   margin-right: 32px;
+  cursor: pointer;
 `;
 
 export const CommentBox = styled.div`
@@ -57,6 +58,7 @@ export const WriterNameBox = styled.div`
   // min-height: 2.333rem;
   // margin-left: 3.417rem;
   margin-bottom: 12px;
+  cursor: pointer;
 `;
 
 export const WriterIcon = styled.div`

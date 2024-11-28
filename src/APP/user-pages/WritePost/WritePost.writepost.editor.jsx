@@ -15,7 +15,7 @@ const gradeOptions = [
   // {value: "공지사항", label:"공지사항"},
   {value: "자유", label:"자유"},
   {value: "질문", label:"질문"},
-  {value: "정보 공유", label:"정보"},
+  {value: "정보", label:"정보"},
   {value: "홍보", label:"홍보"},
 ]
 

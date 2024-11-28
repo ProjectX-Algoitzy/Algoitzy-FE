@@ -15,7 +15,7 @@ const gradeOptions = [
   // {value: "공지사항", label:"공지사항"},
   {value: "자유", label:"자유"},
   {value: "질문", label:"질문"},
-  {value: "정보 공유", label:"정보 공유"},
+  {value: "정보 공유", label:"정보"},
   {value: "홍보", label:"홍보"},
 ]
 
@@ -41,6 +41,7 @@ export default function Editor({
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [isGradeSelected, setisGradeSelected] = useState(false); 
+  const [categoryCode, setCategoryCode] = useState(null);
   const [grade, setGrade] = useState(gradeOptions[0]);
   const [saveYn, setSaveYn] = useState(true); // 임시 저장 여부 (default: true)
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
@@ -49,13 +50,32 @@ export default function Editor({
   const [drafts, setDrafts] = useState([]); // 임시저장 게시글 목록
 
 
-  // 학년 선택 change event
   const handleGradeChange = (selectedOption) => {
-    const { value } = selectedOption;
-    setGrade(value);
-    // setGradeColor('#555555');
-    setisGradeSelected(true);
-  }
+    // 카테고리 목록 요청
+    request.get('/board/category')
+      .then((response) => {
+        if (response.isSuccess) {
+          const categoryList = response.result.categoryList;
+  
+          // 선택된 옵션과 일치하는 카테고리 찾기
+          const matchedCategory = categoryList.find(
+            (category) => category.name === selectedOption.label
+          );
+  
+          if (matchedCategory) {
+            setCategoryCode(matchedCategory.code); // 카테고리 코드 저장
+            setGrade(selectedOption); // 선택한 옵션 설정
+          } else {
+            alert('선택한 카테고리가 목록에 없습니다.');
+          }
+        } else {
+          alert(`카테고리 목록 조회 실패: ${response.message}`);
+        }
+      })
+      .catch((error) => {
+        console.error('카테고리 목록 조회 중 오류:', error);
+      });
+  };  
 
   const resizeTextarea = (e) => {
     e.target.style.height = 'auto'; // 높이 초기화
@@ -405,7 +425,7 @@ export default function Editor({
       const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     
       const requestData = {
-        category: grade?.value || "FREE", // 선택된 카테고리
+        category: categoryCode, // 선택된 카테고리
         title: title.trim() || '제목 없음',
         content: content || '',
         fileUrlList: fileUrls,
@@ -496,15 +516,19 @@ const fetchDraftDetails = async (boardId) => {
     alert('제목과 내용을 입력하세요.');
     return;
   }
+  if (!categoryCode) {
+    alert('카테고리를 선택하세요.');
+    return;
+  }
 
   const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
 
   const requestData = {
-    category: /*grade?.value ||*/ "NOTICE", // 선택된 카테고리
+    category: categoryCode,
     title: title.trim() || '제목 없음',
     content: content || '',
     fileUrlList: fileUrls,
-    saveYn: true, // 임시저장
+    saveYn: true,
     memberId: 0,
   };
 

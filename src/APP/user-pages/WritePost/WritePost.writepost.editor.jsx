@@ -403,7 +403,7 @@ export default function Editor({
       const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     
       const requestData = {
-        category: grade?.value || "NOTICE", // 선택된 카테고리
+        category: grade?.value || "FREE", // 선택된 카테고리
         title: title.trim() || '제목 없음',
         content: content || '',
         fileUrlList: fileUrls,

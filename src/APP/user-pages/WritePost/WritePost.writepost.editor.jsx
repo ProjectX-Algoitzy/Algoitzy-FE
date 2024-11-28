@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EditorState, EditorSelection } from '@codemirror/state';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
@@ -8,6 +8,7 @@ import * as Styled from './Styled/WritePost.writepost.editor.styles';
 import request from '../../Api/request';
 import DraftModal from './WritePost.writepost.draft';
 import FileTable from './WritePost.writepost.filetable';
+import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
 
 const gradeOptions = [
@@ -32,6 +33,7 @@ export default function Editor({
   const imageInputRef = useRef(null); // 이미지 파일 입력창을 제어할 useRef
   const fileInputRef = useRef(null); // 일반 파일 입력창을 제어할 useRef
   const modalRef = useRef(null);
+  const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const [editorView, setEditorView] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -425,18 +427,66 @@ export default function Editor({
         alert('임시저장 중 오류가 발생했습니다.');
       }
     };
+
+    // 임시저장 글 상세 데이터를 가져오는 함수
+const fetchDraftDetails = async (boardId) => {
+  try {
+    const response = await request.get(`board/draft/${boardId}`);
+    if (response.isSuccess) {
+      const draft = response.result;
+
+      // 제목과 내용을 업데이트
+      setTitle(draft.title);
+      setMarkdownContent(draft.content);
+
+      // 에디터 내용 업데이트
+      editorView.dispatch({
+        changes: {
+          from: 0,
+          to: editorView.state.doc.length, // 기존 내용 삭제
+          insert: draft.content, // 새로운 내용 삽입
+        },
+      });
+
+      // 파일 리스트 업데이트
+      const uploadedFilesFromDraft = draft.boardFileList.map((file) => ({
+        originalName: file.originalName,
+        fileUrl: file.fileUrl,
+      }));
+      setUploadedFiles(uploadedFilesFromDraft);
+
+      // 카테고리 업데이트
+      setGrade({ value: draft.category, label: draft.category });
+
+      console.log('임시저장 글 불러오기 성공:', draft);
+    } else {
+      console.error('임시저장 글 불러오기 실패:', response.message);
+    }
+  } catch (error) {
+    console.error('임시저장 글 불러오기 오류:', error);
+  }
+};
   
     // 임시저장 글 선택
-    const handleSelectDraft = (draft) => {
-      setTitle(draft.title);
-      setMarkdownContent(draft.content); // 불러온 내용으로 에디터 업데이트
-      toggleDraftModal();
+    const handleSelectDraft = async (draft) => {
+      try {
+        const confirmed = await confirm(
+          '저장하지 않은 내용은 사라집니다. 계속하시겠습니까?'
+        );
+  
+        if (confirmed) {
+          fetchDraftDetails(draft.boardId); // 선택된 글 불러오기
+        }
+      } catch {
+        console.log('사용자가 취소했습니다.');
+      }
     };
   
     // 컴포넌트 마운트 시 임시저장 목록 가져오기
     useEffect(() => {
       fetchDrafts();
     }, []);
+
 
  // 게시글 등록 API 호출 함수
  const handlePostSubmit = async () => {
@@ -454,7 +504,7 @@ export default function Editor({
     title: title.trim() || '제목 없음',
     content: content || '',
     fileUrlList: fileUrls,
-    saveYn: false, // 임시저장
+    saveYn: true, // 임시저장
     memberId: 0,
   };
 
@@ -594,7 +644,6 @@ export default function Editor({
         drafts={drafts}
         onSelectDraft={handleSelectDraft}
       />
-
     </Styled.LeftContainer>
   );
 }

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Langding from "./APP/user-pages/Langding/Langding.landing";
 import Login from "./APP/user-pages/Auth/Auth.login";
 import Signup from "./APP/user-pages/SignUp/SignUp.signup";
@@ -25,6 +25,7 @@ import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDet
 import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
 import Community from "./APP/user-pages/Community/Community.community.main";
+import WritePost from "./APP/user-pages/WritePost/WritePost.writepost.main";
 import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
@@ -44,7 +45,6 @@ import { setLoadingFunctions } from "./APP/Api/request";
 //   left: 0;
 //   width: 100%;
 // `;
-
 
 const Root = styled.div`
   position: absolute;
@@ -76,14 +76,15 @@ function App() {
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
 
+  const location = useLocation(); // 현재 경로 확인
+  const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
+
   return (
-    
 
     <Root>
     <GlobalStyle />
-      <BrowserRouter>
         <ScrollToTop />
-          <Header />
+        {!hideHeader && <Header />}
           <ContentWrapper>
           <Routes>
             <Route path="/" element={<Langding />} />
@@ -110,12 +111,12 @@ function App() {
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
             <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
+            <Route path="/writepost" element={<WritePost />} /> {/* 새 글쓰기 */}
             <Route path="/community" element={isLoggedIn() ? <Community /> : <Navigate to="/" />} />
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/login" />} /> {/* 커뮤니티 글 세부 */}
           </Routes>
           </ContentWrapper>
-          <Footer />
-      </BrowserRouter>
+          {!hideHeader && <Footer />}
     </Root>
     
   );

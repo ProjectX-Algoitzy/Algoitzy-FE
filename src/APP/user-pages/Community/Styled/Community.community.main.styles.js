@@ -225,7 +225,7 @@ export const WriteBtn = styled.button`
   width: 190px;
   height: 47px;
   border: none;
-  border-radius: 0.167rem;
+  cursor: pointer;
 `;
 
 export const Pagination = styled.div`

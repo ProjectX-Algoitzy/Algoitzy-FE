@@ -25,8 +25,8 @@ import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDet
 import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
 import Community from "./APP/user-pages/Community/Community.community.main";
-import PostDetail from "./APP/user-pages/PostDetail/PostDetail.postdetail.main";
 import WritePost from "./APP/user-pages/WritePost/WritePost.writepost.main";
+import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -109,11 +109,11 @@ function App() {
             <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
             <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
-            <Route path="/mypage" element={<MyPage />} /> {/* 마이페이지 */}
+            <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
-            <Route path="/community" element={<Community />} /> {/* 커뮤니티 */}
-            <Route path="/postdetail" element={<PostDetail />} /> {/* 커뮤니티 글 세부 */} {/* ANCHOR - id로 설정하기 */}
             <Route path="/writepost" element={<WritePost />} /> {/* 새 글쓰기 */}
+            <Route path="/community" element={isLoggedIn() ? <Community /> : <Navigate to="/" />} />
+            <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/login" />} /> {/* 커뮤니티 글 세부 */}
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}

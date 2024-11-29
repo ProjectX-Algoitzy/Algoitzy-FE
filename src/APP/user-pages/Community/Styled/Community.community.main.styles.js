@@ -87,6 +87,10 @@ export const Search = styled.input`
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    color: ${tokens.colors.B_Grey_4};
+  }
 `;
 
 export const SearchIcon = styled.img`
@@ -221,7 +225,6 @@ export const WriteBtn = styled.button`
   width: 190px;
   height: 47px;
   border: none;
-  border-radius: 0.167rem;
   cursor: pointer;
 `;
 

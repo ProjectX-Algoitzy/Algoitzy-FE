@@ -387,7 +387,7 @@ export default function EditMyInfo() {
         console.log("개인정보 수정 성공!");
         const result = await alert('수정 완료되었습니다.');
         if (result) {
-          window.location.replace('/mypage');
+          window.location.replace(`/mypage/${localStorage.getItem('handle')}`);
         }
       } else {
         console.error("개인정보 수정 실패:", response.data);

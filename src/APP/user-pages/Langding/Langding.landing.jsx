@@ -51,6 +51,8 @@ export default function Langding() {
         if(response["isSuccess"]) {
           setIsLoggedIn(true);
           localStorage.setItem('memberId', response.result.memberId);
+          localStorage.setItem('profileUrl', response.result.profileUrl);
+          localStorage.setItem('handle', response.result.handle);
 
         }
       } catch (error) {

@@ -3,41 +3,63 @@ import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Community.community.tuple.styles";
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function CommunityTuple({ item, isTabClick, isSelected, onOpen, onClose }) {
-  const { alert } = useContext(AlertContext);  
-  
-  const [isAbled, setIsAbled] = useState(true); 
+export default function CommunityTuple({ item, isTabClick, searchKeyword }) {
+  const navigate = useNavigate();
+  const { alert } = useContext(AlertContext);
+  const [isAbled, setIsAbled] = useState(true);
 
-	// 스터디 제목 글자수 자르기
-	const truncateTitle = (title) => {
-		if (title.length > 12) {
-			return title.slice(0, 11) + '...';
-		}
-		return title;
-	}
-
-	const renderTupleTitle = (title) => {
-    if (title.length > 36) {
-      return <itemS.TupleTitle>{title.slice(0, 35) + '...'}</itemS.TupleTitle>;
-    } else {
-      return <itemS.TupleTitle>{title}</itemS.TupleTitle>;
-    }
+  const formatDate = (createdTime) => {
+    const date = new Date(createdTime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}.${month}.${day}`;
   };
 
-	return (
-		<itemS.TupleContainer fix={item.fix}>
-			<itemS.TupleType onClick={onOpen}>{isTabClick ? item.postId : item.type}</itemS.TupleType>
-			<itemS.TupleTitleBox onClick={onOpen}>
-				{/* <itemS.TupleTitle>{item.title}</itemS.TupleTitle> */}
-				{renderTupleTitle(item.title)}
-				{item.new && (
-					<itemS.NewIcon>NEW</itemS.NewIcon>	
-				)}
-			</itemS.TupleTitleBox>
-			<itemS.TupleWriter onClick={onOpen}>{item.writer}</itemS.TupleWriter>
-			<itemS.TupleDate onClick={onOpen}>{item.date}</itemS.TupleDate>
-			<itemS.TupleView onClick={onOpen}>{item.view}</itemS.TupleView>
-				
-		</itemS.TupleContainer>
-	);
+  const renderHighlight = (text) => {
+    if (!searchKeyword) return text;
+
+    const parts = text.split(new RegExp(`(${searchKeyword})`, 'gi'));
+    return parts.map((part, index) =>
+      part.toLowerCase() === searchKeyword.toLowerCase() ? (
+        <itemS.HighlightedText key={index}>{part}</itemS.HighlightedText>
+      ) : (
+        <itemS.TupleTitle key={index}>{part}</itemS.TupleTitle>
+      )
+    );
+  };
+
+  const renderTupleTitle = (title) => {
+    const maxLength = 36;
+
+    if (!title) {
+      // title이 null, undefined, 또는 빈 문자열일 경우 처리
+      return <itemS.TupleTitle>제목 없음</itemS.TupleTitle>;
+    }
+
+    const truncatedTitle = title.length > maxLength ? title.slice(0, maxLength - 1) + '...' : title;
+
+    return (
+      <itemS.TupleTitle>
+        {renderHighlight(truncatedTitle)}
+      </itemS.TupleTitle>
+    );
+  };
+
+  const moveToDetail = (id) => {
+    navigate(`/board/${id}`);
+  };
+
+  return (
+    <itemS.TupleContainer fixyn={item.fixYn} onClick={() => moveToDetail(item.boardId)}>
+      <itemS.TupleType>{isTabClick ? item.boardId : item.category}</itemS.TupleType>
+      <itemS.TupleTitleBox>
+        {renderTupleTitle(item.title)}
+        {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
+      </itemS.TupleTitleBox>
+      <itemS.TupleWriter>{renderHighlight(item.createdName)}</itemS.TupleWriter>
+      <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
+      <itemS.TupleView>{item.viewCount}</itemS.TupleView>
+    </itemS.TupleContainer>
+  );
 }

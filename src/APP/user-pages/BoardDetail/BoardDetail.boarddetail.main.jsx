@@ -105,6 +105,23 @@ export default function BoardDetail() {
     }
   };
 
+	// 게시글 삭제
+	const handleDelete = async () => {
+
+    try {
+      const response = await request.delete(`/board/${id}`);
+      if (response.isSuccess) {
+        console.log("게시글 삭제 성공:", response);
+				navigate('/community');
+      } else {
+        console.error("게시글 삭제 실패:", response);
+      }
+    } catch (error) {
+      console.error("게시글 삭제 에러:", error);
+      
+    }
+  };
+
 	// 계정 링크 이동
 	const handlePage = (handle) => {
     navigate(`/mypage/${handle}`);
@@ -126,7 +143,7 @@ export default function BoardDetail() {
 							{board.createMemberId === memberId && (
 								<>
 									<itemS.EditBtn>수정</itemS.EditBtn>
-									<itemS.DeleteBtn>삭제</itemS.DeleteBtn>
+									<itemS.DeleteBtn onClick={handleDelete}>삭제</itemS.DeleteBtn>
 								</>
 							)}
 						</itemS.ButtonBox>

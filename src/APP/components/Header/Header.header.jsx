@@ -111,9 +111,9 @@ export default function Header() {
                 </itemS.SubMenuContaier>
               )}
             </itemS.StyledLink>
-            {/* <itemS.StyledLink>
+            <itemS.StyledLink>
               <itemS.PageLink>커뮤니티</itemS.PageLink>
-            </itemS.StyledLink> */}
+            </itemS.StyledLink>
             <itemS.StyledLink onClick={() => handleMenuClick('coding')}>
               <itemS.PageLink>코딩테스트 분석</itemS.PageLink>
               {activeMenu === 'coding' && (

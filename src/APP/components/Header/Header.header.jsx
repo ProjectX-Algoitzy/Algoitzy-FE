@@ -85,6 +85,7 @@ export default function Header() {
 
   return (
     <itemS.HeaderContainer activeMenu={activeMenu}>
+      <itemS.InnerContainer>
         <itemS.HeaderWrap>
           <itemS.HeaderLeftWrap>
             <itemS.StyledLink to="/" style={{ textDecoration: 'none' }}>
@@ -147,6 +148,7 @@ export default function Header() {
             )}
           </itemS.HeaderRightWrap>
         </itemS.HeaderWrap>
-      </itemS.HeaderContainer>
+      </itemS.InnerContainer>
+    </itemS.HeaderContainer>
   );
 }

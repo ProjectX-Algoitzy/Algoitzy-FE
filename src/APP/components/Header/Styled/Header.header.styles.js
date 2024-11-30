@@ -13,18 +13,24 @@ export const HeaderContainer = styled.div`
   height: ${({ activeMenu }) => ['study', 'coding'].includes(activeMenu) ? '10rem' : 'auto'};
 `;
 
+export const InnerContainer = styled.div`
+  width: 100%;
+  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
+`;
+
 // HeaderWrap부분이 admin이랑 약간 다른 듯
 export const HeaderWrap = styled.div`  
+  width: 50rem; //1199px -> 50rem;
   height: 3.33rem;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
-  padding: 0 5rem;
   @media (max-width: 600px) {
-      padding: 0 0.33rem;
+    /* padding: 0 0.33rem; */
+    width: 0;
+    justify-content: center;
   }
 `;
 
@@ -35,7 +41,7 @@ export const StyledLink = styled(Link)`
 export const HeaderLeftWrap = styled.div`
   display: flex;
   @media (max-width: 600px) {
-      margin: 0;
+    margin: 0;
   }
 `;
 
@@ -44,7 +50,7 @@ export const Rabel = styled.img`
   width: 7.46rem;
   height: 1.67rem;
   @media (max-width: 600px) {
-      margin: 0.5rem;
+    margin: 0.5rem;
   }
 `;
 
@@ -63,7 +69,7 @@ export const PageLink = styled.div`
   margin: 0 0.25rem;
   ${tokens.typography.T5_SB_16};
   @media (max-width: 600px) {
-      margin: 0;
+    margin: 0;
   }
 `;
 
@@ -74,7 +80,6 @@ export const ProfileBox = styled.div`
   flex-direction: row;
   height: 0.88rem;
   margin-left: 2.08rem;
-  margin-right: 2.08rem;
   @media (max-width: 600px) {
      margin-left: 1rem;
      margin-right: 0;

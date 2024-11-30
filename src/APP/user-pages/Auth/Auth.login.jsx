@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useContext  } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as itemS from "../../user-pages/Auth/Styled/Auth.login.styles"
-import request, { ACCESS_TOKEN } from '../../Api/request';
+import { ACCESS_TOKEN } from '../../Api/request';
 import axios from 'axios';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
-import { LoginStateContext } from '../../Common/LoginState/LoginStateContext';
 
 export default function Login() {
 
   const navigate = useNavigate();
 
-  //const { isLogin, setIsLogin } = useContext(LoginStateContext);
-
-  const { confirm } = useContext(ConfirmContext);
+  // const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
   const [isAlertOpen, setIsAlertOpen] = useState(false);  // Alert 창 열림 여부
 

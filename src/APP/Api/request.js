@@ -3,6 +3,16 @@ import { getAlertFunction } from '../Common/Alert/alertSingleton';
 
 export const ACCESS_TOKEN = 'accessToken';
 
+const excludedPathPatterns = [
+  // /^\/board(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
+  // /^\/institution(?:\?.*)?$/, // 검색 쿼리 있는 기관 조회 api 경로 
+  // /^\/problem(?:\?.*)?$/, // 검색 쿼리 있는 문제집 조회 api 경로 
+  // /^\/member\/user(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
+  /^\/reply\/\d+\/like$/, // 댓글 좋아요 api 경로
+  /^\/board\/\d+\/reply(?:\?.*page=\d+&size=\d+)?$/, // 게시글 댓글 조회 api 경로
+  /^\/reply\?boardId=\d+(&parentId=\d+)?(&content=.*)?$/ // 댓글 달기
+];
+
 // Authorization에 토큰 자동으로 설정
 const request = axios.create({
   baseURL: process.env.REACT_APP_API_URL,  // 환경 변수를 사용하여 API 주소 설정 'https://user-dev.kau-koala.com',
@@ -23,7 +33,12 @@ export const setLoadingFunctions = (show, hide) => {
 // 요청 인터셉터
 request.interceptors.request.use(
   (config) => {
-    loadingFunctions.showLoading(); // 요청 시작 시 로딩 상태 표시
+    const isExcludedPath = excludedPathPatterns.some((pattern) => pattern.test(config.url));
+
+    // 요청 시작 시 로딩 상태 표시
+    if (!isExcludedPath) {
+      loadingFunctions.showLoading();
+    }
     return config;
   },
   (error) => {
@@ -35,7 +50,12 @@ request.interceptors.request.use(
 // 응답 인터셉터
 request.interceptors.response.use(
   (response) => {
-    loadingFunctions.hideLoading(); // 응답이 오면 로딩 상태 숨김
+    const isExcludedPath = excludedPathPatterns.some((pattern) => pattern.test(response.config.url));
+
+    // 응답이 오면 로딩 상태 숨김
+    if (!isExcludedPath) {
+      loadingFunctions.hideLoading();
+    }
     return response.data;
   },
   async (error) => {

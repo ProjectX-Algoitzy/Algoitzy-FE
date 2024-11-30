@@ -72,6 +72,12 @@ export default function BoardDetail() {
 		fetchComment();
 	}, [currentPage]);
 
+	const handleEdit = () => {
+		navigate(`/writepost`, {
+			state: { boardId: id }, 
+		});
+	  };	
+
 	const handlePageChange = (newPage) => {
 		if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
@@ -142,7 +148,7 @@ export default function BoardDetail() {
 						<itemS.ButtonBox>
 							{board.createMemberId === memberId && (
 								<>
-									<itemS.EditBtn>수정</itemS.EditBtn>
+									<itemS.EditBtn onClick={handleEdit}>수정</itemS.EditBtn>
 									<itemS.DeleteBtn onClick={handleDelete}>삭제</itemS.DeleteBtn>
 								</>
 							)}

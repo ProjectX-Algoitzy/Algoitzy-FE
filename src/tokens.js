@@ -168,6 +168,11 @@ export const typography = {
         fontSize: "0.5rem",
         lineHeight: "0.625rem",
       },
+      Sub_B_16: {
+        fontWeight: "700",
+        fontSize: "0.667rem",
+        lineHeight: "0.875rem",
+      },
     }
 /* 예시 사용법
 export const Title_4 = styled.div`

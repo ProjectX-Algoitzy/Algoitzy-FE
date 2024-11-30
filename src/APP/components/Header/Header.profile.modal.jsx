@@ -22,7 +22,7 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal
   };
 
   const handleMyPage = () => {
-    navigate('/mypage');
+    navigate(`/mypage/${localStorage.getItem('handle')}`);
     setShowProfileModal(false);
   };
 

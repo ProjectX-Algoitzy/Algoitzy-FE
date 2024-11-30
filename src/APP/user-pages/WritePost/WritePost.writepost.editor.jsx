@@ -523,6 +523,7 @@ export default function Editor({
       const fileUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     
       const requestData = {
+        category: categoryCode,
         title: title.trim() || '제목 없음',
         content: content || '',
         fileUrlList: fileUrls,
@@ -540,7 +541,6 @@ export default function Editor({
         }
       } catch (error) {
         console.error('임시저장 중 오류 발생:', error);
-        alert('임시저장 중 오류가 발생했습니다.');
       }
     };
 

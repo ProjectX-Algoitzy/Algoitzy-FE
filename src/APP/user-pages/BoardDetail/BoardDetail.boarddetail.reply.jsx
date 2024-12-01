@@ -111,7 +111,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
                   <itemS.WriterName onClick={() => handlePage(item.handle)}>{item.createdName}</itemS.WriterName>
                   {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
                 </itemS.WriterNameBox>
-                {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                {item.myReplyYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
                   <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                     <itemS.DotButton src='/img/hamberg.svg' alt='...' />
                     {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시

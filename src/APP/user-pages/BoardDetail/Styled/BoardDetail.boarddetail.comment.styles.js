@@ -6,10 +6,9 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  // width: 50rem;
-  padding-bottom: 18px;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid ${tokens.colors.B_Grey_3};
-  margin-top: 18px;
+  margin-top: 0.75rem;
 `;
 
 export const WriteContainer = styled.div`
@@ -27,11 +26,11 @@ export const CommentContainer = styled.div`
 `;
 
 export const CommentProfile = styled.img`
-  width: 64px;
-  height: 64px;
-  border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
-  border-radius: 32px;
-  margin-right: 32px;
+  width: 2.666rem;
+  height: 2.666rem;
+  border: 0.04rem solid ${tokens.colors.B_Grey_2};
+  border-radius: 1.333rem;
+  margin-right: 1.333rem;
   cursor: pointer;
 `;
 
@@ -47,17 +46,14 @@ export const WriterBox = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row;
-  width: 1015px;
+  width: 42.291rem;
 `;
 
 export const WriterNameBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  // width: 26.667rem;
-  // min-height: 2.333rem;
-  // margin-left: 3.417rem;
-  margin-bottom: 12px;
+  margin-bottom: 0.5rem;
   cursor: pointer;
 `;
 
@@ -69,32 +65,31 @@ export const WriterIcon = styled.div`
    background-color: rgba(251, 170, 132, 0.2);
    color: ${tokens.colors.Sub_3};
    width: 2.17rem;
-   height: 21px;
+   height: 0.875rem;
    border: none;
    border-radius: 0.17rem;
-  //  margin-left: 0.17rem;
 `;
 
 export const WriterName = styled.div`
   ${tokens.typography.B2_M_16};
-  font-size: 15px;
+  font-size: 0.625rem;
   font-weight: semibold;
   color: ${tokens.colors.Black};
-  margin: 0 16px 0 0;
+  margin: 0 0.666rem 0 0;
 `;
 
 export const DotBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 35px;
+  width: 1.875rem;
   position: relative;
   cursor: pointer;
 `;
 
 export const DotButton = styled.img`
-  width: 3px;
-  height: 15px;
+  width: 0.125rem;
+  height: 0.625rem;
 `;
 
 export const UtilButtonBox = styled.div`
@@ -102,10 +97,10 @@ export const UtilButtonBox = styled.div`
   flex-direction: column;
   background-color: ${tokens.colors.White};
   position: absolute;
-  left: 10px;
-  top: 27px;
-  border-radius: 4px;
-  box-shadow: 2px 2px 10px 5px rgba(58, 107, 135, 0.08);
+  left: 0.416rem;
+  top: 1.125rem;
+  border-radius: 0.166rem;
+  box-shadow: 0.083rem 0.083rem 0.416rem 0.208rem rgba(58, 107, 135, 0.08);
   cursor: pointer;
 `;
 
@@ -119,15 +114,15 @@ export const UtilBox = styled.div`
 `;
 
 export const Hr = styled.div`
-  width: 142px;
+  width: 5.917rem;
   height: 0.2px;
   background-color: #E9EEF6;
 `;
 
 export const UtilIcon = styled.img`
-  width: 17px;
-  height: 17px;
-  margin-right: 6px;
+  width: 0.708rem;
+  height: 0.708rem;
+  margin-right: 0.25rem;
 `;
 
 export const UtilText = styled.div`
@@ -139,8 +134,8 @@ export const ContentBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 1015px;
-  margin-bottom: 12px;
+  width: 42.29rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const DeletedIcon = styled.img`
@@ -159,25 +154,25 @@ export const InfoBottomBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
-  width: 1015px;
+  width: 42.29rem;
 `;
 
 export const CreatedTime = styled.div`
   ${tokens.typography.B2_M_16};
   color: #888888;
-  margin-right: 12px;
+  margin-right: 0.5rem;
 `;
 
 export const Reply = styled.div`
   ${tokens.typography.B2_M_16};
   color: #888888;
-  margin-right: 12px;
+  margin-right: 0.5rem;
   cursor: pointer;
 `;
 
 export const CommentLike = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 0.833rem;
+  height: 0.833rem;
   margin-right: 0.5rem;
   cursor: pointer;
 `;
@@ -187,9 +182,9 @@ export const WriteBox = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 13px;
+  margin-top: 0.5rem;
 `;
 
 export const Blank = styled.div`
-  width: 96px;
+  width: 4rem;
 `;

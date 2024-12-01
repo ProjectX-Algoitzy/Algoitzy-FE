@@ -1,37 +1,29 @@
-import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
+import styled from 'styled-components'; 
+import * as tokens from "../../../../tokens";
 
 export const OuterContainer = styled.div`
-  // background: linear-gradient(to bottom, #EFF1FD, #E8F7FF);
-  // position: relative;
   width: 100%;
 `;
 
 export const Container = styled.div`
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 `;
 
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   background-color: ${tokens.colors.White};
   border-radius: 0.25rem;
   padding: 1.4rem 15rem 4rem 15rem;
   margin-top: 5.583rem;
-  // margin-bottom: 4.083rem;
-  // box-shadow: 0 0.17rem 1rem 0.17rem rgba(0, 0, 0, 0.04);
 `;
 
 export const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 50rem;
-  // border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
-  // @media (max-width: 600px) {
-  //   width: 100%;
-  // }
 `;
 
 export const HeadContainer = styled.div`
@@ -39,11 +31,7 @@ export const HeadContainer = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  // width: 14.58rem;
   margin-bottom: 0.83rem;
-  // @media (max-width: 600px) {
-  //   width: 100%;
-  // }
 `;
 
 export const Head = styled.div`
@@ -65,11 +53,11 @@ export const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   width: 50rem;
-  margin-bottom: 42px;
+  margin-bottom: 1.75rem;
 `;
 
 export const Title = styled.div`
-  width: 28rem;
+  // width: 28rem;
   ${tokens.typography.H3_SB_40};
   color: ${tokens.colors.Black};
 `;
@@ -79,47 +67,44 @@ export const ButtonBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  // width: 22rem;
-  
 `;
 
 export const EditBtn = styled.button`
-  width: 160px;
-  height: 48px;
+  width: 6.667rem;
+  height: 2rem;
   background-color: ${tokens.colors.Blue_0_Main};
   color: ${tokens.colors.White};
   border: none;
-  border-radius: 4px;
-  margin-right: 16px;
+  border-radius: 0.167rem;
+  margin-right: 0.667rem;
   cursor: pointer;
 `;
 
 export const DeleteBtn = styled.button`
-  width: 160px;
-  height: 48px;
+  width: 6.667rem;
+  height: 2rem;
   background-color: ${tokens.colors.Red};
   color: ${tokens.colors.White};
   border: none;
-  border-radius: 4px;
+  border-radius: 0.167rem;
   cursor: pointer;
 `;
 
-// 작성자 정보
 export const WriterInfoContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 50rem;
-  padding-bottom: 12px;
-  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2}; 
-  margin-bottom: 12px;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.002rem solid ${tokens.colors.B_Grey_2};
+  margin-bottom: 0.5rem;
 `;
 
 export const Profile = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
-  margin-right: 12px;
+  width: 1.667rem;
+  height: 1.667rem;
+  border-radius: 0.833rem;
+  border: 0.002rem solid ${tokens.colors.B_Grey_2};
+  margin-right: 0.5rem;
   cursor: pointer;
 `;
 
@@ -134,7 +119,7 @@ export const WriterName = styled.div`
   ${tokens.typography.B2_M_16};
   font-weight: bold;
   color: ${tokens.colors.Blue_0_Main};
-  margin-bottom: 1.5px;
+  margin-bottom: 0.063rem;
   cursor: pointer;
 `;
 
@@ -148,7 +133,7 @@ export const InfoBottomBox = styled.div`
 export const CreatedTime = styled.div`
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Black};
-  margin-right: 12px;
+  margin-right: 0.5rem;
 `;
 
 export const ViewCnt = styled.div`
@@ -156,7 +141,6 @@ export const ViewCnt = styled.div`
   color: ${tokens.colors.Black};
 `;
 
-// 좋아요, 댓글 수
 export const CountContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -167,15 +151,15 @@ export const CountContainer = styled.div`
 `;
 
 export const LikeIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 0.833rem;
+  height: 0.833rem;
   margin-right: 0.5rem;
   cursor: pointer;
 `;
 
 export const CommentIcon = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 0.833rem;
+  height: 0.833rem;
   margin-right: 0.5rem;
 `;
 
@@ -185,15 +169,14 @@ export const CountText = styled.div`
   margin-right: 1rem;
 `;
 
-// 댓글 시작
 export const Body = styled.div`
   background-color: rgba(0, 165, 255, 0.1);
   ${tokens.typography.T4_SB_20};
   color: ${tokens.colors.Blue_0_Main};
   width: 50rem;
   padding: 0.25rem 0 0.25rem 1rem;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  border-radius: 0.1667rem;
+  margin-bottom: 0.8333rem;
 `;
 
 export const ContentContainer = styled.div`
@@ -203,28 +186,26 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   background-color: ${tokens.colors.Grey_1};
   padding: 1.25rem 0 1rem 0;
-  border: 1px solid ${tokens.colors.B_Grey_2};
-  border-radius: 4px;
+  border: 0.042rem solid ${tokens.colors.B_Grey_2};
+  border-radius: 0.167rem;
 `;
 
-// 댓글 작성 
 export const WriteContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
-  margin-bottom: 36px;
+  margin-bottom: 1.5rem;
 `;
 
 export const CommentProfile = styled.img`
-  width: 64px;
-  height: 64px;
-  border: 0.04rem solid ${tokens.colors.B_Grey_2}; 
-  border-radius: 32px;
-  margin-right: 32px;
+  width: 2.667rem;
+  height: 2.667rem;
+  border: 0.002rem solid ${tokens.colors.B_Grey_2};
+  border-radius: 1.333rem;
+  margin-right: 1.333rem;
 `;
 
-// 페이지
 export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -233,14 +214,14 @@ export const PaginationContainer = styled.div`
 `;
 
 export const BlankBtn = styled.div`
-  width: 190px;
+  width: 7.917rem;
 `;
 
 export const WriteBtn = styled.button`
   background-color: ${tokens.colors.Blue_0_Main};
   color: ${tokens.colors.White};
-  width: 190px;
-  height: 47px;
+  width: 7.917rem;
+  height: 1.958rem;
   border: none;
   border-radius: 0.167rem;
 `;
@@ -248,10 +229,9 @@ export const WriteBtn = styled.button`
 export const Pagination = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;  
-  padding: 0.83rem;
+  align-items: center;
+  padding: 0.833rem;
   list-style: none;
-  // margin-top: 1.6rem;
 `;
 
 export const PaginationArrow = styled.div`
@@ -268,7 +248,7 @@ export const PaginationArrow = styled.div`
 export const PaginationNumber = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   margin: 0 0.21rem;
   width: 0.33rem;
   height: 0.88rem;

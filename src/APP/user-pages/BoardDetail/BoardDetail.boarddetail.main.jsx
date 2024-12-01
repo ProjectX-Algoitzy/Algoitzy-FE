@@ -146,7 +146,7 @@ export default function BoardDetail() {
 					<itemS.TitleContainer>
 						<itemS.Title>{board.title}</itemS.Title>
 						<itemS.ButtonBox>
-							{board.createMemberId === memberId && (
+							{board.createMemberId === memberId && board.category !== '공지' && (
 								<>
 									<itemS.EditBtn onClick={handleEdit}>수정</itemS.EditBtn>
 									<itemS.DeleteBtn onClick={handleDelete}>삭제</itemS.DeleteBtn>

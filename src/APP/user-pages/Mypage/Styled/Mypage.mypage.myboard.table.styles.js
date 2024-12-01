@@ -1,13 +1,10 @@
 import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
-
+import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
   @media (max-width: 600px) {
     width: 32rem;
   }
-  // background-color: ${tokens.colors.White};
-  
 `;
 
 export const Table = styled.div`
@@ -23,7 +20,7 @@ export const TableContainerWrapper = styled.div`
 export const TabBtnContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
@@ -35,10 +32,9 @@ export const TabBtnContainer = styled.div`
 export const TabBox = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   justify-content: space-between;
   width: 12rem;
-  
 `;
 
 export const Tab = styled.div`
@@ -95,7 +91,6 @@ export const CategoryView = styled.div`
   color: ${tokens.colors.Black};
   text-align: center;
   width: 3.833rem;
-  // margin-right: 1.667rem;
 `;
 
 export const CategoryTempDate = styled.div`
@@ -104,12 +99,12 @@ export const CategoryTempDate = styled.div`
   text-align: center;
   width: 9.6rem;
 `;
-
 // 카테고리 파트 끝
+
 export const TupleContainerWrapper = styled.div`
   display: flex;
-  
 `;
+
 export const TupleContainer = styled.div`
   flex: 1;
   overflow: auto;
@@ -122,7 +117,7 @@ export const TupleContainer = styled.div`
 export const ScrollbarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 `;
 
 export const ScrollTopArrow = styled.img`
@@ -130,70 +125,26 @@ export const ScrollTopArrow = styled.img`
 `;
 
 export const ScrollBottomArrow = styled.img`
-  
 `;
 
 export const ScrollbarWrapper = styled.div`
-  // position: absolute;
-  // right: -20px;
   overflow-y: auto;
   height: 18.417rem;
-  width: 6px;
+  width: 0.25rem;
   background-color: ${tokens.colors.B_Grey_3};
-  border-radius: 3px;
-  // margin-left: 20px;
-  // margin-top: 2.292rem;
-  // margin: 2.292rem 0 0 20px;
-  margin: 1px 0;
+  border-radius: 0.125rem;
+  margin: 0.042rem 0;
 `;
 
 export const ScrollbarThumb = styled.div`
   width: 100%;
-  height: 96px;
+  height: 4rem;
   background: ${tokens.colors.B_Grey_6};
-  border-radius: 3px;
-  position: relative; // 위치 설정
-  top: 0; // 초기 위치
+  border-radius: 0.125rem;
+  position: relative;
+  top: 0;
   cursor: pointer;
 `;
-// export const TupleContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   background-color: ${tokens.colors.White};
-//   max-height: 19rem;
-//   // min-height: 24rem;
-//   overflow: auto;
-
-//   &::-webkit-scrollbar {
-//     width: 0px; /* Chrome, Safari, Opera용 */
-
-//   }
-//   scrollbar-width: none; /* Firefox용 */
-//   border-radius: 0 0 0.32rem 0.32rem;
-// `;
-
-// export const TupleContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   background-color: ${tokens.colors.White};
-//   max-height: 19rem;
-//   overflow: auto;
-
-//   &::-webkit-scrollbar {
-//     width: 6px; 
-//     border-radius: 3px; 
-//     background: ${tokens.colors.B_Grey_3};
-
-//   }
-//   &::-webkit-scrollbar-thumb {
-//     background: ${tokens.colors.B_Grey_6}; 
-//     border-radius: 3px; 
-//     // background-clip: padding-box; 
-//     // border: 2px solid transparent; 
-//   }
-//   // scrollbar-width: none; /* Firefox용 */
-//   border-radius: 0 0 0.32rem 0.32rem;
-// `;
 
 export const ButtonContainer = styled.div`
   display: flex;
@@ -224,6 +175,7 @@ export const AllCheck = styled.input`
   border-radius: 0.16rem;
   background-color: #fff;
   margin-left: 1.05rem;
+
   cursor: pointer;
 
   &:checked {
@@ -232,7 +184,7 @@ export const AllCheck = styled.input`
   }
 
   &:checked::before {
-    content: '✔'; 
+    content: '✔';
     color: #fff;
     font-size: 0.583rem;
     display: flex;
@@ -245,6 +197,7 @@ export const AllCheckText = styled.div`
   ${tokens.typography.Sub_B_16};
   color: ${tokens.colors.Black};
 `;
+
 export const ButtonBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -252,6 +205,7 @@ export const ButtonBox = styled.div`
   align-items: center;
   width: 15rem;
 `;
+
 export const DeleteButton = styled.button`
   background-color: ${tokens.colors.Red};
   color: ${tokens.colors.White};
@@ -261,6 +215,7 @@ export const DeleteButton = styled.button`
   border-radius: 0.16rem;
   cursor: pointer;
 `;
+
 export const WriteButton = styled.button`
   background-color: ${tokens.colors.B_Grey_7};
   color: ${tokens.colors.White};
@@ -271,7 +226,6 @@ export const WriteButton = styled.button`
   cursor: pointer;
 `;
 
-
 export const NoItemsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -279,5 +233,4 @@ export const NoItemsContainer = styled.div`
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.B_Grey_5};
   min-height: 2.333rem;
-  
 `;

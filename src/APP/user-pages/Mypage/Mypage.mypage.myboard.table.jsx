@@ -217,13 +217,15 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
           />
           <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
         </itemS.AllCheckBox>
-        {selectedTab === 'board' ? (
-          <itemS.ButtonBox>
+        {isMemberMatch && (
+          selectedTab === 'board' ? (
+            <itemS.ButtonBox>
+              <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
+              <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
+            </itemS.ButtonBox>
+          ) : (
             <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
-            <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
-          </itemS.ButtonBox>
-        ) : (
-          <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
+          )
         )}
         
       </itemS.ButtonContainer>

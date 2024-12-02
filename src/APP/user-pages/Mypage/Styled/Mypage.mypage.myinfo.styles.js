@@ -49,7 +49,7 @@ export const TabBtnContainer = styled.div`
   flex-direction: row;
   align-items: center;  
   justify-content: space-between;
-  width: 20.416rem;
+  // width: 20.416rem;
   height: 2rem;
 `;
 
@@ -77,6 +77,7 @@ export const EditButton = styled.button`
   border: none;
   border-radius: 0.125rem;
   margin-right: 0.458rem;
+  margin-left: 1rem;
   cursor: pointer;
 `;
 

@@ -2,10 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyBoardTuple from './Mypage.mypage.myboard.tuple';
 import * as itemS from "./Styled/Mypage.mypage.myboard.table.styles";
+import request from '../../Api/request';
 
-export default function MyBoardTable({ items, boardCount, tempCount }) {
+export default function MyBoardTable({ items, boardCount, tempCount, isMemberMatch }) {
   const navigate = useNavigate();
-  
+
   const [checkedItems, setCheckedItems] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [count, setCount] = useState(boardCount); //TODO -  - 임시로 10 넣음
@@ -73,6 +74,23 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
     setCheckedItems(newCheckedItems);
   };
 
+  // 게시글 삭제
+	const handleDelete = async (item) => {
+    console.log('item',item);
+    // try {
+    //   const response = await request.delete(`/board/${item}`);
+    //   if (response.isSuccess) {
+    //     console.log("게시글 삭제 성공:", response);
+		// 		navigate('/community');
+    //   } else {
+    //     console.error("게시글 삭제 실패:", response);
+    //   }
+    // } catch (error) {
+    //   console.error("게시글 삭제 에러:", error);
+      
+    // }
+  };
+
   const handleWriteClick = () => {
 		navigate('/writepost'); 
 	};
@@ -88,12 +106,15 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
             >
               게시한 글
             </itemS.Tab>
-            <itemS.Tab 
-              onClick={() => handleTabClick("temp")} 
-              active={selectedTab === "temp"}
-            >
-              임시저장한 글
-            </itemS.Tab>
+            {isMemberMatch && (
+              <itemS.Tab 
+                onClick={() => handleTabClick("temp")} 
+                active={selectedTab === "temp"}
+              >
+                임시저장한 글
+              </itemS.Tab>
+            )}
+            
           </itemS.TabBox>
         </itemS.TabBtnContainer>
         <itemS.TableContainerWrapper>
@@ -198,11 +219,11 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
         </itemS.AllCheckBox>
         {selectedTab === 'board' ? (
           <itemS.ButtonBox>
-            <itemS.DeleteButton>삭제</itemS.DeleteButton>
+            <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
             <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
           </itemS.ButtonBox>
         ) : (
-          <itemS.DeleteButton>삭제</itemS.DeleteButton>
+          <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
         )}
         
       </itemS.ButtonContainer>

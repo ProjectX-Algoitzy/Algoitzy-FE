@@ -17,6 +17,7 @@ export default function MyPage() {
   const [boards, setBoards] = useState([]); // 내가 쓴 글
   const [boardCount, setBoardCount] = useState(0); // 내 게시글
   const [tempCount, setTempCount] = useState(0); // 임시저장 글
+  const [totalCount, setTotalCount] = useState(0); // 전체 글
   
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -70,6 +71,7 @@ export default function MyPage() {
 				setBoards(response.result.boardList);
         setBoardCount(response.result.saveCount);
         setTempCount(response.result.tempSaveCount);
+        setTotalCount(response.result.totalCount)
 			} else {
 				console.error("내 게시글 목록 조회 실패:", response);
 			}
@@ -127,7 +129,7 @@ export default function MyPage() {
           <itemS.HeadBox>
             <itemS.Head>마이페이지</itemS.Head>
           </itemS.HeadBox>
-          <MyInfo item={myInfoData} boardCount={boardCount+tempCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
+          <MyInfo item={myInfoData} boardCount={totalCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
         </itemS.MyInfoContainer>
 
         {selectedTab === "study" ? (

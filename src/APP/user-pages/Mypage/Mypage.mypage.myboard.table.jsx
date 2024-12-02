@@ -4,6 +4,8 @@ import MyBoardTuple from './Mypage.mypage.myboard.tuple';
 import * as itemS from "./Styled/Mypage.mypage.myboard.table.styles";
 
 export default function MyBoardTable({ items, boardCount, tempCount }) {
+  const navigate = useNavigate();
+  
   const [checkedItems, setCheckedItems] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [count, setCount] = useState(boardCount); //TODO -  - 임시로 10 넣음
@@ -70,6 +72,10 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
     });
     setCheckedItems(newCheckedItems);
   };
+
+  const handleWriteClick = () => {
+		navigate('/writepost'); 
+	};
 
   return (
     <itemS.Container>
@@ -193,7 +199,7 @@ export default function MyBoardTable({ items, boardCount, tempCount }) {
         {selectedTab === 'board' ? (
           <itemS.ButtonBox>
             <itemS.DeleteButton>삭제</itemS.DeleteButton>
-            <itemS.WriteButton>글쓰기</itemS.WriteButton>
+            <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
           </itemS.ButtonBox>
         ) : (
           <itemS.DeleteButton>삭제</itemS.DeleteButton>

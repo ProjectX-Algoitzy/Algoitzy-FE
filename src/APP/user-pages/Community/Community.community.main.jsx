@@ -2,12 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import request from '../../Api/request';
 import * as itemS from "./Styled/Community.community.main.styles";
 import CommunityTable from './Community.community.table';
-import { AlertContext } from '../../Common/Alert/AlertContext';
-import { dummyData } from './dummy';
 import { useNavigate } from 'react-router-dom';
 
 export default function Community() {
-	const { alert } = useContext(AlertContext);
 	const navigate = useNavigate();
 
 	const [posts, setPosts] = useState([]);
@@ -127,8 +124,8 @@ export default function Community() {
   };
 
   const handleWriteClick = () => {
-	navigate('/writepost'); // Navigate to the /writepost route
-};
+		navigate('/writepost'); 
+	};
 
 	return (
 		<itemS.OuterContainer>

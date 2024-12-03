@@ -8,6 +8,9 @@ import WriteBox from './WriteBox';
 
 export default function BoardDetail() {
 	const navigate = useNavigate();
+
+	const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
+
 	const { id } = useParams();  // 게시글 ID 가져오기
 	const memberId = +localStorage.getItem('memberId');
 	const profileUrl = localStorage.getItem('profileUrl');
@@ -71,12 +74,64 @@ export default function BoardDetail() {
 	useEffect(() => {
 		fetchComment();
 	}, [currentPage]);
+  
+	useEffect(() => {
+		// 카테고리 옵션을 API에서 가져오기
+		const fetchCategoryOptions = async () => {
+		  try {
+			const response = await request.get('/board/category');
+			if (response.isSuccess) {
+			  const options = response.result.categoryList.map((category) => ({
+				value: category.code,
+				label: category.name,
+			  }));
+	
+			  const filteredOptions = options.filter(
+				(option) => option.label !== '공지'
+			  );
+	
+			  setCategoryOptions(filteredOptions);
+			  //setSelectedCategory(filteredOptions[0] || null); // 첫 번째 옵션 선택
+			} else {
+			  console.error('카테고리 목록 조회 실패:', response.message);
+			}
+		  } catch (error) {
+			console.error('카테고리 목록 조회 중 오류:', error);
+		  }
+		};
+	
+		fetchCategoryOptions();
+	  }, []);
+	
+	  // 카테고리 변환 함수
+	const categoryConverter = (categoryOptions) => {
+	  const nameToCode = (name) => {
+		const found = categoryOptions.find((option) => option.label === name);
+		return found ? found.value : null; // name에 해당하는 code 반환
+	  };
+	
+	  const codeToName = (code) => {
+		const found = categoryOptions.find((option) => option.value === code);
+		return found ? found.label : null; // code에 해당하는 name 반환
+	  };
+	
+	  return { nameToCode, codeToName };
+	};
 
 	const handleEdit = () => {
+		const { nameToCode, codeToName } = categoryConverter(categoryOptions);
+
 		navigate(`/writepost`, {
-			state: { boardId: id }, 
+			state: {
+				boardId: id,
+				title: board.title,
+				initialContent: board.content,
+				initialCategoryCode: nameToCode(board.category),
+				initialUploadedFiles: board.boardFileList,
+				initialSaveYn: true,
+			  },
 		});
-	  };	
+	  };
 
 	const handlePageChange = (newPage) => {
 		if (newPage >= 0 && newPage < totalPages) {

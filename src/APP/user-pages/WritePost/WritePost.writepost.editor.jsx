@@ -505,7 +505,6 @@ const categoryConverter = (categoryOptions) => {
         }
       } catch (error) {
         console.error('파일 업로드 오류:', error);
-        alert('파일 업로드 중 오류가 발생했습니다.');
       }
     }
   };

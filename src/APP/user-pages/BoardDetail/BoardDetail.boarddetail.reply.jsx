@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/BoardDetail.boarddetail.reply.styles";
 import WriteBox from './WriteBox';
+import EditWriteBox from './EditWriteBox';
 import request from '../../Api/request';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
@@ -85,6 +86,10 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
     };
   }, []);
 
+  const handleCancel = () => {
+    setIsEditing(false); // 수정 모드 종료
+  };
+
   // 계정 링크 이동
 	const handlePage = (handle) => {
     navigate(`/mypage/${handle}`);
@@ -96,13 +101,12 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
         <itemS.CommentContainer>
           <itemS.CommentProfile onClick={() => handlePage(item.handle)} src={item.profileUrl} alt='프로필' />
           {isEditing ? (
-            <WriteBox
-              parentId={item.replyId}
+            <EditWriteBox
+              replyId={item.replyId} // 수정 대상 댓글 ID 전달
               fetchComment={fetchComment}
               handleLoad={handleEditComplete}
-              isEditing={true} // 수정 여부 전달
               editContent={editContent} // 수정할 초기 내용 전달
-              replyId={item.replyId} // 수정 대상 댓글 ID 전달
+              handleCancel={handleCancel}
             />
           ) : (
             <itemS.CommentBox>
@@ -160,9 +164,9 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
               parentId={item.replyId}
               fetchComment={fetchComment} 
               handleLoad={handleReplyClick}
-              isEditing={false} // 수정 여부 전달
-              editContent={editContent} // 수정할 초기 내용 전달
-              replyId={item.replyId} // 수정 대상 댓글 ID 전달
+              // isEditing={false} // 수정 여부 전달
+              // editContent={editContent} // 수정할 초기 내용 전달
+              // replyId={item.replyId} // 수정 대상 댓글 ID 전달
             />
           </itemS.WriteBox>
         )}

@@ -81,7 +81,7 @@ export const DotBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1.458rem;
+  width: 1.875rem;
   position: relative;
   cursor: pointer;
 `;

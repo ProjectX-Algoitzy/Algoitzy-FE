@@ -38,7 +38,6 @@ export const CategoryTitle = styled.div`
   text-align: center;
   width: 26.667rem;
   margin-left: 3.417rem;
-  // text-decoration: underline;
 `;
 
 export const CategoryWriter = styled.div`
@@ -46,7 +45,10 @@ export const CategoryWriter = styled.div`
   color: ${tokens.colors.Black};
   text-align: center;
   width: 4.667rem;
-  // text-decoration: underline;
+`;
+
+export const CategoryBlank = styled.div`
+  width: 4.667rem;
 `;
 
 export const CategoryDate = styled.div`
@@ -54,7 +56,6 @@ export const CategoryDate = styled.div`
   color: ${tokens.colors.Black};
   text-align: center;
   width: 5.75rem;
-  // text-decoration: underline;
 `;
 
 export const CategoryView = styled.div`
@@ -63,7 +64,6 @@ export const CategoryView = styled.div`
   text-align: center;
   width: 3.833rem;
   margin-right: 1.667rem;
-  // text-decoration: underline;
 `;
 
 // 카테고리 파트 끝

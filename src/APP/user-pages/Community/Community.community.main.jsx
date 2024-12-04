@@ -9,6 +9,7 @@ export default function Community() {
 
 	const [posts, setPosts] = useState([]);
 	const [categories, setCategories] = useState([{ code: '', name: '전체' }]); // Default '전체' tab
+	const [isRegularMember, setIsRegularMember] = useState(false); // 정규스터디 참여 이력
 
 	// api 요청 파라미터
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -177,6 +178,7 @@ export default function Community() {
 						items={posts}
 						isTabClick={isTabClick}
 						searchKeyword={searchKeyword}
+						isRegularMember={isRegularMember}
 						/>
 					<itemS.PaginationContainer>
 						<itemS.BlankBtn></itemS.BlankBtn>
@@ -202,7 +204,11 @@ export default function Community() {
 							/>
 						</itemS.Pagination>
 
-						<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
+						{isRegularMember ? (
+							<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
+						) : (
+							<itemS.BlankBtn></itemS.BlankBtn>
+						)}
 					</itemS.PaginationContainer>
 				</itemS.InnerContainer>
 			</itemS.Container>

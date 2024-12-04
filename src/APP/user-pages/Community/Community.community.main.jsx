@@ -22,7 +22,7 @@ export default function Community() {
 	
 	// 페이지
 	const [currentPage, setCurrentPage] = useState(0);
-	const [totalPages, setTotalPages] = useState(5); //TODO - 임시 ) 전체 페이지 수 -> response 값으로 전체 개수 받아와야함
+	const [totalPages, setTotalPages] = useState(0); //TODO - 임시 ) 전체 페이지 수 -> response 값으로 전체 개수 받아와야함
 	const [currentPageGroup, setCurrentPageGroup] = useState(0);
 	const itemsPerPage = 10; // 페이지당 항목 수
  
@@ -55,6 +55,7 @@ export default function Community() {
 			if (response.isSuccess) {
 				console.log("게시글 목록 조회 성공");
 				setPosts(response.result.boardList);
+				setTotalPages(Math.ceil(response.result.totalCount / itemsPerPage));
 			} else {
 				console.error("게시글 목록 조회 실패:", response);
 			}

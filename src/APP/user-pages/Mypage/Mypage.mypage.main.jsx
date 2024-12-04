@@ -157,6 +157,7 @@ export default function MyPage() {
             boardCount={boardCount}
             tempCount={tempCount}
             isMemberMatch={isMemberMatch}
+            fetchBoard={fetchBoard}
           />
         )}
 

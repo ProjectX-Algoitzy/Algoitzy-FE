@@ -9,7 +9,7 @@ export default function Community() {
 
 	const [posts, setPosts] = useState([]);
 	const [categories, setCategories] = useState([{ code: '', name: '전체' }]); // Default '전체' tab
-	const [isRegularMember, setIsRegularMember] = useState(false); // 정규스터디 참여 이력
+	const [isRegularMember, setIsRegularMember] = useState(localStorage.getItem('regularStudyMemberYn')); // 정규스터디 참여 이력
 
 	// api 요청 파라미터
   const [searchKeyword, setSearchKeyword] = useState('');

@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyBoardTuple from './Mypage.mypage.myboard.tuple';
 import * as itemS from "./Styled/Mypage.mypage.myboard.table.styles";
 import request from '../../Api/request';
+import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function MyBoardTable({ items, boardCount, tempCount, isMemberMatch }) {
+export default function MyBoardTable({ items, boardCount, tempCount, isMemberMatch, fetchBoard={fetchBoard} }) {
   const navigate = useNavigate();
+  const { alert } = useContext(AlertContext);
 
   const [checkedItems, setCheckedItems] = useState({});
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -75,21 +77,41 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
   };
 
   // 게시글 삭제
-	const handleDelete = async (item) => {
-    console.log('item',item);
-    // try {
-    //   const response = await request.delete(`/board/${item}`);
-    //   if (response.isSuccess) {
-    //     console.log("게시글 삭제 성공:", response);
-		// 		navigate('/community');
-    //   } else {
-    //     console.error("게시글 삭제 실패:", response);
-    //   }
-    // } catch (error) {
-    //   console.error("게시글 삭제 에러:", error);
-      
-    // }
+	const handleDelete = async (items) => {
+    try {
+      // items 객체에서 value가 true인 key값들로 배열 생성
+      const idsToDelete = Object.keys(items).filter((id) => items[id] === true);
+      console.log('idsToDelete', idsToDelete);
+      // 삭제할 항목이 없는 경우 경고 메시지 출력 후 종료
+      if (idsToDelete.length === 0) {
+        alert('삭제할 게시글을 선택해주세요.');
+        return;
+      }
+  
+      // 삭제 요청 수행
+      for (let id of idsToDelete) {
+        console.log('boardId', id); 
+  
+        try {
+          const response = await request.delete(`/board/${id}`);
+          if (response.isSuccess) {
+            console.log(`게시글 ${id} 삭제 성공:`, response);
+          } else {
+            console.error(`게시글 ${id} 삭제 실패:`, response);
+          }
+        } catch (error) {
+          console.error(`게시글 ${id} 삭제 중 오류 발생:`, error);
+        }
+      }
+  
+      // 삭제 후 추가 동작 수행
+      fetchBoard();
+      if (isAllChecked) handleAllCheckChange();
+    } catch (error) {
+      console.error('삭제 처리 중 오류 발생:', error);
+    }
   };
+
 
   const handleWriteClick = () => {
 		navigate('/writepost'); 

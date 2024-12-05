@@ -153,6 +153,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
                   alt='하뚜'
                   onClick={toggleLike} // 클릭 시 좋아요 토글
                 />
+                <itemS.LikeCount>{item.likeCount}</itemS.LikeCount>
               </itemS.InfoBottomBox>
             </itemS.CommentBox>
           )}

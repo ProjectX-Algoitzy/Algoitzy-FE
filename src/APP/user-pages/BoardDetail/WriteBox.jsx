@@ -53,14 +53,20 @@ export default function WriteBox({ parentId = null, fetchComment, handleLoad }) 
   return (
     <itemS.Container>
       <itemS.WriteBox>
-        <itemS.InputBox
-          type="text"
-          placeholder="댓글을 남겨보세요."
-          value={comment}
-          onChange={handleChange}
-        />
-        <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
-        <itemS.SubmitBtn onClick={handleSubmit}>올리기</itemS.SubmitBtn>
+      <itemS.InputContainer>
+          <itemS.InputBox
+            type="text"
+            placeholder="댓글을 남겨보세요."
+            value={comment}
+            onChange={handleChange}
+          />
+          <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
+        </itemS.InputContainer>
+ 
+        <itemS.ButtonBox>
+          <itemS.SubmitBtn onClick={handleSubmit} isActive={comment.length > 0 && comment.length}>올리기</itemS.SubmitBtn>
+        </itemS.ButtonBox>
+        
       </itemS.WriteBox>
     </itemS.Container>
   );

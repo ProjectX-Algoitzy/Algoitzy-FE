@@ -168,6 +168,11 @@ export const typography = {
         fontSize: "0.5rem",
         lineHeight: "0.625rem",
       },
+      Sub_M_13: {
+        fontWeight: "500",
+        fontSize: "0.5rem",
+        lineHeight: "0.583rem",
+      },
       Sub_B_16: {
         fontWeight: "700",
         fontSize: "0.667rem",

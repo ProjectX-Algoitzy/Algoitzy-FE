@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import request from '../../Api/request';
-import * as itemS from "./Styled/WirteBox.styles";
+import * as itemS from './Styled/WirteBox.styles';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function WriteBox({ parentId = null, fetchComment, handleLoad }) {
+export default function WriteBox({ parentId = null, fetchComment, handleLoad, isReply = false }) {
   const { id } = useParams();
   const { alert } = useContext(AlertContext);
 
   const [comment, setComment] = useState('');
+  const textareaRef = useRef(null);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -17,6 +18,11 @@ export default function WriteBox({ parentId = null, fetchComment, handleLoad }) 
       return;
     }
     setComment(value);
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'; 
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
+    }
   };
 
   const handleSubmit = async () => {
@@ -38,37 +44,37 @@ export default function WriteBox({ parentId = null, fetchComment, handleLoad }) 
       const response = await request.post('/reply', requestBody);
 
       if (response.isSuccess) {
-        console.log("댓글 작성 성공", response);
+        console.log('댓글 작성 성공', response);
         setComment('');
         fetchComment();
         if (handleLoad) handleLoad();
       } else {
-        console.error("댓글 작성 실패:", response.message);
+        console.error('댓글 작성 실패:', response.message);
       }
     } catch (error) {
-      console.error("댓글 작성 오류:", error);
+      console.error('댓글 작성 오류:', error);
     }
   };
 
   return (
     <itemS.Container>
-      <itemS.WriteBox>
-      <itemS.InputContainer>
-          <itemS.InputBox
-            type="text"
+      <itemS.WriteBox isreply={isReply}>
+        <itemS.InputContainer isreply={isReply}>
+          <itemS.TextArea
+            isreply={isReply}
+            ref={textareaRef}
             placeholder="댓글을 남겨보세요."
             value={comment}
             onChange={handleChange}
           />
           <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
         </itemS.InputContainer>
- 
-        <itemS.ButtonBox>
-          <itemS.SubmitBtn onClick={handleSubmit} isActive={comment.length > 0 && comment.length}>올리기</itemS.SubmitBtn>
+        <itemS.ButtonBox isreply={isReply}>
+          <itemS.SubmitBtn onClick={handleSubmit} isActive={comment.length > 0}>
+            올리기
+          </itemS.SubmitBtn>
         </itemS.ButtonBox>
-        
       </itemS.WriteBox>
     </itemS.Container>
   );
 }
-

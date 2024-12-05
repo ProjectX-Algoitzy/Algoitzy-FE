@@ -1,13 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import request from '../../Api/request';
 import * as itemS from "./Styled/EditWirteBox.styles";
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function EditWriteBox({ replyId, fetchComment, handleLoad, editContent = '', handleCancel }) {
+export default function EditWriteBox({ replyId, fetchComment, handleLoad, editContent = '', handleCancel, isComment }) {
   const { alert } = useContext(AlertContext);
 
   const [comment, setComment] = useState(editContent);
+  const textareaRef = useRef(null);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -16,6 +17,11 @@ export default function EditWriteBox({ replyId, fetchComment, handleLoad, editCo
       return;
     }
     setComment(value);
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'; 
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
+    }
   };
 
   const handleEdit = async () => {
@@ -45,10 +51,11 @@ export default function EditWriteBox({ replyId, fetchComment, handleLoad, editCo
 
   return (
     <itemS.Container>
-      <itemS.WriteBox>
-        <itemS.InputContainer>
-          <itemS.InputBox
-            type="text"
+      <itemS.WriteBox iscomment={isComment}>
+        <itemS.InputContainer iscomment={isComment}>
+          <itemS.TextArea
+            iscomment={isComment}
+            ref={textareaRef}
             placeholder="댓글을 남겨보세요."
             value={comment}
             onChange={handleChange}
@@ -56,7 +63,7 @@ export default function EditWriteBox({ replyId, fetchComment, handleLoad, editCo
           <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
         </itemS.InputContainer>
  
-        <itemS.ButtonBox>
+        <itemS.ButtonBox iscomment={isComment}>
           <itemS.CancelBtn onClick={handleCancel}>취소</itemS.CancelBtn>
           <itemS.SubmitBtn onClick={handleEdit} isActive={comment.length > 0 && comment.length}>올리기</itemS.SubmitBtn>
         </itemS.ButtonBox>

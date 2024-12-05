@@ -191,10 +191,18 @@ export const WriteBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
-  margin-top: 0.542rem;
+  align-items: flex-start;
+  margin-top: 0.5rem;
 `;
 
 export const Blank = styled.div`
   width: 4rem;
+`;
+
+export const ReplyProfile = styled.img`
+  width: 1.667rem;
+  height: 1.667rem;
+  border: 0.04rem solid ${tokens.colors.B_Grey_2};
+  border-radius: 50%;
+  margin-right: 0.708rem;
 `;

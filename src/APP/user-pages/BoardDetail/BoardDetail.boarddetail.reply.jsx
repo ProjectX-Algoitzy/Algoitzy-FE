@@ -107,6 +107,7 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
               handleLoad={handleEditComplete}
               editContent={editContent} // 수정할 초기 내용 전달
               handleCancel={handleCancel}
+              isComment={false}
             />
           ) : (
             <itemS.CommentBox>
@@ -161,13 +162,12 @@ export default function Reply({ item, parentName, formatDate, fetchComment }) {
         {isReplyBoxVisible && (
           <itemS.WriteBox>
             <itemS.Blank></itemS.Blank>
+            <itemS.ReplyProfile src={item.profileUrl} alt='프로필' />
             <WriteBox
               parentId={item.replyId}
               fetchComment={fetchComment} 
               handleLoad={handleReplyClick}
-              // isEditing={false} // 수정 여부 전달
-              // editContent={editContent} // 수정할 초기 내용 전달
-              // replyId={item.replyId} // 수정 대상 댓글 ID 전달
+              isReply={true}
             />
           </itemS.WriteBox>
         )}

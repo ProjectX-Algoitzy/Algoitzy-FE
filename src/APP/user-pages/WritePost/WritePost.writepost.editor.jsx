@@ -63,6 +63,9 @@ export default function Editor({
   const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const { alert } = useContext(AlertContext);
 
+  console.log("ㅁ닝라ㅓㅁ;ㅣㄴ아ㅓㄹ",fileInputRef);
+  console.log("uploadedfiles",uploadedFiles);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
@@ -505,6 +508,12 @@ const categoryConverter = (categoryOptions) => {
       } catch (error) {
         console.error('파일 업로드 오류:', error);
       }
+      finally {
+        // 파일 입력 초기화
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
     }
   };
 
@@ -715,13 +724,6 @@ const fetchDraftDetails = async (boardId) => {
         {uploadedFiles.length > 0 && (
         <Styled.FileContainer>
           <FileTable uploadedFiles={uploadedFiles} deleteFile={deleteFile} />
-          <input
-            type="file"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={handleFileUpload}
-            multiple // 다중 파일 업로드 지원
-          />
 
         </Styled.FileContainer>
       )}

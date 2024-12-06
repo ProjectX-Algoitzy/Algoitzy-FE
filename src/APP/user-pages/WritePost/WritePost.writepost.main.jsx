@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Editor from './WritePost.writepost.editor';
 import Preview from './WritePost.writepost.preview';
 import * as Styled from './Styled/WritePost.writepost.main.styles';
@@ -7,6 +7,7 @@ import request from '../../Api/request';
 
 export default function WritePost() {
   const location = useLocation();
+  const { id } = useParams();  // 게시글 ID 가져오기
   const { boardId } = location.state || {}; // 수정 시 전달받은 게시글 ID
   const [markdownContent, setMarkdownContent] = useState('');
   const [title, setTitle] = useState('');

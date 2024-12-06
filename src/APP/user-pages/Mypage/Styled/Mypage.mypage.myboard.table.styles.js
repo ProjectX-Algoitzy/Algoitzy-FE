@@ -117,7 +117,7 @@ export const TupleContainer = styled.div`
 export const ScrollbarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 1.25rem;
+  margin-left: 0.833rem;
 `;
 
 export const ScrollTopArrow = styled.img`
@@ -138,7 +138,7 @@ export const ScrollbarWrapper = styled.div`
 
 export const ScrollbarThumb = styled.div`
   width: 100%;
-  height: 4rem;
+  height: 96px;
   background: ${tokens.colors.B_Grey_6};
   border-radius: 0.125rem;
   position: relative;

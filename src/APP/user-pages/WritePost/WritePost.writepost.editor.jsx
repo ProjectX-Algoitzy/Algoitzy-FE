@@ -612,6 +612,8 @@ const fetchDraftDetails = async (boardId) => {
       // 카테고리 업데이트
       const { nameToCode, codeToName } = categoryConverter(categoryOptions);
       setSelectedCategory({ value: draft.categoryCode, label: draft.category });
+      setCategoryCode(draft.categoryCode);
+      setCategory(draft.category);
 
       console.log('임시저장 글 불러오기 성공:', draft);
     } else {

@@ -607,6 +607,7 @@ const fetchDraftDetails = async (boardId) => {
       const uploadedFilesFromDraft = draft.boardFileList.map((file) => ({
         originalName: file.originalName,
         fileUrl: file.fileUrl,
+        size: file.fileSize,
       }));
       setUploadedFiles(uploadedFilesFromDraft);
       console.log(uploadedFiles);

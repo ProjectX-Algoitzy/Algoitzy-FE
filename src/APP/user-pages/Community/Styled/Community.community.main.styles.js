@@ -225,6 +225,7 @@ export const WriteBtn = styled.button`
   width: 7.917rem;
   height: 2rem;
   border: none;
+  border-radius: 0.16rem;
   cursor: pointer;
 `;
 

@@ -64,8 +64,6 @@ export default function Editor({
   const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const { alert } = useContext(AlertContext);
 
-  console.log("asjf;laksje;lkfase",category);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
@@ -528,8 +526,6 @@ const categoryConverter = (categoryOptions) => {
             name: matchedCategory ? matchedCategory.label : '알 수 없음',
           };
         });
-        
-        console.log('Fetched Drafts:', draftList); // 디버깅용 출력
 
         setDrafts(draftList);
         setDraftCount(draftList.length); // 게시글 수 업데이트
@@ -607,7 +603,6 @@ const fetchDraftDetails = async (boardId) => {
         size: file.fileSize,
       }));
       setUploadedFiles(uploadedFilesFromDraft);
-      console.log(uploadedFiles);
 
       // 카테고리 업데이트
       const { nameToCode, codeToName } = categoryConverter(categoryOptions);
@@ -659,8 +654,6 @@ const fetchDraftDetails = async (boardId) => {
     fileUrlList: fileUrls,
     saveYn: true,
   };
-
-  console.log('요청 데이터:', requestData);
 
   try {
     let response;

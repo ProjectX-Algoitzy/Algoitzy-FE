@@ -38,7 +38,7 @@ export default function Editor({
   
   const [boardId, setBoardId] = useState(initialBoardId); // boardId를 상태로 관리
 
-  const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리 상태
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory); // 선택된 카테고리 상태
   const [isCategorySelected, setIsCategorySelected] = useState(false); // 카테고리 선택 여부 상태
 
   const [categoryCode, setCategoryCode] = useState(state?.initialCategoryCode || null);
@@ -64,8 +64,7 @@ export default function Editor({
   const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const { alert } = useContext(AlertContext);
 
-  console.log("ㅁ닝라ㅓㅁ;ㅣㄴ아ㅓㄹ",fileInputRef);
-  console.log("uploadedfiles",uploadedFiles);
+  console.log("asjf;laksje;lkfase",category);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -213,10 +212,9 @@ const categoryConverter = (categoryOptions) => {
         });
         // 카테고리 업데이트
 
-        if (categoryCode){
+        if (category){
         const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-        setCategory({ value: categoryCode, label: codeToName(categoryCode) });
-        setSelectedCategory({ value: categoryCode, label: codeToName(categoryCode) });
+        setSelectedCategory({ value: nameToCode(categoryCode), label: category });
         }
         loadCount.current += 1; // 실행 횟수 증가
       }
@@ -525,8 +523,6 @@ const categoryConverter = (categoryOptions) => {
           const matchedCategory = categoryOptions.find(
             (option) => option.value === draft.categoryCode
           );
-          console.log("123123123",matchedCategory);
-          console.log("456456",draft.categoryCode);
           return {
             ...draft,
             name: matchedCategory ? matchedCategory.label : '알 수 없음',
@@ -615,8 +611,7 @@ const fetchDraftDetails = async (boardId) => {
 
       // 카테고리 업데이트
       const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-      setCategory({ value: draft.category, label: draft.category });
-      setSelectedCategory({ value: nameToCode(draft.category), label: draft.category });
+      setSelectedCategory({ value: draft.categoryCode, label: draft.category });
 
       console.log('임시저장 글 불러오기 성공:', draft);
     } else {
@@ -679,6 +674,7 @@ const fetchDraftDetails = async (boardId) => {
       if (response.isSuccess) {
         setSaveYn(true);
         setBoardId(response.result);
+        setCategory(selectedCategory);
 
         alert(boardId ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
         navigate(-1); // 이전 페이지로 이동

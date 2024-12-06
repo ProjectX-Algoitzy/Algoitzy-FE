@@ -12,7 +12,7 @@ export default function WritePost() {
   const [markdownContent, setMarkdownContent] = useState('');
   const [title, setTitle] = useState('');
   const [categoryCode, setCategoryCode] = useState(null);
-
+  const [category, setCategory] = useState(null);
   useEffect(() => {
     // 게시글 ID가 있을 경우 수정 데이터를 불러옵니다.
     if (boardId) {
@@ -23,7 +23,8 @@ export default function WritePost() {
             const { title, content, category } = response.result;
             setTitle(title);
             setMarkdownContent(content);
-            setCategoryCode(category); // 카테고리 설정
+            setCategoryCode(categoryCode); // 카테고리 설정
+            setCategory(category);
           } else {
             console.error('게시글 조회 실패:', response.message);
           }
@@ -55,6 +56,7 @@ export default function WritePost() {
           setMarkdownContent={setMarkdownContent}
           initialBoardId={boardId} // 수정 시 boardId 전달
           initialCategoryCode={categoryCode} // 수정 시 카테고리 코드 전달
+          initialCategory={category}
           initialContent={markdownContent} // Codemirror 초기 값 전달
 />
 

@@ -20,6 +20,7 @@ export default function Editor({
   initialContent,
   setMarkdownContent,
   initialCategoryCode,
+  initialCategory,
   initialUploadedFiles,
   initialSaveYn,
 }) {
@@ -42,7 +43,7 @@ export default function Editor({
 
   const [categoryCode, setCategoryCode] = useState(state?.initialCategoryCode || null);
   const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
-  const [category, setCategory] = useState(categoryOptions[0]);
+  const [category, setCategory] = useState(state?.initialCategory || categoryOptions[0]);
 
   const [linkURL, setLinkURL] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
@@ -167,8 +168,6 @@ const categoryConverter = (categoryOptions) => {
   };
 
   useEffect(() => {
-
-
 
     if (!editorRef.current || initialContent === undefined) return;
     const startState = EditorState.create({
@@ -524,8 +523,10 @@ const categoryConverter = (categoryOptions) => {
       if (response.isSuccess) {
         const draftList = response.result.boardList.map((draft) => {
           const matchedCategory = categoryOptions.find(
-            (option) => option.value === draft.category
+            (option) => option.value === draft.categoryCode
           );
+          console.log("123123123",matchedCategory);
+          console.log("456456",draft.categoryCode);
           return {
             ...draft,
             name: matchedCategory ? matchedCategory.label : '알 수 없음',

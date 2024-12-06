@@ -84,7 +84,7 @@ export default function MyPage() {
     fetchMyInfo();
     fetchMyStudy();
     fetchBoard();
-  }, []);
+  }, [handle]);
 
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
   const indexOfLastPassItem = currentPagePassStudy * itemsPerPage;

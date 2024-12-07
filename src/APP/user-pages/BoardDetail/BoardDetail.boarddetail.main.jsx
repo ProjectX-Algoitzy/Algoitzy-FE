@@ -102,25 +102,10 @@ export default function BoardDetail() {
 	
 		fetchCategoryOptions();
 	  }, []);
-	
-	  // 카테고리 변환 함수
-	const categoryConverter = (categoryOptions) => {
-	  const nameToCode = (name) => {
-		const found = categoryOptions.find((option) => option.label === name);
-		return found ? found.value : null; // name에 해당하는 code 반환
-	  };
-	
-	  const codeToName = (code) => {
-		const found = categoryOptions.find((option) => option.value === code);
-		return found ? found.label : null; // code에 해당하는 name 반환
-	  };
-	
-	  return { nameToCode, codeToName };
-	};
 
 	const handleEdit = () => {
-		const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-
+		navigate(`/writepost/${id}`, { state: { saveYn : true } });
+		/*
 		navigate(`/writepost`, {
 			state: {
 				boardId: id,
@@ -132,6 +117,7 @@ export default function BoardDetail() {
 				initialSaveYn: true,
 			  },
 		});
+		*/
 	  };
 
 	const handlePageChange = (newPage) => {

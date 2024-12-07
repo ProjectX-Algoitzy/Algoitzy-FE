@@ -36,6 +36,7 @@ import GlobalStyle from './GlobalStyles';
 import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 import { useLoading } from "./APP/Common/Loading/LoadingContext";
 import { setLoadingFunctions } from "./APP/Api/request";
+import { useMatch } from 'react-router-dom';
 
 // const Root = styled.div`
 //   position: absolute;
@@ -76,8 +77,9 @@ function App() {
     return !!localStorage.getItem(ACCESS_TOKEN);
   };
 
-  const location = useLocation(); // 현재 경로 확인
-  const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
+  const match_newPost = useMatch('/writepost');
+  const match_savedPost = useMatch('/writepost/:id');
+  const hideHeader = !!match_newPost || !!match_savedPost;
 
   return (
 
@@ -111,7 +113,8 @@ function App() {
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
             <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
-            <Route path="/writepost" element={<WritePost />} /> {/* 새 글쓰기 */}
+            <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
+            <Route path="/writepost/:id" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 임시저장, 수정 */}
             <Route path="/community" element={isLoggedIn() ? <Community /> : <Navigate to="/" />} />
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/login" />} /> {/* 커뮤니티 글 세부 */}
           </Routes>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { EditorState, EditorSelection } from '@codemirror/state';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { markdown } from '@codemirror/lang-markdown';
@@ -29,6 +29,9 @@ export default function Editor({
   const location = useLocation(); // useLocation으로 전달된 state 접근
   const { state } = location;
 
+  const { id } = useParams();
+  const [board, setBoard] = useState({});
+  
   const editorRef = useRef(null);
   const imageInputRef = useRef(null); // 이미지 파일 입력창을 제어할 useRef
   const fileInputRef = useRef(null); // 일반 파일 입력창을 제어할 useRef
@@ -84,6 +87,24 @@ export default function Editor({
   }, []);
 
   useEffect(() => {
+    const fetchBoard = async () => { // 게시글 조회
+      try {
+        const response = await request.get(`/board/${id}`);
+  
+        if (response.isSuccess) {
+          console.log("게시글 상세 조회 성공", response);
+          setBoard(response.result);
+        } else {
+          console.error("게시글 상세 조회 실패:", response);
+        }
+      } catch (error) {
+        console.error('게시글 상세 조회 오류', error);
+      }
+    };
+    fetchBoard();
+    console.log(id);
+    console.log("loadeeeeeddddddddd", board);
+
     // 카테고리 옵션을 API에서 가져오기
     const fetchCategoryOptions = async () => {
       try {
@@ -137,38 +158,15 @@ const categoryConverter = (categoryOptions) => {
     e.target.style.height = `${e.target.scrollHeight}px`; // 내용에 맞게 높이 조정
   };
 
-  const fetchEditDetails = async () => {
-        // 제목과 내용을 업데이트
-        setTitle(title);
-        setMarkdownContent(initialContent);
-        // 에디터 내용 업데이트
-        editorView.dispatch({
-          changes: {
-            from: 0,
-            to: editorView.state.doc.length, // 기존 내용 삭제
-            insert: initialContent, // 새로운 내용 삽입
-          },
-        });
-  
-        // 파일 리스트 업데이트
-        /*
-        const initialUploadedFiles = boardFileList.map((file) => ({
-          originalName: file.originalName,
-          fileUrl: file.fileUrl,
-        }));
-        setUploadedFiles(initialUploadedFiles);
-        */
-        // 카테고리 업데이트
-        setCategory({ value: initialCategoryCode, label: initialCategoryCode });
-  
-        console.log('수정 글 불러오기 성공:', title);
-  };
-
   useEffect(() => {
-
+    //if (id && (!board || Object.keys(board).length === 0)) return;
+    
     if (!editorRef.current || initialContent === undefined) return;
+
+    setTitle(board.title);
+    
     const startState = EditorState.create({
-      doc: initialContent || '', // 수정 시 초기 내용을 Codemirror에 반영
+      doc: board.content || '', // 수정 시 초기 내용을 Codemirror에 반영
       extensions: [
         keymap.of([...defaultKeymap, ...historyKeymap]), // 기본 키맵 및 Undo/Redo 키맵 추가
         history(), // 히스토리 확장 추가
@@ -191,11 +189,16 @@ const categoryConverter = (categoryOptions) => {
 
     setEditorView(view);
 
+    if (category){
+      setSelectedCategory({ value: board.categoryCode, label: board.category });
+    }
+
     return () => {
       view.destroy();
     };
-  }, []);
+  }, [id, board, editorRef]);
 
+  /*
   useEffect(() => {
     // initialContent가 늦게 바뀌므로 2번 변경 감지 후 초기화 끄기
   
@@ -218,6 +221,7 @@ const categoryConverter = (categoryOptions) => {
       }
     }
   }, [editorView, initialContent]); // initialContent를 포함해 변경 감지
+  */
 
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
@@ -343,7 +347,7 @@ const categoryConverter = (categoryOptions) => {
     };
   }, [isModalOpen]);
 
-    // S3 이미지 업로드 함수
+  // S3 이미지 업로드 함수
   const uploadImage = async (file) => {
     try {
       const formData = new FormData();

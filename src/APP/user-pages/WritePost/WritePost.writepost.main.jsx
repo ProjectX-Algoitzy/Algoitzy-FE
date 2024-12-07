@@ -13,6 +13,7 @@ export default function WritePost() {
   const [title, setTitle] = useState('');
   const [categoryCode, setCategoryCode] = useState(null);
   const [category, setCategory] = useState(null);
+
   useEffect(() => {
     // 게시글 ID가 있을 경우 수정 데이터를 불러옵니다.
     if (boardId) {
@@ -26,10 +27,10 @@ export default function WritePost() {
             setCategoryCode(categoryCode); // 카테고리 설정
             setCategory(category);
           } else {
-            console.error('게시글 조회 실패:', response.message);
+            console.error('게시글 상세 조회 실패:', response.message);
           }
         } catch (error) {
-          console.error('게시글 조회 중 오류:', error);
+          console.error('게시글 상세 실패 오류:', error);
         }
       };
 

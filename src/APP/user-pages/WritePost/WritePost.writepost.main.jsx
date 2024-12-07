@@ -19,7 +19,7 @@ export default function WritePost() {
     if (boardId) {
       const fetchBoardData = async () => {
         try {
-          const response = await request.get(`/board`);
+          const response = await request.get(`/board/${boardId}`);
           if (response.isSuccess) {
             const { title, content, category } = response.result;
             setTitle(title);
@@ -30,7 +30,7 @@ export default function WritePost() {
             console.error('게시글 상세 조회 실패:', response.message);
           }
         } catch (error) {
-          console.error('게시글 상세 실패 오류:', error);
+          console.error('게시글 상세 조회 중 오류:', error);
         }
       };
 

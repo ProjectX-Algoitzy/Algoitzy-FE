@@ -86,7 +86,7 @@ export const Group = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start; 
-  width: 50.83rem;
+  width: 50rem;
   margin-top: 1.83rem;
 `;
 

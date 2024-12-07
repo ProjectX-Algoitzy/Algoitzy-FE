@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Community.community.tuple.styles";
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function CommunityTuple({ item, isTabClick, searchKeyword }) {
+export default function CommunityTuple({ item, isTabClick, searchKeyword, isRegularMember }) {
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
   const [isAbled, setIsAbled] = useState(true);
@@ -57,7 +57,11 @@ export default function CommunityTuple({ item, isTabClick, searchKeyword }) {
         {renderTupleTitle(item.title)}
         {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
       </itemS.TupleTitleBox>
-      <itemS.TupleWriter>{renderHighlight(item.createdName)}</itemS.TupleWriter>
+      {isRegularMember ? (
+        <itemS.TupleWriter>{renderHighlight(item.createdName)}</itemS.TupleWriter>
+      ) : (
+        <itemS.TupleBlank></itemS.TupleBlank>
+      )}
       <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
       <itemS.TupleView>{item.viewCount}</itemS.TupleView>
     </itemS.TupleContainer>

@@ -6,7 +6,7 @@ export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;  
-  width: 11.85rem;
+  width: 11.65rem;
   height: 15rem;
   background-color: ${tokens.colors.White};
   border-radius: 0.33rem;

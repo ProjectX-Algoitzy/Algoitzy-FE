@@ -76,6 +76,10 @@ export const TupleWriter = styled.div`
   cursor: pointer;
 `;
 
+export const TupleBlank = styled.div`
+  width: 4.667rem;
+`;
+
 export const TupleDate = styled.div`
   display: flex;
   justify-content: center;

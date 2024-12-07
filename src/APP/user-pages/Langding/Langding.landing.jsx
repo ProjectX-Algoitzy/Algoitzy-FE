@@ -53,6 +53,7 @@ export default function Langding() {
           localStorage.setItem('memberId', response.result.memberId);
           localStorage.setItem('profileUrl', response.result.profileUrl);
           localStorage.setItem('handle', response.result.handle);
+          localStorage.setItem('regularStudyMemberYn', response.result.regularStudyMemberYn);
 
         }
       } catch (error) {

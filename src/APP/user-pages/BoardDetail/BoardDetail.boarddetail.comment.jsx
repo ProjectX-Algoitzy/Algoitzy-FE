@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/BoardDetail.boarddetail.comment.styles";
 import WriteBox from './WriteBox';
+import EditWriteBox from './EditWriteBox';
 import Reply from './BoardDetail.boarddetail.reply';
 import request from '../../Api/request';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
@@ -86,6 +87,10 @@ export default function Comment({ item, formatDate, fetchComment }) {
     };
   }, []);
 
+  const handleCancel = () => {
+    setIsEditing(false); // 수정 모드 종료
+  };
+
   // 계정 링크 이동
 	const handlePage = (handle) => {
     navigate(`/mypage/${handle}`);
@@ -97,13 +102,13 @@ export default function Comment({ item, formatDate, fetchComment }) {
         <itemS.CommentContainer>
           <itemS.CommentProfile onClick={() => handlePage(item.handle)} src={item.profileUrl} alt='프로필' />
           {isEditing ? (
-            <WriteBox
-              parentId={item.replyId}
+            <EditWriteBox
+              replyId={item.replyId} // 수정 대상 댓글 ID 전달
               fetchComment={fetchComment}
               handleLoad={handleEditComplete}
-              isEditing={true} // 수정 여부 전달
               editContent={editContent} // 수정할 초기 내용 전달
-              replyId={item.replyId} // 수정 대상 댓글 ID 전달
+              handleCancel={handleCancel}
+              isComment={true}
             />
           ) : (
             <itemS.CommentBox>
@@ -112,7 +117,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
                   <itemS.WriterName onClick={() => handlePage(item.handle)}>{item.createdName}</itemS.WriterName>
                   {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
                 </itemS.WriterNameBox>
-                {item.myBoardYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                {item.myReplyYn && !item.deleteByAdminYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
                   <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                     <itemS.DotButton src='/img/hamberg.svg' alt='...' />
                     {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
@@ -131,14 +136,14 @@ export default function Comment({ item, formatDate, fetchComment }) {
                   </itemS.DotBox>
                 )}
               </itemS.WriterBox>
-              {item.deleteYn || item.deleteByAdminYn ? (
+              {item.deleteYn ? (
                 <itemS.ContentBox>
                   <itemS.DeletedIcon src='/img/deleted_icon_black.svg' alt='삭제된 글' />
-                  <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.deleteYn ? '작성자에 의해 삭제된 댓글 입니다.' : '관리자에 의해 삭제된 댓글 입니다.'}</itemS.Content>
+                  <itemS.Content data-delete-yn={item.deleteYn ? true : undefined}>{item.deleteByAdminYn ? '관리자에 의해 삭제된 댓글입니다.' : '작성자에 의해 삭제된 댓글입니다.'}</itemS.Content>
                 </itemS.ContentBox>
               ) : (
                 <itemS.ContentBox>
-                  <itemS.Content deleteYn={item.deleteYn || item.deleteByAdminYn}>{item.content}</itemS.Content>
+                  <itemS.Content data-delete-yn={item.deleteYn ? true : undefined}>{item.content}</itemS.Content>
                 </itemS.ContentBox>
               )}
               <itemS.InfoBottomBox>
@@ -149,6 +154,7 @@ export default function Comment({ item, formatDate, fetchComment }) {
                   alt='하뚜'
                   onClick={toggleLike} // 클릭 시 좋아요 토글
                 />
+                <itemS.LikeCount>{item.likeCount}</itemS.LikeCount>
               </itemS.InfoBottomBox>
             </itemS.CommentBox>
           )}
@@ -158,13 +164,12 @@ export default function Comment({ item, formatDate, fetchComment }) {
         {isReplyBoxVisible && (
           <itemS.WriteBox>
             <itemS.Blank></itemS.Blank>
+            <itemS.ReplyProfile src={item.profileUrl} alt='프로필' />
             <WriteBox
               parentId={item.replyId}
               fetchComment={fetchComment} 
               handleLoad={handleReplyClick}
-              isEditing={false} // 수정 여부 전달
-              editContent={editContent} // 수정할 초기 내용 전달
-              replyId={item.replyId} // 수정 대상 댓글 ID 전달
+              isReply={true}
             />
           </itemS.WriteBox>
         )}

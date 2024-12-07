@@ -2,16 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import request from '../../Api/request';
 import * as itemS from "./Styled/Community.community.main.styles";
 import CommunityTable from './Community.community.table';
-import { AlertContext } from '../../Common/Alert/AlertContext';
-import { dummyData } from './dummy';
 import { useNavigate } from 'react-router-dom';
 
 export default function Community() {
-	const { alert } = useContext(AlertContext);
 	const navigate = useNavigate();
 
 	const [posts, setPosts] = useState([]);
 	const [categories, setCategories] = useState([{ code: '', name: '전체' }]); // Default '전체' tab
+	const [isRegularMember, setIsRegularMember] = useState(localStorage.getItem('regularStudyMemberYn')); // 정규스터디 참여 이력
 
 	// api 요청 파라미터
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -25,7 +23,7 @@ export default function Community() {
 	
 	// 페이지
 	const [currentPage, setCurrentPage] = useState(0);
-	const [totalPages, setTotalPages] = useState(5); //TODO - 임시 ) 전체 페이지 수 -> response 값으로 전체 개수 받아와야함
+	const [totalPages, setTotalPages] = useState(0); //TODO - 임시 ) 전체 페이지 수 -> response 값으로 전체 개수 받아와야함
 	const [currentPageGroup, setCurrentPageGroup] = useState(0);
 	const itemsPerPage = 10; // 페이지당 항목 수
  
@@ -58,6 +56,7 @@ export default function Community() {
 			if (response.isSuccess) {
 				console.log("게시글 목록 조회 성공");
 				setPosts(response.result.boardList);
+				setTotalPages(Math.ceil(response.result.totalCount / itemsPerPage));
 			} else {
 				console.error("게시글 목록 조회 실패:", response);
 			}
@@ -127,8 +126,8 @@ export default function Community() {
   };
 
   const handleWriteClick = () => {
-	navigate('/writepost'); // Navigate to the /writepost route
-};
+		navigate('/writepost'); 
+	};
 
 	return (
 		<itemS.OuterContainer>
@@ -144,7 +143,7 @@ export default function Community() {
 									type="text"
 									value={searchKeyword}
 									onChange={(e) => setSearchKeyword(e.target.value)}
-									placeholder='제목, 내용, 작성자 검색'
+									placeholder='제목, 작성자 검색'
 								/>
 								<itemS.SearchIcon onClick={() => handleSearch()} src='/img/search.svg' alt='돋보기' />
 							</itemS.SearchContainer>
@@ -179,6 +178,7 @@ export default function Community() {
 						items={posts}
 						isTabClick={isTabClick}
 						searchKeyword={searchKeyword}
+						isRegularMember={isRegularMember}
 						/>
 					<itemS.PaginationContainer>
 						<itemS.BlankBtn></itemS.BlankBtn>
@@ -204,7 +204,11 @@ export default function Community() {
 							/>
 						</itemS.Pagination>
 
-						<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
+						{isRegularMember ? (
+							<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
+						) : (
+							<itemS.BlankBtn></itemS.BlankBtn>
+						)}
 					</itemS.PaginationContainer>
 				</itemS.InnerContainer>
 			</itemS.Container>

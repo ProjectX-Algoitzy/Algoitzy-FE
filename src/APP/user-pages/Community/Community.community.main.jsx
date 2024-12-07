@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const ISREGULAR = localStorage.getItem('regularStudyMemberYn'); // 정규스터디 참여 이력
 
 export default function Community() {
+	const [isRegularMember, setIsRegularMember] = useState(false);
 	const navigate = useNavigate();
 
 	const [posts, setPosts] = useState([]);
@@ -34,6 +35,11 @@ export default function Community() {
 		{ length: Math.min(5, totalPages - currentPageGroup * 5) },
 		(_, i) => currentPageGroup * 5 + i
 	);
+
+	useEffect(() => {
+		// Load `regularStudyMemberYn` from localStorage and set state
+		setIsRegularMember(localStorage.getItem('regularStudyMemberYn') === 'true');
+	  }, []);	
 
 	const fetchCategories = async () => {
     try {
@@ -181,7 +187,7 @@ export default function Community() {
 						items={posts}
 						isTabClick={isTabClick}
 						searchKeyword={searchKeyword}
-						isRegularMember={ISREGULAR}
+						isRegularMember={isRegularMember}
 						/>
 					<itemS.PaginationContainer>
 						<itemS.BlankBtn></itemS.BlankBtn>
@@ -207,7 +213,7 @@ export default function Community() {
 							/>
 						</itemS.Pagination>
 
-						{ISREGULAR ? (
+						{isRegularMember ? (
 							<itemS.WriteBtn onClick={handleWriteClick}>+ 글쓰기</itemS.WriteBtn>
 						) : (
 							<itemS.BlankBtn></itemS.BlankBtn>

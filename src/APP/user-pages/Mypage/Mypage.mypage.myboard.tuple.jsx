@@ -25,7 +25,7 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
   };
 
   return (
-    <itemS.TupleContainer data-delete-yn={item.deleteYn ? true : undefined}>
+    <itemS.TupleContainer data-delete-yn={item.deleteYn ? true : undefined}  temp={(selectedTab !== 'board').toString()} >
       {isMemberMatch ? (
         <itemS.CheckBox
           type="checkbox"
@@ -71,7 +71,8 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
               </itemS.TupleTitle>
             </itemS.TupleTitleBox>
           ) : (
-            <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
+            // <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}> //TODO -  에디터 이동 넣을 곳
+            <itemS.TupleTitleBox>
               <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
                 {truncateTitle(item.title)}
               </itemS.TupleTitle>

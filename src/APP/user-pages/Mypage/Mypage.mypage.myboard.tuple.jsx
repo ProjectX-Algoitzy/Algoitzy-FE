@@ -63,11 +63,20 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
         // 임시저장 글 탭
         <>
           <itemS.TupleId>{item.category}</itemS.TupleId>
-          <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
-            <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
-              {truncateTitle(item.title)}
-            </itemS.TupleTitle>
-          </itemS.TupleTitleBox>
+          {item.deleteYn ? (
+            <itemS.TupleTitleBox>
+              <itemS.DeletedIcon src='/img/deleted_icon.svg' alt='삭제된 글' />
+              <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
+                {truncateTitle(item.title)}
+              </itemS.TupleTitle>
+            </itemS.TupleTitleBox>
+          ) : (
+            <itemS.TupleTitleBox onClick={() => moveToDetail(item.boardId)}>
+              <itemS.TupleTitle data-delete-yn={item.deleteYn ? true : undefined}>
+                {truncateTitle(item.title)}
+              </itemS.TupleTitle>
+            </itemS.TupleTitleBox>
+          )}
           <itemS.TupleTempDate>{formatDate(item.createdTime)}</itemS.TupleTempDate>
         </>
       )}

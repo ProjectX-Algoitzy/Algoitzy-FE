@@ -17,6 +17,11 @@ export const TableContainerWrapper = styled.div`
   flex-direction: row;
 `;
 
+export const A = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const TabBtnContainer = styled.div`
   display: flex;
   flex-direction: row;

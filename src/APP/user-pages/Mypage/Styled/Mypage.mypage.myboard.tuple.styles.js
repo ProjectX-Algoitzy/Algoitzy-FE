@@ -50,6 +50,11 @@ export const CheckBox = styled.input`
   }
 `;
 
+
+export const Blank = styled.div`
+  width: 0.875rem;
+`;
+
 export const TupleId = styled.div`
   display: flex;
   justify-content: center;

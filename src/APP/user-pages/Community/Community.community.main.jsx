@@ -4,12 +4,14 @@ import * as itemS from "./Styled/Community.community.main.styles";
 import CommunityTable from './Community.community.table';
 import { useNavigate } from 'react-router-dom';
 
+const ISREGULAR = localStorage.getItem('regularStudyMemberYn'); // 정규스터디 참여 이력
+
 export default function Community() {
+	const [isRegularMember, setIsRegularMember] = useState(false);
 	const navigate = useNavigate();
 
 	const [posts, setPosts] = useState([]);
 	const [categories, setCategories] = useState([{ code: '', name: '전체' }]); // Default '전체' tab
-	const [isRegularMember, setIsRegularMember] = useState(localStorage.getItem('regularStudyMemberYn')); // 정규스터디 참여 이력
 
 	// api 요청 파라미터
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -33,6 +35,11 @@ export default function Community() {
 		{ length: Math.min(5, totalPages - currentPageGroup * 5) },
 		(_, i) => currentPageGroup * 5 + i
 	);
+
+	useEffect(() => {
+		// Load `regularStudyMemberYn` from localStorage and set state
+		setIsRegularMember(localStorage.getItem('regularStudyMemberYn') === 'true');
+	  }, []);	
 
 	const fetchCategories = async () => {
     try {
@@ -90,6 +97,8 @@ export default function Community() {
 		} else if (tab.name === '홍보') {
 				setContent('궁금한 점을 나누며 성장하는 공간입니다.');
 		}
+		setCurrentPage(0);
+		setCurrentPageGroup(0);
 	};
 
 	const handleSearch = () => {

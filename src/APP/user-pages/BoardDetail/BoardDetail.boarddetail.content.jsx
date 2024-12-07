@@ -36,7 +36,7 @@ export default function Content({ content, files }) {
   return (
     <itemS.Container>
       <itemS.ContentContainer>
-      <MarkdownContent markdownContent={content || 'sssss'} /> {/* content 전달 */}
+      <MarkdownContent markdownContent={content || ''} /> {/* content 전달 */}
         {files && files.length > 0 && (
           <itemS.FileContainer>
             <itemS.FileText>첨부파일</itemS.FileText>

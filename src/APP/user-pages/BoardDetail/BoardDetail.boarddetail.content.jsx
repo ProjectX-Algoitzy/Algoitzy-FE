@@ -1,5 +1,6 @@
 import React from "react";
 import * as itemS from "./Styled/BoardDetail.boarddetail.content.styles";
+import MarkdownContent from './BoardDetail.boarddetail.markdowncontent';
 
 // 확장자별 아이콘 매핑
 const fileIcons = {
@@ -35,7 +36,7 @@ export default function Content({ content, files }) {
   return (
     <itemS.Container>
       <itemS.ContentContainer>
-        <itemS.Content>{content}</itemS.Content>
+      <MarkdownContent markdownContent={content || 'sssss'} /> {/* content 전달 */}
         {files && files.length > 0 && (
           <itemS.FileContainer>
             <itemS.FileText>첨부파일</itemS.FileText>

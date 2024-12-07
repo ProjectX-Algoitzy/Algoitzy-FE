@@ -111,9 +111,9 @@ function App() {
             <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
             <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
-            <Route path="/writepost" element={<WritePost />} /> {/* 새 글쓰기 */}
-            <Route path="/community" element={isLoggedIn() ? <Community /> : <Navigate to="/" />} />
-            <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/login" />} /> {/* 커뮤니티 글 세부 */}
+            <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
+            <Route path="/community" element={<Community />} />
+            <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} /> {/* 커뮤니티 글 세부 */}
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}

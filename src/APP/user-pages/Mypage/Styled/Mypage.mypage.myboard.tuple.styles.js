@@ -16,9 +16,13 @@ export const TupleContainer = styled.div`
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
 
+  // &:hover {
+  //   background-color: ${tokens.colors.B_Grey_2};
+  //   cursor: ${(props) => (props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
+  // }
   &:hover {
-    background-color: ${tokens.colors.B_Grey_2};
-    cursor: ${(props) => (props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
+    background-color: ${(props) => (props.temp === 'true' ? 'inherit' : tokens.colors.B_Grey_2)};
+    cursor: ${(props) => (props.temp === 'true' ? 'default' : props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
   }
 `;
 

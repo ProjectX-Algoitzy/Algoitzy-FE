@@ -65,6 +65,21 @@ export default function Editor({
   const { alert } = useContext(AlertContext);
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // 기본 브라우저 확인창 표시
+      event.preventDefault();
+      event.returnValue = ''; // 대부분의 브라우저에서 이 설정으로 기본 메시지가 표시됨
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    return () => {
+      // 컴포넌트 언마운트 시 이벤트 제거
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+  
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
       // 일정 시간 후 스크롤 상태 비활성화

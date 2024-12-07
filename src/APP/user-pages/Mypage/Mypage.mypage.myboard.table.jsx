@@ -207,6 +207,7 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
                         item={item}
                         isChecked={checkedItems[item.boardId] || false}
                         onCheckChange={() => handleCheckChange(item.boardId)}
+                        isMemberMatch={isMemberMatch}
                       />
                     ))
                 )}
@@ -231,14 +232,15 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
         </itemS.TableContainerWrapper>
         </itemS.Table>
       <itemS.ButtonContainer>
-        <itemS.AllCheckBox>
-          <itemS.AllCheck
-            type="checkbox"
-            checked={isAllChecked}
-            onChange={handleAllCheckChange}
-          />
-          <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
-        </itemS.AllCheckBox>
+        {isMemberMatch && 
+          <itemS.AllCheckBox>
+            <itemS.AllCheck
+              type="checkbox"
+              checked={isAllChecked}
+              onChange={handleAllCheckChange}
+            />
+            <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
+          </itemS.AllCheckBox>}
         {isMemberMatch && (
           selectedTab === 'board' ? (
             <itemS.ButtonBox>

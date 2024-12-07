@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/Mypage.mypage.myboard.tuple.styles";
 
-export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChange }) {
+export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChange, isMemberMatch }) {
   const navigate = useNavigate();
 
   const formatDate = (createdTime) => {
@@ -26,15 +26,19 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
 
   return (
     <itemS.TupleContainer data-delete-yn={item.deleteYn ? true : undefined}>
-
-      <itemS.CheckBox
-				type="checkbox"
-				checked={isChecked}
-				onChange={(e) => {
-          e.stopPropagation();
-          onCheckChange();
-        }}
-			/>
+      {isMemberMatch ? (
+        <itemS.CheckBox
+          type="checkbox"
+          checked={isChecked}
+          onChange={(e) => {
+            e.stopPropagation();
+            onCheckChange();
+          }}
+        />
+      ) : (
+        <itemS.Blank></itemS.Blank>
+      )}
+      
       {selectedTab === "board" ? (
         <>
           <itemS.TupleId>{item.category}</itemS.TupleId>

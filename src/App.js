@@ -52,6 +52,7 @@ const Root = styled.div`
   min-height: 100vh; /* Root가 화면의 전체 높이를 차지하도록 설정 */
 `;
 
+
 const ContentWrapper = styled.div`
   padding-bottom: 9.17rem; /* 푸터 높이만큼의 여백을 추가 */
 `;

@@ -17,6 +17,7 @@ export default function BoardDetail() {
 
 	const [board, setBoard] = useState({});
 	const [comment, setComment] = useState([]);
+	const [commentCount, setCommentCount] = useState(0);
 
 	// 페이지
 	const [currentPage, setCurrentPage] = useState(0);
@@ -63,6 +64,7 @@ export default function BoardDetail() {
       if (response.isSuccess) {
         console.log("댓글 조회 성공", response.result.replyList);
         setComment(response.result.replyList);
+				setCommentCount(response.result.replyList.length)
 				setTotalPages(Math.ceil(response.result.parentReplyCount / itemsPerPage));
       } else {
         console.error("댓글 조회 실패:", response);
@@ -258,29 +260,32 @@ export default function BoardDetail() {
 							/>
 						))}
 						
-						<itemS.PaginationContainer>
-							<itemS.Pagination>
-								<itemS.PaginationArrow
-									left
-									onClick={() => handlePageGroupChange('prev')}
-									disabled={currentPageGroup === 0}
-								/>
-								{pageNumbers.map((pageNumber) => (
-									<itemS.PaginationNumber
-										key={pageNumber}
-										onClick={() => handlePageChange(pageNumber)}
-										active={pageNumber === currentPage}
-									>
-										{pageNumber + 1}
-									</itemS.PaginationNumber>
-								))}
-								<itemS.PaginationArrow
-									onClick={() => handlePageGroupChange('next')}
-									disabled={(currentPageGroup + 1) * 5 >= totalPages}
-								/>
-							</itemS.Pagination>
+						{commentCount > 0 && (
+							<itemS.PaginationContainer>
+								<itemS.Pagination>
+									<itemS.PaginationArrow
+										left
+										onClick={() => handlePageGroupChange('prev')}
+										disabled={currentPageGroup === 0}
+									/>
+									{pageNumbers.map((pageNumber) => (
+										<itemS.PaginationNumber
+											key={pageNumber}
+											onClick={() => handlePageChange(pageNumber)}
+											active={pageNumber === currentPage}
+										>
+											{pageNumber + 1}
+										</itemS.PaginationNumber>
+									))}
+									<itemS.PaginationArrow
+										onClick={() => handlePageGroupChange('next')}
+										disabled={(currentPageGroup + 1) * 5 >= totalPages}
+									/>
+								</itemS.Pagination>
 
-						</itemS.PaginationContainer>
+							</itemS.PaginationContainer>
+						)}
+						
 					</itemS.ContentContainer>
 
 				</itemS.InnerContainer>

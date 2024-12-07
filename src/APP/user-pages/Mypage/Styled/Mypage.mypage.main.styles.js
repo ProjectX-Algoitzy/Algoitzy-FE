@@ -5,7 +5,7 @@ import * as tokens from "../../../../tokens"
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-  background: linear-gradient(to top, #EFF1FD, #E8F7FF);
+  background: linear-gradient(to bottom, #EFF1FD, #E8F7FF);
   @media (max-width: 600px) {
     padding-left: 4rem;
   }

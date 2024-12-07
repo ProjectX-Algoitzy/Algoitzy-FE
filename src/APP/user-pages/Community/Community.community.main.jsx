@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ISREGULAR = localStorage.getItem('regularStudyMemberYn'); // 정규스터디 참여 이력
 
+
 export default function Community() {
 	const [isRegularMember, setIsRegularMember] = useState(false);
 	const navigate = useNavigate();

@@ -480,8 +480,14 @@ const categoryConverter = (categoryOptions) => {
   };
 
   const deleteFile = async (file) => {
+    let response;
+    
     try {
-      const response = await request.delete('/s3', { params: { fileUrl: file.fileUrl } });
+      if (boardId){
+        response = await request.delete('/s3', { params: { fileUrl: file.fileUrl } });
+      } else {
+        response = await request.delete('/board-file', { params: { fileUrl: file.fileUrl } });
+      }
       if (response.isSuccess) {
         setUploadedFiles((prevFiles) =>
           prevFiles.filter((f) => f.fileUrl !== file.fileUrl)

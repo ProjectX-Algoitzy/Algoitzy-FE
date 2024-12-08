@@ -7,7 +7,8 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 1.33rem;
   height: 100%;
-  width: 39.042rem;
+  width: 100%;
+  max-width: 34rem;
 
   @media (max-width: 600px) {
     width: 33.04rem;
@@ -20,7 +21,6 @@ export const Title = styled.div`
   justify-content: space-between;
   margin-top: 4.17rem;
   margin-bottom: 1.5rem;
-  /* width: 33.04rem; */
   width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
@@ -32,7 +32,6 @@ export const ComingSoonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 33.04rem; */
   width: 100%;
   height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};

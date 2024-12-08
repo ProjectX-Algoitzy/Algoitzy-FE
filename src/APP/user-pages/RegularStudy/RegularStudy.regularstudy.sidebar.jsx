@@ -50,16 +50,7 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
                 <img src="/img/iconpeople.png" alt="사람아이콘" style={{ width: "1rem", height: "1rem", marginRight: "0.333rem" }} />
                 {regularStudyInfo.memberCount}명
               </itemS.CountContainer>
-              {/* <itemS.OnlineContainer>
-                <img src="/img/icononline.png" alt="사람아이콘" style={{width:"24px", height:"24px", marginRight:"8px"}} />
-                온라인
-              </itemS.OnlineContainer> */}
             </itemS.CountAndOnlineContainer>
-            {/* <itemS.ManagerNameContainer>
-              <img src={regularStudyInfo.leaderProfileUrl} alt="회색동그라미" style={{width:"18px", height:"18px", marginRight:"8px"}} />
-              {regularStudyInfo.leaderName}
-              <img src="/img/iconstudymanager.png" alt="스터디장" style={{width:"58px", height:"19px", marginLeft:"8px"}} />
-            </itemS.ManagerNameContainer> */}
             <itemS.LinkContainer>
               <itemS.styledLink
                 onClick={() => setActiveComponent('home')}

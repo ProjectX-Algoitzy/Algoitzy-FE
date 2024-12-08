@@ -5,7 +5,6 @@ export const CanNotEnterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 33.04rem; */
   width: 100%;
   height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
@@ -19,7 +18,8 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 1.33rem;
   height: 100%;
-  width: 39.042rem;
+  width: 100%;
+  max-width: 34rem;
 
   @media (max-width: 600px) {
     width: 33.04rem;
@@ -30,7 +30,6 @@ export const Container = styled.div`
 export const Title = styled.div`
   display: flex;
   flex-direction: row;
-  /* width: 33.04rem; */
   width: 100%;
   justify-content: space-between;
   margin-top: 4.17rem;
@@ -57,7 +56,6 @@ export const CurriculumContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0.83rem;
-  /* width: 33.04rem; */
   width: 100%;
   height: 4.17rem;
   background-color: ${(props) => (props.isCurrentWeek ? tokens.colors.White : tokens.colors.Grey_2)}; /* props로 배경색 변경 */

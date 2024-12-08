@@ -9,10 +9,9 @@ export const OutsideContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   margin-top: 3.33rem;
-  /* overflow: auto;  */
-  /* padding-left: 2rem;
-  padding-right: 15rem; */
+  overflow: auto;
   justify-content: center; 
+  width: 50rem;
   
   @media (max-width: 600px) {
     flex-direction: column; 

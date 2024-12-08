@@ -34,7 +34,6 @@ export const Group = styled.div`
   flex-wrap: wrap;
   align-items: flex-start; 
   width: 50.83rem;
-  justify-content: space-between;
   padding-top: 1.83rem;
   @media (max-width: 600px) {
     width: 33.8rem;

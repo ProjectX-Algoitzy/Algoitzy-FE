@@ -6,7 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   padding-left: 1.33rem;
   height: 100%;
-  width: 39.042rem;
+  width: 100%;
+  max-width: 34rem;
 
   @media (max-width: 600px) {
     width: 33.04rem;
@@ -18,7 +19,6 @@ export const Title = styled.div`
   display: flex;
   margin-top: 4.17rem;
   margin-bottom: 1.5rem;
-  /* width: 33.04rem; */
   width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
@@ -30,7 +30,6 @@ export const CanNotEnterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 33.04rem; */
   width: 100%;
   height: 15rem;
   background-color: ${tokens.colors.B_Grey_1};
@@ -40,9 +39,7 @@ export const CanNotEnterContainer = styled.div`
 `;
 
 export const StyledTable = styled.table`
-  /* width: 33.04rem; */
   width: 100%;
-  /* height: 11.54rem; */
   border-collapse: collapse;
 `;
 
@@ -61,8 +58,6 @@ export const StyledTd = styled.td`
   border-top: ${({ rowIndex }) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
   border-left: ${({ colIndex }) => (colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
   border-right: ${({ colIndex }) => (colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2')};
-  /* height: ${({ rowIndex }) => (rowIndex === 0 ? '1.88rem' : '2.29rem')};
-  width: ${({ colIndex }) => (colIndex === 0 ? '7.33rem' : '2.29rem')}; */
   width: ${({ colIndex }) => (colIndex === 0 ? '7.33rem' : 'auto')};
   height: ${({ rowIndex }) => (rowIndex === 0 ? '1.88rem' : '2.5rem')};
 `;
@@ -75,7 +70,6 @@ export const ImgIcon = styled.img`
 export const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  /* width: 33.04rem; */
   width: 100%;
   margin-top: 1.5rem;
 `;

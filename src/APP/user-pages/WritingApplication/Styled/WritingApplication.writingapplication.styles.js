@@ -5,7 +5,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-image: url('/img/makingapplication.png'); */
   margin-bottom: 5rem;
 `;
 
@@ -71,7 +70,8 @@ export const ContentContainer = styled.div` /* 하나의 질문 전체를 담아
   background-color: ${tokens.colors.White};
   border-radius: 0.167rem;
   padding: 1.333rem 1.292rem 0.333rem 1rem;
-  width: 33.04rem;
+  /* width: 33.04rem; */
+  width: 50rem;
   box-shadow: 0px 0.083rem 0.125rem 0.083rem #D6DaF0; 
 `;
 

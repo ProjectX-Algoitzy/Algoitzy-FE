@@ -11,8 +11,8 @@ export const InnerContainer = styled.div`
   flex-direction: column;
   align-items: center; 
   border-radius: 0.83rem;
-  /* padding: 6.58rem 15rem; */
   padding: 6.58rem 0rem;
+  width: 50rem;
 
   @media (max-width: 600px) {
     width: 100%;

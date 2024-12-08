@@ -13,6 +13,7 @@ export const InnerContainer = styled.div`
   align-items: center; 
   border-radius: 0.83rem;
   padding: 6.58rem 0;
+  width: 50rem;
 `;
 
 export const TitleContainer = styled.div`

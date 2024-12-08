@@ -26,6 +26,7 @@ export const InnerContainer = styled.div`
   align-items: center; 
   border-radius: 0.83rem;
   padding: 6.58rem 0;
+  width: 50rem;
 `;
 
 export const Group = styled.div`
@@ -33,6 +34,7 @@ export const Group = styled.div`
   flex-wrap: wrap;
   align-items: flex-start; 
   width: 50.83rem;
+  justify-content: space-between;
   padding-top: 1.83rem;
   @media (max-width: 600px) {
     width: 33.8rem;

@@ -18,6 +18,7 @@ export const InnerContainer = styled.div`
   border: 0.042rem solid ${tokens.colors.Grey_4};
   border-radius: 0.83rem;
   padding: 5.33rem 12.71rem;
+  width: 50rem;
   margin: 5rem 0;
 `;
 

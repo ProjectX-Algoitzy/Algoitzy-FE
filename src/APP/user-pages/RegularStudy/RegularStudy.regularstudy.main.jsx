@@ -8,15 +8,6 @@ import RegularStudyMocktest from './RegularStudy.regularstudy.mocktest';
 import { useParams } from 'react-router-dom';
 
 export default function RegularStudyMain() {
-  // const [activeComponent, setActiveComponent] = useState('home');
-  // const [activeComponent, setActiveComponent] = useState(
-  //   () => localStorage.getItem('activeComponent') || 'home'
-  // );
-
-  // useEffect(() => {
-  //   localStorage.setItem('activeComponent', activeComponent);
-  // }, [activeComponent]);
-
   const { id } = useParams();  // 정규스터디 ID 가져오기
 
   const getInitialComponent = () => {

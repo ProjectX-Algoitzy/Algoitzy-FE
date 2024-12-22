@@ -109,7 +109,8 @@ export default function EditMyInfo() {
   const NameRegex = /^[a-zA-Z가-힣\s]+$/;
 
   // 비밀번호 유효성 검사
-  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,15}$/;
+  // const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[a-zA-Z\d@$!%*#?&]{8,15}$/;
+  const PasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/])[a-zA-Z\d~!@#$%^&*_\-+=`|\\(){}[\]:;"'<>,.?/]{8,15}$/;
 
   // 핸드폰 번호 유효성 검사 
   const PhoneRegex = /^01[0-9]-\d{4}-\d{4}$/;

@@ -58,7 +58,8 @@ export default function WritePost() {
           initialBoardId={boardId} // 수정 시 boardId 전달
           initialCategoryCode={categoryCode} // 수정 시 카테고리 코드 전달
           initialCategory={category}
-          initialContent={markdownContent} // Codemirror 초기 값 전달
+          initialContent={markdownContent}
+          markdownContent={markdownContent} // Codemirror 초기 값 전달
 />
 
         <Preview title={title} markdownContent={markdownContent} />

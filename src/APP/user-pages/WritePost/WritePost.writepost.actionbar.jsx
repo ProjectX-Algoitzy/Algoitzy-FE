@@ -6,7 +6,6 @@ import { markdown } from '@codemirror/lang-markdown';
 import { history, historyKeymap, defaultKeymap } from '@codemirror/commands';
 import * as Styled from './Styled/WritePost.writepost.editor.styles';
 import request from '../../Api/request';
-import MarkdownEditor from './WritePost.writepost.markdowneditor';
 import DraftModal from './WritePost.writepost.draft';
 import FileTable from './WritePost.writepost.filetable';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
@@ -24,7 +23,6 @@ export default function Editor({
   initialCategory,
   initialUploadedFiles,
   initialSaveYn,
-  markdownContent,
 }) {
 
   const navigate = useNavigate();
@@ -181,7 +179,6 @@ const categoryConverter = (categoryOptions) => {
         console.log('수정 글 불러오기 성공:', title);
   };
 
-  /*
   useEffect(() => {
 
     if (!editorRef.current || initialContent === undefined) return;
@@ -191,7 +188,7 @@ const categoryConverter = (categoryOptions) => {
         keymap.of([...defaultKeymap, ...historyKeymap]), // 기본 키맵 및 Undo/Redo 키맵 추가
         history(), // 히스토리 확장 추가
         markdown(),
-        placeholder("내용55을 적어보세요"),
+        placeholder("내용을 적어보세요"),
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
@@ -213,7 +210,6 @@ const categoryConverter = (categoryOptions) => {
       view.destroy();
     };
   }, []);
-  */
 
   useEffect(() => {
     // initialContent가 늦게 바뀌므로 2번 변경 감지 후 초기화 끄기
@@ -568,7 +564,7 @@ const categoryConverter = (categoryOptions) => {
     };
 
     const handleSaveDraft = async () => {
-      const content = markdownContent;
+      const content = editorView.state.doc.toString().trim();
       const fileUrls = uploadedFiles.map(file => file.fileUrl);
 
       const requestData = {
@@ -675,7 +671,7 @@ const fetchDraftDetails = async (boardId) => {
 
  // 게시글 등록 API 호출 함수
  const handlePostSubmit = async () => {
-  const content = markdownContent;
+  const content = editorView.state.doc.toString().trim();
 
   const fileUrls = uploadedFiles.map(file => file.fileUrl);
 
@@ -754,7 +750,7 @@ const fetchDraftDetails = async (boardId) => {
       )}
       
     </Styled.EditorHeader>
-      {/* 
+
       <Styled.Toolbar>
         <button onClick={() => applyMarkdownSyntax('heading1')}><img src='/img/toolbar_H1.svg' alt="Heading 1"/></button>
         <button onClick={() => applyMarkdownSyntax('heading2')}><img src='/img/toolbar_H2.svg' alt="Heading 2"/></button>
@@ -786,18 +782,6 @@ const fetchDraftDetails = async (boardId) => {
       </Styled.Toolbar>
 
       <Styled.EditorContainer ref={editorRef} />
-      */}
-
-      <MarkdownEditor
-        initialContent={initialContent}
-        setMarkdownContent={setMarkdownContent}
-        applyMarkdownSyntax={applyMarkdownSyntax}
-        handleFileUpload={handleFileUpload}
-        handleImageUpload={handleImageUpload}
-        fileInputRef={fileInputRef}
-        imageInputRef={imageInputRef}
-      />
-
 
       {isModalOpen && (
         <Styled.ModalContent ref={modalRef} style={{ position: 'absolute', top: modalPosition.top, left: modalPosition.left }}>

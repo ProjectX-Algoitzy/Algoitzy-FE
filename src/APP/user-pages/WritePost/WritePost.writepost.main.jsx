@@ -7,25 +7,29 @@ import request from '../../Api/request';
 
 export default function WritePost() {
   const location = useLocation();
-  const { id } = useParams();  // 게시글 ID 가져오기
-  const { boardId } = location.state || {}; // 수정 시 전달받은 게시글 ID
+  const [boardId, setBoardId] = useState(location.state || {});
   const [markdownContent, setMarkdownContent] = useState('');
+  const [initialContent, setInitialContent] = useState('');
   const [title, setTitle] = useState('');
   const [categoryCode, setCategoryCode] = useState(null);
   const [category, setCategory] = useState(null);
+  const [boardFileList, setBoardFileList] = useState([]);
+  const [saveYn, setSaveYn] = useState(false);
 
   useEffect(() => {
-    // 게시글 ID가 있을 경우 수정 데이터를 불러옵니다.
     if (boardId) {
       const fetchBoardData = async () => {
         try {
           const response = await request.get(`/board/${boardId}`);
           if (response.isSuccess) {
-            const { title, content, category } = response.result;
+            const { title, content, category, boardFileList, saveYn } = response.result;
             setTitle(title);
             setMarkdownContent(content);
-            setCategoryCode(categoryCode); // 카테고리 설정
+            setInitialContent(content);
+            setCategoryCode(categoryCode);
             setCategory(category);
+            setBoardFileList(boardFileList);
+            setSaveYn(saveYn);
           } else {
             console.error('게시글 상세 조회 실패:', response.message);
           }
@@ -33,7 +37,6 @@ export default function WritePost() {
           console.error('게시글 상세 조회 중 오류:', error);
         }
       };
-
       fetchBoardData();
     }
   }, [boardId]);
@@ -52,14 +55,22 @@ export default function WritePost() {
     <Styled.Container>
       <Styled.MarkdownEditorContainer>
         <Editor
+          initialBoardId={boardId}
+
           title={title}
           setTitle={setTitle}
-          setMarkdownContent={setMarkdownContent}
-          initialBoardId={boardId} // 수정 시 boardId 전달
-          initialCategoryCode={categoryCode} // 수정 시 카테고리 코드 전달
+          
+          initialCategoryCode={categoryCode}
           initialCategory={category}
-          initialContent={markdownContent}
-          markdownContent={markdownContent} // Codemirror 초기 값 전달
+
+          boardFileList={boardFileList}
+          setBoardFileList={setBoardFileList}
+
+          initialContent={initialContent}
+          markdownContent={markdownContent}
+          setMarkdownContent={setMarkdownContent}
+
+          saveYn={saveYn}
 />
 
         <Preview title={title} markdownContent={markdownContent} />

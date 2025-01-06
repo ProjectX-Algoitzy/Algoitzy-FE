@@ -18,13 +18,14 @@ export default function Editor({
   initialBoardId,
   title,
   setTitle,
-  initialContent,
-  setMarkdownContent,
   initialCategoryCode,
   initialCategory,
-  initialUploadedFiles,
-  initialSaveYn,
+  boardFileList,
+  setBoardFileList,
+  initialContent,
   markdownContent,
+  setMarkdownContent,
+  saveYn,
 }) {
   
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ export default function Editor({
   const { state } = location;
 
   const editorRef = useRef(null);
-  const modalRef = useRef(null);
   const [editorView, setEditorView] = useState(null);
+  
   const [isScrolling, setIsScrolling] = useState(false); // 스크롤 상태 관리
   
   const [boardId, setBoardId] = useState(initialBoardId); // boardId를 상태로 관리
@@ -48,8 +49,6 @@ export default function Editor({
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
-
-  const [saveYn, setSaveYn] = useState(state?.initialSaveYn || false); // 임시 저장 여부 (default: true)
 
   const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false); // 모달 상태
@@ -368,7 +367,6 @@ const fetchDraftDetails = async (boardId) => {
       }
 
       if (response.isSuccess) {
-        setSaveYn(true);
         setBoardId(response.result);
         setCategory(selectedCategory);
 

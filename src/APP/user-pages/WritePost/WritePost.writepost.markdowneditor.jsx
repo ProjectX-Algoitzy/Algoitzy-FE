@@ -5,14 +5,15 @@ import { markdown } from '@codemirror/lang-markdown';
 import { history, historyKeymap, defaultKeymap } from '@codemirror/commands';
 import * as Styled from './Styled/WritePost.writepost.editor.styles';
 import request from '../../Api/request';
+import FileTable from './WritePost.writepost.filetable';
 
 
 export default function MarkdownEditor({
   initialContent,
   setMarkdownContent,
-  handleFileUpload,
   fileInputRef,
   imageInputRef,
+  onUploadedFilesChange,
 }) {
 
   const editorRef = useRef(null);
@@ -23,6 +24,8 @@ export default function MarkdownEditor({
   const [linkURL, setLinkURL] = useState('');
 
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -201,6 +204,61 @@ export default function MarkdownEditor({
     setSelectedFiles(files); // 상태에 파일 목록 저장
     handleFileUpload(event);
   };
+
+  const deleteFile = async (file) => {
+    let response;
+    try {
+      if (file.onlyS3==true){
+        response = await request.delete('/s3', { params: { fileUrl: file.fileUrl } });
+      } else {
+        response = await request.delete('/board-file', {
+          params: { fileUrl: file.fileUrl },
+        });      }
+      if (response.isSuccess) {
+        setUploadedFiles((prevFiles) =>
+          prevFiles.filter((f) => f.fileUrl !== file.fileUrl)
+        );
+      } else {
+        throw new Error('파일 삭제 실패');
+      }
+    } catch (error) {
+      console.error('파일 삭제 실패:', error);
+      alert('파일 삭제 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleFileUpload = async (event) => {
+    const files = Array.from(event.target.files); // 다중 파일 처리
+    for (const file of files) {
+      try {
+        const formData = new FormData();
+        formData.append('multipartFileList', file);
+  
+        const response = await request.post('/s3/v2', formData);
+        if (response.isSuccess) {
+          const uploadedFile = response.result.s3FileList?.[0];
+          if (uploadedFile) {
+            setUploadedFiles((prevFiles) => [
+              ...prevFiles,
+              { ...uploadedFile, size: uploadedFile.fileSize, onlyS3: true },
+            ]);
+          }
+        } else {
+          throw new Error('파일 업로드 실패');
+        }
+      } catch (error) {
+        console.error('파일 업로드 오류:', error);
+      }
+    }
+
+    const updatedFiles = [...uploadedFiles];
+    onUploadedFilesChange(updatedFiles); // 상위 컴포넌트로 전달
+    if (fileInputRef.current) fileInputRef.current.value = ''; // 파일 입력 초기화
+    console.log(updatedFiles);
+    console.log(uploadedFiles);
+  };
+
+  
    // S3 이미지 업로드 함수
    const uploadImage = async (file) => {
     try {
@@ -290,6 +348,14 @@ export default function MarkdownEditor({
 
   return (
     <>
+        {/* 선택된 파일 목록 표시 */}
+        {uploadedFiles.length > 0 && (
+        <Styled.FileContainer>
+          <FileTable uploadedFiles={uploadedFiles} deleteFile={deleteFile}/>
+
+        </Styled.FileContainer>
+      )}
+
      <Styled.Toolbar>
         <button onClick={() => applyMarkdownSyntax('heading1')}><img src='/img/toolbar_H1.svg' alt="Heading 1"/></button>
         <button onClick={() => applyMarkdownSyntax('heading2')}><img src='/img/toolbar_H2.svg' alt="Heading 2"/></button>

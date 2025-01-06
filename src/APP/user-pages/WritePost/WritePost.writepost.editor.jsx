@@ -48,7 +48,6 @@ export default function Editor({
   const [category, setCategory] = useState(state?.initialCategory || categoryOptions[0]);
 
   const [linkURL, setLinkURL] = useState('');
-  const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
@@ -350,7 +349,6 @@ const fetchDraftDetails = async (boardId) => {
  // 게시글 등록 API 호출 함수
  const handlePostSubmit = async () => {
   const content = markdownContent;
-  setUploadedFiles(uploadedFiles);
   const fileUrls = uploadedFiles.map(file => file.fileUrl);
 
   const requestData = {
@@ -426,7 +424,8 @@ const fetchDraftDetails = async (boardId) => {
         setMarkdownContent={setMarkdownContent}
         fileInputRef={fileInputRef}
         imageInputRef={imageInputRef}
-        onUploadedFilesChange={setUploadedFiles}
+        uploadedFiles={uploadedFiles}
+        setUploadedFiles={setUploadedFiles}
       />
 
     </Styled.InnerEditorContainer> 

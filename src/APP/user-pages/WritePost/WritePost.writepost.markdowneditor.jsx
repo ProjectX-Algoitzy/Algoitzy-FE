@@ -13,7 +13,8 @@ export default function MarkdownEditor({
   setMarkdownContent,
   fileInputRef,
   imageInputRef,
-  onUploadedFilesChange,
+  uploadedFiles=[],
+  setUploadedFiles,
 }) {
 
   const editorRef = useRef(null);
@@ -24,7 +25,6 @@ export default function MarkdownEditor({
   const [linkURL, setLinkURL] = useState('');
 
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
-  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
 
@@ -250,15 +250,8 @@ export default function MarkdownEditor({
         console.error('파일 업로드 오류:', error);
       }
     }
-
-    const updatedFiles = [...uploadedFiles];
-    onUploadedFilesChange(updatedFiles); // 상위 컴포넌트로 전달
-    if (fileInputRef.current) fileInputRef.current.value = ''; // 파일 입력 초기화
-    console.log(updatedFiles);
-    console.log(uploadedFiles);
   };
 
-  
    // S3 이미지 업로드 함수
    const uploadImage = async (file) => {
     try {

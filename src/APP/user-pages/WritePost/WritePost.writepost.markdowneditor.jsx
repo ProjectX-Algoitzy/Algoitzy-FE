@@ -11,13 +11,14 @@ import FileTable from './WritePost.writepost.filetable';
 export default function MarkdownEditor({
   initialContent,
   setMarkdownContent,
-  fileInputRef,
-  imageInputRef,
   uploadedFiles=[],
   setUploadedFiles,
 }) {
 
   const editorRef = useRef(null);
+  const imageInputRef = useRef(null);
+  const fileInputRef = useRef(null);
+  
   const [editorView, setEditorView] = useState(null);
 
   const modalRef = useRef(null);

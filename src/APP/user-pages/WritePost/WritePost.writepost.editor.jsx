@@ -32,8 +32,6 @@ export default function Editor({
   const { state } = location;
 
   const editorRef = useRef(null);
-  const imageInputRef = useRef(null); // 이미지 파일 입력창을 제어할 useRef
-  const fileInputRef = useRef(null); // 일반 파일 입력창을 제어할 useRef
   const modalRef = useRef(null);
   const [editorView, setEditorView] = useState(null);
   const [isScrolling, setIsScrolling] = useState(false); // 스크롤 상태 관리
@@ -47,7 +45,6 @@ export default function Editor({
   const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
   const [category, setCategory] = useState(state?.initialCategory || categoryOptions[0]);
 
-  const [linkURL, setLinkURL] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
@@ -422,8 +419,6 @@ const fetchDraftDetails = async (boardId) => {
       <MarkdownEditor
         initialContent={initialContent}
         setMarkdownContent={setMarkdownContent}
-        fileInputRef={fileInputRef}
-        imageInputRef={imageInputRef}
         uploadedFiles={uploadedFiles}
         setUploadedFiles={setUploadedFiles}
       />

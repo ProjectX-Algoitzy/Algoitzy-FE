@@ -26,7 +26,7 @@ export default function Editor({
   initialSaveYn,
   markdownContent,
 }) {
-
+  
   const navigate = useNavigate();
   const location = useLocation(); // useLocation으로 전달된 state 접근
   const { state } = location;

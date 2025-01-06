@@ -32,16 +32,16 @@ export default function MarkdownEditor({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
 
-  useEffect(() => {
-    if (!editorRef.current || initialContent === undefined) return;
 
+  useEffect(() => {
+    if (!editorRef.current) return;
     const startState = EditorState.create({
-      doc: initialContent || '',
+      doc: '',
       extensions: [
         keymap.of([...defaultKeymap, ...historyKeymap]),
         history(),
         markdown(),
-        placeholder('내용22을 적어보세요'),
+        placeholder('내용을 적어보세요'),
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
           if (update.docChanged) {
@@ -63,6 +63,21 @@ export default function MarkdownEditor({
       view.destroy();
     };
   }, []);
+
+  
+  useEffect(() => {
+    if (editorView) {
+      // 에디터 내용 업데이트
+      editorView.dispatch({
+        changes: {
+          from: 0,
+          to: editorView.state.doc.length, // 기존 내용 삭제
+          insert: initialContent, // 새로운 내용 삽입
+        },
+      });
+    }
+  }, [initialContent]);
+
 
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;

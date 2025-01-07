@@ -17,20 +17,30 @@ const categoryPlaceholderText = '카테고리 선택';
 export default function Editor({
   boardId,
   setBoardId,
+
+  fetchBoardData,
+
   title,
   setTitle,
+
   initialCategoryCode,
   initialCategory,
+
   boardFileList,
   setBoardFileList,
+  
+  uploadedImageUrls=[],
+  setUploadedImageUrls,
+
   initialContent,
   markdownContent,
   setMarkdownContent,
+
   saveYn,
 }) {
   
   const navigate = useNavigate();
-  const location = useLocation(); // useLocation으로 전달된 state 접근
+  const location = useLocation();
   const { state } = location;
 
   const editorRef = useRef(null);
@@ -46,8 +56,6 @@ export default function Editor({
   const [category, setCategory] = useState(state?.initialCategory || categoryOptions[0]);
 
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
-
-  const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
 
   const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false); // 모달 상태
@@ -142,68 +150,63 @@ const categoryConverter = (categoryOptions) => {
     setSelectedCategory(selectedOption); // 선택된 카테고리 설정
     setIsCategorySelected(true); // 선택 여부 설정
   };
+  
+  const deleteImageFromS3 = async (fileUrl) => {
+    try {
+      const response = await request.delete('/s3', { params: { fileUrl } });
+      if (!response.isSuccess) {
+        console.error('이미지 삭제 실패:', response.message);
+      }
+    } catch (error) {
+      console.error('이미지 삭제 중 오류:', error);
+    }
+  };
 
-  const resizeTextarea = (e) => {
-    e.target.style.height = 'auto'; // 높이 초기화
-    e.target.style.height = `${e.target.scrollHeight}px`; // 내용에 맞게 높이 조정
+  const deleteAllUploadedImages = async () => {
+    const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
+    await Promise.all(promises);
   };
   
-    const deleteImageFromS3 = async (fileUrl) => {
-      try {
-        const response = await request.delete('/s3', { params: { fileUrl } });
-        if (!response.isSuccess) {
-          console.error('이미지 삭제 실패:', response.message);
-        }
-      } catch (error) {
-        console.error('이미지 삭제 중 오류:', error);
-      }
-    };
-  
-    const deleteAllUploadedImages = async () => {
-      const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
-      await Promise.all(promises); // 모든 삭제 요청 실행
-    };
-  
-    useEffect(() => {
-      // 페이지를 떠날 때 처리
-      const handleBeforeUnload = (event) => {
-        if (uploadedImageUrls.length > 0) {
-          deleteAllUploadedImages();
-          event.preventDefault();
-          event.returnValue = ''; // 브라우저 기본 메시지 표시
-        }
-      };
-  
-      window.addEventListener('beforeunload', handleBeforeUnload);
-  
-      // Cleanup: 이벤트 리스너 제거
-      return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-      };
-    }, [uploadedImageUrls]);
-  
-    useEffect(() => {
-      // 컴포넌트 언마운트 시 이미지 삭제
-      return () => {
+  useEffect(() => {
+    // 페이지를 떠날 때 처리
+    const handleBeforeUnload = (event) => {
+      if (uploadedImageUrls.length > 0) {
         deleteAllUploadedImages();
-      };
-    }, []);
-  
-    const handleExit = async () => {
-      try {
-        const confirmed = await confirm(
-          '저장하지 않은 내용은 사라집니다. 계속하시겠습니까?'
-        );
-        if (confirmed) {
-          await deleteAllUploadedImages(); // 이미지 삭제 로직 실행
-          navigate(-1); // 이전 페이지로 이동
-        } else {
-          console.log('사용자가 취소했습니다.');
-        }
-      } catch (error) {
-        console.error('나가기 처리 중 오류 발생:', error);
+        event.preventDefault();
+        event.returnValue = ''; // 브라우저 기본 메시지 표시
       }
     };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup: 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [uploadedImageUrls]);
+
+  useEffect(() => {
+    // 컴포넌트 언마운트 시 이미지 삭제
+    return () => {
+      deleteAllUploadedImages();
+    };
+  }, []);
+  
+  const handleExit = async () => {
+    try {
+      const confirmed = await confirm(
+        '저장하지 않은 내용은 사라집니다. 계속하시겠습니까?'
+      );
+      if (confirmed) {
+        await deleteAllUploadedImages(); // 이미지 삭제 로직 실행
+        navigate(-1); // 이전 페이지로 이동
+      } else {
+        console.log('사용자가 취소했습니다.');
+      }
+    } catch (error) {
+      console.error('나가기 처리 중 오류 발생:', error);
+    }
+  };
 
   // 임시저장 게시글 목록 조회
   const fetchDrafts = async () => {
@@ -412,6 +415,8 @@ const fetchDraftDetails = async (boardId) => {
         setMarkdownContent={setMarkdownContent}
         uploadedFiles={uploadedFiles}
         setUploadedFiles={setUploadedFiles}
+        uploadedImageUrls={uploadedImageUrls}
+        setUploadedImageUrls={setUploadedImageUrls}
       />
 
     </Styled.InnerEditorContainer> 

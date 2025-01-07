@@ -13,6 +13,8 @@ export default function MarkdownEditor({
   setMarkdownContent,
   uploadedFiles=[],
   setUploadedFiles,
+  uploadedImageUrls,
+  setUploadedImageUrls,
 }) {
 
   const editorRef = useRef(null);
@@ -24,10 +26,6 @@ export default function MarkdownEditor({
   const modalRef = useRef(null);
 
   const [linkURL, setLinkURL] = useState('');
-
-  const [selectedFiles, setSelectedFiles] = useState([]); // 선택된 파일들 상태
-
-  const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
@@ -217,7 +215,6 @@ export default function MarkdownEditor({
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files); // 선택된 파일 배열로 변환
-    setSelectedFiles(files); // 상태에 파일 목록 저장
     handleFileUpload(event);
   };
 
@@ -327,7 +324,7 @@ export default function MarkdownEditor({
   
     const deleteAllUploadedImages = async () => {
       const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
-      await Promise.all(promises); // 모든 삭제 요청 실행
+      await Promise.all(promises);
     };
   
     useEffect(() => {
@@ -371,7 +368,9 @@ export default function MarkdownEditor({
         <button onClick={() => applyMarkdownSyntax('heading2')}><img src='/img/toolbar_H2.svg' alt="Heading 2"/></button>
         <button onClick={() => applyMarkdownSyntax('heading3')}><img src='/img/toolbar_H3.svg' alt="Heading 3"/></button>
         </Styled.ToolbarInnerGroup>
+
         <span>|</span>
+
         <Styled.ToolbarInnerGroup>
         <button onClick={() => applyMarkdownSyntax('bold')}><img src='/img/toolbar_bold.svg' alt="Bold"/></button>
         <button onClick={() => applyMarkdownSyntax('italic')}><img src='/img/toolbar_italic.svg' alt="Italic"/></button>
@@ -379,6 +378,7 @@ export default function MarkdownEditor({
         </Styled.ToolbarInnerGroup>
 
         <span>|</span>
+
         <Styled.ToolbarInnerGroup>
         <button onClick={() => applyMarkdownSyntax('blockquote')}><img src='/img/toolbar_blockquote.svg' alt="Blockquote"/></button>
         <button onClick={() => fileInputRef.current?.click()}><img src='/img/toolbar_attach.svg' alt="Attach" /></button>

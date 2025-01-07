@@ -64,7 +64,7 @@ export default function MarkdownEditor({
     };
   }, []);
 
-  
+
   useEffect(() => {
     if (editorView) {
       // 에디터 내용 업데이트
@@ -357,23 +357,29 @@ export default function MarkdownEditor({
 
   return (
     <>
-        {/* 선택된 파일 목록 표시 */}
-        {uploadedFiles.length > 0 && (
-        <Styled.FileContainer>
-          <FileTable uploadedFiles={uploadedFiles} deleteFile={deleteFile}/>
+    {/* 선택된 파일 목록 표시 */}
+    {uploadedFiles.length > 0 && (
+    <Styled.FileContainer>
+        <FileTable uploadedFiles={uploadedFiles} deleteFile={deleteFile}/>
 
-        </Styled.FileContainer>
-      )}
+    </Styled.FileContainer>
+    )}
 
      <Styled.Toolbar>
+        <Styled.ToolbarInnerGroup>
         <button onClick={() => applyMarkdownSyntax('heading1')}><img src='/img/toolbar_H1.svg' alt="Heading 1"/></button>
         <button onClick={() => applyMarkdownSyntax('heading2')}><img src='/img/toolbar_H2.svg' alt="Heading 2"/></button>
         <button onClick={() => applyMarkdownSyntax('heading3')}><img src='/img/toolbar_H3.svg' alt="Heading 3"/></button>
+        </Styled.ToolbarInnerGroup>
         <span>|</span>
+        <Styled.ToolbarInnerGroup>
         <button onClick={() => applyMarkdownSyntax('bold')}><img src='/img/toolbar_bold.svg' alt="Bold"/></button>
         <button onClick={() => applyMarkdownSyntax('italic')}><img src='/img/toolbar_italic.svg' alt="Italic"/></button>
         <button onClick={() => applyMarkdownSyntax('strikethrough')}><img src='/img/toolbar_strikethrough.svg' alt="Strikethrough"/></button>
+        </Styled.ToolbarInnerGroup>
+
         <span>|</span>
+        <Styled.ToolbarInnerGroup>
         <button onClick={() => applyMarkdownSyntax('blockquote')}><img src='/img/toolbar_blockquote.svg' alt="Blockquote"/></button>
         <button onClick={() => fileInputRef.current?.click()}><img src='/img/toolbar_attach.svg' alt="Attach" /></button>
           <input
@@ -393,6 +399,8 @@ export default function MarkdownEditor({
             accept="image/*"
           />
         <button onClick={() => applyMarkdownSyntax('code')}><img src='/img/toolbar_code.svg' alt="Code"/></button>
+        </Styled.ToolbarInnerGroup>
+
       </Styled.Toolbar>
 
       <Styled.EditorContainer ref={editorRef} />

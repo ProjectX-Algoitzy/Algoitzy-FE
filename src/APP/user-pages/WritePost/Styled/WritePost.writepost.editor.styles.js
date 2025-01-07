@@ -3,8 +3,6 @@ import * as tokens from "../../../../tokens";
 import Select from 'react-select';
 import { css } from "styled-components";
 
-
-
 export const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,9 +10,9 @@ export const LeftContainer = styled.div`
 `;
 
 export const InnerEditorContainer = styled.div`
-  padding: 0 1rem;
+  padding: 0 2.833rem;
   flex: 1;
-  border: 1px solid #ffffff;
+  border: 0;
   font-size: 0.8rem;
   font-family: 'Pretendard', sans-serif;
   line-height: 1.6;
@@ -62,29 +60,25 @@ export const InnerEditorContainer = styled.div`
 `;
 
 export const EditorHeader = styled.div`
+  padding : 2.833rem 0 1.042rem 0;
   display: flex;
   flex-direction: column;
-  padding: 0.542rem 0;
   gap: 0.5rem;
 `
 
-export const TitleInput = styled.textarea`
-  width: 100%;
-  height: auto;
-  overflow-y: hidden; /* 내용이 넘치면 자동으로 높이 조절되도록 설정 */
-  color: ${({ hasText }) => hasText ? tokens.colors.B_Grey_8 : tokens.colors.B_Grey_6}; /* hasText에 따라 색상 변경 */
-	${tokens.typography.H2_SB_48}
+export const PageLabel = styled.div`
+  color: ${tokens.colors.B_Grey_6};
+	${tokens.typography.T8_B_35}
   font-family: 'Pretendard', sans-serif;
-  border: 1px solid #ffffff;
   outline: none;
   resize: none;
   overflow: hidden;
 `;
 
 export const Divider = styled.div`
-  width: 4.3rem;
-  height: 0.1rem;
-  background-color: ${tokens.colors.B_Grey_4}; /* 구분선 색상 */
+  width: 4.375rem;
+  height: 0.125rem;
+  background-color: ${tokens.colors.B_Grey_4};
 `;
 
 // 라벨+입력 컨테이너
@@ -102,19 +96,39 @@ export const Label = styled.label`
   margin-bottom: 0.42rem;
 `;
 
-// 토글 에러 메시지 아래 라벨
-export const BlankLabel = styled.label`
-  height: 1rem;
+// 옵션 제목 라벨
+export const OptionLabel = styled.label`
   ${tokens.typography.T4_SB_20}
   color: ${tokens.colors.Grey_6};
   margin-top: 1.56rem;
   margin-bottom: 0.42rem;
 `;
 
+export const TextInput = styled.input`
+  width: 100%;
+  height: 2.27rem;
+  padding: 0 0.42rem;
+  margin-bottom: 0.17rem;
+
+  color: ${tokens.colors.Grey_8}; 
+  ${tokens.typography.B2_M_16}
+
+  border: 0.042rem solid ${tokens.colors.Grey_4};
+  border-radius: 0.17rem;
+
+  &::placeholder {
+    color: ${tokens.colors.Grey_4}; 
+  }
+
+  // 텍스트 입력되어 있을 경우 border 색상변경
+  &:not(:placeholder-shown) { 
+    border: 0.042rem solid ${tokens.colors.Grey_6};
+  }
+`;
+
 export const CategorySelect = styled(Select).attrs({
   classNamePrefix: 'react-select',
 })`
-z-index: 20; /* 다른 요소 위에 표시 */
 
 .react-select__control {
   width: 100%;
@@ -129,8 +143,9 @@ z-index: 20; /* 다른 요소 위에 표시 */
 
 .react-select__menu {
   position: absolute;
-  top: -0.43rem;  
-  width: 100%;
+  top: -0.43rem;
+  left: -0.1rem;
+  width: 102%;
   border-radius: 0.17rem;
   border: none;
   box-shadow: 0 0.08rem 0.17rem rgba(0, 0, 0, 0.1);
@@ -138,6 +153,7 @@ z-index: 20; /* 다른 요소 위에 표시 */
   text-align: center;
   ${tokens.typography.B3_M_14};
   overflow: hidden; /* Hide scrollbar */
+  z-index: 20;
 }
 
 .react-select__menu-list {
@@ -197,9 +213,9 @@ export const Toolbar = styled.div`
   z-index: 10; /* 다른 요소 위에 표시 */
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.458rem;
   background-color: white;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   padding-bottom: 0.25rem;
 
   button {
@@ -207,8 +223,7 @@ export const Toolbar = styled.div`
     border: none;
     font-size: 1rem;
     cursor: pointer;
-    padding: 0.2rem;
-    color: #666;
+    padding: 0;
 
     &:hover {
       color: #333;
@@ -219,16 +234,22 @@ export const Toolbar = styled.div`
     width: 1.25rem;
     height: 1.25rem;
   }
-
+    
   span {
     color: #ccc;
   }
 `;
 
+export const ToolbarInnerGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.333rem;
+`;
+
 export const EditorContainer = styled.div`
-  padding: 0.667rem 1rem;
+  padding-top: 2.125rem;
   flex: 1;
-  border: 1px solid #ffffff;
+  border: 0;
   font-size: 0.8rem;
   font-family: 'Pretendard', sans-serif;
   line-height: 1.6;

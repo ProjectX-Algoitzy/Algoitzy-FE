@@ -379,20 +379,18 @@ const fetchDraftDetails = async (boardId) => {
     <Styled.LeftContainer>
       <Styled.InnerEditorContainer ref={editorRef} isScrolling={isScrolling}>
       <Styled.EditorHeader>
-      <Styled.TitleInput
-        placeholder="제목을 입력하세요"
-        value={title}
-        onChange={(e) => {
-          setTitle(e.target.value);
-          resizeTextarea(e);
-        }}
-        hasText={title.length > 0}
-      />
 
+      <Styled.PageLabel>새로운 글쓰기</Styled.PageLabel>
         <Styled.Divider/>
 
         <Styled.LIContainer>
-        <Styled.BlankLabel>게시판 선택</Styled.BlankLabel>
+        <Styled.OptionLabel>제목</Styled.OptionLabel>
+        <Styled.TextInput 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          placeholder="제목을 입력하세요"
+        />
+        <Styled.OptionLabel>게시판 선택</Styled.OptionLabel>
         <Styled.CategorySelect
           options={categoryOptions}
           placeholder={categoryPlaceholderText}

@@ -5,7 +5,8 @@ export const FileTableContainer = styled.div`
   display: flex;
   flex-direction: column;
   border: 0.042rem solid ${tokens.colors.B_Grey_3};
-  border-radius: 4px;
+  border-radius: 0.167rem;
+  margin-bottom: 1.042rem;
 `;
 
 export const FileTableHeader = styled.div`

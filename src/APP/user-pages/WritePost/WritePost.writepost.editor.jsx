@@ -353,23 +353,20 @@ const fetchDraftDetails = async (boardId) => {
     fileUrlList: fileUrls,
     saveYn: true,
   };
+
   try {
     let response;
-      console.log("BOARDID",boardId,"E#");
       if (boardId) {
-        // 수정 요청
+        // 게시글 수정(임시저장 글 포함)
         response = await request.patch(`/board/${boardId}`, requestData);
       } else {
-        // 새 게시글 작성 요청
+        // 새 게시글 작성
         response = await request.post('/board', requestData);
       }
-
       if (response.isSuccess) {
         setBoardId(response.result);
-        setCategory(selectedCategory);
-
-        alert(boardId ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
-        navigate(-1); // 이전 페이지로 이동
+        alert(saveYn==true ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
+        navigate(-1); // 커뮤니티 게시글 목록으로 이동
       } else {
         alert('게시글을 저장하는 중 오류가 발생했습니다.');
       }

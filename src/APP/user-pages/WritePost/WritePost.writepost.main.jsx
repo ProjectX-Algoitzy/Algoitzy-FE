@@ -7,7 +7,7 @@ import request from '../../Api/request';
 
 export default function WritePost() {
   const location = useLocation();
-  const [boardId, setBoardId] = useState(location.state || {});
+  const [boardId, setBoardId] = useState(location.state?.boardId || null);
   const [markdownContent, setMarkdownContent] = useState('');
   const [initialContent, setInitialContent] = useState('');
   const [title, setTitle] = useState('');
@@ -17,7 +17,7 @@ export default function WritePost() {
   const [saveYn, setSaveYn] = useState(false);
 
   useEffect(() => {
-    if (boardId) {
+    if (boardId !== null) {
       const fetchBoardData = async () => {
         try {
           const response = await request.get(`/board/${boardId}`);
@@ -55,7 +55,8 @@ export default function WritePost() {
     <Styled.Container>
       <Styled.MarkdownEditorContainer>
         <Editor
-          initialBoardId={boardId}
+          boardId={boardId}
+          setBoardId={setBoardId}
 
           title={title}
           setTitle={setTitle}
@@ -71,7 +72,7 @@ export default function WritePost() {
           setMarkdownContent={setMarkdownContent}
 
           saveYn={saveYn}
-/>
+        />
 
         <Preview title={title} markdownContent={markdownContent} />
 

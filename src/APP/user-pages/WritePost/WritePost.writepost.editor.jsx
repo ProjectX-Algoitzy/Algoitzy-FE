@@ -15,7 +15,8 @@ import { AlertContext } from '../../Common/Alert/AlertContext';
 const categoryPlaceholderText = '카테고리 선택';
 
 export default function Editor({
-  initialBoardId,
+  boardId,
+  setBoardId,
   title,
   setTitle,
   initialCategoryCode,
@@ -34,11 +35,9 @@ export default function Editor({
 
   const editorRef = useRef(null);
   const [editorView, setEditorView] = useState(null);
-  
+
   const [isScrolling, setIsScrolling] = useState(false); // 스크롤 상태 관리
   
-  const [boardId, setBoardId] = useState(initialBoardId); // boardId를 상태로 관리
-
   const [selectedCategory, setSelectedCategory] = useState(initialCategory); // 선택된 카테고리 상태
   const [isCategorySelected, setIsCategorySelected] = useState(false); // 카테고리 선택 여부 상태
 
@@ -354,10 +353,9 @@ const fetchDraftDetails = async (boardId) => {
     fileUrlList: fileUrls,
     saveYn: true,
   };
-
   try {
     let response;
-
+      console.log("BOARDID",boardId,"E#");
       if (boardId) {
         // 수정 요청
         response = await request.patch(`/board/${boardId}`, requestData);

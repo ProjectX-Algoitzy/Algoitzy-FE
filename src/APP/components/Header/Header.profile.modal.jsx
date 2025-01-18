@@ -26,6 +26,11 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal
     setShowProfileModal(false);
   };
 
+  const handleInquiryPage = () => {
+    navigate("/inquiry");
+    setShowProfileModal(false);
+  };
+
   return (
       <itemS.ArrowBubble onClick={e => e.stopPropagation()}>
         <itemS.TopContainer>
@@ -35,7 +40,7 @@ const ProfileModal = ({ userName, profileUrl, setIsLoggedIn, setShowProfileModal
         </itemS.TopContainer>
         <itemS.BottomContainer>
           <itemS.Button onClick={handleMyPage}>마이페이지</itemS.Button>
-          {/* <itemS.Button>문의하기</itemS.Button> */}
+          <itemS.Button onClick={handleInquiryPage}>문의하기</itemS.Button>
         </itemS.BottomContainer>
       </itemS.ArrowBubble>
   );

@@ -82,6 +82,11 @@ export default function AttendanceModal({ week, onClose }) {
                 </itemS.FirstSentence>
 
                 <itemS.ContentContainer>
+                    <itemS.AlertContainer>
+                        <itemS.TriangleAlertImg src='/img/trianglealert.svg' alt='삼각형알림마크'/>
+                        안내 문구
+                    </itemS.AlertContainer>
+
                     {problemItems.map((item) => (
                         <itemS.LittleContainer key={item.id}>
                             <itemS.SmallTitle>문제 인증({item.id})</itemS.SmallTitle>

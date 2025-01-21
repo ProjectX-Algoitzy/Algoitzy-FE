@@ -67,7 +67,7 @@ export const TriangleAlertImg = styled.img`
   width: 0.957rem;
   height: 1rem;
   margin-left: 0.758rem;
-  margin-right: 0.319rem;
+  margin-right: 0.452rem;
 `;
 
 export const LittleContainer = styled.div`

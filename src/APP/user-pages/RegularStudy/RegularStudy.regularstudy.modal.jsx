@@ -84,7 +84,7 @@ export default function AttendanceModal({ week, onClose }) {
                 <itemS.ContentContainer>
                     <itemS.AlertContainer>
                         <itemS.TriangleAlertImg src='/img/trianglealert.svg' alt='삼각형알림마크'/>
-                        안내 문구
+                        백준에서 푼 문제는 인증하지 않아도 되며, <br />블로그 URL은 홈 경로가 아닌 특정 글의 URL을 입력해 주세요.
                     </itemS.AlertContainer>
 
                     {problemItems.map((item) => (

@@ -47,8 +47,27 @@ export const BigTitle = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 2.67rem;
   align-items: center;
+`;
+
+export const AlertContainer = styled.div`
+  display: flex;
+  background-color: ${tokens.colors.B_Grey_1};
+  align-items: center;
+  ${tokens.typography.B1_M_20};
+  color: ${tokens.colors.B_Grey_8};
+  border-radius: 0.417rem;
+  width: 31.38rem;
+  height: 3.208rem;
+  margin-top: 1.185rem;
+  margin-bottom: 0.875rem;
+`;
+
+export const TriangleAlertImg = styled.img`
+  width: 0.957rem;
+  height: 1rem;
+  margin-left: 0.758rem;
+  margin-right: 0.452rem;
 `;
 
 export const LittleContainer = styled.div`

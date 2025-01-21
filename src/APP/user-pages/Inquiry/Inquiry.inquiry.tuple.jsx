@@ -45,7 +45,7 @@ export default function InquiryTuple({ item, isTabClick, searchKeyword, isRegula
   };
 
   const moveToDetail = (id) => {
-    navigate(`/board/${id}`);
+    navigate(`/inquiryboard/${id}`);
   };
   
   return (

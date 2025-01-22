@@ -25,8 +25,10 @@ import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDet
 import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
 import Community from "./APP/user-pages/Community/Community.community.main";
+import Inquiry from "./APP/user-pages/Inquiry/Inquiry.inquiry.main";
 import WritePost from "./APP/user-pages/WritePost/WritePost.writepost.main";
 import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.main";
+import InquiryBoardDetail from "./APP/user-pages/InquiryBoardDetail/InquiryBoardDetail.inquiryboarddetail.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -113,7 +115,9 @@ function App() {
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
             <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
             <Route path="/community" element={<Community />} />
+            <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} /> {/* 커뮤니티 글 세부 */}
+            <Route path="/inquiryboard/:id" element={isLoggedIn() ? <InquiryBoardDetail /> : <Navigate to="/" />} /> {/*문의하기 글 세부 */}
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}

@@ -96,6 +96,7 @@ export const TabSortContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 50rem;
+  margin-bottom: 10px;
   @media (max-width: 600px) {
     width: 100%;
   }
@@ -136,7 +137,8 @@ export const SortDrop = styled.div`
   align-items: center;
   background-color: ${tokens.colors.White};
   width: 5.92rem;
-  height: 4.5rem;
+  /* height: 4.5rem; */
+  height: 3rem;
   border-radius: 0.17rem;
   position: absolute;
   box-shadow: 0 0.08rem 0.42rem 0.08rem rgba(58, 107, 135, 0.10);

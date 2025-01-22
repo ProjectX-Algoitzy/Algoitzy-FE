@@ -9,7 +9,6 @@ export default function Inquiry() {
 	const navigate = useNavigate();
 
 	const [posts, setPosts] = useState([]);
-	const [categories, setCategories] = useState([{ code: '', name: '전체' }]); // Default '전체' tab
 
 	// api 요청 파라미터
   	const [searchKeyword, setSearchKeyword] = useState('');
@@ -37,47 +36,28 @@ export default function Inquiry() {
 		setIsRegularMember(localStorage.getItem('regularStudyMemberYn') === 'true');
     }, []);	
 
-	const fetchCategories = async () => {
-        try {
-        const response = await request.get('/board/category');
-        if (response.isSuccess) {
-            const apiCategories = response.result.categoryList;
-            setCategories([{ code: '', name: '전체' }, ...apiCategories]); // Add '전체' as the first tab
-        } else {
-            console.error('카테고리 목록 조회 실패:', response);
-        }
-        } catch (error) {
-        console.error('카테고리 목록 조회 오류', error);
-        }
-    };
-
-	const fetchBoard = async () => {
+	const fetchInquiry = async () => {
 		try {
-			const response = await request.get(`/board?searchKeyword=${searchKeyword}&category=${selectedTab}&sort=${sortType}&page=${currentPage + 1}&size=${itemsPerPage}`);
+			const response = await request.get(`/inquiry?searchKeyword=${searchKeyword}&category=${selectedTab}&sort=${sortType}&page=${currentPage + 1}&size=${itemsPerPage}`);
 			console.log("response", response);
 
 			if (response.isSuccess) {
-				console.log("게시글 목록 조회 성공");
-				setPosts(response.result.boardList);
+				console.log("문의하기 목록 조회 성공");
+				setPosts(response.result.inquiryList);
 				setTotalPages(Math.ceil(response.result.totalCount / itemsPerPage));
 			} else {
-				console.error("게시글 목록 조회 실패:", response);
+				console.error("문의하기 목록 조회 실패:", response);
 			}
 		} catch (error) {
-			console.error('게시글 목록 조회 오류', error);
+			console.error('문의하기 목록 조회 오류', error);
 		}
 	};
 
 	useEffect(() => {
-        fetchCategories();
-    }, []);
-
-	useEffect(() => {
-		fetchBoard();
+		fetchInquiry();
 	},[ selectedTab, sortType, currentPage, searchKeyword]);
 
 	const handleSearch = () => {
-        // fetchBoard();
         setCurrentPage(0);
         setCurrentPageGroup(0);
     };
@@ -139,7 +119,6 @@ export default function Inquiry() {
 								<itemS.SortDrop>
 									<itemS.SortText onClick={() => onSortType('LATEST')}>최신순</itemS.SortText>
 									<itemS.SortText onClick={() => onSortType('VIEW_COUNT')}>조회수</itemS.SortText>
-									<itemS.SortText onClick={() => onSortType('LIKE')}>좋아요</itemS.SortText>
 								</itemS.SortDrop>
 							)}
 						</itemS.SortContainer>

@@ -50,7 +50,7 @@ export default function InquiryTuple({ item, isTabClick, searchKeyword, isRegula
   
   return (
     <itemS.TupleContainer fixyn={item.fixYn} onClick={() => moveToDetail(item.boardId)}>
-      <itemS.TupleType>{isTabClick ? item.boardId : item.category}</itemS.TupleType>
+      <itemS.TupleType>{isTabClick ? item.boardId : item.categoryName}</itemS.TupleType>
       <itemS.TupleTitleBox>
         {renderTupleTitle(item.title)}
         {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}

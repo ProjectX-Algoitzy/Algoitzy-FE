@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import request from '../../Api/request';
 import * as itemS from "../../user-pages/EnterpriseBootcampList/Styled/EnterpriseBootcampList.enterprisebootcamplist.main.styles";
 import EnterBootListTable from './EnterpriseBootcampList.enterprisebootcamplist.table';
+import useDebounce from '../../Common/useDebounce';
 
 export default function EnterBootList() {
   const [institutionList, setInstitutionList] = useState([]);
@@ -15,6 +16,7 @@ export default function EnterBootList() {
   const [size, setSize] = useState(10);
 
   const [isSortDropVisible, setIsSortDropVisible] = useState(false); // 정렬 드롭박스 열기/닫기
+  const debouncedQuery = useDebounce(searchKeyword, 500);
 
   // 페이지
   const [currentPage, setCurrentPage] = useState(0);
@@ -47,7 +49,7 @@ export default function EnterBootList() {
 
   useEffect(() => {
     fetchInstitutionList();
-  },[ searchKeyword, type, sortType, currentPage])
+  },[ debouncedQuery, type, sortType, currentPage])
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);

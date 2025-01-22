@@ -3,9 +3,7 @@ import request from '../../Api/request';
 import * as itemS from "./Styled/Community.community.main.styles";
 import CommunityTable from './Community.community.table';
 import { useNavigate } from 'react-router-dom';
-
-const ISREGULAR = localStorage.getItem('regularStudyMemberYn'); // 정규스터디 참여 이력
-
+import useDebounce from '../../Common/useDebounce';
 
 export default function Community() {
 	const [isRegularMember, setIsRegularMember] = useState(false);
@@ -20,7 +18,7 @@ export default function Community() {
 	const [selectedTab, setSelectedTab] = useState('');
 
 	const [content, setContent] = useState('커뮤니티 내의 모든 글을 볼 수 있습니다.');
-
+	const debouncedQuery = useDebounce(searchKeyword, 500);
 	const [sortText, setSortText] = useState('최신순');
 	const [isSortDropVisible, setIsSortDropVisible] = useState(false); // 정렬 드롭박스 열기/닫기
 	
@@ -38,7 +36,6 @@ export default function Community() {
 	);
 
 	useEffect(() => {
-		// Load `regularStudyMemberYn` from localStorage and set state
 		setIsRegularMember(localStorage.getItem('regularStudyMemberYn') === 'true');
 	  }, []);	
 
@@ -79,7 +76,7 @@ export default function Community() {
 
 	useEffect(() => {
 		fetchBoard();
-	},[ selectedTab, sortType, currentPage, searchKeyword]);
+	},[ selectedTab, sortType, currentPage, debouncedQuery]);
 
 	const handleTabClick = (tab) => {
 		setSelectedTab(tab.code);
@@ -187,7 +184,7 @@ export default function Community() {
 					<CommunityTable 
 						items={posts}
 						isTabClick={isTabClick}
-						searchKeyword={searchKeyword}
+						searchKeyword={debouncedQuery}
 						isRegularMember={isRegularMember}
 						/>
 					<itemS.PaginationContainer>

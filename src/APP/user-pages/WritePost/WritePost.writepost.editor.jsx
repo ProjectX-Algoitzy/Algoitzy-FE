@@ -9,6 +9,8 @@ import request from '../../Api/request';
 import MarkdownEditor from './WritePost.writepost.markdowneditor';
 import DraftModal from './WritePost.writepost.draft';
 import FileTable from './WritePost.writepost.filetable';
+import ActionBar from './WritePost.writepost.actionbar';
+
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
@@ -420,33 +422,31 @@ const fetchDraftDetails = async (boardId) => {
         setUploadedImageUrls={setUploadedImageUrls}
       />
 
-    </Styled.InnerEditorContainer> 
-      <Styled.BtnContainer>
-      <Styled.ExitButton onClick={handleExit}>← 나가기</Styled.ExitButton>
-      <Styled.BtnContainer2>
-      {!saveYn && ( // boardId가 없을 때만 표시
-      <Styled.DraftButton>
-        {/* 임시저장 클릭 영역 */}
-        <Styled.DraftSaveArea onClick={handleSaveDraft}>
-          임시저장
-        </Styled.DraftSaveArea>
-        {/* 임시저장 카운트 클릭 영역 */}
-        <Styled.DraftCountArea onClick={toggleDraftModal}>
-          | {draftCount}
-        </Styled.DraftCountArea>
-      </Styled.DraftButton>
-    )}
-      <Styled.Btn onClick={handlePostSubmit}>
-        {boardId && saveYn ? '수정하기' : '등록하기'}
-      </Styled.Btn>
-      </Styled.BtnContainer2>
-      </Styled.BtnContainer>
+    </Styled.InnerEditorContainer>
 
-      <DraftModal
-        isDraftModalOpen={isDraftModalOpen}
-        toggleDraftModal={toggleDraftModal}
-        drafts={drafts}
-        onSelectDraft={handleSelectDraft}
+      <ActionBar
+          boardId={boardId}
+          setBoardId={setBoardId}
+
+          fetchBoardData={fetchBoardData}
+
+          title={title}
+          setTitle={setTitle}
+          
+          initialCategoryCode={categoryCode}
+          initialCategory={category}
+
+          boardFileList={boardFileList}
+          setBoardFileList={setBoardFileList}
+
+          uploadedImageUrls={uploadedImageUrls}
+          setUploadedImageUrls={setUploadedImageUrls}
+
+          initialContent={initialContent}
+          markdownContent={markdownContent}
+          setMarkdownContent={setMarkdownContent}
+
+          saveYn={saveYn}
       />
     </Styled.LeftContainer>
   );

@@ -3,10 +3,9 @@ import * as tokens from "../../../../tokens";
 import Select from 'react-select';
 import { css } from "styled-components";
 
-export const LeftContainer = styled.div`
+export const ActionBarContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
 `;
 
 export const InnerEditorContainer = styled.div`

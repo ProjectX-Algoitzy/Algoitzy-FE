@@ -20,24 +20,22 @@ export default function WritePost() {
   const [markdownContent, setMarkdownContent] = useState('');
   const [initialContent, setInitialContent] = useState('');
 
-  const [saveYn, setSaveYn] = useState(false);
+  const [saveYn, setSaveYn] = useState(location.state?.saveYn);
   
+  // 게시글 상세 조회
   const fetchBoardData = async () => {
-
   try {
     let response;
-    if (boardId == null) { // 새로운 글쓰기
-      response = await request.get(`/board/${boardId}`);
-    } 
-    else if (saveYn == true){ // 임시저장
-      response = await request.get(`/board/draft/${boardId}`);
-    }
-    else { // 수정
-      response = await request.get(`/board/${boardId}`);
-    }
+    if (boardId !== null) {
+      if (saveYn == false){ // 임시저장
+        response = await request.get(`/board/draft/${boardId}`);
+      }
+      else { // 수정
+        response = await request.get(`/board/${boardId}`);
+      }
 
     if (response.isSuccess) {
-      const { title, content, category, boardFileList, saveYn } = response.result;
+      const { title, content, categoryCode, category, boardFileList, saveYn } = response.result;
       setTitle(title);
       setMarkdownContent(content);
       setInitialContent(content);
@@ -48,22 +46,60 @@ export default function WritePost() {
     } else {
       console.error('게시글 상세 조회 실패:', response.message);
     }
-    } catch (error) {
-      console.error('게시글 상세 조회 중 오류:', error);
-    }
+  }
+  } catch (error) {
+    console.error('게시글 상세 조회 중 오류:', error);
+  }
   };
 
   useEffect(() => {
     fetchBoardData();
   }, [boardId]);
 
+
   useEffect(() => {
-    // 마운트 시 스크롤 비활성화
+    // 스크롤 비활성화
     document.body.style.overflow = 'hidden';
-    
-    // 언마운트 시 스크롤 복원
+  }, []);
+
+  const deleteImageFromS3 = async (fileUrl) => {
+    try {
+      const response = await request.delete('/s3', { params: { fileUrl } });
+      if (!response.isSuccess) {
+        console.error('이미지 삭제 실패:', response.message);
+      }
+    } catch (error) {
+      console.error('이미지 삭제 중 오류:', error);
+    }
+  };
+
+  const deleteAllUploadedImages = async () => {
+    const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
+    await Promise.all(promises);
+  };
+  
+  useEffect(() => {
+    // 페이지를 떠날 때 처리
+    const handleBeforeUnload = (event) => {
+      if (uploadedImageUrls.length > 0) {
+        deleteAllUploadedImages();
+        event.preventDefault();
+        event.returnValue = ''; // 브라우저 기본 메시지 표시
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup: 이벤트 리스너 제거
     return () => {
-      document.body.style.overflow = 'auto';
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [uploadedImageUrls]);
+
+  useEffect(() => {
+    // 컴포넌트 언마운트 시 이미지 삭제
+    return () => {
+      deleteAllUploadedImages();
     };
   }, []);
   
@@ -78,9 +114,12 @@ export default function WritePost() {
 
           title={title}
           setTitle={setTitle}
-          
-          initialCategoryCode={categoryCode}
-          initialCategory={category}
+
+          categoryCode={categoryCode}
+          setCategoryCode={setCategoryCode}
+
+          category={category}
+          setCategory={setCategory}
 
           boardFileList={boardFileList}
           setBoardFileList={setBoardFileList}
@@ -93,6 +132,7 @@ export default function WritePost() {
           setMarkdownContent={setMarkdownContent}
 
           saveYn={saveYn}
+          setSaveYn={setSaveYn}
         />
 
         <Preview title={title} markdownContent={markdownContent} />

@@ -26,6 +26,12 @@ export default function ActionBar({
   initialCategoryCode,
   initialCategory,
 
+  categoryCode,
+  setCategoryCode,
+
+  category,
+  setCategory,
+
   boardFileList,
   setBoardFileList,
   
@@ -37,6 +43,7 @@ export default function ActionBar({
   setMarkdownContent,
 
   saveYn,
+  setSaveYn,
 }) {
   
   const navigate = useNavigate();
@@ -51,9 +58,7 @@ export default function ActionBar({
   const [selectedCategory, setSelectedCategory] = useState(initialCategory); // 선택된 카테고리 상태
   const [isCategorySelected, setIsCategorySelected] = useState(false); // 카테고리 선택 여부 상태
 
-  const [categoryCode, setCategoryCode] = useState(state?.initialCategoryCode || null);
   const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
-  const [category, setCategory] = useState(state?.initialCategory || categoryOptions[0]);
 
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
@@ -332,7 +337,8 @@ const fetchDraftDetails = async (boardId) => {
   
         if (confirmed) {
           setBoardId(draft.boardId);
-          fetchDraftDetails(draft.boardId); // 선택된 글 불러오기
+          setSaveYn(false);
+          fetchBoardData();
         }
       } catch {
         console.log('사용자가 취소했습니다.');
@@ -347,14 +353,12 @@ const fetchDraftDetails = async (boardId) => {
 
  // 게시글 등록 API 호출 함수
  const handlePostSubmit = async () => {
-  const content = markdownContent;
-  const fileUrls = uploadedFiles.map(file => file.fileUrl);
-
+  
   const requestData = {
-    title: title.trim(),
-    content: content,
+    title: title,
+    content: markdownContent,
     category: categoryCode,
-    fileUrlList: fileUrls,
+    fileUrlList: boardFileList,
     saveYn: true,
   };
 

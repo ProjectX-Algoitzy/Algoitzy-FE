@@ -290,6 +290,7 @@ const fetchDraftDetails = async (boardId) => {
       setTitle(draft.title);
       setMarkdownContent(draft.content);
 
+      console.log("###############",draft.content);
       // 에디터 내용 업데이트
       editorView.dispatch({
         changes: {

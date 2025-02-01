@@ -50,13 +50,7 @@ export default function ActionBar({
   const location = useLocation();
   const { state } = location;
 
-  const editorRef = useRef(null);
   const [editorView, setEditorView] = useState(null);
-
-  const [isScrolling, setIsScrolling] = useState(false); // 스크롤 상태 관리
-  
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory); // 선택된 카테고리 상태
-  const [isCategorySelected, setIsCategorySelected] = useState(false); // 카테고리 선택 여부 상태
 
   const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
 
@@ -65,96 +59,9 @@ export default function ActionBar({
   const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false); // 모달 상태
   const [drafts, setDrafts] = useState([]); // 임시저장 게시글 목록
-  const loadCount = useRef(0);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
 
   const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const { alert } = useContext(AlertContext);
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      // 기본 브라우저 확인창 표시
-      event.preventDefault();
-      event.returnValue = ''; // 대부분의 브라우저에서 이 설정으로 기본 메시지가 표시됨
-    };
-  
-    window.addEventListener('beforeunload', handleBeforeUnload);
-  
-    return () => {
-      // 컴포넌트 언마운트 시 이벤트 제거
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, []);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolling(true); // 스크롤 상태 활성화
-      // 일정 시간 후 스크롤 상태 비활성화
-      setTimeout(() => setIsScrolling(false), 1000);
-    };
-
-    const editorElement = editorRef.current;
-    if (editorElement) {
-      editorElement.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      if (editorElement) {
-        editorElement.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    // 카테고리 옵션을 API에서 가져오기
-    const fetchCategoryOptions = async () => {
-      try {
-        const response = await request.get('/board/category');
-        if (response.isSuccess) {
-          const options = response.result.categoryList.map((category) => ({
-            value: category.code,
-            label: category.name,
-          }));
-
-          const filteredOptions = options.filter(
-            (option) => option.label !== '공지'
-          );
-
-          setCategoryOptions(filteredOptions);
-          //setSelectedCategory(filteredOptions[0] || null); // 첫 번째 옵션 선택
-        } else {
-          console.error('카테고리 목록 조회 실패:', response.message);
-        }
-      } catch (error) {
-        console.error('카테고리 목록 조회 중 오류:', error);
-      }
-    };
-
-    fetchCategoryOptions();
-  }, []);
-
-  // 카테고리 변환 함수
-const categoryConverter = (categoryOptions) => {
-  const nameToCode = (name) => {
-    const found = categoryOptions.find((option) => option.label === name);
-    return found ? found.value : null; // name에 해당하는 code 반환
-  };
-
-  const codeToName = (code) => {
-    const found = categoryOptions.find((option) => option.value === code);
-    return found ? found.label : null; // code에 해당하는 name 반환
-  };
-
-  return { nameToCode, codeToName };
-};
-
-  const handleCategoryChange = (selectedOption) => {
-    setCategoryCode(selectedOption.value); // 선택된 카테고리 코드 설정
-    setSelectedCategory(selectedOption); // 선택된 카테고리 설정
-    setIsCategorySelected(true); // 선택 여부 설정
-  };
   
   const deleteImageFromS3 = async (fileUrl) => {
     try {
@@ -244,15 +151,16 @@ const categoryConverter = (categoryOptions) => {
     };
 
     const handleSaveDraft = async () => {
-      const content = markdownContent;
       const fileUrls = uploadedFiles.map(file => file.fileUrl);
 
+      setSaveYn(false);
+
       const requestData = {
-        title: title.trim() || '',
-        content: content || '',
+        title: title,
+        content: markdownContent,
         category: categoryCode,
-        fileUrlList: fileUrls,
-        saveYn: false, // 임시저장
+        fileUrlList: boardFileList,
+        saveYn: saveYn,
       };
     
       try {
@@ -266,6 +174,7 @@ const categoryConverter = (categoryOptions) => {
           setBoardId(response.result);
         }    
         if (response.isSuccess) {
+          console.log(response);
           alert('글이 임시저장되었습니다.');
           setUploadedFiles((prevFiles) =>
             prevFiles.map((file) => ({
@@ -313,12 +222,6 @@ const fetchDraftDetails = async (boardId) => {
       }));
       setUploadedFiles(uploadedFilesFromDraft);
 
-      // 카테고리 업데이트
-      const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-      setSelectedCategory({ value: draft.categoryCode, label: draft.category });
-      setCategoryCode(draft.categoryCode);
-      setCategory(draft.category);
-
       console.log('임시저장 글 불러오기 성공:', draft);
     } else {
       console.error('임시저장 글 불러오기 실패:', response.message);
@@ -353,7 +256,7 @@ const fetchDraftDetails = async (boardId) => {
 
  // 게시글 등록 API 호출 함수
  const handlePostSubmit = async () => {
-  
+
   const requestData = {
     title: title,
     content: markdownContent,
@@ -372,7 +275,7 @@ const fetchDraftDetails = async (boardId) => {
         response = await request.post('/board', requestData);
       }
       if (response.isSuccess) {
-        setBoardId(response.result);
+        if (response.result) setBoardId(response.result);
         alert(saveYn==true ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
         navigate(-1); // 커뮤니티 게시글 목록으로 이동
       } else {

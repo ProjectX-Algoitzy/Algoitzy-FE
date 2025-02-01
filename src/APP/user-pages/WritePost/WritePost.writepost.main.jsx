@@ -18,10 +18,10 @@ export default function WritePost() {
   const [uploadedImageUrls, setUploadedImageUrls] = useState([]);
 
   const [markdownContent, setMarkdownContent] = useState('');
-  const [initialContent, setInitialContent] = useState('');
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
-  
+
+
   // 게시글 상세 조회
   const fetchBoardData = async () => {
   try {
@@ -38,7 +38,6 @@ export default function WritePost() {
       const { title, content, categoryCode, category, boardFileList, saveYn } = response.result;
       setTitle(title);
       setMarkdownContent(content);
-      setInitialContent(content);
       setCategoryCode(categoryCode);
       setCategory(category);
       setBoardFileList(boardFileList);
@@ -51,6 +50,7 @@ export default function WritePost() {
     console.error('게시글 상세 조회 중 오류:', error);
   }
   };
+
 
   useEffect(() => {
     fetchBoardData();
@@ -73,11 +73,13 @@ export default function WritePost() {
     }
   };
 
+
   const deleteAllUploadedImages = async () => {
     const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
     await Promise.all(promises);
   };
   
+
   useEffect(() => {
     // 페이지를 떠날 때 처리
     const handleBeforeUnload = (event) => {
@@ -127,7 +129,6 @@ export default function WritePost() {
           uploadedImageUrls={uploadedImageUrls}
           setUploadedImageUrls={setUploadedImageUrls}
 
-          initialContent={initialContent}
           markdownContent={markdownContent}
           setMarkdownContent={setMarkdownContent}
 

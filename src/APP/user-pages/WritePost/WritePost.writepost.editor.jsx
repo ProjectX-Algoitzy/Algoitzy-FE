@@ -35,27 +35,19 @@ export default function Editor({
   uploadedImageUrls=[],
   setUploadedImageUrls,
 
-  initialContent,
   markdownContent,
   setMarkdownContent,
 
   saveYn,
   setSaveYn,
 }) {
-  
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { state } = location;
 
   const editorRef = useRef(null);
-  const [editorView, setEditorView] = useState(null);
 
   const [isScrolling, setIsScrolling] = useState(false); // 스크롤 상태 관리
   
   const [selectedCategory, setSelectedCategory] = useState({ value: categoryCode, label: category }); // 선택된 카테고리 상태
   const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
-
-  const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
   const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
@@ -144,7 +136,7 @@ export default function Editor({
         </Styled.EditorHeader>
 
         <MarkdownEditor
-          initialContent={initialContent}
+          markdownContent={markdownContent}
           setMarkdownContent={setMarkdownContent}
           boardFileList={boardFileList}
           setBoardFileList={setBoardFileList}
@@ -175,7 +167,6 @@ export default function Editor({
           uploadedImageUrls={uploadedImageUrls}
           setUploadedImageUrls={setUploadedImageUrls}
 
-          initialContent={initialContent}
           markdownContent={markdownContent}
           setMarkdownContent={setMarkdownContent}
 

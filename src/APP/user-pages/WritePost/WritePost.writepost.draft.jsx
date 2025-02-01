@@ -3,8 +3,6 @@ import * as Styled from './Styled/WritePost.writepost.draft.styles';
 import request from '../../Api/request';
 
 export default function DraftModal({ isDraftModalOpen, toggleDraftModal, drafts, onSelectDraft }) {
-  const [categoryOptions, setCategoryOptions] = useState([]); // 카테고리 옵션 상태
-  const [mappedDrafts, setMappedDrafts] = useState([]); // 매핑된 drafts 상태
   
   if (!isDraftModalOpen) return null;
 

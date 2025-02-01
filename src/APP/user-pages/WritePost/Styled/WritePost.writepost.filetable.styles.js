@@ -7,11 +7,14 @@ export const FileTableContainer = styled.div`
   border: 0.042rem solid ${tokens.colors.B_Grey_3};
   border-radius: 0.167rem;
   margin-bottom: 1.042rem;
+
+  color: ${tokens.colors.B_Grey_8};
+	${tokens.typography.B2_M_16}
 `;
 
 export const FileTableHeader = styled.div`
   display: flex;
-  align-items: center; /* 높이를 글자에 맞게 정렬 */
+  align-items: center;
   background-color: ${tokens.colors.B_Grey_1};
   padding: 0.333rem 0;
   ${tokens.typography.B2_M_16};
@@ -26,7 +29,7 @@ export const FileTableBody = styled.div`
 
 export const FileRow = styled.div`
   display: flex;
-  align-items: center; /* 높이를 글자에 맞게 정렬 */
+  align-items: center; 
   padding: 0.1rem 0;
 `;
 
@@ -59,7 +62,7 @@ export const TableCell = styled.div`
   }
 
   &:nth-child(2) { /* 파일명 */
-    flex: 0 0 18rem; /* 파일명 컬럼 길이 */
+    flex: 0 0 17rem; /* 파일명 컬럼 길이 */
     text-align: left;
   }
 

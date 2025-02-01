@@ -9,10 +9,8 @@ import FileTable from './WritePost.writepost.filetable';
 
 
 export default function MarkdownEditor({
-  initialContent,
+  markdownContent,
   setMarkdownContent,
-  uploadedFiles=[],
-  setUploadedFiles,
   boardFileList,
   setBoardFileList,
   uploadedImageUrls,
@@ -22,10 +20,9 @@ export default function MarkdownEditor({
   const editorRef = useRef(null);
   const imageInputRef = useRef(null);
   const fileInputRef = useRef(null);
-  
-  const [editorView, setEditorView] = useState(null);
-
   const modalRef = useRef(null);
+
+  const [editorView, setEditorView] = useState(null);
 
   const [linkURL, setLinkURL] = useState('');
 
@@ -65,20 +62,20 @@ export default function MarkdownEditor({
   }, []);
 
 
+  // 에디터 내용 업데이트
   useEffect(() => {
     if (editorView) {
-      // 에디터 내용 업데이트
       editorView.dispatch({
         changes: {
           from: 0,
           to: editorView.state.doc.length, // 기존 내용 삭제
-          insert: initialContent, // 새로운 내용 삽입
+          insert: markdownContent, // 새로운 내용 삽입
         },
       });
     }
-  }, [initialContent]);
+  }, [markdownContent]);
 
-
+  // 툴바 기능
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
 
@@ -88,13 +85,12 @@ export default function MarkdownEditor({
       setIsModalOpen(true);
       return;
     } else if (syntax === 'image') {
-      openImageFileExplorer(); // 이미지 파일 선택창 열기
+      openImageFileExplorer();
       return;
     } else if (syntax === 'file') {
-      openFileExplorer(); // 일반 파일 선택창 열기
+      openFileExplorer();
       return;
     } else if (syntax === 'code') {
-      // 코드 블록 추가
       editorView.dispatch(
         editorView.state.changeByRange((range) => {
           const codeBlock = `\`\`\`\n${editorView.state.sliceDoc(range.from, range.to)}\n\`\`\``;
@@ -161,12 +157,14 @@ export default function MarkdownEditor({
     return regex.test(text) ? text.replace(regex, '$1') : `${wrap}${text || '텍스트'}${wrap}`;
   };
 
+  // heading
   const setHeadingLevel = (currentLineText, level) => {
     const headingLevels = ['# ', '## ', '### '];
     const strippedText = currentLineText.replace(/^#+\s*/, '');
     return headingLevels[level - 1] + strippedText;
   };
 
+  // link
   const handleLinkInsert = () => {
     if (!editorView) return;
   
@@ -184,6 +182,7 @@ export default function MarkdownEditor({
     setLinkURL('');
     setIsModalOpen(false);
   };
+
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -203,22 +202,26 @@ export default function MarkdownEditor({
     };
   }, [isModalOpen]);
 
+
   const openImageFileExplorer = () => {
     if (imageInputRef.current) {
-      imageInputRef.current.click(); // 이미지 파일 탐색기 열기
+      imageInputRef.current.click(); 
     }
   };
   
+
   const openFileExplorer = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click(); // 일반 파일 탐색기 열기
+      fileInputRef.current.click(); 
     }
   };
 
+
   const handleFileChange = (event) => {
-    const files = Array.from(event.target.files); // 선택된 파일 배열로 변환
+    const files = Array.from(event.target.files);
     handleFileUpload(event);
   };
+
 
   const deleteFile = async (file) => {
     let response;
@@ -230,7 +233,7 @@ export default function MarkdownEditor({
           params: { fileUrl: file.fileUrl },
         });      }
       if (response.isSuccess) {
-        setUploadedFiles((prevFiles) =>
+        setBoardFileList((prevFiles) =>
           prevFiles.filter((f) => f.fileUrl !== file.fileUrl)
         );
       } else {
@@ -241,6 +244,7 @@ export default function MarkdownEditor({
       alert('파일 삭제 중 오류가 발생했습니다.');
     }
   };
+
 
   const handleFileUpload = async (event) => {
     const files = Array.from(event.target.files); // 다중 파일 처리
@@ -267,7 +271,8 @@ export default function MarkdownEditor({
     }
   };
 
-   // S3 이미지 업로드 함수
+
+   // S3 이미지 업로드
    const uploadImage = async (file) => {
     try {
       const formData = new FormData();
@@ -293,74 +298,76 @@ export default function MarkdownEditor({
     }
   };
   
-    // 이미지 업로드 핸들러
-    const handleImageUpload = async (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-  
-      try {
-        const imageURL = await uploadImage(file); // S3 업로드 후 URL 반환
-        setUploadedImageUrls((prevUrls) => [...prevUrls, imageURL]); // 업로드된 URL 저장
-  
-        const markdownImage = `<img src="${imageURL}" alt="" style="max-width: 100%; height: auto;" />`;
-        editorView.dispatch(
-          editorView.state.changeByRange((range) => ({
-            changes: { from: range.from, to: range.to, insert: markdownImage },
-            range: EditorSelection.cursor(range.from + markdownImage.length),
-          }))
-        );
-      } catch (error) {
+
+  // 이미지 업로드 핸들러
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const imageURL = await uploadImage(file); // S3 업로드 후 URL 반환
+      setUploadedImageUrls((prevUrls) => [...prevUrls, imageURL]); // 업로드된 URL 저장
+
+      const markdownImage = `<img src="${imageURL}" alt="" style="max-width: 100%; height: auto;" />`;
+      editorView.dispatch(
+        editorView.state.changeByRange((range) => ({
+          changes: { from: range.from, to: range.to, insert: markdownImage },
+          range: EditorSelection.cursor(range.from + markdownImage.length),
+        }))
+      );
+    } catch (error) {
+    }
+  };
+
+
+  const deleteImageFromS3 = async (fileUrl) => {
+    try {
+      const response = await request.delete('/s3', { params: { fileUrl } });
+      if (!response.isSuccess) {
+        console.error('이미지 삭제 실패:', response.message);
       }
-    };
-  
-    const deleteImageFromS3 = async (fileUrl) => {
-      try {
-        const response = await request.delete('/s3', { params: { fileUrl } });
-        if (!response.isSuccess) {
-          console.error('이미지 삭제 실패:', response.message);
-        }
-      } catch (error) {
-        console.error('이미지 삭제 중 오류:', error);
-      }
-    };
-  
-    const deleteAllUploadedImages = async () => {
-      const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
-      await Promise.all(promises);
-    };
-  
-    useEffect(() => {
-      // 페이지를 떠날 때 처리
-      const handleBeforeUnload = (event) => {
-        if (uploadedImageUrls.length > 0) {
-          deleteAllUploadedImages();
-          event.preventDefault();
-          event.returnValue = ''; // 브라우저 기본 메시지 표시
-        }
-      };
-  
-      window.addEventListener('beforeunload', handleBeforeUnload);
-  
-      // Cleanup: 이벤트 리스너 제거
-      return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-      };
-    }, [uploadedImageUrls]);
-  
-    useEffect(() => {
-      // 컴포넌트 언마운트 시 이미지 삭제
-      return () => {
+    } catch (error) {
+      console.error('이미지 삭제 중 오류:', error);
+    }
+  };
+
+  const deleteAllUploadedImages = async () => {
+    const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
+    await Promise.all(promises);
+  };
+
+
+  useEffect(() => {
+    // 페이지를 떠날 때 처리
+    const handleBeforeUnload = (event) => {
+      if (uploadedImageUrls.length > 0) {
         deleteAllUploadedImages();
-      };
-    }, []);
+        event.preventDefault();
+        event.returnValue = ''; // 브라우저 기본 메시지 표시
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup: 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [uploadedImageUrls]);
+
+
+  useEffect(() => {
+    // 컴포넌트 언마운트 시 이미지 삭제
+    return () => {
+      deleteAllUploadedImages();
+    };
+  }, []);
+
 
   return (
     <>
-    {/* 선택된 파일 목록 표시 */}
     {boardFileList.length > 0 && (
-    <Styled.FileContainer>
         <FileTable uploadedFiles={boardFileList} deleteFile={deleteFile}/>
-    </Styled.FileContainer>
     )}
 
      <Styled.Toolbar>

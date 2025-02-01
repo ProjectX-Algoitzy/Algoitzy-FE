@@ -62,7 +62,7 @@ export default function FileTable({ uploadedFiles, deleteFile }) {
       <Styled.FileTableHeader>
         <Styled.TableColumn style={{ flex: '0 0 3rem', textAlign: 'center' }}>
         </Styled.TableColumn>
-        <Styled.TableColumn style={{ flex: '0 0 18rem', textAlign: 'left' }}>
+        <Styled.TableColumn style={{ flex: '0 0 17rem', textAlign: 'left' }}>
           파일명
         </Styled.TableColumn>
         <Styled.TableColumn style={{ textAlign: 'center' }}>
@@ -81,9 +81,9 @@ export default function FileTable({ uploadedFiles, deleteFile }) {
                   />
                 </Styled.DeleteButton>
               </Styled.TableCell>
-              <Styled.TableCell style={{ flex: '0 18rem', textAlign: 'left' }}>
+              <Styled.TableCell style={{ flex: '0 17rem', textAlign: 'left' }}>
                 <Styled.FileIcon src={getFileIcon(file.originalName)} alt="파일 아이콘" />
-                <Styled.FileName>{file.originalName}</Styled.FileName> {/* 파일명에 스타일 적용 */}
+                <Styled.FileName>{file.originalName}</Styled.FileName>
               </Styled.TableCell>
               <Styled.TableCell style={{ textAlign: 'center' }}>
                 {file.size || file.fileSize}

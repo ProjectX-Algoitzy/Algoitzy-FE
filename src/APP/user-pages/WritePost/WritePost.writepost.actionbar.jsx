@@ -15,9 +15,6 @@ export default function ActionBar({
   title,
   setTitle,
 
-  initialCategoryCode,
-  initialCategory,
-
   categoryCode,
   setCategoryCode,
 
@@ -30,7 +27,6 @@ export default function ActionBar({
   uploadedImageUrls=[],
   setUploadedImageUrls,
 
-  initialContent,
   markdownContent,
   setMarkdownContent,
 

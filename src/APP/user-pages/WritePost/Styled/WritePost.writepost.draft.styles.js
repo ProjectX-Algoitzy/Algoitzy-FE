@@ -39,8 +39,9 @@ export const DraftModalTitle = styled.h2`
 export const DraftModalClose = styled.button`
   background-image: url('/img/close.png');
   background-size: cover;
-  width: 1.5rem;
-  height: 1.5rem;
+  background-color: transparent;
+  width: 1rem;
+  height: 1rem;
   border: none;
   cursor: pointer;
 `;

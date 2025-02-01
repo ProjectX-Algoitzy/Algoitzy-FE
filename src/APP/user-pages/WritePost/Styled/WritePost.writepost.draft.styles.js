@@ -70,7 +70,10 @@ export const DraftItem = styled.div`
 export const DraftTitle = styled.div`
   ${tokens.typography.B3_M_14};
   color: ${tokens.colors.Grey_8};
-  width: 26rem;
+  width: 26rem;  /* 최대 너비 설정 */
+  white-space: nowrap;  /* 줄바꿈 방지 */
+  overflow: hidden;  /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis;  /* 너무 길면 ...으로 표시 */
 `;
 
 export const DraftCategory = styled.div`

@@ -239,24 +239,24 @@ export default function ActionBar({
   return (
     <Styled.ActionBarContainer>
       <Styled.BtnContainer>
-      <Styled.ExitButton onClick={handleExit}>← 나가기</Styled.ExitButton>
-      <Styled.BtnContainer2>
-      {!saveYn && ( // boardId가 없을 때만 표시
-      <Styled.DraftButton>
-        {/* 임시저장 클릭 영역 */}
-        <Styled.DraftSaveArea onClick={handleSaveDraft}>
-          임시저장
-        </Styled.DraftSaveArea>
-        {/* 임시저장 카운트 클릭 영역 */}
-        <Styled.DraftCountArea onClick={toggleDraftModal}>
-          | {draftCount}
-        </Styled.DraftCountArea>
-      </Styled.DraftButton>
-    )}
-      <Styled.Btn onClick={handlePostSubmit}>
-        {boardId && saveYn ? '수정하기' : '등록하기'}
-      </Styled.Btn>
-      </Styled.BtnContainer2>
+        <Styled.ExitButton onClick={handleExit}>← 나가기</Styled.ExitButton>
+        <Styled.BtnContainer2>
+          {!saveYn && ( // boardId가 없을 때만 표시
+          <Styled.DraftButton>
+            {/* 임시저장 클릭 영역 */}
+            <Styled.DraftSaveArea onClick={handleSaveDraft}>
+              임시저장
+            </Styled.DraftSaveArea>
+            {/* 임시저장 카운트 클릭 영역 */}
+            <Styled.DraftCountArea onClick={toggleDraftModal}>
+              | {draftCount}
+            </Styled.DraftCountArea>
+          </Styled.DraftButton>
+        )}
+          <Styled.Btn onClick={handlePostSubmit}>
+            {boardId && saveYn ? '수정하기' : '등록하기'}
+          </Styled.Btn>
+        </Styled.BtnContainer2>
       </Styled.BtnContainer>
 
       <DraftModal
@@ -265,7 +265,7 @@ export default function ActionBar({
         drafts={drafts}
         onSelectDraft={handleSelectDraft}
       />
-
+      
     </Styled.ActionBarContainer>
   );
 }

@@ -1,18 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { EditorState, EditorSelection } from '@codemirror/state';
-import { EditorView, keymap, placeholder } from '@codemirror/view';
-import { markdown } from '@codemirror/lang-markdown';
-import { history, historyKeymap, defaultKeymap } from '@codemirror/commands';
 import * as Styled from './Styled/WritePost.writepost.actionbar.styles';
 import request from '../../Api/request';
-import MarkdownEditor from './WritePost.writepost.markdowneditor';
 import DraftModal from './WritePost.writepost.draft';
-import FileTable from './WritePost.writepost.filetable';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
-
-const categoryPlaceholderText = '카테고리 선택';
 
 export default function ActionBar({
   boardId,
@@ -50,10 +42,6 @@ export default function ActionBar({
   const location = useLocation();
   const { state } = location;
 
-  const [editorView, setEditorView] = useState(null);
-
-  const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵션
-
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
   const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
@@ -63,6 +51,8 @@ export default function ActionBar({
   const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
   const { alert } = useContext(AlertContext);
   
+
+  // S3 이미지 삭제
   const deleteImageFromS3 = async (fileUrl) => {
     try {
       const response = await request.delete('/s3', { params: { fileUrl } });
@@ -74,13 +64,16 @@ export default function ActionBar({
     }
   };
 
+
+  // 이미지 삭제 호출
   const deleteAllUploadedImages = async () => {
     const promises = uploadedImageUrls.map((url) => deleteImageFromS3(url));
     await Promise.all(promises);
   };
+
   
+  // 페이지를 떠날 때 처리
   useEffect(() => {
-    // 페이지를 떠날 때 처리
     const handleBeforeUnload = (event) => {
       if (uploadedImageUrls.length > 0) {
         deleteAllUploadedImages();
@@ -88,22 +81,22 @@ export default function ActionBar({
         event.returnValue = ''; // 브라우저 기본 메시지 표시
       }
     };
-
     window.addEventListener('beforeunload', handleBeforeUnload);
-
-    // Cleanup: 이벤트 리스너 제거
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [uploadedImageUrls]);
 
+
+  // 컴포넌트 언마운트 시 이미지 삭제
   useEffect(() => {
-    // 컴포넌트 언마운트 시 이미지 삭제
     return () => {
       deleteAllUploadedImages();
     };
   }, []);
   
+
+  // 나가기
   const handleExit = async () => {
     try {
       const confirmed = await confirm(
@@ -120,23 +113,14 @@ export default function ActionBar({
     }
   };
 
+
   // 임시저장 게시글 목록 조회
   const fetchDrafts = async () => {
     try {
       const response = await request.get('board/draft');
       if (response.isSuccess) {
-        const draftList = response.result.boardList.map((draft) => {
-          const matchedCategory = categoryOptions.find(
-            (option) => option.value === draft.categoryCode
-          );
-          return {
-            ...draft,
-            name: matchedCategory ? matchedCategory.label : '알 수 없음',
-          };
-        });
-
-        setDrafts(draftList);
-        setDraftCount(draftList.length); // 게시글 수 업데이트
+        setDrafts(response.result.boardList);
+        setDraftCount(response.result.boardList.length);
       } else {
         console.error('임시저장 목록 조회 실패:', response.message);
       }
@@ -145,145 +129,111 @@ export default function ActionBar({
     }
   };
 
-    // 모달 열기/닫기
-    const toggleDraftModal = () => {
-      setIsDraftModalOpen((prev) => !prev);
-    };
 
-    const handleSaveDraft = async () => {
-      const fileUrls = uploadedFiles.map(file => file.fileUrl);
-
-      setSaveYn(false);
-
-      const requestData = {
-        title: title,
-        content: markdownContent,
-        category: categoryCode,
-        fileUrlList: boardFileList,
-        saveYn: saveYn,
-      };
-    
-      try {
-        let response;
-        if (boardId) {
-          // boardId가 존재하면 PATCH 요청
-          response = await request.patch(`/board/${boardId}`, requestData);
-        } else {
-          // boardId가 없으면 POST 요청
-          response = await request.post('/board', requestData);
-          setBoardId(response.result);
-        }    
-        if (response.isSuccess) {
-          console.log(response);
-          alert('글이 임시저장되었습니다.');
-          setUploadedFiles((prevFiles) =>
-            prevFiles.map((file) => ({
-              ...file,
-              onlyS3: false, // 모든 파일의 onlyS3 값을 true로 설정
-            }))
-          );
-          console.log(uploadedFiles);
-          fetchDrafts(); // 임시저장 목록 갱신
-        } else {
-          alert('게시글을 임시저장하는 중 오류가 발생했습니다.');
-        }
-      } catch (error) {
-        console.error('임시저장 중 오류 발생:', error);
-        // alert('게시글을 임시저장하는 중 오류가 발생했습니다.');
-      }
-    };
-
-    // 임시저장 글 상세 데이터를 가져오는 함수
-const fetchDraftDetails = async (boardId) => {
-  try {
-    const response = await request.get(`board/draft/${boardId}`);
-    if (response.isSuccess) {
-      const draft = response.result;
-
-      // 제목과 내용을 업데이트
-      setTitle(draft.title);
-      setMarkdownContent(draft.content);
-
-      console.log("###############",draft.content);
-      // 에디터 내용 업데이트
-      editorView.dispatch({
-        changes: {
-          from: 0,
-          to: editorView.state.doc.length, // 기존 내용 삭제
-          insert: draft.content, // 새로운 내용 삽입
-        },
-      });
-
-      // 파일 리스트 업데이트
-      const uploadedFilesFromDraft = draft.boardFileList.map((file) => ({
-        originalName: file.originalName,
-        fileUrl: file.fileUrl,
-        size: file.fileSize,
-      }));
-      setUploadedFiles(uploadedFilesFromDraft);
-
-      console.log('임시저장 글 불러오기 성공:', draft);
-    } else {
-      console.error('임시저장 글 불러오기 실패:', response.message);
-    }
-  } catch (error) {
-    console.error('임시저장 글 불러오기 오류:', error);
-  }
-};
-  
-    // 임시저장 글 선택
-    const handleSelectDraft = async (draft) => {
-      try {
-        const confirmed = await confirm(
-          '저장하지 않은 내용은 사라집니다. 계속하시겠습니까?'
-        );
-  
-        if (confirmed) {
-          setBoardId(draft.boardId);
-          setSaveYn(false);
-          fetchBoardData();
-        }
-      } catch {
-        console.log('사용자가 취소했습니다.');
-      }
-    };
-  
-    // 컴포넌트 마운트 시 임시저장 목록 가져오기
-    useEffect(() => {
-      fetchDrafts();
-    }, []);
+  // 컴포넌트 마운트 시 임시저장 목록 가져오기
+  useEffect(() => {
+    fetchDrafts();
+  }, []);
 
 
- // 게시글 등록 API 호출 함수
- const handlePostSubmit = async () => {
-
-  const requestData = {
-    title: title,
-    content: markdownContent,
-    category: categoryCode,
-    fileUrlList: boardFileList,
-    saveYn: true,
+  // 임시저장 게시글 목록 모달 열기/닫기
+  const toggleDraftModal = () => {
+    setIsDraftModalOpen((prev) => !prev);
   };
 
-  try {
-    let response;
+  
+  // 임시저장
+  const handleSaveDraft = async () => {
+    const fileUrls = uploadedFiles.map(file => file.fileUrl);
+
+    setSaveYn(false);
+
+    const requestData = {
+      title: title,
+      content: markdownContent,
+      category: categoryCode,
+      fileUrlList: boardFileList,
+      saveYn: saveYn,
+    };
+  
+    try {
+      let response;
       if (boardId) {
-        // 게시글 수정(임시저장 글 포함)
+        // boardId가 존재하면 PATCH 요청
         response = await request.patch(`/board/${boardId}`, requestData);
       } else {
-        // 새 게시글 작성
+        // boardId가 없으면 POST 요청
         response = await request.post('/board', requestData);
-      }
+        setBoardId(response.result);
+      }    
       if (response.isSuccess) {
-        if (response.result) setBoardId(response.result);
-        alert(saveYn==true ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
-        navigate(-1); // 커뮤니티 게시글 목록으로 이동
+        console.log(response);
+        alert('글이 임시저장되었습니다.');
+        setUploadedFiles((prevFiles) =>
+          prevFiles.map((file) => ({
+            ...file,
+            onlyS3: false, // 모든 파일의 onlyS3 값을 true로 설정
+          }))
+        );
+        console.log(uploadedFiles);
+        fetchDrafts(); // 임시저장 목록 갱신
       } else {
-        alert('게시글을 저장하는 중 오류가 발생했습니다.');
+        alert('게시글을 임시저장하는 중 오류가 발생했습니다.');
       }
     } catch (error) {
-      // alert('게시글을 저장하는 중 오류가 발생했습니다.');
+      console.error('임시저장 중 오류 발생:', error);
+      // alert('게시글을 임시저장하는 중 오류가 발생했습니다.');
     }
+  };
+  
+
+  // 임시저장 게시글 선택
+  const handleSelectDraft = async (draft) => {
+    try {
+      const confirmed = await confirm(
+        '저장하지 않은 내용은 사라집니다. 계속하시겠습니까?'
+      );
+
+      if (confirmed) {
+        setBoardId(draft.boardId);
+        setSaveYn(false);
+        fetchBoardData();
+      }
+    } catch {
+      console.log('사용자가 취소했습니다.');
+    }
+  };
+
+  // 등록하기
+  const handlePostSubmit = async () => {
+
+    const requestData = {
+      title: title,
+      content: markdownContent,
+      category: categoryCode,
+      fileUrlList: boardFileList,
+      saveYn: true,
+    };
+
+    try {
+      let response;
+        if (boardId) {
+          // 게시글 수정(임시저장 글 포함)
+          response = await request.patch(`/board/${boardId}`, requestData);
+        } else {
+          // 새 게시글 작성
+          response = await request.post('/board', requestData);
+        }
+        if (response.isSuccess) {
+          if (response.result) setBoardId(response.result);
+          alert(saveYn==true ? '게시글이 수정되었습니다.' : '게시글이 등록되었습니다.');
+          navigate(-1); // 커뮤니티 게시글 목록으로 이동
+        } else {
+          alert('게시글을 저장하는 중 오류가 발생했습니다.');
+        }
+      } catch (error) {
+        // alert('게시글을 저장하는 중 오류가 발생했습니다.');
+      }
   };
 
   return (

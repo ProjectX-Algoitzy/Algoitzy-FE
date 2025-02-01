@@ -54,7 +54,9 @@ export default function Editor({
   
   const categoryPlaceholderText = '카테고리 선택';
     
-  useEffect(() => { // 에디터 스크롤
+
+  // 에디터 내부 스크롤
+  useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
       // 일정 시간 후 스크롤 상태 비활성화
@@ -73,8 +75,9 @@ export default function Editor({
     };
   }, []);
 
+
+  // 카테고리 옵션 리스트 가져오기
   useEffect(() => {
-    // 카테고리 옵션을 API에서 가져오기
     const fetchCategoryOptions = async () => {
       try {
         const response = await request.get('/board/category');
@@ -102,11 +105,14 @@ export default function Editor({
     fetchCategoryOptions();
   }, [categoryCode]);
 
+
+  // 카테고리 변경
   const handleCategoryChange = (selectedOption) => {
-    setCategoryCode(selectedOption.value); // 선택된 카테고리 코드 설정
+    setCategoryCode(selectedOption.value);
     setCategory(selectedOption.label);
-    setSelectedCategory(selectedOption); // 선택된 카테고리 설정
+    setSelectedCategory(selectedOption);
   };
+
   
   return (
     <Styled.LeftContainer>

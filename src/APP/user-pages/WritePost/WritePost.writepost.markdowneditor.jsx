@@ -75,7 +75,8 @@ export default function MarkdownEditor({
     }
   }, [markdownContent]);
 
-  // 툴바 기능
+  
+  // 마크다운 툴바
   const applyMarkdownSyntax = (syntax) => {
     if (!editorView) return;
 

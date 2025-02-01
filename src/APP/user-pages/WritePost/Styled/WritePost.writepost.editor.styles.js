@@ -63,7 +63,6 @@ export const EditorHeader = styled.div`
   padding : 2.833rem 0 1.042rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 `
 
 export const PageLabel = styled.div`
@@ -79,12 +78,7 @@ export const Divider = styled.div`
   width: 4.375rem;
   height: 0.125rem;
   background-color: ${tokens.colors.B_Grey_4};
-`;
-
-// 라벨+입력 컨테이너
-export const LIContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  margin: 0.5rem 0;
 `;
 
 // 입력값 라벨

@@ -144,15 +144,14 @@ export default function ActionBar({
   
   // 임시저장
   const handleSaveDraft = async () => {
-    const fileUrls = uploadedFiles.map(file => file.fileUrl);
-
+    const fileUrlList = boardFileList.map(file => file.fileUrl);
     setSaveYn(false);
 
     const requestData = {
       title: title,
       content: markdownContent,
       category: categoryCode,
-      fileUrlList: boardFileList,
+      fileUrlList: fileUrlList,
       saveYn: saveYn,
     };
   
@@ -206,12 +205,13 @@ export default function ActionBar({
 
   // 등록하기
   const handlePostSubmit = async () => {
+    const fileUrlList = boardFileList.map(file => file.fileUrl);
 
     const requestData = {
       title: title,
       content: markdownContent,
       category: categoryCode,
-      fileUrlList: boardFileList,
+      fileUrlList: fileUrlList,
       saveYn: true,
     };
 
@@ -265,7 +265,7 @@ export default function ActionBar({
         drafts={drafts}
         onSelectDraft={handleSelectDraft}
       />
-      
+
     </Styled.ActionBarContainer>
   );
 }

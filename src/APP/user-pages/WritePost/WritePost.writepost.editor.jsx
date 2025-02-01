@@ -119,18 +119,17 @@ export default function Editor({
   return (
     <Styled.LeftContainer>
       <Styled.InnerEditorContainer ref={editorRef} isScrolling={isScrolling}>
-      <Styled.EditorHeader>
+        <Styled.EditorHeader>
+          <Styled.PageLabel>새로운 글쓰기</Styled.PageLabel>
+          <Styled.Divider/>
 
-      <Styled.PageLabel>새로운 글쓰기</Styled.PageLabel>
-        <Styled.Divider/>
-
-        <Styled.LIContainer>
           <Styled.OptionLabel>제목</Styled.OptionLabel>
           <Styled.TextInput 
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
             placeholder="제목을 입력하세요"
           />
+
           <Styled.OptionLabel>게시판 선택</Styled.OptionLabel>
           <Styled.CategorySelect
             options={categoryOptions}
@@ -142,20 +141,18 @@ export default function Editor({
             isSearchable={false}
             onChange={handleCategoryChange}
           />
-        </Styled.LIContainer>
-      
-    </Styled.EditorHeader>
+        </Styled.EditorHeader>
 
-      <MarkdownEditor
-        initialContent={initialContent}
-        setMarkdownContent={setMarkdownContent}
-        uploadedFiles={uploadedFiles}
-        setUploadedFiles={setUploadedFiles}
-        uploadedImageUrls={uploadedImageUrls}
-        setUploadedImageUrls={setUploadedImageUrls}
-      />
+        <MarkdownEditor
+          initialContent={initialContent}
+          setMarkdownContent={setMarkdownContent}
+          boardFileList={boardFileList}
+          setBoardFileList={setBoardFileList}
+          uploadedImageUrls={uploadedImageUrls}
+          setUploadedImageUrls={setUploadedImageUrls}
+        />
 
-    </Styled.InnerEditorContainer>
+      </Styled.InnerEditorContainer>
 
       <ActionBar
           boardId={boardId}

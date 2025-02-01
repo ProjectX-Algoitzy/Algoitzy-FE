@@ -13,6 +13,8 @@ export default function MarkdownEditor({
   setMarkdownContent,
   uploadedFiles=[],
   setUploadedFiles,
+  boardFileList,
+  setBoardFileList,
   uploadedImageUrls,
   setUploadedImageUrls,
 }) {
@@ -251,7 +253,7 @@ export default function MarkdownEditor({
         if (response.isSuccess) {
           const uploadedFile = response.result.s3FileList?.[0];
           if (uploadedFile) {
-            setUploadedFiles((prevFiles) => [
+            setBoardFileList((prevFiles) => [
               ...prevFiles,
               { ...uploadedFile, size: uploadedFile.fileSize, onlyS3: true },
             ]);
@@ -355,10 +357,9 @@ export default function MarkdownEditor({
   return (
     <>
     {/* 선택된 파일 목록 표시 */}
-    {uploadedFiles.length > 0 && (
+    {boardFileList.length > 0 && (
     <Styled.FileContainer>
-        <FileTable uploadedFiles={uploadedFiles} deleteFile={deleteFile}/>
-
+        <FileTable uploadedFiles={boardFileList} deleteFile={deleteFile}/>
     </Styled.FileContainer>
     )}
 

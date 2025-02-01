@@ -21,8 +21,7 @@ export default function WritePost() {
   const [initialContent, setInitialContent] = useState('');
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
-
-  console.log(boardId,saveYn)
+  
   // 게시글 상세 조회
   const fetchBoardData = async () => {
   try {

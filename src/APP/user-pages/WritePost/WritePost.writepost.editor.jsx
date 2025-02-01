@@ -14,7 +14,6 @@ import ActionBar from './WritePost.writepost.actionbar';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-
 export default function Editor({
   boardId,
   setBoardId,
@@ -62,7 +61,7 @@ export default function Editor({
   const { alert } = useContext(AlertContext);
   
   const categoryPlaceholderText = '카테고리 선택';
-  
+    
   useEffect(() => { // 에디터 스크롤
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
@@ -136,7 +135,7 @@ export default function Editor({
           <Styled.CategorySelect
             options={categoryOptions}
             placeholder={categoryPlaceholderText}
-            value={selectedCategory}
+            value={selectedCategory?.value ? selectedCategory : undefined}
             // isDisabled={true} // 선택 비활성화
             // defaultValue={categoryOptions[0]}
             components={{ DropdownIndicator: null, IndicatorSeparator: null }}

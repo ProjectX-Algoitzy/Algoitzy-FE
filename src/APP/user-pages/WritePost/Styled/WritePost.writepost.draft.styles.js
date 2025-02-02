@@ -81,7 +81,6 @@ export const DraftCategory = styled.div`
   color: ${tokens.colors.Grey_8};
 `;
 
-
 export const DraftDate = styled.div`
   ${tokens.typography.B3_M_14};
   color: ${tokens.colors.Grey_8};

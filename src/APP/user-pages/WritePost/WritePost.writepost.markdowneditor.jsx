@@ -3,7 +3,7 @@ import { EditorState, EditorSelection } from '@codemirror/state';
 import { EditorView, keymap, placeholder } from '@codemirror/view';
 import { markdown } from '@codemirror/lang-markdown';
 import { history, historyKeymap, defaultKeymap } from '@codemirror/commands';
-import * as Styled from './Styled/WritePost.writepost.editor.styles';
+import * as Styled from './Styled/WritePost.writepost.markdowneditor.styles';
 import request from '../../Api/request';
 import FileTable from './WritePost.writepost.filetable';
 
@@ -221,29 +221,6 @@ export default function MarkdownEditor({
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     handleFileUpload(event);
-  };
-
-
-  const deleteFile = async (file) => {
-    let response;
-    try {
-      if (file.onlyS3==true){
-        response = await request.delete('/s3', { params: { fileUrl: file.fileUrl } });
-      } else {
-        response = await request.delete('/board-file', {
-          params: { fileUrl: file.fileUrl },
-        });      }
-      if (response.isSuccess) {
-        setBoardFileList((prevFiles) =>
-          prevFiles.filter((f) => f.fileUrl !== file.fileUrl)
-        );
-      } else {
-        throw new Error('파일 삭제 실패');
-      }
-    } catch (error) {
-      console.error('파일 삭제 실패:', error);
-      alert('파일 삭제 중 오류가 발생했습니다.');
-    }
   };
 
 

@@ -107,38 +107,37 @@ export default function WritePost() {
   
   return (
     <Styled.Container>
-      <Styled.MarkdownEditorContainer>
-        <Editor
-          boardId={boardId}
-          setBoardId={setBoardId}
 
-          fetchBoardData={fetchBoardData}
+      <Editor
+        boardId={boardId}
+        setBoardId={setBoardId}
 
-          title={title}
-          setTitle={setTitle}
+        fetchBoardData={fetchBoardData}
 
-          categoryCode={categoryCode}
-          setCategoryCode={setCategoryCode}
+        title={title}
+        setTitle={setTitle}
 
-          category={category}
-          setCategory={setCategory}
+        categoryCode={categoryCode}
+        setCategoryCode={setCategoryCode}
 
-          boardFileList={boardFileList}
-          setBoardFileList={setBoardFileList}
+        category={category}
+        setCategory={setCategory}
 
-          uploadedImageUrls={uploadedImageUrls}
-          setUploadedImageUrls={setUploadedImageUrls}
+        boardFileList={boardFileList}
+        setBoardFileList={setBoardFileList}
 
-          markdownContent={markdownContent}
-          setMarkdownContent={setMarkdownContent}
+        uploadedImageUrls={uploadedImageUrls}
+        setUploadedImageUrls={setUploadedImageUrls}
 
-          saveYn={saveYn}
-          setSaveYn={setSaveYn}
-        />
+        markdownContent={markdownContent}
+        setMarkdownContent={setMarkdownContent}
 
-        <Preview title={title} markdownContent={markdownContent} />
+        saveYn={saveYn}
+        setSaveYn={setSaveYn}
+      />
+      
+      <Preview title={title} markdownContent={markdownContent} />
 
-      </Styled.MarkdownEditorContainer>
     </Styled.Container>
   );
 }

@@ -248,7 +248,7 @@ export default function MarkdownEditor({
 
 
   const handleFileUpload = async (event) => {
-    const files = Array.from(event.target.files); // 다중 파일 처리
+    const files = Array.from(event.target.files); 
     for (const file of files) {
       try {
         const formData = new FormData();
@@ -260,7 +260,7 @@ export default function MarkdownEditor({
           if (uploadedFile) {
             setBoardFileList((prevFiles) => [
               ...prevFiles,
-              { ...uploadedFile, size: uploadedFile.fileSize, onlyS3: true },
+              { ...uploadedFile, size: uploadedFile.fileSize, onlyS3: true, deleted: false },
             ]);
           }
         } else {
@@ -300,7 +300,6 @@ export default function MarkdownEditor({
   };
   
 
-  // 이미지 업로드 핸들러
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -338,8 +337,8 @@ export default function MarkdownEditor({
   };
 
 
+  // 페이지를 떠날 때 처리
   useEffect(() => {
-    // 페이지를 떠날 때 처리
     const handleBeforeUnload = (event) => {
       if (uploadedImageUrls.length > 0) {
         deleteAllUploadedImages();
@@ -357,8 +356,8 @@ export default function MarkdownEditor({
   }, [uploadedImageUrls]);
 
 
+  // 컴포넌트 언마운트 시 이미지 삭제
   useEffect(() => {
-    // 컴포넌트 언마운트 시 이미지 삭제
     return () => {
       deleteAllUploadedImages();
     };
@@ -368,7 +367,10 @@ export default function MarkdownEditor({
   return (
     <>
     {boardFileList.length > 0 && (
-        <FileTable uploadedFiles={boardFileList} deleteFile={deleteFile}/>
+        <FileTable
+          boardFileList={boardFileList}
+          setBoardFileList={setBoardFileList}
+        />
     )}
 
      <Styled.Toolbar>

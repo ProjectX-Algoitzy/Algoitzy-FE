@@ -38,8 +38,6 @@ export default function ActionBar({
   const location = useLocation();
   const { state } = location;
 
-  const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
-
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false); // 모달 상태
   const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [drafts, setDrafts] = useState([]); // 임시저장 게시글 목록
@@ -110,6 +108,39 @@ export default function ActionBar({
   };
 
 
+  const updateDeletedFiles = async () => {
+    const filesToDelete = boardFileList.filter(file => !file.onlyS3 && file.deleted);
+  
+    if (filesToDelete.length === 0) return;
+  
+    try {
+      // 모든 삭제 요청을 병렬 실행
+      await Promise.all(
+        filesToDelete.map(async (file) => {
+          try {
+            const response = await request.delete('/board-file', {
+              params: { fileUrl: file.fileUrl },
+            });
+  
+            if (response.isSuccess) {
+              setBoardFileList((prevFiles) =>
+                prevFiles.filter((f) => f.fileUrl !== file.fileUrl)
+              );
+            } else {
+              throw new Error('파일 삭제 실패');
+            }
+          } catch (error) {
+            console.error(`파일 삭제 실패 (${file.fileUrl}):`, error);
+            alert('파일 삭제 중 오류가 발생했습니다.');
+          }
+        })
+      );
+    } catch (error) {
+      console.error('삭제된 파일 업데이트 중 오류 발생:', error);
+    }
+  };
+
+
   // 임시저장 게시글 목록 조회
   const fetchDrafts = async () => {
     try {
@@ -140,7 +171,9 @@ export default function ActionBar({
   
   // 임시저장
   const handleSaveDraft = async () => {
+    await updateDeletedFiles();
     const fileUrlList = boardFileList.map(file => file.fileUrl);
+    
     setSaveYn(false);
 
     const requestData = {
@@ -153,7 +186,6 @@ export default function ActionBar({
   
     try {
       let response;
-      console.log("TESTTTTTTTTT")
       if (boardId) {
         // boardId가 존재하면 PATCH 요청
         response = await request.patch(`/board/${boardId}`, requestData);
@@ -167,7 +199,7 @@ export default function ActionBar({
         setBoardFileList((prevFiles) =>
           prevFiles.map((file) => ({
             ...file,
-            onlyS3: false, // 모든 파일의 onlyS3 값을 true로 설정
+            onlyS3: false,
           }))
         );
         console.log("$$$$$$$$$",boardFileList);
@@ -201,6 +233,7 @@ export default function ActionBar({
 
   // 등록하기
   const handlePostSubmit = async () => {
+    await updateDeletedFiles();
     const fileUrlList = boardFileList.map(file => file.fileUrl);
 
     const requestData = {

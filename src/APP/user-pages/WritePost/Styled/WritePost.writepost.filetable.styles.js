@@ -19,7 +19,7 @@ export const FileTableHeader = styled.div`
   padding: 0.333rem 0;
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.B_Grey_6};
-  height: auto; /* 글자 높이에 맞춤 */
+  height: auto;
 `;
 
 export const FileTableBody = styled.div`
@@ -102,16 +102,17 @@ export const FileIcon = styled.img`
 
 export const FileName = styled.span`
   display: inline-block;
-  max-width: 16rem; /* 파일 이름 최대 너비 설정 */
-  white-space: nowrap; /* 텍스트를 한 줄로 유지 */
-  overflow: hidden; /* 넘치는 텍스트 숨기기 */
-  text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
-  vertical-align: middle; /* 아이콘과 수직 정렬 */
+  max-width: 16rem;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  vertical-align: middle;
 `;
 
 export const EmptyMessage = styled.div`
-  padding: 1rem;
+  margin: 0.1rem 0;
+  height: 1rem;
   text-align: center;
   color: ${tokens.colors.B_Grey_6};
-  ${tokens.typography.B3_M_14};
+  ${tokens.typography.B2_M_16}
 `;

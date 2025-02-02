@@ -16,35 +16,30 @@ const fileIcons = {
 // 기본 아이콘
 const defaultIcon = '/img/file_default.png';
 
-// 확장자 추출 및 아이콘 선택 함수
+// 확장자 추출 및 아이콘 지정
 const getFileIcon = (fileName) => {
   const extension = fileName.split('.').pop().toLowerCase();
 
-  // doc 확장자 처리
   const docExtensions = ['doc', 'docx'];
   if (docExtensions.includes(extension)) {
     return fileIcons.doc;
   }
 
-  // xls 확장자 처리
   const xlsExtensions = ['xls', 'xlsx'];
   if (xlsExtensions.includes(extension)) {
     return fileIcons.xls;
   }
 
-  // ppt 확장자 처리
   const pptExtensions = ['ppt', 'pptx'];
   if (pptExtensions.includes(extension)) {
     return fileIcons.ppt;
   }
 
-  // hwp 확장자 처리
   const hwpExtensions = ['hwp', 'hwpx'];
   if (hwpExtensions.includes(extension)) {
     return fileIcons.hwp;
   }
 
-  // img 확장자 처리
   const imgExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
   if (imgExtensions.includes(extension)) {
     return fileIcons.img;

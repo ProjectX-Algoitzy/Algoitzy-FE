@@ -50,7 +50,6 @@ const getFileIcon = (fileName) => {
 
 
 export default function FileTable({ uploadedFiles, deleteFile }) {
-  console.log('%%%',uploadedFiles);
   return (
     <Styled.FileTableContainer>
       {/* 라벨 영역 */}

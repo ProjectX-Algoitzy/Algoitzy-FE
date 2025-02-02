@@ -40,11 +40,11 @@ export default function ActionBar({
 
   const [uploadedFiles, setUploadedFiles] = useState(state?.initialUploadedFiles || []);
 
-  const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [isDraftModalOpen, setIsDraftModalOpen] = useState(false); // 모달 상태
+  const [draftCount, setDraftCount] = useState(0); // 임시저장 게시글 수
   const [drafts, setDrafts] = useState([]); // 임시저장 게시글 목록
 
-  const { confirm } = useContext(ConfirmContext); // ConfirmContext 사용
+  const { confirm } = useContext(ConfirmContext);
   const { alert } = useContext(AlertContext);
   
 
@@ -153,6 +153,7 @@ export default function ActionBar({
   
     try {
       let response;
+      console.log("TESTTTTTTTTT")
       if (boardId) {
         // boardId가 존재하면 PATCH 요청
         response = await request.patch(`/board/${boardId}`, requestData);
@@ -162,15 +163,14 @@ export default function ActionBar({
         setBoardId(response.result);
       }    
       if (response.isSuccess) {
-        console.log(response);
         alert('글이 임시저장되었습니다.');
-        setUploadedFiles((prevFiles) =>
+        setBoardFileList((prevFiles) =>
           prevFiles.map((file) => ({
             ...file,
             onlyS3: false, // 모든 파일의 onlyS3 값을 true로 설정
           }))
         );
-        console.log(uploadedFiles);
+        console.log("$$$$$$$$$",boardFileList);
         fetchDrafts(); // 임시저장 목록 갱신
       } else {
         alert('게시글을 임시저장하는 중 오류가 발생했습니다.');

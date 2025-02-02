@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { EditorState, EditorSelection } from '@codemirror/state';
-import { EditorView, keymap, placeholder } from '@codemirror/view';
-import { markdown } from '@codemirror/lang-markdown';
-import { history, historyKeymap, defaultKeymap } from '@codemirror/commands';
 import * as Styled from './Styled/WritePost.writepost.editor.styles';
 import request from '../../Api/request';
 import MarkdownEditor from './WritePost.writepost.markdowneditor';
-import DraftModal from './WritePost.writepost.draft';
-import FileTable from './WritePost.writepost.filetable';
 import ActionBar from './WritePost.writepost.actionbar';
 
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';

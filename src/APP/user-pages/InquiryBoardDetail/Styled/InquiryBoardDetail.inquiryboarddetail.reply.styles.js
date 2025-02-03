@@ -175,13 +175,6 @@ export const Reply = styled.div`
   cursor: pointer;
 `;
 
-export const CommentLike = styled.img`
-  width: 0.833rem;
-  height: 0.833rem;
-  margin-right: 0.21rem;
-  cursor: pointer;
-`;
-
 export const LikeCount = styled.div`
   ${tokens.typography.B3_M_14};
   color: #888888;

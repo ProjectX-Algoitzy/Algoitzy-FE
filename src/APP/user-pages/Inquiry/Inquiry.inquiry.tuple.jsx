@@ -49,11 +49,11 @@ export default function InquiryTuple({ item, isTabClick, searchKeyword, isRegula
   };
   
   return (
-    <itemS.TupleContainer fixyn={item.fixYn} onClick={() => moveToDetail(item.boardId)}>
-      <itemS.TupleType>{isTabClick ? item.boardId : item.categoryName}</itemS.TupleType>
+    <itemS.TupleContainer disabled={!item.publicYn && !item.myInquiryYn} onClick={() => (item.publicYn || item.myInquiryYn) && moveToDetail(item.inquiryId)}>
+      <itemS.TupleType>{isTabClick ? item.inquiryId : item.categoryName}</itemS.TupleType>
       <itemS.TupleTitleBox>
         {renderTupleTitle(item.title)}
-        {item.newBoardYn && <itemS.NewIcon>NEW</itemS.NewIcon>}
+        {!item.publicYn && <itemS.Lockimg src='/img/lock.png' alt='자물쇠' />}
       </itemS.TupleTitleBox>
       {isRegularMember ? (
         <itemS.TupleWriter>{renderHighlight(item.createdName)}</itemS.TupleWriter>
@@ -61,7 +61,12 @@ export default function InquiryTuple({ item, isTabClick, searchKeyword, isRegula
         <itemS.TupleBlank></itemS.TupleBlank>
       )}
       <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
-      <itemS.TupleProcess>{item.viewCount}</itemS.TupleProcess>
+      <itemS.TupleView>{item.viewCount}</itemS.TupleView>
+      <itemS.TupleProcess>
+        <itemS.ProcessingYNBox solvedYn={item.solvedYn}>
+          {item.solvedYn ? '답변 완료' : '답변 대기'}
+        </itemS.ProcessingYNBox>
+      </itemS.TupleProcess>
     </itemS.TupleContainer>
   )
 }

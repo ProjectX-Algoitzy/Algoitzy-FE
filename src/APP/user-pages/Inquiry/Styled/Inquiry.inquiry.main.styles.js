@@ -31,7 +31,7 @@ export const TopContainer = styled.div`
   justify-content: space-between;
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
-  margin-bottom: 27px;
+  /* margin-bottom: 27px; */
   @media (max-width: 600px) {
     width: 100%;
   }

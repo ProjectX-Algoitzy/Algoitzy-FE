@@ -21,7 +21,7 @@ export default function WritePost() {
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
 
-
+  
   // 게시글 상세 조회
   const fetchBoardData = async () => {
   try {
@@ -135,7 +135,7 @@ export default function WritePost() {
         saveYn={saveYn}
         setSaveYn={setSaveYn}
       />
-      
+
       <Preview title={title} markdownContent={markdownContent} />
 
     </Styled.Container>

@@ -111,7 +111,7 @@ export default function Inquiry() {
                             <itemS.SearchIcon onClick={() => handleSearch()} src='/img/search.svg' alt='돋보기' />
                         </itemS.SearchContainer>
 					</itemS.TopContainer>
-					{/* <itemS.TabSortContainer>
+					<itemS.TabSortContainer>
 						<itemS.SortContainer>
 							<itemS.CategoryDrop onClick={toggleSortDrop}>{sortText}</itemS.CategoryDrop>
 							<itemS.SortIcon src="/img/sorticon.svg" alt="Sort Icon" onClick={toggleSortDrop} />
@@ -122,7 +122,7 @@ export default function Inquiry() {
 								</itemS.SortDrop>
 							)}
 						</itemS.SortContainer>
-					</itemS.TabSortContainer> */}
+					</itemS.TabSortContainer>
 					<InquiryTable 
                         items={posts}
                         isTabClick={isTabClick}

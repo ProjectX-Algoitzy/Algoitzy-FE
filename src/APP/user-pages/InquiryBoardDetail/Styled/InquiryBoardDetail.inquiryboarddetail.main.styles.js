@@ -121,7 +121,7 @@ export const InfoBox = styled.div`
   flex-direction: column;
 `;
 
-export const ReplyYN = styled.div` 
+export const ProcessingYNBox = styled.div` 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,8 +130,7 @@ export const ReplyYN = styled.div`
   height: 0.875rem;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.B_Grey_1};
-  background-color: ${tokens.colors.Blue_0_Main};
-  // background-color: ${tokens.colors.B_Grey_4};
+  background-color: ${({ solvedYn }) => (solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4)};
 `;
 
 export const WriterName = styled.div`
@@ -158,6 +157,17 @@ export const CreatedTime = styled.div`
 export const ViewCnt = styled.div`
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Black};
+`;
+
+export const ToggleIcon = styled.img`
+  width: 0.708rem;
+  height: 0.708rem;
+  margin-right: 0.25rem;
+`;
+
+export const ToggleText = styled.div`
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.B_Grey_8};
 `;
 
 export const CountContainer = styled.div`
@@ -213,7 +223,7 @@ export const ContentContainer = styled.div`
 export const WriteContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: row;
   margin-bottom: 1.5rem;
 `;

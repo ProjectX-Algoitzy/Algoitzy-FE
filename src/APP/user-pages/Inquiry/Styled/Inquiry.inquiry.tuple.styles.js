@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 import * as tokens from "../../../../tokens"
 
-
-export const Container = styled.div`
-  
-`;
-
 // 튜플 파트 시작
 export const TupleContainer = styled.div`
   display: flex;
@@ -14,10 +9,13 @@ export const TupleContainer = styled.div`
   align-items: center;
   width: 50rem;
   border-bottom: 1px solid ${tokens.colors.B_Grey_3};
-  background-color: ${({ fixyn }) => (fixyn ? tokens.colors.B_Grey_1 : 'transparent')};
+  background-color: transparent;
   &:hover {
     background-color: ${tokens.colors.B_Grey_2};
   }
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  /* opacity: ${({ disabled }) => (disabled ? 0.6 : 1)}; */
 `;
 
 export const TupleType = styled.div`
@@ -51,18 +49,10 @@ export const HighlightedText = styled.span`
   color: ${tokens.colors.Blue_0_Main};
 `;
 
-export const NewIcon = styled.div`
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   ${tokens.typography.T5_SB_16};
-   background-color: rgba(251, 170, 132, 0.2);
-   color: ${tokens.colors.Sub_3};
-   width: 2.17rem;
-   height: 0.88rem;
-   border: none;
-   border-radius: 0.17rem;
-   margin-left: 0.17rem;
+export const Lockimg = styled.img`
+  width: 0.667rem;
+  height: 0.75rem;
+  margin-left: 0.458rem;
 `;
 
 export const TupleWriter = styled.div`
@@ -102,13 +92,27 @@ export const TupleProcess = styled.div`
   margin-right: 1.667rem;
   cursor: pointer;
 `;
-// 튜플 파트 끝
 
-export const WaitingBox = styled.div`
-  background-color: ${tokens.colors.Grey_4};
+export const TupleView = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Black};
+  width: 3.833rem;
+  min-height: 2.333rem;
+  margin-right: 1.667rem;
+  cursor: pointer;
+`;
+
+export const ProcessingYNBox = styled.div`
+  background-color: ${({ solvedYn }) => (solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4)};
   color: ${tokens.colors.White};
   width: 3.167rem;
   height: 0.875rem;
   border: none;
   border-radius: 0.16rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

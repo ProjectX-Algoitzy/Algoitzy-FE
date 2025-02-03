@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import request from '../../Api/request';
 import * as itemS from "./Styled/InquiryBoardDetail.inquiryboarddetail.main.styles";
+import InquiryWriteBox from './InquiryBoardDetail.inquiryboarddetail.inquirywritebox';
 import InquiryContent from "./InquiryBoardDetail.inquiryboarddetail.content";
 import InquiryComment from "./InquiryBoardDetail.inquiryboarddetail.comment";
-import WriteBox from '../BoardDetail/WriteBox';
 
 export default function InquiryBoardDetail() {
     const navigate = useNavigate();
     const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵
     const { id } = useParams();  // 게시글 ID 가져오기
-    const memberId = +localStorage.getItem('memberId');
     const profileUrl = localStorage.getItem('profileUrl');
 
-    const [board, setBoard] = useState({});
+    const [inquiry, setInquiry] = useState({});
     const [comment, setComment] = useState([]);
     const [commentCount, setCommentCount] = useState(0);
 
@@ -40,24 +39,24 @@ export default function InquiryBoardDetail() {
         return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
     };
 
-    const fetchBoard = async () => { // 게시글 조회
+    const fetchInquiry = async () => { // 문의하기 조회
         try {
-            const response = await request.get(`/board/${id}`);
+            const response = await request.get(`/inquiry/${id}`);
 
             if (response.isSuccess) {
-                console.log("게시글 상세 조회 성공", response);
-                setBoard(response.result);
+                console.log("문의하기 상세 조회 성공", response);
+                setInquiry(response.result);
             } else {
-                console.error("게시글 상세 조회 실패:", response);
+                console.error("문의하기 상세 조회 실패:", response);
             }
         } catch (error) {
-            console.error('게시글 상세 조회 오류', error);
+            console.error('문의하기 상세 조회 오류', error);
         }
     };
 
     const fetchComment = async () => { // 댓글 조회
         try {
-            const response = await request.get(`/board/${id}/reply?page=${currentPage + 1}&size=${itemsPerPage}`);
+            const response = await request.get(`/inquiry/${id}/reply?page=${currentPage + 1}&size=${itemsPerPage}`);
 
             if (response.isSuccess) {
                 console.log("댓글 조회 성공", response.result.replyList);
@@ -73,7 +72,7 @@ export default function InquiryBoardDetail() {
     };
 
     useEffect(() => {
-        fetchBoard();
+        fetchInquiry();
     }, []);
 
     useEffect(() => {
@@ -84,8 +83,9 @@ export default function InquiryBoardDetail() {
         // 카테고리 옵션을 API에서 가져오기
         const fetchCategoryOptions = async () => {
             try {
-                const response = await request.get('/board/category');
+                const response = await request.get('/inquiry/category');
                 if (response.isSuccess) {
+                    console.log("문의하기의 카테고리 종류", response);
                     const options = response.result.categoryList.map((category) => ({
                         value: category.code,
                         label: category.name,
@@ -96,7 +96,6 @@ export default function InquiryBoardDetail() {
                     );
 
                     setCategoryOptions(filteredOptions);
-                    //setSelectedCategory(filteredOptions[0] || null); // 첫 번째 옵션 선택
                 } else {
                     console.error('카테고리 목록 조회 실패:', response.message);
                 }
@@ -123,17 +122,15 @@ export default function InquiryBoardDetail() {
         return { nameToCode, codeToName };
     };
 
-    const handleEdit = () => {
+    const handleEdit = () => {  // 이 부분은 유정님이랑 협업필요
         const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-
         navigate(`/writepost`, {
             state: {
-                boardId: id,
-                title: board.title,
-                initialContent: board.content,
-                initialCategoryCode: board.categoryCode,
-                initialCategory: board.category,
-                initialUploadedFiles: board.boardFileList,
+                inquiryId: id,
+                title: inquiry.title,
+                initialContent: inquiry.content,
+                initialCategoryCode: inquiry.categoryCode,
+                initialCategory: inquiry.categoryName,
                 initialSaveYn: true,
             },
         });
@@ -156,35 +153,18 @@ export default function InquiryBoardDetail() {
         }
     };
 
-    // 댓글 좋아요 토글
-    const toggleLike = async () => {
-        try {
-            const response = await request.put(`/board/${board.boardId}/like`); // 좋아요 API 호출
-
-            if (response.isSuccess) {
-                console.log("좋아요 토글 성공", response);
-                fetchBoard()
-            } else {
-                console.error("좋아요 토글 실패:", response);
-            }
-        } catch (error) {
-            console.error("Error liking the reply:", error);
-        }
-    };
-
-    // 게시글 삭제
+    // 문의하기 삭제
     const handleDelete = async () => {
-
         try {
-            const response = await request.delete(`/board/${id}`);
+            const response = await request.delete(`/inquiry/${id}`);
             if (response.isSuccess) {
-                console.log("게시글 삭제 성공:", response);
-                navigate('/community');
+                console.log("문의하기 삭제 성공:", response);
+                navigate('/inquiry');
             } else {
-                console.error("게시글 삭제 실패:", response);
+                console.error("문의하기 삭제 실패:", response);
             }
         } catch (error) {
-            console.error("게시글 삭제 에러:", error);
+            console.error("문의하기 삭제 에러:", error);
 
         }
     };
@@ -204,9 +184,9 @@ export default function InquiryBoardDetail() {
 						</itemS.HeadContainer>
 					</itemS.TopContainer>
 					<itemS.TitleContainer>
-						<itemS.Title>{board.title}</itemS.Title>
+						<itemS.Title>{inquiry.title}</itemS.Title>
 						<itemS.ButtonBox>
-							{board.createMemberId === memberId && board.category !== '공지' && (
+							{inquiry.myInquiryYn && (
 								<>
 									<itemS.EditBtn onClick={handleEdit}>수정</itemS.EditBtn>
 									<itemS.DeleteBtn onClick={handleDelete}>삭제</itemS.DeleteBtn>
@@ -216,40 +196,38 @@ export default function InquiryBoardDetail() {
 					</itemS.TitleContainer>
 					<itemS.WriterInfoContainer>
                         <itemS.ProfileInfoContainer>
-                            <itemS.Profile onClick={() => handlePage(board.handle)} src={board.profileUrl} alt='프로필'/>
+                            <itemS.Profile onClick={() => handlePage(inquiry.handle)} src={inquiry.profileUrl} alt='프로필'/>
                             <itemS.InfoBox>
-                                <itemS.WriterName onClick={() => handlePage(board.handle)}>{board.createdName}</itemS.WriterName>
+                                <itemS.WriterName onClick={() => handlePage(inquiry.handle)}>{inquiry.createdName}</itemS.WriterName>
                                 <itemS.InfoBottomBox>
-                                    <itemS.CreatedTime>{formatDate(board.createdTime)}</itemS.CreatedTime>
-                                    <itemS.ViewCnt>조회수 {board.viewCount}</itemS.ViewCnt>
+                                    <itemS.CreatedTime>{formatDate(inquiry.createdTime)}</itemS.CreatedTime>
+                                    <itemS.ToggleIcon 
+                                        src={inquiry.publicYn ? '/img/checktoggle.png' : '/img/unchecktoggle.png'} 
+                                        alt={inquiry.publicYn ? '체크됨' : '체크안됨'} 
+                                    />
+                                    <itemS.ToggleText style={{ marginRight: "0.75rem" }}>공개</itemS.ToggleText>
+                                    <itemS.ToggleIcon 
+                                        src={inquiry.publicYn ? '/img/unchecktoggle.png' : '/img/checktoggle.png'} 
+                                        alt={inquiry.publicYn ? '체크안됨' : '체크됨'} 
+                                    />
+                                    <itemS.ToggleText>비공개</itemS.ToggleText>
+                                    {/* <itemS.ViewCnt>조회수 {inquiry.viewCount}</itemS.ViewCnt> */}
                                 </itemS.InfoBottomBox>
                             </itemS.InfoBox>
                         </itemS.ProfileInfoContainer>
-                        <itemS.ReplyYN>답변 완료</itemS.ReplyYN> {/*나중에 api에 따라 달라짐 */}
+                        <itemS.ProcessingYNBox solvedYn={inquiry.solvedYn}>
+                            {inquiry.solvedYn ? '답변 완료' : '답변 대기'}
+                        </itemS.ProcessingYNBox>
 					</itemS.WriterInfoContainer>
-					<InquiryContent 
-						content={board.content} 
-						files={board.boardFileList}
-					/>
-					{/* <itemS.CountContainer>
-						<itemS.LikeIcon
-							src={board.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
-							alt='하뚜'
-							onClick={toggleLike} // 클릭 시 좋아요 토글
-						/>
-						<itemS.CountText>좋아요 {board.likeCount}</itemS.CountText>
-						<itemS.CommentIcon src='/img/comment.svg' alt='댓글' />
-						<itemS.CountText>댓글 {board.replyCount}</itemS.CountText>
-					</itemS.CountContainer> */}
-
+					<InquiryContent content={inquiry.content} />
 					<itemS.Body>댓글</itemS.Body>
 					<itemS.ContentContainer>
-						<itemS.WriteContainer>
-							<itemS.CommentProfile src={profileUrl} alt='프로필' />
-							<WriteBox
-								fetchComment={fetchComment} 
-							/>
-						</itemS.WriteContainer>
+                        {inquiry.myInquiryYn && (
+                            <itemS.WriteContainer>
+                                <itemS.CommentProfile src={profileUrl} alt='프로필' />
+                                <InquiryWriteBox fetchComment={fetchComment} />
+						    </itemS.WriteContainer>
+                        )}
 						
 						{comment.map(item => (
 							<InquiryComment

@@ -15,6 +15,7 @@ export default function InquiryTable({ items, isTabClick, searchKeyword, isRegul
 								<itemS.CategoryBlank></itemS.CategoryBlank>
 							)}
 							<itemS.CategoryDate>작성일</itemS.CategoryDate>
+							<itemS.CategoryView>조회수</itemS.CategoryView>
 							<itemS.CategoryView>처리 현황</itemS.CategoryView>
 						</itemS.CategoryContainer>
 						<itemS.TupleContainer>

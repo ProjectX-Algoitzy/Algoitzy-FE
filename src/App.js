@@ -27,6 +27,7 @@ import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
 import Community from "./APP/user-pages/Community/Community.community.main";
 import WritePost from "./APP/user-pages/WritePost/WritePost.writepost.main";
 import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.main";
+import WriteSelfStudy from "./APP/user-pages/WriteSelfStudy/WriteSelfStudy.writeselfstudy.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -77,7 +78,7 @@ function App() {
   };
 
   const location = useLocation(); // 현재 경로 확인
-  const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
+  const hideHeader = window.location.pathname.toLowerCase().startsWith('/write');
 
   return (
 
@@ -114,6 +115,8 @@ function App() {
             <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
             <Route path="/community" element={<Community />} />
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} /> {/* 커뮤니티 글 세부 */}
+            
+            <Route path="/writeselfstudy" element={isLoggedIn() ? <WriteSelfStudy /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}

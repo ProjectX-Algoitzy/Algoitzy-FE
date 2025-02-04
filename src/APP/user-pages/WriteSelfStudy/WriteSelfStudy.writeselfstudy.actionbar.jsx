@@ -259,7 +259,7 @@ export default function ActionBar({
         }
         if (response.isSuccess) {
           if (response.result) setBoardId(response.result);
-          alert(boardId ? '정규 스터디가 수정되었습니다.' : '정규 스터디가 등록되었습니다.');
+          alert(boardId ? '자율 스터디가 수정되었습니다.' : '자율 스터디가 등록되었습니다.');
           navigate(-1); // 커뮤니티 게시글 목록으로 이동
         } else {
           alert('정규 스터디를 저장하는 중 오류가 발생했습니다.');

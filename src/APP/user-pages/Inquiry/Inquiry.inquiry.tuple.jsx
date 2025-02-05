@@ -50,7 +50,7 @@ export default function InquiryTuple({ item, isTabClick, searchKeyword, isRegula
   
   return (
     <itemS.TupleContainer disabled={!item.publicYn && !item.myInquiryYn} onClick={() => (item.publicYn || item.myInquiryYn) && moveToDetail(item.inquiryId)}>
-      <itemS.TupleType>{isTabClick ? item.inquiryId : item.categoryName}</itemS.TupleType>
+      <itemS.TupleType>{isTabClick ? item.inquiryId : item.categoryName}</itemS.TupleType> {/* 커뮤니티랑 똑같이 카테고리 탭 클릭시 id가 대신 오도록 */}
       <itemS.TupleTitleBox>
         {renderTupleTitle(item.title)}
         {!item.publicYn && <itemS.Lockimg src='/img/lock.png' alt='자물쇠' />}

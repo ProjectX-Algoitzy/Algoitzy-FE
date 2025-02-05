@@ -169,6 +169,21 @@ export default function InquiryBoardDetail() {
         }
     };
 
+    // 문의 공개 여부 변경 에러
+    const handleRadioPublic = async () => {
+        try {
+            const response = await request.put(`/inquiry/${id}/public`);
+
+            if (response.isSuccess) {
+                window.location.reload(); // 성공 시 새로고침
+            } else {
+                console.error("문의 공개 여부 변경:", response);
+            }
+        } catch (error) {
+            console.error("문의 공개 여부 변경 에러: ", error);
+        }
+    }
+
     // 계정 링크 이동
     const handlePage = (handle) => {
         navigate(`/mypage/${handle}`);
@@ -180,7 +195,7 @@ export default function InquiryBoardDetail() {
 				<itemS.InnerContainer>
 					<itemS.TopContainer>
 						<itemS.HeadContainer>
-							<itemS.Head>문의하기</itemS.Head>
+							<itemS.Head>문의하기&gt; {inquiry.categoryName}</itemS.Head>
 						</itemS.HeadContainer>
 					</itemS.TopContainer>
 					<itemS.TitleContainer>
@@ -201,14 +216,14 @@ export default function InquiryBoardDetail() {
                                 <itemS.WriterName onClick={() => handlePage(inquiry.handle)}>{inquiry.createdName}</itemS.WriterName>
                                 <itemS.InfoBottomBox>
                                     <itemS.CreatedTime>{formatDate(inquiry.createdTime)}</itemS.CreatedTime>
-                                    <itemS.ToggleIcon 
-                                        src={inquiry.publicYn ? '/img/checktoggle.png' : '/img/unchecktoggle.png'} 
-                                        alt={inquiry.publicYn ? '체크됨' : '체크안됨'} 
+                                    <itemS.RadioButton 
+                                        checked={inquiry.publicYn} 
+                                        onChange={handleRadioPublic} 
                                     />
                                     <itemS.ToggleText style={{ marginRight: "0.75rem" }}>공개</itemS.ToggleText>
-                                    <itemS.ToggleIcon 
-                                        src={inquiry.publicYn ? '/img/unchecktoggle.png' : '/img/checktoggle.png'} 
-                                        alt={inquiry.publicYn ? '체크안됨' : '체크됨'} 
+                                    <itemS.RadioButton 
+                                        checked={!inquiry.publicYn} 
+                                        onChange={handleRadioPublic} 
                                     />
                                     <itemS.ToggleText>비공개</itemS.ToggleText>
                                     {/* <itemS.ViewCnt>조회수 {inquiry.viewCount}</itemS.ViewCnt> */}

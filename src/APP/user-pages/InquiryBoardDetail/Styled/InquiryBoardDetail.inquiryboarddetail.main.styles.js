@@ -159,10 +159,32 @@ export const ViewCnt = styled.div`
   color: ${tokens.colors.Black};
 `;
 
-export const ToggleIcon = styled.img`
+export const RadioButton = styled.input.attrs({ type: "radio" })`
   width: 0.708rem;
   height: 0.708rem;
   margin-right: 0.25rem;
+  appearance: none; /* 기본 스타일 제거 */
+  border: 1px solid ${tokens.colors.B_Grey_4}; /* 테두리 색상 */
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  
+  &:checked {
+    border: 1px solid ${tokens.colors.B_Grey_4}; /* 선택 시 테두리 유지 */
+  }
+
+  &:checked::before {
+    content: "";
+    width: 50%;
+    height: 50%;
+    background-color: ${tokens.colors.B_Grey_8}; /* 내부 원 색상 */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 export const ToggleText = styled.div`

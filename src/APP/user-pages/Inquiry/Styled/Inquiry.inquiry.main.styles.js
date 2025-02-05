@@ -53,6 +53,15 @@ export const Head = styled.div`
   ${tokens.typography.T3_B_24};
 `;
 
+export const SemiHead = styled.div`
+  display: flex;
+  align-items: center;
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.B_Grey_6};
+  margin-left: 1rem;
+  line-height: 1.333rem;
+`;
+
 // 검색 컨테이너
 export const SearchContainer = styled.div`
   display: flex;
@@ -100,6 +109,44 @@ export const TabSortContainer = styled.div`
   @media (max-width: 600px) {
     width: 100%;
   }
+`;
+
+// 탭 컨테이너
+export const TabContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 50rem;
+  justify-content: flex-start;
+`;
+
+// 탭 메뉴
+export const Tab = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6.54rem;
+  height: 1.71rem;
+  color: ${tokens.colors.B_Grey_6};
+  ${tokens.typography.B2_M_16};
+  border: 0.04rem solid ${tokens.colors.B_Grey_4};
+  border-radius: 0.17rem;
+  margin: 0.83rem 0.33rem 1.67rem 0;
+  cursor: pointer;
+`;
+
+// 선택된 탭 메뉴
+export const TabSelected = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6.54rem;
+  height: 1.71rem;
+  color: ${tokens.colors.Grey_8};
+  ${tokens.typography.T5_SB_16};
+  border: 0.08rem solid ${tokens.colors.B_Grey_7};
+  border-radius: 0.17rem;
+  margin: 0.83rem 0.33rem 1.67rem 0;
+  cursor: pointer;
 `;
 
 // 조회수/이름순

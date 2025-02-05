@@ -75,15 +75,17 @@ export default function InquiryComment({ item, formatDate, fetchComment }) {
   };
 
   // 계정 링크 이동
-	const handlePage = (handle) => {
-    navigate(`/mypage/${handle}`);
+	const handlePage = (item) => {
+    if (!item.createdName == "관리자") {
+      navigate(`/mypage/${item.handle}`);
+    }
   };
 
   return (
     <itemS.Container>
       <itemS.WriteContainer>
         <itemS.CommentContainer>
-          <itemS.CommentProfile onClick={() => handlePage(item.handle)} src={item.profileUrl} alt='프로필' />
+          <itemS.CommentProfile onClick={() => handlePage(item)} src={item.profileUrl} alt='프로필' />
           {isEditing ? (
             <InquiryEditWritebox
               replyId={item.replyId} // 수정 대상 댓글 ID 전달
@@ -97,10 +99,10 @@ export default function InquiryComment({ item, formatDate, fetchComment }) {
             <itemS.CommentBox>
               <itemS.WriterBox>
                 <itemS.WriterNameBox>
-                  <itemS.WriterName onClick={() => handlePage(item.handle)}>{item.createdName}</itemS.WriterName>
-                  {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
+                  <itemS.WriterName onClick={() => handlePage(item)}>{item.createdName}</itemS.WriterName>
+                  {item.myInquiryYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
                 </itemS.WriterNameBox>
-                {item.myReplyYn && item.myInquiryYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                {item.myReplyYn && item.myInquiryYn && ( // item.myInquiryYn이 true일 때만 DotBox 렌더링
                   <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                     <itemS.DotButton src='/img/hamberg.svg' alt='...' />
                     {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시

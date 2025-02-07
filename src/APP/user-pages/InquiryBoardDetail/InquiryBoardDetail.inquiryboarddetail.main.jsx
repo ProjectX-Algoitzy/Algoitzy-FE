@@ -235,7 +235,7 @@ export default function InquiryBoardDetail() {
                         </itemS.ProcessingYNBox>
 					</itemS.WriterInfoContainer>
 					<InquiryContent content={inquiry.content} />
-					<itemS.Body>댓글</itemS.Body>
+					<itemS.Body>답변</itemS.Body>
 					<itemS.ContentContainer>
                         {inquiry.myInquiryYn && (
                             <itemS.WriteContainer>

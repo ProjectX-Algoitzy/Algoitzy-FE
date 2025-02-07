@@ -115,7 +115,7 @@ function App() {
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
             <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}
             <Route path="/community" element={<Community />} />
-            <Route path="/inquiry" element={<Inquiry />} />
+            <Route path="/inquiry" element={isLoggedIn() ? <Inquiry /> : <Navigate to="/" />} /> 
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} /> {/* 커뮤니티 글 세부 */}
             <Route path="/inquiryboard/:id" element={isLoggedIn() ? <InquiryBoardDetail /> : <Navigate to="/" />} /> {/*문의하기 글 세부 */}
           </Routes>

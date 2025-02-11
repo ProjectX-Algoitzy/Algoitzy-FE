@@ -177,11 +177,6 @@ export const CommentLike = styled.img`
   cursor: pointer;
 `;
 
-export const LikeCount = styled.div`
-  ${tokens.typography.B3_M_14};
-  color: #888888;
-`;
-
 export const WriteBox = styled.div`
   display: flex;
   flex-direction: row;

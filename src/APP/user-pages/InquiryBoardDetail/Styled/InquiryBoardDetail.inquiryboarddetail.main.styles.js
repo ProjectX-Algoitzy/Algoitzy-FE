@@ -121,7 +121,7 @@ export const InfoBox = styled.div`
   flex-direction: column;
 `;
 
-export const ReplyYN = styled.div` 
+export const ProcessingYNBox = styled.div` 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,8 +130,7 @@ export const ReplyYN = styled.div`
   height: 0.875rem;
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.B_Grey_1};
-  background-color: ${tokens.colors.Blue_0_Main};
-  // background-color: ${tokens.colors.B_Grey_4};
+  background-color: ${({ solvedYn }) => (solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4)};
 `;
 
 export const WriterName = styled.div`
@@ -160,6 +159,39 @@ export const ViewCnt = styled.div`
   color: ${tokens.colors.Black};
 `;
 
+export const RadioButton = styled.input.attrs({ type: "radio" })`
+  width: 0.708rem;
+  height: 0.708rem;
+  margin-right: 0.25rem;
+  appearance: none; /* 기본 스타일 제거 */
+  border: 1px solid ${tokens.colors.B_Grey_4}; /* 테두리 색상 */
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  
+  &:checked {
+    border: 1px solid ${tokens.colors.B_Grey_4}; /* 선택 시 테두리 유지 */
+  }
+
+  &:checked::before {
+    content: "";
+    width: 50%;
+    height: 50%;
+    background-color: ${tokens.colors.B_Grey_8}; /* 내부 원 색상 */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+export const ToggleText = styled.div`
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.B_Grey_8};
+`;
+
 export const CountContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -169,17 +201,10 @@ export const CountContainer = styled.div`
   margin: 0 0 1rem 0.625rem;
 `;
 
-export const LikeIcon = styled.img`
-  width: 0.833rem;
-  height: 0.833rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
-`;
-
 export const CommentIcon = styled.img`
   width: 0.833rem;
   height: 0.833rem;
-  margin-right: 0.5rem;
+  margin-right: 0.542rem;
 `;
 
 export const CountText = styled.div`
@@ -213,7 +238,7 @@ export const ContentContainer = styled.div`
 export const WriteContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: row;
   margin-bottom: 1.5rem;
 `;

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as itemS from "./Styled/InquiryBoardDetail.inquiryboarddetail.reply.styles";
-import WriteBox from '../BoardDetail/WriteBox';
-import EditWriteBox from '../BoardDetail/EditWriteBox';
+import InquiryWriteBox from './InquiryBoardDetail.inquiryboarddetail.inquirywritebox';
+import InquiryEditWritebox from './InquiryBoardDetail.inquiryboarddetail.editwritebox';
 import request from '../../Api/request';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
@@ -42,30 +42,13 @@ export default function InquiryReply({ item, parentName, formatDate, fetchCommen
     fetchComment(); 
   };
 
-  // 댓글 좋아요 토글
-  const toggleLike = async () => {
-    try {
-      const response = await request.put(`/reply/${item.replyId}/like`); // 좋아요 API 호출
-      
-      if (response.isSuccess) {
-        console.log("좋아요 토글 성공", response);
-        setLikeStatus(!likeStatus); // 상태 업데이트
-        fetchComment();
-      } else {
-        console.error("좋아요 토글 실패:", response);
-      }
-    } catch (error) {
-      console.error("Error liking the reply:", error);
-    }
-  };
-
   // 댓글 삭제
   const handleDelete = async () => {
     const confirmed = await confirm("정말 삭제하시겠습니까?");
     
     if (confirmed) { 
       try {
-        const response = await request.delete(`/reply/${item.replyId}`); 
+        const response = await request.delete(`/inquiry-reply/${item.replyId}`); 
   
         if (response.isSuccess) {
           console.log("댓글 삭제 성공", response);
@@ -92,7 +75,7 @@ export default function InquiryReply({ item, parentName, formatDate, fetchCommen
 
   // 계정 링크 이동
 	const handlePage = (handle) => {
-    navigate(`/mypage/${handle}`);
+    if (handle != null) { navigate(`/mypage/${handle}`); }
   };
 
   return (
@@ -101,7 +84,7 @@ export default function InquiryReply({ item, parentName, formatDate, fetchCommen
         <itemS.CommentContainer>
           <itemS.CommentProfile onClick={() => handlePage(item.handle)} src={item.profileUrl} alt='프로필' />
           {isEditing ? (
-            <EditWriteBox
+            <InquiryEditWritebox
               replyId={item.replyId} // 수정 대상 댓글 ID 전달
               fetchComment={fetchComment}
               handleLoad={handleEditComplete}
@@ -148,11 +131,6 @@ export default function InquiryReply({ item, parentName, formatDate, fetchCommen
               <itemS.InfoBottomBox>
                 <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
                 <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
-                <itemS.CommentLike
-                  src={item.myLikeYn ? '/img/like-s-fill.svg' : '/img/like-s.svg'}
-                  alt='하뚜'
-                  onClick={toggleLike} // 클릭 시 좋아요 토글
-                />
                 <itemS.LikeCount>{item.likeCount}</itemS.LikeCount>
               </itemS.InfoBottomBox>
             </itemS.CommentBox>
@@ -163,7 +141,7 @@ export default function InquiryReply({ item, parentName, formatDate, fetchCommen
           <itemS.WriteBox>
             <itemS.Blank></itemS.Blank>
             <itemS.ReplyProfile src={item.profileUrl} alt='프로필' />
-            <WriteBox
+            <InquiryWriteBox
               parentId={item.replyId}
               fetchComment={fetchComment} 
               handleLoad={handleReplyClick}

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import request from '../../Api/request';
 import * as itemS from "./Styled/InquiryBoardDetail.inquiryboarddetail.main.styles";
 import InquiryWriteBox from './InquiryBoardDetail.inquiryboarddetail.inquirywritebox';
 import InquiryContent from "./InquiryBoardDetail.inquiryboarddetail.content";
 import InquiryComment from "./InquiryBoardDetail.inquiryboarddetail.comment";
+import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
 export default function InquiryBoardDetail() {
+    const { confirm } = useContext(ConfirmContext);
     const navigate = useNavigate();
     const [categoryOptions, setCategoryOptions] = useState([]); // 동적 카테고리 옵
     const { id } = useParams();  // 게시글 ID 가져오기
@@ -59,15 +61,15 @@ export default function InquiryBoardDetail() {
             const response = await request.get(`/inquiry/${id}/reply?page=${currentPage + 1}&size=${itemsPerPage}`);
 
             if (response.isSuccess) {
-                console.log("댓글 조회 성공", response.result.replyList);
+                // console.log("답글 조회 성공", response.result.replyList);
                 setComment(response.result.replyList);
                 setCommentCount(response.result.replyList.length)
                 setTotalPages(Math.ceil(response.result.parentReplyCount / itemsPerPage));
             } else {
-                console.error("댓글 조회 실패:", response);
+                console.error("답글 조회 실패:", response);
             }
         } catch (error) {
-            console.error('댓글 조회 오류', error);
+            console.error('답글 조회 오류', error);
         }
     };
 
@@ -171,16 +173,19 @@ export default function InquiryBoardDetail() {
 
     // 문의 공개 여부 변경 에러
     const handleRadioPublic = async () => {
-        try {
-            const response = await request.put(`/inquiry/${id}/public`);
-
-            if (response.isSuccess) {
-                window.location.reload(); // 성공 시 새로고침
-            } else {
-                console.error("문의 공개 여부 변경:", response);
+        const confirmed = await confirm(inquiry.publicYn ? "비공개로 변경하시겠습니까?" : "공개로 변경하시겠습니까?");
+        if (confirmed) {
+            try {
+                const response = await request.put(`/inquiry/${id}/public`);
+    
+                if (response.isSuccess) {
+                    window.location.reload(); // 성공 시 새로고침
+                } else {
+                    console.error("문의 공개 여부 변경:", response);
+                }
+            } catch (error) {
+                console.error("문의 공개 여부 변경 에러: ", error);
             }
-        } catch (error) {
-            console.error("문의 공개 여부 변경 에러: ", error);
         }
     }
 
@@ -235,6 +240,12 @@ export default function InquiryBoardDetail() {
                         </itemS.ProcessingYNBox>
 					</itemS.WriterInfoContainer>
 					<InquiryContent content={inquiry.content} />
+                    
+                    <itemS.CountContainer>
+						<itemS.CommentIcon src='/img/comment.svg' alt='댓글' />
+						<itemS.CountText>답변 {inquiry.replyCount}</itemS.CountText>
+					</itemS.CountContainer>
+
 					<itemS.Body>답변</itemS.Body>
 					<itemS.ContentContainer>
                         {inquiry.myInquiryYn && (

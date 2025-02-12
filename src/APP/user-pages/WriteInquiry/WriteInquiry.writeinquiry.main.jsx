@@ -21,7 +21,7 @@ export default function WritePost() {
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
 
-  const [publicYn, setPublicYn] = useState(true);
+  const [publicYn, setPublicYn] = useState(null);
 
   
   // 게시글 상세 조회
@@ -32,14 +32,14 @@ export default function WritePost() {
         response = await request.get(`/inquiry/${boardId}`);
 
     if (response.isSuccess) {
-      const { title, content, categoryCode, categoryName, boardFileList, saveYn, PublicYn } = response.result;
+      const { title, content, categoryCode, categoryName, boardFileList, saveYn, publicYn } = response.result;
       setTitle(title);
       setMarkdownContent(content);
       setCategoryCode(categoryCode);
       setCategory(categoryName);
       // setBoardFileList(boardFileList);
       setSaveYn(saveYn);
-      setPublicYn(publicYn)
+      setPublicYn(publicYn);
     } else {
       console.error('게시글 상세 조회 실패:', response.message);
     }
@@ -48,7 +48,6 @@ export default function WritePost() {
     console.error('게시글 상세 조회 중 오류:', error);
   }
   };
-
 
   useEffect(() => {
     fetchBoardData();

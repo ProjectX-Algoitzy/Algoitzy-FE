@@ -114,7 +114,7 @@ export default function Inquiry() {
 	};
 
 	const handleWriteClick = () => {
-		navigate('/writepost');
+		navigate('/writeinquiry');
 	};
 
 	return (

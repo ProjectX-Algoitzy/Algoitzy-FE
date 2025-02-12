@@ -29,6 +29,7 @@ import Inquiry from "./APP/user-pages/Inquiry/Inquiry.inquiry.main";
 import WritePost from "./APP/user-pages/WritePost/WritePost.writepost.main";
 import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.main";
 import InquiryBoardDetail from "./APP/user-pages/InquiryBoardDetail/InquiryBoardDetail.inquiryboarddetail.main";
+import WriteInquiry from "./APP/user-pages/WriteInquiry/WriteInquiry.writeinquiry.main";
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval"
 import { refreshToken } from "./APP/Api/refreshToken"
@@ -79,7 +80,7 @@ function App() {
   };
 
   const location = useLocation(); // 현재 경로 확인
-  const hideHeader = window.location.pathname.toLowerCase() === '/writepost';
+  const hideHeader = window.location.pathname.toLowerCase().startsWith('/write');
 
   return (
 
@@ -115,6 +116,7 @@ function App() {
             <Route path="/inquiry" element={isLoggedIn() ? <Inquiry /> : <Navigate to="/" />} /> 
             <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} /> {/* 커뮤니티 글 세부 */}
             <Route path="/inquiryboard/:id" element={isLoggedIn() ? <InquiryBoardDetail /> : <Navigate to="/" />} /> {/*문의하기 글 세부 */}
+            <Route path="/writeinquiry" element={isLoggedIn() ? <WriteInquiry /> : <Navigate to="/" />} /> {/* 새 문의하기 글쓰기 */}
           </Routes>
           </ContentWrapper>
           {!hideHeader && <Footer />}

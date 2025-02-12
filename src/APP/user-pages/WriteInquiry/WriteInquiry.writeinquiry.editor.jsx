@@ -109,6 +109,11 @@ export default function Editor({
     setSelectedCategory(selectedOption);
   };
 
+
+  // 문의 공개 여부 변경 에러
+  const handleRadioPublic = async () => {
+    setPublicYn(!publicYn);
+  }
   
   return (
     <Styled.LeftContainer>
@@ -135,6 +140,22 @@ export default function Editor({
             isSearchable={false}
             onChange={handleCategoryChange}
           />
+
+          <Styled.PrivateSelectContainer>
+          <Styled.OptionLabel2>공개 설정</Styled.OptionLabel2>
+            <Styled.RadioButton 
+                checked={publicYn} 
+                onChange={handleRadioPublic} 
+                style={{ marginLeft: "1rem" }} 
+            />
+            <Styled.ToggleText style={{ marginRight: "0.75rem" }}>공개</Styled.ToggleText>
+            <Styled.RadioButton 
+                checked={!publicYn} 
+                onChange={handleRadioPublic} 
+            />
+            <Styled.ToggleText>비공개</Styled.ToggleText>
+          </Styled.PrivateSelectContainer>
+
         </Styled.EditorHeader>
 
         <MarkdownEditor

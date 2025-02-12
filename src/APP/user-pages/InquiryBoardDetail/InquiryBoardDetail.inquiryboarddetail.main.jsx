@@ -124,19 +124,13 @@ export default function InquiryBoardDetail() {
         return { nameToCode, codeToName };
     };
 
-    const handleEdit = () => {  // 이 부분은 유정님이랑 협업필요
-        const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-        navigate(`/writepost`, {
+    const handleEdit = () => {
+        navigate(`/writeinquiry`, {
             state: {
-                inquiryId: id,
-                title: inquiry.title,
-                initialContent: inquiry.content,
-                initialCategoryCode: inquiry.categoryCode,
-                initialCategory: inquiry.categoryName,
-                initialSaveYn: true,
-            },
+                boardId: id,
+              },
         });
-    };
+      };
 
     const handlePageChange = (newPage) => {
         if (newPage >= 0 && newPage < totalPages) {

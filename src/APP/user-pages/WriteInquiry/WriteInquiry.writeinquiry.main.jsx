@@ -21,7 +21,7 @@ export default function WritePost() {
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
 
-  const [publicYn, setPublicYn] = useState(null);
+  const [publicYn, setPublicYn] = useState(true);
 
   
   // 게시글 상세 조회

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import * as tokens from "../../../../tokens";
 
 export const MarkdownContentContainer = styled.div`
-  width: 50.05rem;
+  width: 49.17rem;
   background-color: ${tokens.colors.B_Grey_1};
   padding: 0.417rem 0.417rem;
   margin-bottom: 2rem;

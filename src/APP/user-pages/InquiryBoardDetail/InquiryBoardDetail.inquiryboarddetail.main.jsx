@@ -109,21 +109,6 @@ export default function InquiryBoardDetail() {
         fetchCategoryOptions();
     }, []);
 
-    // 카테고리 변환 함수
-    const categoryConverter = (categoryOptions) => {
-        const nameToCode = (name) => {
-            const found = categoryOptions.find((option) => option.label === name);
-            return found ? found.value : null; // name에 해당하는 code 반환
-        };
-
-        const codeToName = (code) => {
-            const found = categoryOptions.find((option) => option.value === code);
-            return found ? found.label : null; // code에 해당하는 name 반환
-        };
-
-        return { nameToCode, codeToName };
-    };
-
     const handleEdit = () => {
         navigate(`/writeinquiry`, {
             state: {
@@ -215,16 +200,20 @@ export default function InquiryBoardDetail() {
                                 <itemS.WriterName onClick={() => handlePage(inquiry.handle)}>{inquiry.createdName}</itemS.WriterName>
                                 <itemS.InfoBottomBox>
                                     <itemS.CreatedTime>{formatDate(inquiry.createdTime)}</itemS.CreatedTime>
-                                    <itemS.RadioButton 
-                                        checked={inquiry.publicYn} 
-                                        onChange={handleRadioPublic} 
-                                    />
-                                    <itemS.ToggleText style={{ marginRight: "0.75rem" }}>공개</itemS.ToggleText>
-                                    <itemS.RadioButton 
-                                        checked={!inquiry.publicYn} 
-                                        onChange={handleRadioPublic} 
-                                    />
-                                    <itemS.ToggleText>비공개</itemS.ToggleText>
+                                    {inquiry.myInquiryYn && (
+                                        <>
+                                            <itemS.RadioButton 
+                                                checked={inquiry.publicYn} 
+                                                onChange={handleRadioPublic} 
+                                            />
+                                            <itemS.ToggleText style={{ marginRight: "0.75rem" }}>공개</itemS.ToggleText>
+                                            <itemS.RadioButton 
+                                                checked={!inquiry.publicYn} 
+                                                onChange={handleRadioPublic} 
+                                            />
+                                            <itemS.ToggleText>비공개</itemS.ToggleText>  
+                                        </>
+                                    )}
                                     {/* <itemS.ViewCnt>조회수 {inquiry.viewCount}</itemS.ViewCnt> */}
                                 </itemS.InfoBottomBox>
                             </itemS.InfoBox>

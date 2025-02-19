@@ -151,7 +151,7 @@ export const InfoBottomBox = styled.div`
 export const CreatedTime = styled.div`
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Black};
-  margin-right: 0.5rem;
+  margin-right: 1.542rem;
 `;
 
 export const ViewCnt = styled.div`
@@ -160,24 +160,25 @@ export const ViewCnt = styled.div`
 `;
 
 export const RadioButton = styled.input.attrs({ type: "radio" })`
+  margin-top: -0.021px;
   width: 0.708rem;
   height: 0.708rem;
   margin-right: 0.25rem;
   appearance: none; /* 기본 스타일 제거 */
-  border: 1px solid ${tokens.colors.B_Grey_4}; /* 테두리 색상 */
+  border: 0.5px solid ${tokens.colors.B_Grey_4}; /* 테두리 색상 */
   border-radius: 50%;
   display: inline-block;
   cursor: pointer;
   position: relative;
   
   &:checked {
-    border: 1px solid ${tokens.colors.B_Grey_4}; /* 선택 시 테두리 유지 */
+    border: 0.5px solid ${tokens.colors.B_Grey_4}; /* 선택 시 테두리 유지 */
   }
 
   &:checked::before {
     content: "";
-    width: 50%;
-    height: 50%;
+    width: 0.292rem;
+    height: 0.292rem;
     background-color: ${tokens.colors.B_Grey_8}; /* 내부 원 색상 */
     border-radius: 50%;
     position: absolute;

@@ -4,7 +4,7 @@ import * as tokens from "../../../../tokens";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 1.33rem;
+  padding-left: 1.333rem;
   height: 100%;
   width: 100%;
   max-width: 34rem;
@@ -18,13 +18,22 @@ export const Container = styled.div`
 export const Title = styled.div`
   display: flex;
   margin-top: 4.17rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.792rem;
   width: 100%;
   ${tokens.typography.T1_SB_32};
   color: ${tokens.colors.Grey_8};
   padding-bottom: 0.67rem;
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
 `;
+
+export const BlueComment = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  ${tokens.typography.B3_M_14};
+  color: ${tokens.colors.Blue_0_Main};
+`;
+
 
 export const CanNotEnterContainer = styled.div`
   display: flex;
@@ -47,8 +56,12 @@ export const StyledTd = styled.td`
   color: ${tokens.colors.Grey_7};
   ${tokens.typography.T5_SB_16};
   border: 0.042rem solid #B9C4D2;
-  padding: 0.33rem;
+  padding: 0.333rem;
   text-align: center;
+  
+  cursor: ${({ rowIndex, colIndex }) => (rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default')};
+  transition: ${({ rowIndex, colIndex }) => (rowIndex !== 0 && colIndex === 0 ? 'background-color 0.2s ease-in-out, color 0.2s ease-in-out' : 'none')};
+
   background-color: ${({ rowIndex, colIndex }) => {
     if (rowIndex === 0 && colIndex === 0) return 'rgba(0, 165, 255, 0.05)';
     if (rowIndex === 0) return 'rgba(0, 165, 255, 0.05)';
@@ -58,8 +71,18 @@ export const StyledTd = styled.td`
   border-top: ${({ rowIndex }) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
   border-left: ${({ colIndex }) => (colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
   border-right: ${({ colIndex }) => (colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2')};
-  width: ${({ colIndex }) => (colIndex === 0 ? '7.33rem' : 'auto')};
-  height: ${({ rowIndex }) => (rowIndex === 0 ? '1.88rem' : '2.5rem')};
+  width: ${({ colIndex }) => (colIndex === 0 ? '7.333rem' : 'auto')};
+  height: ${({ rowIndex }) => (rowIndex === 0 ? '1.875rem' : '2.5rem')};
+
+  ${({ rowIndex, colIndex }) =>
+    rowIndex !== 0 && colIndex === 0 &&
+    `
+      &:hover {
+        background-color: ${tokens.colors.Blue_0_Main};
+        color: ${tokens.colors.B_Grey_1};
+      }
+    `
+  }
 `;
 
 export const ImgIcon = styled.img`

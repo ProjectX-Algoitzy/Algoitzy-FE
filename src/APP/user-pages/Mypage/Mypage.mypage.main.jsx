@@ -4,7 +4,6 @@ import MyInfo from './Mypage.mypage.myinfo';
 import ParticipatedStudyList from './Mypage.mypage.participatedstudylist';
 import AppliedStudyList from './Mypage.mypage.appliedstudylist';
 import MyBoardTable from './Mypage.mypage.myboard.table';
-import MyInquiryTable from './Mypage.mypage.myinquiry.table';
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from '../../Api/request';
 
@@ -15,12 +14,10 @@ export default function MyPage() {
   const [myInfoData, setMyInfoData] = useState({});
   const [passStudyList, setPassStudyList] = useState([]);
   const [applyStudyList, setApplyStudyList] = useState([]);
-  const [boards, setBoards] = useState([]); // 내 게시글
-  const [boardCount, setBoardCount] = useState(0); // 내 게시글 수
-  const [tempCount, setTempCount] = useState(0); // 임시저장 글 수
-  const [totalCount, setTotalCount] = useState(0); // 전체 글 수
-  const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
-  const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
+  const [boards, setBoards] = useState([]); // 내가 쓴 글
+  const [boardCount, setBoardCount] = useState(0); // 내 게시글
+  const [tempCount, setTempCount] = useState(0); // 임시저장 글
+  const [totalCount, setTotalCount] = useState(0); // 전체 글
   
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -66,10 +63,11 @@ export default function MyPage() {
 
   const fetchBoard = async () => {
 		try {
-			const response = await request.get(`/member/${handle}/board`);
+			const response = await request.get(`/member/${handle}/board?page=1&size=100`);
 			console.log("내 게시글 목록 조회 성공", response);
 
 			if (response.isSuccess) {
+				// console.log("내 게시글 목록 조회 성공");
 				setBoards(response.result.boardList);
         setBoardCount(response.result.saveCount);
         setTempCount(response.result.tempSaveCount);
@@ -82,27 +80,10 @@ export default function MyPage() {
 		}
 	};
 
-  const fetchinquiry = async () => {
-		try {
-			const response = await request.get(`/member/${handle}/inquiry`);
-			console.log("내 문의하기 목록 조회 성공", response);
-
-			if (response.isSuccess) {
-				setInquiries(response.result.inquiryList);
-        setInquiryCount(response.result.totalCount);
-			} else {
-				console.error("내 문의하기 목록 조회 실패:", response);
-			}
-		} catch (error) {
-			console.error('내 문의하기 목록 조회 오류', error);
-		}
-	};
-
   useEffect(() => {
     fetchMyInfo();
     fetchMyStudy();
     fetchBoard();
-    fetchinquiry();
   }, [handle]);
 
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
@@ -170,22 +151,15 @@ export default function MyPage() {
               />
             )}
           </>
-        ) : selectedTab === "posts" ? (
-          <MyBoardTable
+        ) : (
+          <MyBoardTable 
             items={boards}
             boardCount={boardCount}
             tempCount={tempCount}
             isMemberMatch={isMemberMatch}
             fetchBoard={fetchBoard}
           />
-        ) : selectedTab === "inquiry" ? (
-          <MyInquiryTable
-            items={inquiries}
-            inquiryCount={inquiryCount}
-            isMemberMatch={isMemberMatch}
-            fetchinquiry={fetchinquiry}
-          />
-        ) : null}
+        )}
 
       </itemS.InnerContainer>
     </itemS.Container>

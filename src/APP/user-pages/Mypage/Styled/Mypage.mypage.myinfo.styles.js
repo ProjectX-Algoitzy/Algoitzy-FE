@@ -57,8 +57,8 @@ export const TabBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;  
-  justify-content: space-between;
-  width: 13.34rem;
+  justify-content: space-around;
+  width: 11.666rem;
   height: 2rem;
 `;
 
@@ -77,7 +77,7 @@ export const EditButton = styled.button`
   border: none;
   border-radius: 0.125rem;
   margin-right: 0.458rem;
-  margin-left: 2.916rem;
+  margin-left: 1rem;
   cursor: pointer;
 `;
 

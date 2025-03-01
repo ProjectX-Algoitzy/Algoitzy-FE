@@ -21,7 +21,7 @@ export default function RegularStudyAttendance() {
     const fetchAttendance = async () => {
       try {
         const response = await request.get(`study/${id}/attendance`);
-        console.log("정규스터디 출석부 조회: ", response);
+        // console.log("정규스터디 출석부 조회: ", response);
 
         if (response["isSuccess"]) {
           const transformedData = transformData(response.result.attendanceList);
@@ -39,7 +39,7 @@ export default function RegularStudyAttendance() {
     const fetchWeek = async () => {
       try {
         const response = await request.get('/week/current');
-        console.log("현재 주차 정보 조회: ", response);
+        // console.log("현재 주차 정보 조회: ", response);
         if(response["isSuccess"]){
           setShowCertificationBtn(true);
           setWeek(response.result.week);
@@ -52,7 +52,7 @@ export default function RegularStudyAttendance() {
           setNoticeMessage(error.response.data.message);
         }
       }
-    }
+    };
     fetchAttendance();
     fetchWeek();
   }, [id]);
@@ -60,7 +60,7 @@ export default function RegularStudyAttendance() {
   const fetchAttendanceRequestList = async (handle) => {
     try {
       const response = await request.get(`/attendance-request/${id}/${handle}`);
-      console.log("출석 요청 내역 목록 조회: ", response);
+      // console.log("출석 요청 내역 목록 조회: ", response);
 
       if (response["isSuccess"]) {
         setAttendanceRequestList(response.result.attendanceRequestList || []);
@@ -71,7 +71,6 @@ export default function RegularStudyAttendance() {
   };
 
   const transformData = (attendanceList) => {
-    console.log("attendanceList: ", attendanceList);
     const data = {
       '문제 인증': [['문제 인증', '1주차', '2주차', '3주차', '4주차', '5주차', '6주차', '7주차', '8주차']],
       '블로그 포스팅': [['블로그 포스팅', '1주차', '2주차', '3주차', '4주차', '5주차', '6주차', '7주차', '8주차']],
@@ -99,14 +98,8 @@ export default function RegularStudyAttendance() {
         };
         ['문제 인증', '블로그 포스팅', '주말 모의테스트'].forEach((key) => {
           students[uniqueKey][key][0] = (
-            <div>
-              <div onClick={() => {
-                setIsHistoryModalOpen(true); 
-                fetchAttendanceRequestList(handle); 
-                handleName(name); 
-              }}>
-                {name} <br />
-              </div>
+            <div data-handle={handle} > {/* handle을 데이터 속성으로 저장 (표시 X) */}
+              {name} 
             </div>
           );
         });
@@ -148,6 +141,20 @@ export default function RegularStudyAttendance() {
   
     return data;
   };
+
+  const extractText = (element) => {
+    if (typeof element === "string") return element;
+    if (React.isValidElement(element)) {
+      return React.Children.map(element.props.children, child =>
+        typeof child === "string" ? child : ""
+      ).join("");
+    }
+    return "";
+  };
+
+  const getHandle = (element) => {
+    return element?.props?.["data-handle"] || null;
+  };
   
   const Table = ({ currentTab, onArrowClick, data }) => (
     <itemS.StyledTable>
@@ -155,7 +162,18 @@ export default function RegularStudyAttendance() {
         {data[currentTab]?.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map((cell, colIndex) => (
-              <itemS.StyledTd key={colIndex} rowIndex={rowIndex} colIndex={colIndex}>
+              <itemS.StyledTd 
+                key={colIndex} 
+                rowIndex={rowIndex} 
+                colIndex={colIndex}
+                onClick={rowIndex !== 0 && colIndex === 0 ? () => {
+                  setIsHistoryModalOpen(true);
+                  const extractedText = extractText(data[currentTab][rowIndex][0]);
+                  const handle = getHandle(data[currentTab][rowIndex][0]);
+                  fetchAttendanceRequestList(handle); 
+                  handleName(extractedText);
+                } : undefined}
+              >
                 {rowIndex === 0 && colIndex === 0 ? (
                   <div style={{ position: 'relative', width: '100%', textAlign: 'center' }}>
                   <img 
@@ -217,7 +235,7 @@ export default function RegularStudyAttendance() {
       </itemS.BtnContainer>
       
       {showAuthModal && <AttendanceModal week={week} onClose={closeAuthModal} />}
-      {isHistoryModalOpen && <RegularStudyCheckAttendanceHistoryModal attendanceRequesterName={attendanceRequesterName} attendanceRequestList={attendanceRequestList} onClose={handleCloseHistoryModal} />}
+      {isHistoryModalOpen && <RegularStudyCheckAttendanceHistoryModal currentWeek={week} attendanceRequesterName={attendanceRequesterName} attendanceRequestList={attendanceRequestList} onClose={handleCloseHistoryModal} />}
     </itemS.Container>
   )
 }

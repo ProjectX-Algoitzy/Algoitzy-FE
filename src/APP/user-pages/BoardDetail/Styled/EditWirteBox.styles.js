@@ -38,7 +38,6 @@ export const TextArea = styled.textarea`
   &:focus {
     outline: none;
     border: none;
-  }
 `;
 
 export const TextCount = styled.div`

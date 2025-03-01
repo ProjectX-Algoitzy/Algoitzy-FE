@@ -57,7 +57,7 @@ export default function MyBoardTuple({ selectedTab, item, isChecked, onCheckChan
             </itemS.TupleTitleBox>
           )}
           <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
-          <itemS.TupleView>{item.viewCount} 회</itemS.TupleView>
+          <itemS.TupleView>{item.viewCount}</itemS.TupleView>
         </>
       ) : (
         // 임시저장 글 탭

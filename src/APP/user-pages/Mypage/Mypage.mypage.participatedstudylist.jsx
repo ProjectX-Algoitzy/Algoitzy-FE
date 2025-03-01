@@ -12,7 +12,7 @@ export default function ParticipatedStudyList({
   return (
     <itemS.StudyListContainer>
       <itemS.StudyHeadBox>
-        <itemS.Head>참여 중인 스터디</itemS.Head>
+        <itemS.Head>참여한 스터디</itemS.Head>
       </itemS.StudyHeadBox>
       <itemS.Group>
         {currentPassItems.map((item) => (

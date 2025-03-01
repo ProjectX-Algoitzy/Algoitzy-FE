@@ -4,7 +4,7 @@ import { getAlertFunction } from '../Common/Alert/alertSingleton';
 export const ACCESS_TOKEN = 'accessToken';
 
 const excludedPathPatterns = [
-  /^\/board(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
+  // /^\/board(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
   // /^\/institution(?:\?.*)?$/, // 검색 쿼리 있는 기관 조회 api 경로 
   // /^\/problem(?:\?.*)?$/, // 검색 쿼리 있는 문제집 조회 api 경로 
   // /^\/member\/user(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 

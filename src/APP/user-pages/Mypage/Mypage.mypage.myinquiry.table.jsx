@@ -1,27 +1,25 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyBoardTuple from './Mypage.mypage.myboard.tuple';
+import MyInquiryTuple from './Mypage.mypage.myinquiry.tuple';
 import * as itemS from "./Styled/Mypage.mypage.myboard.table.styles";
 import request from '../../Api/request';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
-export default function MyBoardTable({ items, boardCount, tempCount, isMemberMatch, fetchBoard={fetchBoard} }) {
+export default function MyInquiryTable({ items, inquiryCount, isMemberMatch, fetchinquiry={fetchinquiry} }) {
   const navigate = useNavigate();
   const { alert } = useContext(AlertContext);
 
   const [checkedItems, setCheckedItems] = useState({
-    board: {}, // 게시한 글의 체크 상태
-    temp: {},  // 임시저장 글의 체크 상태
+    inquiry: {}, // 게시한 글의 체크 상태
   });
   const [isAllChecked, setIsAllChecked] = useState({
-    board: false, // 게시한 글의 전체 선택 상태
-    temp: false,  // 임시저장 글의 전체 선택 상태
+    inquiry: false, // 게시한 글의 전체 선택 상태
   });
   
-  const [count, setCount] = useState(boardCount); //TODO -  - 임시로 10 넣음
+  const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
 
   // 게시글, 임시저장글 탭 변경
-  const [selectedTab, setSelectedTab] = useState("board");
+  const [selectedTab, setSelectedTab] = useState("inquiry");
 
   // 스크롤 동기화를 위한 참조
   const contentRef = useRef(null);
@@ -60,18 +58,12 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
     contentRef.current.scrollTop = (newTop / thumbHeight) * (scrollableHeight - containerHeight);
   };
 
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab);  
-    setCount(tab === 'board' ? boardCount : tempCount); 
-    setThumbTop(0);
-  };
-
-  const handleCheckChange = (boardId) => {
+  const handleCheckChange = (inquiryId) => {
     setCheckedItems((prev) => ({
       ...prev,
       [selectedTab]: {
         ...prev[selectedTab],
-        [boardId]: !prev[selectedTab][boardId],
+        [inquiryId]: !prev[selectedTab][inquiryId],
       },
     }));
   };
@@ -85,9 +77,8 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
   
     const newCheckedItems = {};
     items
-      .filter((item) => (selectedTab === "board" ? item.saveYn : !item.saveYn))
       .forEach((item) => {
-        newCheckedItems[item.boardId] = newIsAllChecked;
+        newCheckedItems[item.inquiryId] = newIsAllChecked;
       });
   
     setCheckedItems((prev) => ({
@@ -108,7 +99,7 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
   
     try {
       for (let id of idsToDelete) {
-        const response = await request.delete(`/board/${id}`);
+        const response = await request.delete(`/inquiry/${id}`);
         if (response.isSuccess) {
           console.log(`게시글 ${id} 삭제 성공:`, response);
         } else {
@@ -116,7 +107,7 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
         }
       }
   
-      fetchBoard();
+      fetchinquiry();
       setCheckedItems((prev) => ({
         ...prev,
         [selectedTab]: {},
@@ -141,102 +132,45 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
       <itemS.Table>
         <itemS.TabBtnContainer>
           <itemS.TabBox>
-            <itemS.Tab 
-              onClick={() => handleTabClick("board")} 
-              active={selectedTab === "board"}
-            >
-              커뮤니티 글 {boardCount}
+            <itemS.Tab>
+              문의하기 글 {inquiryCount}
             </itemS.Tab>
-            {isMemberMatch && (
-              <itemS.Tab 
-                onClick={() => handleTabClick("temp")} 
-                active={selectedTab === "temp"}
-              >
-                임시저장한 글 {tempCount}
-              </itemS.Tab>
-            )}
-            
           </itemS.TabBox>
         </itemS.TabBtnContainer>
         <itemS.TableContainerWrapper>
-          {selectedTab === "board" ? ( // 게시한 글
-          
-            <itemS.TableContainer>
-              <itemS.CategoryContainer>
-                <itemS.BlankBox></itemS.BlankBox>
-                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-                <itemS.CategoryDate>작성일</itemS.CategoryDate>
-                <itemS.CategoryView>조회수</itemS.CategoryView>
-              </itemS.CategoryContainer>
-              <itemS.TupleContainerWrapper>
+          <itemS.TableContainer>
+            <itemS.CategoryContainer>
+              <itemS.BlankBox></itemS.BlankBox>
+              <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+              <itemS.CategoryInquiryDate>작성일</itemS.CategoryInquiryDate>
+              <itemS.CategoryInquiryView>조회수</itemS.CategoryInquiryView>
+              <itemS.CategorySolved>처리 현황</itemS.CategorySolved>
+            </itemS.CategoryContainer>
+            <itemS.TupleContainerWrapper>
               <itemS.TupleContainer
                 ref={contentRef}
                 onScroll={handleScrollSync}
               >
-                {items.filter((item) => item.saveYn).length === 0 ? (
+                {items.length === 0 ? (
                   <itemS.NoItemsContainer>
                     아직 작성된 글이 없습니다.
                   </itemS.NoItemsContainer>
                 ) : (
-                  items
-                    .filter((item) => item.saveYn) // 조건에 따라 배열을 필터링
+                  items 
                     .map((item) => (
-                      <MyBoardTuple
-                        key={item.boardId}
-                        selectedTab={selectedTab}
+                      <MyInquiryTuple
+                        key={item.inquiryId}
                         item={item}
-                        // isChecked={checkedItems[item.boardId] || false}
-                        isChecked={checkedItems[selectedTab][item.boardId] || false}
-                        onCheckChange={() => handleCheckChange(item.boardId)}
+                        isChecked={checkedItems[selectedTab][item.inquiryId] || false}
+                        onCheckChange={() => handleCheckChange(item.inquiryId)}
                         isMemberMatch={isMemberMatch}
                       />
                     ))
                 )}
               </itemS.TupleContainer>
-                {/* <itemS.ScrollbarContainer
-                  ref={scrollRef}
-                  // onScroll={handleScrollSync}
-                >
-                  <itemS.ScrollbarThumb
-                    style={{ top: `${thumbTop}px` }}
-                    onMouseDown={handleThumbDrag}
-                  />
-                </itemS.ScrollbarContainer> */}
-              </itemS.TupleContainerWrapper>
-            </itemS.TableContainer>
-          ) : (  // 임시저장한 글
-            <itemS.TableContainer>
-              <itemS.CategoryContainer>
-                <itemS.BlankBox></itemS.BlankBox>
-                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-                <itemS.CategoryTempDate>저장일</itemS.CategoryTempDate>
-              </itemS.CategoryContainer>
-              <itemS.TupleContainer
-                ref={contentRef}
-                onScroll={handleScrollSync}
-              >
-                {items.filter((item) => !item.saveYn).length === 0 ? (
-                  <itemS.NoItemsContainer>
-                    아직 작성된 글이 없습니다.
-                  </itemS.NoItemsContainer>
-                ) : (
-                  items
-                    .filter((item) => !item.saveYn) // 조건에 따라 배열을 필터링
-                    .map((item) => (
-                      <MyBoardTuple
-                        key={item.boardId}
-                        selectedTab={selectedTab}
-                        item={item}
-                        // isChecked={checkedItems[item.boardId] || false}
-                        isChecked={checkedItems[selectedTab][item.boardId] || false}
-                        onCheckChange={() => handleCheckChange(item.boardId)}
-                        isMemberMatch={isMemberMatch}
-                      />
-                    ))
-                )}
-              </itemS.TupleContainer>
-            </itemS.TableContainer>
-          )}
+            </itemS.TupleContainerWrapper>
+          </itemS.TableContainer>
+        
           {count > 8 &&
             <itemS.ScrollbarContainer>
               <itemS.ScrollTopArrow src='/img/scroll-top-arrow.svg' alt='화살표' />
@@ -266,14 +200,10 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
             <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
           </itemS.AllCheckBox>}
         {isMemberMatch && (
-          selectedTab === 'board' ? (
-            <itemS.ButtonBox>
-              <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
-              <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
-            </itemS.ButtonBox>
-          ) : (
+          <itemS.ButtonBox>
             <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>삭제</itemS.DeleteButton>
-          )
+            <itemS.WriteButton onClick={handleWriteClick}>글쓰기</itemS.WriteButton>
+          </itemS.ButtonBox>
         )}
         
       </itemS.ButtonContainer>

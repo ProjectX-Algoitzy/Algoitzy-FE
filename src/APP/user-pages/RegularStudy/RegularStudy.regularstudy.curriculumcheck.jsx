@@ -4,6 +4,8 @@ import request from '../../Api/request'
 import { useParams } from 'react-router-dom';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
+import MarkdownContent from './RegularStudy.regularstudy.markdowncontent';
+
 
 export default function RegularStudyCurriculumCheck() {
     const { curriculumId } = useParams();
@@ -58,7 +60,7 @@ export default function RegularStudyCurriculumCheck() {
           <itemS.WhiteBox>{week}주차</itemS.WhiteBox>
         </itemS.SecondContainer>
         <itemS.ContentsContainer>
-            <div dangerouslySetInnerHTML={{ __html: content }} />
+            <MarkdownContent markdownContent={content || ''} />
         </itemS.ContentsContainer>
       </itemS.Container>
       </itemS.ContentWrapper>

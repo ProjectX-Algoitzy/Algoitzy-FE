@@ -4,6 +4,8 @@ import request from '../../Api/request';
 import { useParams } from 'react-router-dom';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
+import MarkdownContent from './RegularStudy.regularstudy.markdowncontent';
+
 
 export default function RegularStudyHome() {
   const { id } = useParams();
@@ -38,10 +40,7 @@ export default function RegularStudyHome() {
   return (
     <itemS.Container>
       <itemS.Title>홈</itemS.Title>
-
-      <itemS.ContentContainer dangerouslySetInnerHTML={{ __html: regularStudyHome }}>
-        
-      </itemS.ContentContainer>
+      <MarkdownContent markdownContent={regularStudyHome || ''} />
     </itemS.Container>
   )
 }

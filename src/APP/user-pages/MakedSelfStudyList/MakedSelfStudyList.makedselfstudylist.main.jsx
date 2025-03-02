@@ -29,11 +29,6 @@ export default function MakedSelfStudyList() {
   const MakeSelfStudy = () => { // 보기 추가 함수
 		navigate(`/newstudy`);
 	}
-
-  const handleWriteClick = () => {
-    navigate("/writeSelfStudy");
-    window.location.reload(); // 페이지 전환 후 강제 새로고침
-  };
     
   return (
     <itemS.Container>
@@ -42,7 +37,7 @@ export default function MakedSelfStudyList() {
           <itemS.ApplicationText>
             자율 스터디
           </itemS.ApplicationText>
-          <itemS.BtnMakeApp onClick={handleWriteClick}>
+          <itemS.BtnMakeApp onClick={MakeSelfStudy}>
             + 스터디 생성하기
           </itemS.BtnMakeApp>
           

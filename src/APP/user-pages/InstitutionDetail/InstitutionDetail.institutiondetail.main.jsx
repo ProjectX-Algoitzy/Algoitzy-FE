@@ -8,8 +8,6 @@ import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
-import MarkdownContent from './InstitutionDetail.institutiondetail.markdowncontent';
-
 
 export default function InstitutionDetail() {
   const { institutionId } = useParams();
@@ -77,12 +75,10 @@ export default function InstitutionDetail() {
           <itemS.PartBox>
             <itemS.Part>코딩테스트 분석</itemS.Part>
           </itemS.PartBox>
-          <MarkdownContent markdownContent={content || ''} /> {/* content 전달 */}
-          {/*
           <InstitutionDetailExplanation
             content={content}
+            contentEmptyMessage={contentEmptyMessage}
           />
-          */}
           <itemS.PartBox>
             <itemS.Part>추천 문제집</itemS.Part>
           </itemS.PartBox>

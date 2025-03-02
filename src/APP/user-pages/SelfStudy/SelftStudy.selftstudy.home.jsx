@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import * as itemS from "./Styled/SelftStudy.selftstudy.home.styles"
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
-import MarkdownContent from './SelfStudy.selfstudy.markdowncontent';
-
 
 export default function SelftStudyHome({ selftStudyContent }) {
   useEffect(() => {
@@ -17,8 +15,7 @@ export default function SelftStudyHome({ selftStudyContent }) {
   return (
     <itemS.Container>
       <itemS.Title>홈</itemS.Title>
-      <MarkdownContent markdownContent={selftStudyContent || ''} /> {/* content 전달 */}
-      {/*<itemS.ContentContainer dangerouslySetInnerHTML={{ __html: selftStudyContent }}></itemS.ContentContainer>*/}
+      <itemS.ContentContainer dangerouslySetInnerHTML={{ __html: selftStudyContent }}></itemS.ContentContainer>
     </itemS.Container>
   )
 }

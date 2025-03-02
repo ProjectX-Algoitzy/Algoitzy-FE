@@ -3,7 +3,7 @@ import * as tokens from "../../../../tokens";
 
 export const PreviewContainer = styled.div`
   width: 50%;
-  padding: 2.833rem;
+  padding: 1.25rem;
   border: 0.0417rem solid #ffffff;
   background-color: #F5FBFF;
   font-family: 'Pretendard', sans-serif;

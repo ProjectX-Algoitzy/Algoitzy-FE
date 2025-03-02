@@ -148,11 +148,6 @@ export const typography = {
         fontSize: "0.5rem", 
         lineHeight: "0.75rem",
       },
-      T8_B_35: {
-        fontWeight: "700",
-        fontSize: "1.458rem", 
-        lineHeight: "1.75rem",
-      },
       B1_M_20: {
         fontWeight: "500",
         fontSize: "0.833rem",

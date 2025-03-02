@@ -19,9 +19,9 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  padding: 1rem; /* 모달 내부에 패딩 추가 */
-  border-radius: 0.33rem;
+  border-radius: 0.167rem;
   width: 41.13rem;
+  height: 39.833rem;
   max-width: 90%; /* 화면 크기에 맞춰 모달 크기를 조정 */
   max-height: 90%; /* 화면 크기에 맞춰 모달 크기를 조정 */
   box-shadow: 0 0.083rem 0.42rem rgba(0, 0, 0, 0.1);
@@ -32,16 +32,46 @@ export const FirstSentence = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 0.5rem; /* 내부에 패딩 추가 */
+  margin-top: 0.667rem;
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_3};
 `;
 
 export const BigTitle = styled.div`
   ${tokens.typography.T3_B_24};
   color: ${tokens.colors.Grey_8};
-  margin-left: 2.17rem;
-  margin-top: 0.58rem;
-  margin-bottom: 0.78rem;
+  margin-left: 4.875rem;
+  margin-bottom: 0.708rem;
+`;
+
+export const XBtn = styled.img`
+  width: 1.333rem;
+  height: 1.333rem;
+  margin-right: 1rem;
+  margin-bottom: 0.708rem;
+  cursor: pointer;
+`;
+
+export const WeeksContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 22.958rem;
+  height: 1.333rem;
+  margin-top: 0.958rem;
+  margin-bottom: 2.167rem;
+  margin-left: 4.875rem;
+`;
+
+export const Weeks = styled.div`
+  font-weight: 600;
+  font-size: 0.833rem;
+  line-height: 1.333rem;
+  color: ${({ disabled, selected }) => {
+    if (disabled) return tokens.colors.B_Grey_4;  // 비활성화된 주차는 회색
+    if (selected) return tokens.colors.B_Grey_8;  // 선택된 주차는 어두운 회색
+    return tokens.colors.B_Grey_6;  // 기본 주차 색상
+  }};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};  // 비활성화된 주차는 클릭 불가
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};  // 비활성화된 주차는 클릭 불가
 `;
 
 export const ContentContainer = styled.div`
@@ -50,30 +80,10 @@ export const ContentContainer = styled.div`
   align-items: center;
 `;
 
-export const AlertContainer = styled.div`
-  display: flex;
-  background-color: ${tokens.colors.B_Grey_1};
-  align-items: center;
-  ${tokens.typography.B1_M_20};
-  color: ${tokens.colors.B_Grey_8};
-  border-radius: 0.417rem;
-  width: 31.38rem;
-  height: 3.208rem;
-  margin-top: 1.185rem;
-  margin-bottom: 0.875rem;
-`;
-
-export const TriangleAlertImg = styled.img`
-  width: 0.957rem;
-  height: 1rem;
-  margin-left: 0.758rem;
-  margin-right: 0.452rem;
-`;
-
 export const LittleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.33rem;
+  margin-bottom: 1.333rem;
 `;
 
 export const SmallTitle = styled.div`
@@ -126,30 +136,16 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const BtnContainer = styled.div`
+export const BlueCommentContainer = styled.div`
   display: flex;
-  width: 80%;
-  justify-content: center;
-  margin-top: 1rem; /* 버튼 위에 여백 추가 */
+  justify-content: flex-start;
+  margin-left: 4.875rem;
 `;
 
-export const Btn = styled.button` /* 개설하기 버튼 */
-  margin-bottom: 3.25rem;
-  width: 14.33rem;
-  height: 2rem;
-  border-radius: 0.167rem;
-  border: none;
-  cursor: pointer;
-  color: ${tokens.colors.White};
-  ${tokens.typography.T5_SB_16};
-  background-color: ${tokens.colors.Blue_0_Main};
-`;
-
-export const StyledAddButton = styled.img`
-  margin-bottom: 1.333rem;
-  width: 80%;
-  cursor: pointer;
-  @media (max-width: 600px) {
-    width: 26rem;
-  }
+export const BlueComment = styled.div`
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  ${tokens.typography.B3_M_14};
+  color: ${tokens.colors.Blue_0_Main};
 `;

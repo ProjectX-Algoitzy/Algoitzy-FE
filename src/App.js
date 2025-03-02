@@ -20,8 +20,8 @@ import ApplyRegularStudy from "./APP/user-pages/ApplyRegularStudy/ApplyRegularSt
 import CurriculumCheck from "./APP/user-pages/RegularStudy/RegularStudy.regularstudy.curriculumcheck";
 import EnterBootList from "./APP/user-pages/EnterpriseBootcampList/EnterpriseBootcampList.enterprisebootcamplist.main";
 import InstitutionDetail from "./APP/user-pages/InstitutionDetail/InstitutionDetail.institutiondetail.main";
-import Noticeboard from "./APP/user-pages/Noticeboard/Noticeboard.noticeboard.main";
-import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDetail.noticeboarddetail.main";
+// import Noticeboard from "./APP/user-pages/Noticeboard/Noticeboard.noticeboard.main";
+// import NoticeboardDetail from "./APP/user-pages/NoticeboardDetail/NoticeboardDetail.noticeboarddetail.main";
 import MyPage from "./APP/user-pages/Mypage/Mypage.mypage.main";
 import EditMyInfo from "./APP/user-pages/EditMyInfo/EditMyInfo.editmyinfo.main";
 import Community from "./APP/user-pages/Community/Community.community.main";
@@ -34,7 +34,7 @@ import { refreshToken } from "./APP/Api/refreshToken"
 import { checkToken } from "./APP/Api/checkToken";
 import { ACCESS_TOKEN } from "./APP/Api/request"
 import GlobalStyle from './GlobalStyles';
-import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
+// import NoticeBoardFeature from "./APP/user-pages/NoticeBoardFeature";
 import { useLoading } from "./APP/Common/Loading/LoadingContext";
 import { setLoadingFunctions } from "./APP/Api/request";
 
@@ -107,9 +107,6 @@ function App() {
             <Route path="/apply" element={isLoggedIn() ? <ApplyRegularStudy /> : <Navigate to="/" />} />
             <Route path="/enterbootlist" element={isLoggedIn() ? <EnterBootList /> : <Navigate to="/" />} />
             <Route path="/institutiondetail/:institutionId" element={isLoggedIn() ? <InstitutionDetail /> : <Navigate to="/" />} /> {/* 기업/부트캠프 상세조회 */}
-            <Route path="/board" element={isLoggedIn() ? <Noticeboard /> : <Navigate to="/" />} /> {/* 게시판 */}
-            <Route path="/boarddetail/:boardId" element={isLoggedIn() ? <NoticeboardDetail /> : <Navigate to="/" />} /> {/* 게시판 상세조회 */}
-            <Route path="/noticeboardfeature" element={<NoticeBoardFeature />} />
             <Route path="/mypage/:handle" element={<MyPage />} /> {/* 마이페이지 */}
             <Route path="/myinfo" element={<EditMyInfo />} /> {/* 개인정보 수정 */}
             <Route path="/writepost" element={isLoggedIn() ? <WritePost /> : <Navigate to="/" />} /> {/* 새 글쓰기 */}

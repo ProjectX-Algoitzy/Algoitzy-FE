@@ -1,31 +1,31 @@
-import React, { useEffect, useRef } from 'react';
-import * as itemS from './Styled/Editor.quileditor.styles';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import request from '../../Api/request';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
-import { ImageActions } from '@xeger/quill-image-actions';
-import { ImageFormats } from '@xeger/quill-image-formats';
+import React, { useEffect, useRef } from "react";
+import * as itemS from "./Styled/Editor.quileditor.styles";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import request from "../../Api/request";
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
+import { ImageActions } from "@xeger/quill-image-actions";
+import { ImageFormats } from "@xeger/quill-image-formats";
 import Modal from "./Editor.videomodal";
-import { useState } from 'react';
+import { useState } from "react";
 
-Quill.register('modules/imageActions', ImageActions);
-Quill.register('modules/imageFormats', ImageFormats);
+Quill.register("modules/imageActions", ImageActions);
+Quill.register("modules/imageFormats", ImageFormats);
 
 // Custom Video Blot using iframe
-const Video = Quill.import('formats/video');
-const Link = Quill.import('formats/link');
+const Video = Quill.import("formats/video");
+const Link = Quill.import("formats/link");
 
 class CustomVideo extends Video {
   static create(value) {
     const node = super.create(value);
-    
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('allowfullscreen', true);
-    iframe.setAttribute('src', this.sanitize(value));
-    iframe.setAttribute('style', 'height: 25rem; width: 100%');
+
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("frameborder", "0");
+    iframe.setAttribute("allowfullscreen", true);
+    iframe.setAttribute("src", this.sanitize(value));
+    iframe.setAttribute("style", "height: 25rem; width: 100%");
     node.appendChild(iframe);
 
     return node;
@@ -33,27 +33,27 @@ class CustomVideo extends Video {
 
   static sanitize(url) {
     // Transform YouTube URL to embed URL
-    if (url.includes('youtube.com/watch')) {
-      const videoId = url.split('v=')[1];
+    if (url.includes("youtube.com/watch")) {
+      const videoId = url.split("v=")[1];
       return `https://www.youtube.com/embed/${videoId}`;
     }
     return Link.sanitize(url);
   }
 }
 
-CustomVideo.blotName = 'video';
-CustomVideo.className = 'ql-video';
-CustomVideo.tagName = 'DIV';
+CustomVideo.blotName = "video";
+CustomVideo.className = "ql-video";
+CustomVideo.tagName = "DIV";
 
-Quill.register('formats/video', CustomVideo);
+Quill.register("formats/video", CustomVideo);
 
 // Custom Block Blot to handle unwanted <br> tags
-const Block = Quill.import('blots/block');
+const Block = Quill.import("blots/block");
 
 class CustomBlock extends Block {
   static create(value) {
     let node = super.create(value);
-    node.classList.add('custom-block');
+    node.classList.add("custom-block");
     return node;
   }
 
@@ -62,35 +62,35 @@ class CustomBlock extends Block {
   }
 }
 
-CustomBlock.blotName = 'custom-block';
-CustomBlock.tagName = 'DIV'; // Or 'P' depending on your needs
+CustomBlock.blotName = "custom-block";
+CustomBlock.tagName = "DIV"; // Or 'P' depending on your needs
 Quill.register(CustomBlock);
 
 const formats = [
-  'header',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'code-block',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "code-block",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "video",
   // 'align',
-  'color',
-  'background',
-  'float',
-  'height',
-  'width',
+  "color",
+  "background",
+  "float",
+  "height",
+  "width",
 ];
 
 export default function QuilEditor({ setContent, content }) {
   const quillRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [videoURL, setVideoURL] = useState('');
+  const [videoURL, setVideoURL] = useState("");
   let isHandlingTextChange = false;
 
   useEffect(() => {
@@ -105,49 +105,49 @@ export default function QuilEditor({ setContent, content }) {
       const matches = text.match(urlRegex);
 
       if (matches && matches.length > 0) {
-        matches.forEach(url => {
+        matches.forEach((url) => {
           const index = text.indexOf(url);
-          quill.formatText(index, url.length, 'link', url);
+          quill.formatText(index, url.length, "link", url);
         });
       }
 
       isHandlingTextChange = false;
     };
 
-    quill.on('text-change', () => {
+    quill.on("text-change", () => {
       handleTextChange();
       const rawHTML = quill.root.innerHTML;
       setContent(rawHTML);
     });
 
-    quill.container.addEventListener('click', handleClick);
+    quill.container.addEventListener("click", handleClick);
 
     return () => {
-      quill.off('text-change', handleTextChange);
-      quill.container.removeEventListener('click', handleClick);
+      quill.off("text-change", handleTextChange);
+      quill.container.removeEventListener("click", handleClick);
     };
   }, [setContent, quillRef]);
 
   const handleClick = (event) => {
-    if (event.target.tagName === 'IFRAME') {
+    if (event.target.tagName === "IFRAME") {
       const videoURL = event.target.src;
-      window.open(videoURL, '_blank');
+      window.open(videoURL, "_blank");
     }
   };
 
   const uploadImage = async (file) => {
     try {
       const formData = new FormData();
-      formData.append('multipartFileList', file);
+      formData.append("multipartFileList", file);
 
-      const response = await request.post('/s3', formData);
+      const response = await request.post("/s3", formData);
       if (response.isSuccess) {
         return response.result[0]; // 반환된 이미지 URL
       } else {
-        throw new Error('이미지 업로드 실패');
+        throw new Error("이미지 업로드 실패");
       }
     } catch (error) {
-      console.error('이미지 업로드 오류:', error);
+      console.error("이미지 업로드 오류:", error);
       throw error;
     }
   };
@@ -157,8 +157,8 @@ export default function QuilEditor({ setContent, content }) {
     const range = quill.getSelection(true);
 
     if (videoURL) {
-      quill.insertEmbed(range.index, 'video', videoURL);
-      setVideoURL('');
+      quill.insertEmbed(range.index, "video", videoURL);
+      setVideoURL("");
       setIsModalOpen(false); // Close modal after inserting video
     }
   };
@@ -170,18 +170,23 @@ export default function QuilEditor({ setContent, content }) {
       toolbar: {
         container: [
           [{ header: [1, 2, 3, 4, 5, false] }],
-          ['bold', 'italic', 'underline', 'strike', 'code-block'],
-          [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-          ['link', 'image', 'video'],
+          ["bold", "italic", "underline", "strike", "code-block"],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+          ["link", "image", "video"],
           // [{ align: [] }, { color: [] }, { background: [] }],
           [{ color: [] }, { background: [] }],
-          ['clean']
+          ["clean"],
         ],
         handlers: {
           image: () => {
-            const input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
+            const input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", ".gif, .jpg, .png, .jpeg, .svg");
             input.click();
 
             input.onchange = async () => {
@@ -189,7 +194,9 @@ export default function QuilEditor({ setContent, content }) {
               const imageUrl = await uploadImage(file);
 
               const range = quillRef.current.getEditor().getSelection(true);
-              quillRef.current.getEditor().insertEmbed(range.index, 'image', imageUrl);
+              quillRef.current
+                .getEditor()
+                .insertEmbed(range.index, "image", imageUrl);
             };
           },
           video: () => {
@@ -202,11 +209,12 @@ export default function QuilEditor({ setContent, content }) {
           },
         },
         ImageResize: {
-          modules: ['Resize']
-        }
+          modules: ["Resize"],
+        },
       },
-      clipboard: { //망할 개행 이슈 막아주는 소중한 곳이니까 없애면 안되용
-        matchVisual: false
+      clipboard: {
+        //망할 개행 이슈 막아주는 소중한 곳이니까 없애면 안되용
+        matchVisual: false,
       },
       syntax: {
         highlight: (text) => hljs.highlightAuto(text).value,
@@ -218,7 +226,7 @@ export default function QuilEditor({ setContent, content }) {
   return (
     <itemS.Container>
       <itemS.EditorWrapper>
-        <ReactQuill 
+        <ReactQuill
           ref={quillRef}
           modules={modules}
           {...(content && { value: content })}
@@ -230,7 +238,7 @@ export default function QuilEditor({ setContent, content }) {
       {/* 모달 구현 */}
       {isModalOpen && (
         <>
-          <Modal 
+          <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onSubmit={handleVideoInsert}
@@ -242,4 +250,3 @@ export default function QuilEditor({ setContent, content }) {
     </itemS.Container>
   );
 }
-

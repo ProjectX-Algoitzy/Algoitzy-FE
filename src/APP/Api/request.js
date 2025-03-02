@@ -4,7 +4,7 @@ import { getAlertFunction } from '../Common/Alert/alertSingleton';
 export const ACCESS_TOKEN = 'accessToken';
 
 const excludedPathPatterns = [
-  /^\/board(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
+  // /^\/board(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
   // /^\/institution(?:\?.*)?$/, // 검색 쿼리 있는 기관 조회 api 경로 
   // /^\/problem(?:\?.*)?$/, // 검색 쿼리 있는 문제집 조회 api 경로 
   // /^\/member\/user(?:\?.*)?$/, // 검색 쿼리 있는 게시물 조회 api 경로 
@@ -28,6 +28,44 @@ let loadingFunctions = { showLoading: () => {}, hideLoading: () => {} };
 
 export const setLoadingFunctions = (show, hide) => {
   loadingFunctions = { showLoading: show, hideLoading: hide };
+};
+
+
+// 전체 화면 이미지 관리 함수
+let imgOverlay = null;
+
+const showFullScreenImage = (imageUrl) => {
+  if (!imgOverlay) {
+    imgOverlay = document.createElement('div');
+    imgOverlay.style.position = 'fixed';
+    imgOverlay.style.top = 0;
+    imgOverlay.style.left = 0;
+    imgOverlay.style.width = '100%';
+    imgOverlay.style.height = '100%';
+    imgOverlay.style.backgroundImage = `url(${imageUrl})`;
+    imgOverlay.style.backgroundSize = 'cover';
+    imgOverlay.style.backgroundPosition = 'center';
+    imgOverlay.style.zIndex = 9999;
+    imgOverlay.style.cursor = 'pointer';
+
+    // // 이미지 제거를 위한 클릭 이벤트
+    // imgOverlay.onclick = removeFullScreenImage;
+
+    document.body.appendChild(imgOverlay);
+
+    // 뒤로가기로 URL이 변경되면 이미지 제거
+    window.addEventListener('popstate', removeFullScreenImage);
+  }
+};
+
+const removeFullScreenImage = () => {
+  if (imgOverlay) {
+    document.body.removeChild(imgOverlay);
+    imgOverlay = null;
+
+    // popstate 이벤트 리스너 제거
+    window.removeEventListener('popstate', removeFullScreenImage);
+  }
 };
 
 // 요청 인터셉터
@@ -77,6 +115,12 @@ request.interceptors.response.use(
         case 'TOKEN_EXPIRED':
           window.localStorage.clear();
           window.location.href = '/login';
+          break;
+        case '401_PAGE':
+          showFullScreenImage("https://kau-koala.s3.ap-northeast-2.amazonaws.com/dev/4a99767b-9163-48.png");
+          break;
+        case '404_PAGE':
+          showFullScreenImage("https://kau-koala.s3.ap-northeast-2.amazonaws.com/dev/b4441a49-9a46-45.png");
           break;
         default:
           console.error(`Unexpected error: ${message}`, error);

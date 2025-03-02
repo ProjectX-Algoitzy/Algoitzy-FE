@@ -47,8 +47,7 @@ export default function Editor({
   
   const categoryPlaceholderText = '카테고리 선택';
     
-
-  // 에디터 내부 스크롤
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
@@ -73,7 +72,7 @@ export default function Editor({
   useEffect(() => {
     const fetchCategoryOptions = async () => {
       try {
-        const response = await request.get('/board/category');
+        const response = await request.get("/board/category");
         if (response.isSuccess) {
           const options = response.result.categoryList.map((category) => ({
             value: category.code,
@@ -81,17 +80,17 @@ export default function Editor({
           }));
 
           const filteredOptions = options.filter(
-            (option) => option.label !== '공지'
+            (option) => option.label !== "공지"
           );
 
           setCategoryOptions(filteredOptions);
           setSelectedCategory({ value: categoryCode, label: category });
           //setSelectedCategory(filteredOptions[0] || null); // 첫 번째 옵션 선택
         } else {
-          console.error('카테고리 목록 조회 실패:', response.message);
+          console.error("카테고리 목록 조회 실패:", response.message);
         }
       } catch (error) {
-        console.error('카테고리 목록 조회 중 오류:', error);
+        console.error("카테고리 목록 조회 중 오류:", error);
       }
     };
 
@@ -171,6 +170,7 @@ export default function Editor({
 
           saveYn={saveYn}
           setSaveYn={setSaveYn}
+
       />
     </Styled.LeftContainer>
   );

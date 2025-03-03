@@ -51,6 +51,9 @@ export default function RegularStudyAttendance() {
         if(error?.response?.data?.code === "NOTICE") {
           setNoticeMessage(error.response.data.message);
         }
+        if (error?.response?.data?.code === "ATTENDANCE_ENDED") {
+          setWeek(8)
+        }
       }
     };
     fetchAttendance();

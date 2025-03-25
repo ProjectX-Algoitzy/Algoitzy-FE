@@ -42,7 +42,13 @@ export default function MyInfo({ item, boardCount, onSelectTab, isMemberMatch })
             onClick={() => handleTabClick("posts")} 
             active={activeTab === "posts"}
           >
-            작성한 글 {boardCount}
+            커뮤니티
+          </itemS.Tab>
+          <itemS.Tab 
+            onClick={() => handleTabClick("inquiry")} 
+            active={activeTab === "inquiry"}
+          >
+            문의하기
           </itemS.Tab>
         </itemS.TabBox>
         {isMemberMatch && 

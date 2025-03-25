@@ -37,7 +37,6 @@ export const CheckBox = styled.input`
   border: 0.08rem solid #ccc;
   border-radius: 0.16rem;
   background-color: #fff;
-  margin-left: 1rem;
   cursor: pointer;
 
   &:checked {
@@ -75,12 +74,9 @@ export const TupleTitleBox = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  width: 29rem;
   min-height: 2.333rem;
-  width: 21rem;
-  margin-left: 3.3rem;
-  margin-right: 8.117rem;
-  // width: 29rem;
-  // margin-left: 3.417rem;
+  margin-left: 3.417rem;
   // cursor: pointer;
 `;
 
@@ -133,20 +129,21 @@ export const TupleDate = styled.div`
   align-items: center;
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Black};
-  width: 5.25rem;
+  width: 5.75rem;
   min-height: 2.333rem;
+  // cursor: pointer;
 `;
 
 export const TupleView = styled.div`
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   ${tokens.typography.B2_M_16};
   color: ${tokens.colors.Black};
-  width: 3rem;
-  margin-left: 0.833rem;
-  margin-right: 2.43rem;
+  width: 3.833rem;
   min-height: 2.333rem;
+  // margin-right: 1.667rem;
+  // cursor: pointer;
 `;
 
 export const TupleTempDate = styled.div`
@@ -157,33 +154,7 @@ export const TupleTempDate = styled.div`
   color: ${tokens.colors.Black};
   width: 9.6rem;
   min-height: 2.333rem;
-  margin-left: 2rem;
   // cursor: pointer;
 `;
-
-export const TupleProcess = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.Black};
-  width: 3.833rem;
-  min-height: 2.333rem;
-  margin-right: 1.667rem;
-  cursor: pointer;
-`;
-
-export const ProcessingYNBox = styled.div`
-  background-color: ${({ solvedYn }) => (solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4)};
-  color: ${tokens.colors.White};
-  width: 3.167rem;
-  height: 0.875rem;
-  border: none;
-  border-radius: 0.16rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 // 튜플 파트 끝
 

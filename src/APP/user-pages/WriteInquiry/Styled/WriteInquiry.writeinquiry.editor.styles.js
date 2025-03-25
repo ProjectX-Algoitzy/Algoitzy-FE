@@ -88,6 +88,11 @@ export const OptionLabel = styled.label`
   margin-bottom: 0.42rem;
 `;
 
+export const OptionLabel2 = styled.label`
+  ${tokens.typography.T4_SB_20}
+  color: ${tokens.colors.Grey_6};
+`;
+
 export const TextInput = styled.input`
   width: 100%;
   height: 2.27rem;
@@ -187,5 +192,47 @@ export const CategorySelect = styled(Select).attrs({
 
 .react-select__option:hover {
   background-color: rgba(102, 201, 255, 0.2);
-}
+} 
+`;
+
+export const RadioButton = styled.input.attrs({ type: "radio" })`
+  width: 0.708rem;
+  height: 0.708rem;
+  margin-right: 0.25rem;
+  appearance: none; /* 기본 스타일 제거 */
+  border: 1px solid ${tokens.colors.B_Grey_4}; /* 테두리 색상 */
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  
+  &:checked {
+    border: 1px solid ${tokens.colors.B_Grey_4}; /* 선택 시 테두리 유지 */
+  }
+
+  &:checked::before {
+    content: "";
+    width: 50%;
+    height: 50%;
+    background-color: ${tokens.colors.B_Grey_8}; /* 내부 원 색상 */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+export const ToggleText = styled.div`
+  ${tokens.typography.B2_M_16};
+  color: ${tokens.colors.B_Grey_8};
+`;
+
+export const PrivateSelectContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 1.56rem;
+  margin-bottom: 0.42rem;
 `;

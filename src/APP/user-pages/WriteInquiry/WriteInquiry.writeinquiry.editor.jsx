@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import * as Styled from './Styled/WritePost.writepost.editor.styles';
+import * as Styled from './Styled/WriteInquiry.writeinquiry.editor.styles';
 import request from '../../Api/request';
-import MarkdownEditor from './WritePost.writepost.markdowneditor';
-import ActionBar from './WritePost.writepost.actionbar';
+import MarkdownEditor from './WriteInquiry.writeinquiry.markdowneditor';
+import ActionBar from './WriteInquiry.writeinquiry.actionbar';
 
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
@@ -33,6 +33,9 @@ export default function Editor({
 
   saveYn,
   setSaveYn,
+
+  publicYn,
+  setPublicYn,
 }) {
 
   const editorRef = useRef(null);
@@ -47,7 +50,8 @@ export default function Editor({
   
   const categoryPlaceholderText = '카테고리 선택';
     
-  
+
+  // 에디터 내부 스크롤
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolling(true); // 스크롤 상태 활성화
@@ -72,7 +76,7 @@ export default function Editor({
   useEffect(() => {
     const fetchCategoryOptions = async () => {
       try {
-        const response = await request.get("/board/category");
+        const response = await request.get('/inquiry/category');
         if (response.isSuccess) {
           const options = response.result.categoryList.map((category) => ({
             value: category.code,
@@ -80,17 +84,17 @@ export default function Editor({
           }));
 
           const filteredOptions = options.filter(
-            (option) => option.label !== "공지"
+            (option) => option.label !== '공지'
           );
 
           setCategoryOptions(filteredOptions);
           setSelectedCategory({ value: categoryCode, label: category });
           //setSelectedCategory(filteredOptions[0] || null); // 첫 번째 옵션 선택
         } else {
-          console.error("카테고리 목록 조회 실패:", response.message);
+          console.error('카테고리 목록 조회 실패:', response.message);
         }
       } catch (error) {
-        console.error("카테고리 목록 조회 중 오류:", error);
+        console.error('카테고리 목록 조회 중 오류:', error);
       }
     };
 
@@ -105,6 +109,11 @@ export default function Editor({
     setSelectedCategory(selectedOption);
   };
 
+
+  // 문의 공개 여부 변경 에러
+  const handleRadioPublic = async () => {
+    setPublicYn(!publicYn);
+  }
   
   return (
     <Styled.LeftContainer>
@@ -131,6 +140,22 @@ export default function Editor({
             isSearchable={false}
             onChange={handleCategoryChange}
           />
+
+          <Styled.PrivateSelectContainer>
+          <Styled.OptionLabel2>공개 설정</Styled.OptionLabel2>
+            <Styled.RadioButton 
+                checked={publicYn} 
+                onChange={handleRadioPublic} 
+                style={{ marginLeft: "1rem" }} 
+            />
+            <Styled.ToggleText style={{ marginRight: "0.75rem" }}>공개</Styled.ToggleText>
+            <Styled.RadioButton 
+                checked={!publicYn} 
+                onChange={handleRadioPublic} 
+            />
+            <Styled.ToggleText>비공개</Styled.ToggleText>
+          </Styled.PrivateSelectContainer>
+
         </Styled.EditorHeader>
 
         <MarkdownEditor
@@ -171,6 +196,8 @@ export default function Editor({
           saveYn={saveYn}
           setSaveYn={setSaveYn}
 
+          publicYn={publicYn}
+          setPublicYn={setPublicYn}
       />
     </Styled.LeftContainer>
   );

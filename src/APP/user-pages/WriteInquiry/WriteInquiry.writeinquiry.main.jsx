@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import Editor from './WritePost.writepost.editor';
-import Preview from './WritePost.writepost.preview';
-import * as Styled from './Styled/WritePost.writepost.main.styles';
+import Editor from './WriteInquiry.writeinquiry.editor';
+import Preview from './WriteInquiry.writeinquiry.preview';
+import * as Styled from './Styled/WriteInquiry.writeinquiry.main.styles';
 import request from '../../Api/request';
 
 export default function WritePost() {
@@ -21,27 +21,25 @@ export default function WritePost() {
 
   const [saveYn, setSaveYn] = useState(location.state?.saveYn);
 
+  const [publicYn, setPublicYn] = useState(true);
+
   
   // 게시글 상세 조회
   const fetchBoardData = async () => {
   try {
     let response;
     if (boardId !== null) {
-      if (saveYn == false){ // 임시저장
-        response = await request.get(`/board/draft/${boardId}`);
-      }
-      else { // 수정
-        response = await request.get(`/board/${boardId}`);
-      }
+        response = await request.get(`/inquiry/${boardId}`);
 
     if (response.isSuccess) {
-      const { title, content, categoryCode, category, boardFileList, saveYn } = response.result;
+      const { title, content, categoryCode, categoryName, boardFileList, saveYn, publicYn } = response.result;
       setTitle(title);
       setMarkdownContent(content);
       setCategoryCode(categoryCode);
-      setCategory(category);
-      setBoardFileList(boardFileList);
+      setCategory(categoryName);
+      // setBoardFileList(boardFileList);
       setSaveYn(saveYn);
+      setPublicYn(publicYn);
     } else {
       console.error('게시글 상세 조회 실패:', response.message);
     }
@@ -50,7 +48,6 @@ export default function WritePost() {
     console.error('게시글 상세 조회 중 오류:', error);
   }
   };
-
 
   useEffect(() => {
     fetchBoardData();
@@ -138,6 +135,9 @@ export default function WritePost() {
 
         saveYn={saveYn}
         setSaveYn={setSaveYn}
+
+        publicYn={publicYn}
+        setPublicYn={setPublicYn}
       />
 
       <Preview title={title} markdownContent={markdownContent} />

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { marked } from 'marked';
-import * as Styled from './Styled/WritePost.writepost.preview.styles';
+import * as Styled from './Styled/WriteInquiry.writeinquiry.preview.styles';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 
@@ -54,7 +54,7 @@ export default function Preview({ title, markdownContent }) {
     const renderedContent = marked(processedContent);
     const cleanedContent = removeExtraLineBreaks(renderedContent); // 줄바꿈 제거
 
-    // 제목 추가
+    // 제목 추가ßß
     const finalContent = `
       <h1>${title || ''}</h1>
       ${cleanedContent}

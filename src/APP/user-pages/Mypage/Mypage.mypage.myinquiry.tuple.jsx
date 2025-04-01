@@ -19,8 +19,8 @@ export default function MyInquiryTuple({
   };
 
   const truncateTitle = (name) => {
-    if (name.length > 64) {
-      return name.slice(0, 63) + "...";
+    if (name.length > 30) {
+      return name.slice(0, 29) + "...";
     }
     return name;
   };
@@ -51,7 +51,7 @@ export default function MyInquiryTuple({
           </itemS.TupleTitle>
         </itemS.TupleTitleBox>
         <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
-        <itemS.TupleView>{item.viewCount} 회</itemS.TupleView>
+        <itemS.TupleView>{item.viewCount}회</itemS.TupleView>
         <itemS.TupleProcess>
           <itemS.ProcessingYNBox solvedYn={item.solvedYn}>
             {item.solvedYn ? "답변 완료" : "답변 대기"}

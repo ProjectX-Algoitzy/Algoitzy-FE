@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import MyInfo from './Mypage.mypage.myinfo';
-import ParticipatedStudyList from './Mypage.mypage.participatedstudylist';
-import AppliedStudyList from './Mypage.mypage.appliedstudylist';
-import MyBoardTable from './Mypage.mypage.myboard.table';
-import MyInquiryTable from './Mypage.mypage.myinquiry.table';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import MyInfo from "./Mypage.mypage.myinfo";
+import ParticipatedStudyList from "./Mypage.mypage.participatedstudylist";
+import AppliedStudyList from "./Mypage.mypage.appliedstudylist";
+import MyBoardTable from "./Mypage.mypage.myboard.table";
+import MyInquiryTable from "./Mypage.mypage.myinquiry.table";
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
-import request from '../../Api/request';
+import request from "../../Api/request";
 
 export default function MyPage() {
   const { handle } = useParams();
-  const isMemberMatch = handle === localStorage.getItem('handle');
+  const isMemberMatch = handle === localStorage.getItem("handle");
+  const isRoleAdmin = localStorage.getItem("role") === "ROLE_ADMIN";
 
   const [myInfoData, setMyInfoData] = useState({});
   const [passStudyList, setPassStudyList] = useState([]);
@@ -21,7 +22,7 @@ export default function MyPage() {
   const [totalCount, setTotalCount] = useState(0); // 전체 글 수
   const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
   const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
-  
+
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
 
@@ -38,65 +39,65 @@ export default function MyPage() {
       const response = await request.get(`/member/${handle}/info`);
 
       if (response.isSuccess) {
-        console.log("나의 정보 조회 성공",response);
+        console.log("나의 정보 조회 성공", response);
         setMyInfoData(response.result);
       } else {
         console.error("나의 정보 조회 실패:", response);
       }
     } catch (error) {
-      console.error('나의 정보 조회 오류', error);
+      console.error("나의 정보 조회 오류", error);
     }
   };
-  
+
   const fetchMyStudy = async () => {
     try {
       const response = await request.get(`/member/${handle}/study`);
 
       if (response.isSuccess) {
-        console.log("나의 스터디 조회 성공",response); 
+        console.log("나의 스터디 조회 성공", response);
         setPassStudyList(response.result.passStudyList);
         setApplyStudyList(response.result.applyStudyList);
       } else {
         console.error("나의 스터디 조회 실패:", response);
       }
     } catch (error) {
-      console.error('나의 스터디 조회 오류', error);
+      console.error("나의 스터디 조회 오류", error);
     }
   };
 
   const fetchBoard = async () => {
-		try {
-			const response = await request.get(`/member/${handle}/board`);
-			console.log("내 게시글 목록 조회 성공", response);
+    try {
+      const response = await request.get(`/member/${handle}/board`);
+      console.log("내 게시글 목록 조회 성공", response);
 
-			if (response.isSuccess) {
-				setBoards(response.result.boardList);
+      if (response.isSuccess) {
+        setBoards(response.result.boardList);
         setBoardCount(response.result.saveCount);
         setTempCount(response.result.tempSaveCount);
-        setTotalCount(response.result.totalCount)
-			} else {
-				console.error("내 게시글 목록 조회 실패:", response);
-			}
-		} catch (error) {
-			console.error('내 게시글 목록 조회 오류', error);
-		}
-	};
+        setTotalCount(response.result.totalCount);
+      } else {
+        console.error("내 게시글 목록 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("내 게시글 목록 조회 오류", error);
+    }
+  };
 
   const fetchinquiry = async () => {
-		try {
-			const response = await request.get(`/member/${handle}/inquiry`);
-			console.log("내 문의하기 목록 조회 성공", response);
+    try {
+      const response = await request.get(`/member/${handle}/inquiry`);
+      console.log("내 문의하기 목록 조회 성공", response);
 
-			if (response.isSuccess) {
-				setInquiries(response.result.inquiryList);
+      if (response.isSuccess) {
+        setInquiries(response.result.inquiryList);
         setInquiryCount(response.result.totalCount);
-			} else {
-				console.error("내 문의하기 목록 조회 실패:", response);
-			}
-		} catch (error) {
-			console.error('내 문의하기 목록 조회 오류', error);
-		}
-	};
+      } else {
+        console.error("내 문의하기 목록 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("내 문의하기 목록 조회 오류", error);
+    }
+  };
 
   useEffect(() => {
     fetchMyInfo();
@@ -108,12 +109,18 @@ export default function MyPage() {
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
   const indexOfLastPassItem = currentPagePassStudy * itemsPerPage;
   const indexOfFirstPassItem = indexOfLastPassItem - itemsPerPage;
-  const currentPassItems = passStudyList.slice(indexOfFirstPassItem, indexOfLastPassItem);
+  const currentPassItems = passStudyList.slice(
+    indexOfFirstPassItem,
+    indexOfLastPassItem
+  );
 
   // 현재 페이지에 해당하는 지원 스터디 리스트 가져오기
   const indexOfLastApplyItem = currentPageApplyStudy * itemsPerPage;
   const indexOfFirstApplyItem = indexOfLastApplyItem - itemsPerPage;
-  const currentApplyItems = applyStudyList.slice(indexOfFirstApplyItem, indexOfLastApplyItem);
+  const currentApplyItems = applyStudyList.slice(
+    indexOfFirstApplyItem,
+    indexOfLastApplyItem
+  );
 
   // 참여 스터디 페이지 넘김 함수
   const handleNextPagePassStudy = () => {
@@ -148,7 +155,13 @@ export default function MyPage() {
           <itemS.HeadBox>
             <itemS.Head>마이페이지</itemS.Head>
           </itemS.HeadBox>
-          <MyInfo item={myInfoData} boardCount={totalCount} onSelectTab={setSelectedTab} isMemberMatch={isMemberMatch} />
+          <MyInfo
+            item={myInfoData}
+            boardCount={totalCount}
+            onSelectTab={setSelectedTab}
+            isMemberMatch={isMemberMatch}
+            isRoleAdmin={isRoleAdmin}
+          />
         </itemS.MyInfoContainer>
 
         {selectedTab === "study" ? (
@@ -186,7 +199,6 @@ export default function MyPage() {
             fetchinquiry={fetchinquiry}
           />
         ) : null}
-
       </itemS.InnerContainer>
     </itemS.Container>
   );

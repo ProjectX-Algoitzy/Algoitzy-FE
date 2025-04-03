@@ -157,7 +157,7 @@ export default function MyInquiryTable({
               >
                 {items.length === 0 ? (
                   <itemS.NoItemsContainer>
-                    아직 작성된 글이 없습니다.
+                    등록한 문의가 없습니다.
                   </itemS.NoItemsContainer>
                 ) : (
                   items.map((item) => (

@@ -1,11 +1,10 @@
-import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
-
+import styled from "styled-components";
+import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   justify-content: space-between;
   width: 50rem;
   margin-top: 1.83rem;
@@ -14,7 +13,7 @@ export const Container = styled.div`
 export const ProfileBox = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   justify-content: center;
 `;
 
@@ -29,7 +28,7 @@ export const Profile = styled.img`
 export const NameBox = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;  
+  align-items: flex-start;
   justify-content: center;
 `;
 
@@ -47,7 +46,7 @@ export const Handle = styled.div`
 export const TabBtnContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   justify-content: space-between;
   // width: 20.416rem;
   height: 2rem;
@@ -56,16 +55,16 @@ export const TabBtnContainer = styled.div`
 export const TabBox = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   justify-content: space-between;
-  width: 13.34rem;
+  width: ${(props) => (props.isInquiryVisible ? "13.34rem" : "8rem")};
   height: 2rem;
 `;
 
 export const Tab = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.B_Grey_6};
-  text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  text-decoration: ${(props) => (props.active ? "underline" : "none")};
   cursor: pointer;
 `;
 

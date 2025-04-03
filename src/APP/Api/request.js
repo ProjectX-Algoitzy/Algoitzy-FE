@@ -120,14 +120,10 @@ request.interceptors.response.use(
           window.location.href = "/login";
           break;
         case "401_PAGE":
-          showFullScreenImage(
-            "https://kau-koala-v3.s3.ap-northeast-2.amazonaws.com/dev/5972ad53-c2d8-48.png"
-          );
+          showFullScreenImage("/img/401.png");
           break;
         case "404_PAGE":
-          showFullScreenImage(
-            "https://kau-koala-v3.s3.ap-northeast-2.amazonaws.com/dev/71fe850d-4891-40.png"
-          );
+          showFullScreenImage("/img/404.png");
           break;
         default:
           console.error(`Unexpected error: ${message}`, error);

@@ -43,7 +43,7 @@ export default function MyInfo({
         </itemS.NameBox>
       </itemS.ProfileBox>
       <itemS.TabBtnContainer>
-        <itemS.TabBox>
+        <itemS.TabBox isInquiryVisible={!isRoleAdmin && isMemberMatch}>
           <itemS.Tab
             onClick={() => handleTabClick("study")}
             active={activeTab === "study"}

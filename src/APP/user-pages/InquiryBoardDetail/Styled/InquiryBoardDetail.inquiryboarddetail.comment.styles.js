@@ -99,6 +99,7 @@ export const UtilButtonBox = styled.div`
   position: absolute;
   left: 0.416rem;
   top: 1.125rem;
+  z-index: 999;
   border-radius: 0.166rem;
   box-shadow: 0.083rem 0.083rem 0.416rem 0.208rem rgba(58, 107, 135, 0.08);
   cursor: pointer;

@@ -40,6 +40,7 @@ export default function WriteBox({
       boardId: id,
       content: comment,
     };
+    console.log("requestBody", requestBody);
 
     if (parentId !== null) {
       requestBody.parentId = parentId;

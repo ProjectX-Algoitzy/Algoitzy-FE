@@ -287,7 +287,7 @@ export default function ActionBar({
           </Styled.DraftButton>
         )}
           <Styled.Btn onClick={handlePostSubmit}>
-            {boardId && saveYn ? '수정하기' : '등록하기'}
+            {boardId ? '수정하기' : '등록하기'}
           </Styled.Btn>
         </Styled.BtnContainer2>
       </Styled.BtnContainer>

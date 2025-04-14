@@ -28,6 +28,7 @@ import Community from './APP/user-pages/Community/Community.community.main';
 import Inquiry from './APP/user-pages/Inquiry/Inquiry.inquiry.main';
 import WritePost from './APP/user-pages/WritePost/WritePost.writepost.main';
 import BoardDetail from './APP/user-pages/BoardDetail/BoardDetail.boarddetail.main';
+import WriteSelfStudy from "./APP/user-pages/WriteSelfStudy/WriteSelfStudy.writeselfstudy.main";
 import InquiryBoardDetail from './APP/user-pages/InquiryBoardDetail/InquiryBoardDetail.inquiryboarddetail.main';
 import WriteInquiry from "./APP/user-pages/WriteInquiry/WriteInquiry.writeinquiry.main";
 import ScrollToTop from './APP/Common/ScrollToTop';
@@ -130,6 +131,7 @@ function App() {
                     <Route path="/inquiry" element={isLoggedIn() ? <Inquiry /> : <Navigate to="/" />} />
                     <Route path="/board/:id" element={isLoggedIn() ? <BoardDetail /> : <Navigate to="/" />} />{' '}
                     {/* 커뮤니티 글 세부 */}
+                    <Route path="/writeselfstudy" element={isLoggedIn() ? <WriteSelfStudy /> : <Navigate to="/" />} /> {/* 자율스터디 생성 */}
                     <Route
                         path="/inquiryboard/:id"
                         element={isLoggedIn() ? <InquiryBoardDetail /> : <Navigate to="/" />}

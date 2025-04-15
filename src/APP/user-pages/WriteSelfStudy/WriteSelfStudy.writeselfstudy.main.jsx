@@ -111,7 +111,7 @@ export default function WritePost() {
       deleteAllUploadedImages();
     };
   }, []);
-
+  
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       const hasUnsavedChanges = title.trim() !== '' || markdownContent.trim() !== '';

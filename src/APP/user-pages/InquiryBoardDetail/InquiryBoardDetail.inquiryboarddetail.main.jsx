@@ -14,6 +14,7 @@ export default function InquiryBoardDetail() {
     const {id} = useParams(); // 게시글 ID 가져오기
     const profileUrl = localStorage.getItem('profileUrl');
 
+    const [role, setRole] = useState('');
     const [inquiry, setInquiry] = useState({});
     const [comment, setComment] = useState([]);
     const [commentCount, setCommentCount] = useState(0);
@@ -63,10 +64,16 @@ export default function InquiryBoardDetail() {
             const response = await request.get(`/inquiry/${id}/reply?page=${currentPage + 1}&size=${itemsPerPage}`);
 
             if (response.isSuccess) {
-                // console.log("답글 조회 성공", response.result.replyList);
+                // console.log('답글 조회 성공', response.result.replyList);
                 setComment(response.result.replyList);
                 setCommentCount(response.result.replyList.length);
                 setTotalPages(Math.ceil(response.result.parentReplyCount / itemsPerPage));
+
+                // //inquiry.replyCount 갱신
+                // setInquiry((prevInquiry) => ({
+                //     ...prevInquiry,
+                //     replyCount: response.result.parentReplyCount,
+                // }));
             } else {
                 console.error('답글 조회 실패:', response);
             }
@@ -74,6 +81,24 @@ export default function InquiryBoardDetail() {
             console.error('답글 조회 오류', error);
         }
     };
+
+    const fetchMyInfo = async () => {
+        try {
+            const response = await request.get(`/member/my-info`);
+
+            if (response.isSuccess) {
+                setRole(response.result.role);
+            } else {
+                console.error('내 개인정보 조회 실패:', response);
+            }
+        } catch (error) {
+            console.error('내 개인정보 조회 오류', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchMyInfo();
+    }, []);
 
     useEffect(() => {
         fetchInquiry();
@@ -184,7 +209,7 @@ export default function InquiryBoardDetail() {
                     <itemS.TitleContainer>
                         <itemS.Title>{inquiry.title}</itemS.Title>
                         <itemS.ButtonBox>
-                            {inquiry.myInquiryYn && (
+                            {inquiry.myInquiryYn && !inquiry.solvedYn && (
                                 <>
                                     <itemS.EditBtn onClick={handleEdit}>수정</itemS.EditBtn>
                                     <itemS.DeleteBtn onClick={handleDelete}>삭제</itemS.DeleteBtn>
@@ -205,6 +230,7 @@ export default function InquiryBoardDetail() {
                                 </itemS.WriterName>
                                 <itemS.InfoBottomBox>
                                     <itemS.CreatedTime>{formatDate(inquiry.createdTime)}</itemS.CreatedTime>
+                                    <itemS.ViewCnt>조회수 {inquiry.viewCount}</itemS.ViewCnt>
                                     {inquiry.myInquiryYn && (
                                         <>
                                             <itemS.RadioButton
@@ -219,7 +245,6 @@ export default function InquiryBoardDetail() {
                                             <itemS.ToggleText>비공개</itemS.ToggleText>
                                         </>
                                     )}
-                                    {/* <itemS.ViewCnt>조회수 {inquiry.viewCount}</itemS.ViewCnt> */}
                                 </itemS.InfoBottomBox>
                             </itemS.InfoBox>
                         </itemS.ProfileInfoContainer>
@@ -235,48 +260,53 @@ export default function InquiryBoardDetail() {
                     </itemS.CountContainer>
 
                     <itemS.Body>답변</itemS.Body>
-                    <itemS.ContentContainer>
-                        {inquiry.myInquiryYn && (
-                            <itemS.WriteContainer>
-                                <itemS.CommentProfile src={profileUrl} alt="프로필" />
-                                <InquiryWriteBox fetchComment={fetchComment} />
-                            </itemS.WriteContainer>
-                        )}
+                    {!(commentCount === 0 && inquiry.myInquiryYn === false) && (
+                        <itemS.ContentContainer>
+                            {inquiry.myInquiryYn && (
+                                <itemS.WriteContainer>
+                                    <itemS.CommentProfile src={profileUrl} alt="프로필" />
+                                    <InquiryWriteBox fetchComment={fetchComment} setInquiry={setInquiry} />
+                                </itemS.WriteContainer>
+                            )}
 
-                        {comment.map((item) => (
-                            <InquiryComment
-                                key={item.replyId}
-                                item={item}
-                                formatDate={formatDate}
-                                fetchComment={fetchComment}
-                            />
-                        ))}
+                            {comment.map((item) => (
+                                <InquiryComment
+                                    key={item.replyId}
+                                    role={role}
+                                    isMyInquiry={inquiry.myInquiryYn}
+                                    item={item}
+                                    formatDate={formatDate}
+                                    fetchComment={fetchComment}
+                                    setInquiry={setInquiry}
+                                />
+                            ))}
 
-                        {commentCount > 0 && (
-                            <itemS.PaginationContainer>
-                                <itemS.Pagination>
-                                    <itemS.PaginationArrow
-                                        left
-                                        onClick={() => handlePageGroupChange('prev')}
-                                        disabled={currentPageGroup === 0}
-                                    />
-                                    {pageNumbers.map((pageNumber) => (
-                                        <itemS.PaginationNumber
-                                            key={pageNumber}
-                                            onClick={() => handlePageChange(pageNumber)}
-                                            active={pageNumber === currentPage}
-                                        >
-                                            {pageNumber + 1}
-                                        </itemS.PaginationNumber>
-                                    ))}
-                                    <itemS.PaginationArrow
-                                        onClick={() => handlePageGroupChange('next')}
-                                        disabled={(currentPageGroup + 1) * 5 >= totalPages}
-                                    />
-                                </itemS.Pagination>
-                            </itemS.PaginationContainer>
-                        )}
-                    </itemS.ContentContainer>
+                            {commentCount > 0 && (
+                                <itemS.PaginationContainer>
+                                    <itemS.Pagination>
+                                        <itemS.PaginationArrow
+                                            left
+                                            onClick={() => handlePageGroupChange('prev')}
+                                            disabled={currentPageGroup === 0}
+                                        />
+                                        {pageNumbers.map((pageNumber) => (
+                                            <itemS.PaginationNumber
+                                                key={pageNumber}
+                                                onClick={() => handlePageChange(pageNumber)}
+                                                active={pageNumber === currentPage}
+                                            >
+                                                {pageNumber + 1}
+                                            </itemS.PaginationNumber>
+                                        ))}
+                                        <itemS.PaginationArrow
+                                            onClick={() => handlePageGroupChange('next')}
+                                            disabled={(currentPageGroup + 1) * 5 >= totalPages}
+                                        />
+                                    </itemS.Pagination>
+                                </itemS.PaginationContainer>
+                            )}
+                        </itemS.ContentContainer>
+                    )}
                 </itemS.InnerContainer>
             </itemS.Container>
         </itemS.OuterContainer>

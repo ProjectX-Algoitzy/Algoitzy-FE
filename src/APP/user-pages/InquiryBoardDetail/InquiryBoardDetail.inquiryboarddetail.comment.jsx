@@ -7,7 +7,7 @@ import InquiryReply from './InquiryBoardDetail.inquiryboarddetail.reply';
 import request from '../../Api/request';
 import {ConfirmContext} from '../../Common/Confirm/ConfirmContext';
 
-export default function InquiryComment({item, formatDate, fetchComment}) {
+export default function InquiryComment({item, role, isMyInquiry, formatDate, fetchComment, setInquiry}) {
     const {confirm} = useContext(ConfirmContext);
     const modalRef = useRef(null);
     const navigate = useNavigate();
@@ -53,6 +53,7 @@ export default function InquiryComment({item, formatDate, fetchComment}) {
                 if (response.isSuccess) {
                     console.log('댓글 삭제 성공', response);
                     fetchComment();
+                    window.location.reload(); // 새로고침
                 } else {
                     console.error('댓글 삭제 실패:', response.message);
                 }
@@ -127,9 +128,7 @@ export default function InquiryComment({item, formatDate, fetchComment}) {
                                 <itemS.ContentBox>
                                     <itemS.DeletedIcon src="/img/deleted_icon_black.svg" alt="삭제된 글" />
                                     <itemS.Content data-delete-yn={item.deleteYn ? true : undefined}>
-                                        {item.deleteByAdminYn
-                                            ? '관리자에 의해 삭제된 댓글입니다.'
-                                            : '작성자에 의해 삭제된 댓글입니다.'}
+                                        작성자에 의해 삭제된 댓글입니다.
                                     </itemS.Content>
                                 </itemS.ContentBox>
                             ) : (
@@ -141,7 +140,10 @@ export default function InquiryComment({item, formatDate, fetchComment}) {
                             )}
                             <itemS.InfoBottomBox>
                                 <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
-                                {item.myInquiryYn && <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>}
+                                {/* item.handle이 null이면 관리자 */}
+                                {(isMyInquiry || role === 'ROLE_ADMIN') && (
+                                    <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
+                                )}
                             </itemS.InfoBottomBox>
                         </itemS.CommentBox>
                     )}
@@ -154,6 +156,7 @@ export default function InquiryComment({item, formatDate, fetchComment}) {
                         <InquiryWriteBox
                             parentId={item.replyId}
                             fetchComment={fetchComment}
+                            setInquiry={setInquiry}
                             handleLoad={handleReplyClick}
                             isReply={true}
                         />
@@ -163,10 +166,13 @@ export default function InquiryComment({item, formatDate, fetchComment}) {
                 {item.childrenReplyList.map((reply) => (
                     <InquiryReply
                         key={reply.replyId}
+                        isMyInquiry={isMyInquiry}
+                        role={role}
                         item={reply}
                         parentName={item.createdName}
                         formatDate={formatDate}
                         fetchComment={fetchComment}
+                        setInquiry={setInquiry}
                     />
                 ))}
             </itemS.WriteContainer>

@@ -4,7 +4,7 @@ import * as itemS from './Styled/InquiryBoardDetail.inquiryboarddetail.inquirywr
 import request from '../../Api/request';
 import {AlertContext} from '../../Common/Alert/AlertContext';
 
-export default function InquiryWritebox({parentId = null, fetchComment, handleLoad, isReply = false}) {
+export default function InquiryWritebox({parentId = null, fetchComment, handleLoad, isReply = false, setInquiry}) {
     const {id} = useParams();
     const {alert} = useContext(AlertContext);
 
@@ -47,6 +47,14 @@ export default function InquiryWritebox({parentId = null, fetchComment, handleLo
                 console.log('댓글 작성 성공', response);
                 setComment('');
                 fetchComment();
+
+                // inquiry.replyCount 수동 증가
+                if (setInquiry) {
+                    setInquiry((prev) => ({
+                        ...prev,
+                        replyCount: prev.replyCount + 1,
+                    }));
+                }
                 if (handleLoad) handleLoad();
             } else {
                 console.error('댓글 작성 실패:', response.message);
@@ -69,7 +77,11 @@ export default function InquiryWritebox({parentId = null, fetchComment, handleLo
                     <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
                 </itemS.InputContainer>
                 <itemS.ButtonBox isreply={isReply}>
-                    <itemS.SubmitBtn onClick={handleSubmit} isActive={comment.length > 0}>
+                    <itemS.SubmitBtn
+                        onClick={handleSubmit}
+                        isActive={comment.length > 0}
+                        disabled={comment.length === 0}
+                    >
                         올리기
                     </itemS.SubmitBtn>
                 </itemS.ButtonBox>

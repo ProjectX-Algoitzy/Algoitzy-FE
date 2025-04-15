@@ -70,7 +70,7 @@ export const Part = styled.div`
   ${tokens.typography.T4_SB_20};
   color: ${tokens.colors.Blue_0_Main};
   background-color: rgba(0, 165, 255, 0.1);
-  width: 49.08rem;
+  width: 50rem;
   height: 1.67rem;
   border: none;
   border-radius: 0.17rem;

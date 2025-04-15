@@ -4,7 +4,7 @@ import * as tokens from "../../../../tokens";
 export const MarkdownContentContainer = styled.div`
   width: 100%;
   font-family: 'Pretendard', sans-serif;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: ${tokens.colors.B_Grey_8}; /* 텍스트 기본 색상 설정 */
   line-height: 1.6;
   overflow-y: auto;

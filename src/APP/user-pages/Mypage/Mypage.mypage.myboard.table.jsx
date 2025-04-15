@@ -18,8 +18,6 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
     temp: false,  // 임시저장 글의 전체 선택 상태
   });
   
-  // const [checkedItems, setCheckedItems] = useState({});
-  // const [isAllChecked, setIsAllChecked] = useState(false);
   const [count, setCount] = useState(boardCount); //TODO -  - 임시로 10 넣음
 
   // 게시글, 임시저장글 탭 변경
@@ -68,13 +66,6 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
     setThumbTop(0);
   };
 
-  // const handleCheckChange = (boardId) => {
-  //   setCheckedItems((prev) => ({
-  //     ...prev,
-  //     [boardId]: !prev[boardId]
-  //   }));
-  // };
-
   const handleCheckChange = (boardId) => {
     setCheckedItems((prev) => ({
       ...prev,
@@ -85,17 +76,6 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
     }));
   };
   
-
-  // const handleAllCheckChange = () => {
-  //   const newIsAllChecked = !isAllChecked;
-  //   setIsAllChecked(newIsAllChecked);
-  //   const newCheckedItems = {};
-  //   items.forEach((item) => {
-  //     newCheckedItems[item.boardId] = newIsAllChecked;
-  //   });
-  //   setCheckedItems(newCheckedItems);
-  // };
-
   const handleAllCheckChange = () => {
     const newIsAllChecked = !isAllChecked[selectedTab];
     setIsAllChecked((prev) => ({
@@ -115,43 +95,6 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
       [selectedTab]: newCheckedItems,
     }));
   };
-  
-
-  // // 게시글 삭제
-	// const handleDelete = async (items) => {
-  //   try {
-  //     // items 객체에서 value가 true인 key값들로 배열 생성
-  //     const idsToDelete = Object.keys(items).filter((id) => items[id] === true);
-  //     console.log('idsToDelete', idsToDelete);
-  //     // 삭제할 항목이 없는 경우 경고 메시지 출력 후 종료
-  //     if (idsToDelete.length === 0) {
-  //       alert('삭제할 게시글을 선택해주세요.');
-  //       return;
-  //     }
-  
-  //     // 삭제 요청 수행
-  //     for (let id of idsToDelete) {
-  //       console.log('boardId', id); 
-  
-  //       try {
-  //         const response = await request.delete(`/board/${id}`);
-  //         if (response.isSuccess) {
-  //           console.log(`게시글 ${id} 삭제 성공:`, response);
-  //         } else {
-  //           console.error(`게시글 ${id} 삭제 실패:`, response);
-  //         }
-  //       } catch (error) {
-  //         console.error(`게시글 ${id} 삭제 중 오류 발생:`, error);
-  //       }
-  //     }
-  
-  //     // 삭제 후 추가 동작 수행
-  //     fetchBoard();
-  //     if (isAllChecked) handleAllCheckChange();
-  //   } catch (error) {
-  //     console.error('삭제 처리 중 오류 발생:', error);
-  //   }
-  // };
 
   const handleDelete = async (items) => {
     const idsToDelete = Object.keys(items[selectedTab]).filter(
@@ -202,14 +145,14 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
               onClick={() => handleTabClick("board")} 
               active={selectedTab === "board"}
             >
-              게시한 글
+              커뮤니티 글 {boardCount}
             </itemS.Tab>
             {isMemberMatch && (
               <itemS.Tab 
                 onClick={() => handleTabClick("temp")} 
                 active={selectedTab === "temp"}
               >
-                임시저장한 글
+                임시저장한 글 {tempCount}
               </itemS.Tab>
             )}
             
@@ -266,7 +209,7 @@ export default function MyBoardTable({ items, boardCount, tempCount, isMemberMat
               <itemS.CategoryContainer>
                 <itemS.BlankBox></itemS.BlankBox>
                 <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-                <itemS.CategoryTempDate>작성일</itemS.CategoryTempDate>
+                <itemS.CategoryTempDate>저장일</itemS.CategoryTempDate>
               </itemS.CategoryContainer>
               <itemS.TupleContainer
                 ref={contentRef}

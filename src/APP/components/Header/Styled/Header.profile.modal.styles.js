@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
+import styled from "styled-components";
+import * as tokens from "../../../../tokens";
 
 export const ArrowBubble = styled.div`
   position: absolute;
@@ -7,16 +7,17 @@ export const ArrowBubble = styled.div`
   height: 4.88rem;
   // height: 3.34rem;
   padding: 0;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 0.17rem;
   box-shadow: 0 0 0.42rem 0 rgba(58, 107, 135, 0.2);
-  top: 2.0rem;
+  top: 2rem;
   left: 60%;
   transform: translateX(-50%);
   z-index: 99;
 
-  ::after, ::before {
-    content: '';
+  ::after,
+  ::before {
+    content: "";
     position: absolute;
     border-style: solid;
     display: block;
@@ -25,7 +26,7 @@ export const ArrowBubble = styled.div`
 
   ::after {
     border-width: 0 0.63rem 0.63rem;
-    border-color: #FFFFFF transparent;
+    border-color: #ffffff transparent;
     top: -0.58rem;
     left: 4.58rem;
   }
@@ -95,8 +96,8 @@ export const BottomContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  // width: 4.5rem;
-  width: 9rem;
+  width: 4.5rem;
+  /* width: 9rem; */
   height: 1.5rem;
   background-color: ${tokens.colors.B_Grey_1};
   color: ${tokens.colors.Grey_8};

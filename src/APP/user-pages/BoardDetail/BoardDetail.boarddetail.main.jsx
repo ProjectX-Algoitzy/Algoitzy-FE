@@ -126,17 +126,9 @@ export default function BoardDetail() {
 	};
 
 	const handleEdit = () => {
-		const { nameToCode, codeToName } = categoryConverter(categoryOptions);
-
 		navigate(`/writepost`, {
 			state: {
 				boardId: id,
-				title: board.title,
-				initialContent: board.content,
-				initialCategoryCode: board.categoryCode,
-				initialCategory: board.category,
-				initialUploadedFiles: board.boardFileList,
-				initialSaveYn: true,
 			  },
 		});
 	  };

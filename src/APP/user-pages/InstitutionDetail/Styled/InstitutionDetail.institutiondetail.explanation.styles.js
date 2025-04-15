@@ -12,8 +12,8 @@ export const CategoryContainer = styled.div`
   // justify-content: center;
   // align-items: center;
   background-color: ${tokens.colors.B_Grey_1};
-  width: 49.17rem;
-  height: 13.75rem;
+  width: 50rem;
+  height: 20.75rem;
   border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
   margin-bottom: 0.83rem;
   padding: 0.92rem;

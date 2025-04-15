@@ -39,7 +39,7 @@ export const TabBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 12rem;
+  width: 16rem;
 `;
 
 export const Tab = styled.div`
@@ -73,29 +73,54 @@ export const CategoryContainer = styled.div`
 `;
 
 export const BlankBox = styled.div`
-  width: 6.2rem;
+  width: 8.2rem;
 `;
 
 export const CategoryTitle = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
   text-align: center;
-  width: 29rem;
-  margin-left: 3.417rem;
+  width: 21rem;
 `;
 
 export const CategoryDate = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
-  text-align: center;
-  width: 5.75rem;
+  margin-left: 10rem;
 `;
 
 export const CategoryView = styled.div`
   ${tokens.typography.T5_SB_16};
   color: ${tokens.colors.Black};
+  margin-left: 3.333rem;
+  margin-right: 1.25rem;
+`;
+
+export const CategoryInquiryDate = styled.div`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Black};
+  margin-left: 7rem;
+  width: 4.25rem;
+  text-align: center;
+`;
+
+export const CategoryInquiryView = styled.div`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Black};
+  // margin-left: 3.333rem;
+  // margin-right: 1.25rem;
+  width: 3rem;
+  margin-left: 0.833rem;
+  margin-right: 1.53rem;
+  text-align: center;
+`;
+
+export const CategorySolved = styled.div`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Black};
   text-align: center;
   width: 3.833rem;
+  margin-right: 1.467rem;
 `;
 
 export const CategoryTempDate = styled.div`
@@ -103,6 +128,8 @@ export const CategoryTempDate = styled.div`
   color: ${tokens.colors.Black};
   text-align: center;
   width: 9.6rem;
+  margin-left: 9rem;
+  padding-left: 2.2rem;
 `;
 // 카테고리 파트 끝
 
@@ -165,7 +192,7 @@ export const AllCheckBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 5.416rem;
+  width: 6.416rem;
   height: 2rem;
 `;
 

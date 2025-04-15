@@ -17,8 +17,7 @@ export default function SelftStudyHome({ selftStudyContent }) {
   return (
     <itemS.Container>
       <itemS.Title>홈</itemS.Title>
-      <MarkdownContent markdownContent={selftStudyContent || ''} /> {/* content 전달 */}
-      {/*<itemS.ContentContainer dangerouslySetInnerHTML={{ __html: selftStudyContent }}></itemS.ContentContainer>*/}
+      <MarkdownContent markdownContent={selftStudyContent || ''} />
     </itemS.Container>
   )
 }

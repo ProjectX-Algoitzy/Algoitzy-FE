@@ -1,32 +1,45 @@
-import React, { useState, useContext, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import request from '../../Api/request';
+import React, { useState, useContext, useRef, useEffect } from "react";
+import request from "../../Api/request";
 import * as itemS from "./Styled/EditWirteBox.styles";
-import { AlertContext } from '../../Common/Alert/AlertContext';
+import { AlertContext } from "../../Common/Alert/AlertContext";
 
-export default function EditWriteBox({ replyId, fetchComment, handleLoad, editContent = '', handleCancel, isComment }) {
+export default function EditWriteBox({
+  replyId,
+  fetchComment,
+  handleLoad,
+  editContent = "",
+  handleCancel,
+  isComment,
+}) {
   const { alert } = useContext(AlertContext);
 
   const [comment, setComment] = useState(editContent);
   const textareaRef = useRef(null);
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, []);
+
   const handleChange = (e) => {
     const value = e.target.value;
     if (value.length > 500) {
-      alert('댓글은 최대 500자까지 입력할 수 있습니다.');
+      alert("댓글은 최대 500자까지 입력할 수 있습니다.");
       return;
     }
     setComment(value);
 
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'; 
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; 
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
 
   const handleEdit = async () => {
     if (!comment.trim()) {
-      alert('댓글 내용을 입력해주세요.');
+      alert("댓글 내용을 입력해주세요.");
       return;
     }
 
@@ -62,12 +75,16 @@ export default function EditWriteBox({ replyId, fetchComment, handleLoad, editCo
           />
           <itemS.TextCount>{`${comment.length}/500`}</itemS.TextCount>
         </itemS.InputContainer>
- 
+
         <itemS.ButtonBox iscomment={isComment}>
           <itemS.CancelBtn onClick={handleCancel}>취소</itemS.CancelBtn>
-          <itemS.SubmitBtn onClick={handleEdit} isActive={comment.length > 0 && comment.length}>올리기</itemS.SubmitBtn>
+          <itemS.SubmitBtn
+            onClick={handleEdit}
+            isActive={comment.length > 0 && comment.length}
+          >
+            올리기
+          </itemS.SubmitBtn>
         </itemS.ButtonBox>
-        
       </itemS.WriteBox>
     </itemS.Container>
   );

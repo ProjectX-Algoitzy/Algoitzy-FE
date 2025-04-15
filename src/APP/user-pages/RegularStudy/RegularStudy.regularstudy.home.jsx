@@ -6,7 +6,6 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import MarkdownContent from './RegularStudy.regularstudy.markdowncontent';
 
-
 export default function RegularStudyHome() {
   const { id } = useParams();
   const [regularStudyHome, SetRegularStudyHome] = useState(null);

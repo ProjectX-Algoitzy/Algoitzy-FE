@@ -3,7 +3,6 @@ import * as tokens from "../../../../tokens";
 
 export const MarkdownContentContainer = styled.div`
   width: 100%;
-  border: 0.0417rem solid #ffffff;
   font-family: 'Pretendard', sans-serif;
   font-size: 1rem;
   color: ${tokens.colors.B_Grey_8}; /* 텍스트 기본 색상 설정 */

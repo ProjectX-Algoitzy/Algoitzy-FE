@@ -273,6 +273,7 @@ export default function InquiryBoardDetail() {
                                 <InquiryComment
                                     key={item.replyId}
                                     role={role}
+                                    myProfileUrl={profileUrl}
                                     isMyInquiry={inquiry.myInquiryYn}
                                     item={item}
                                     formatDate={formatDate}

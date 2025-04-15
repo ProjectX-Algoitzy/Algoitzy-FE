@@ -62,5 +62,5 @@ export const SubmitBtn = styled.button`
     height: 1.25rem;
     border: none;
     border-radius: 0.17rem;
-    cursor: pointer;
+    cursor: ${({isActive}) => (isActive ? 'pointer' : 'default')};
 `;

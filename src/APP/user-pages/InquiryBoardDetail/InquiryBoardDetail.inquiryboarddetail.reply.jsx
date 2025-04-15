@@ -6,14 +6,13 @@ import InquiryEditWritebox from './InquiryBoardDetail.inquiryboarddetail.editwri
 import request from '../../Api/request';
 import {ConfirmContext} from '../../Common/Confirm/ConfirmContext';
 
-export default function InquiryReply({item, parentName, formatDate, fetchComment}) {
+export default function InquiryReply({item, role, isMyInquiry, parentName, formatDate, fetchComment, setInquiry}) {
     const {confirm} = useContext(ConfirmContext);
     const modalRef = useRef(null);
     const navigate = useNavigate();
 
     const [isReplyBoxVisible, setIsReplyBoxVisible] = useState(false);
     const [isUtilBoxVisible, setIsUtilBoxVisible] = useState(false);
-    const [likeStatus, setLikeStatus] = useState(item.myLikeYn);
     const [isEditing, setIsEditing] = useState(false);
     const [editContent, setEditContent] = useState('');
 
@@ -52,6 +51,7 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                 if (response.isSuccess) {
                     console.log('댓글 삭제 성공', response);
                     fetchComment();
+                    window.location.reload(); // 새로고침
                 } else {
                     console.error('댓글 삭제 실패:', response.message);
                 }
@@ -100,10 +100,10 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                                     <itemS.WriterName onClick={() => handlePage(item.handle)}>
                                         {item.createdName}
                                     </itemS.WriterName>
-                                    {item.myBoardYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
+                                    {item.myInquiryYn && <itemS.WriterIcon>작성자</itemS.WriterIcon>}
                                 </itemS.WriterNameBox>
                                 {item.myReplyYn &&
-                                    !item.deleteByAdminYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
+                                    item.myInquiryYn && ( // item.myBoardYn이 true일 때만 DotBox 렌더링
                                         <itemS.DotBox ref={modalRef} onClick={handleDotClick}>
                                             <itemS.DotButton src="/img/hamberg.svg" alt="..." />
                                             {isUtilBoxVisible && ( // isUtilBoxVisible 상태에 따라 표시
@@ -126,9 +126,7 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                                 <itemS.ContentBox>
                                     <itemS.DeletedIcon src="/img/deleted_icon_black.svg" alt="삭제된 글" />
                                     <itemS.Content data-delete-yn={item.deleteYn ? true : undefined}>
-                                        {item.deleteByAdminYn
-                                            ? '관리자에 의해 삭제된 댓글입니다.'
-                                            : '작성자에 의해 삭제된 댓글입니다.'}
+                                        작성자에 의해 삭제된 댓글입니다.
                                     </itemS.Content>
                                 </itemS.ContentBox>
                             ) : (
@@ -141,7 +139,9 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                             )}
                             <itemS.InfoBottomBox>
                                 <itemS.CreatedTime>{formatDate(item.createdTime)}</itemS.CreatedTime>
-                                <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
+                                {(isMyInquiry || role === 'ROLE_ADMIN') && (
+                                    <itemS.Reply onClick={handleReplyClick}>답글 달기</itemS.Reply>
+                                )}
                                 <itemS.LikeCount>{item.likeCount}</itemS.LikeCount>
                             </itemS.InfoBottomBox>
                         </itemS.CommentBox>
@@ -155,6 +155,7 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                         <InquiryWriteBox
                             parentId={item.replyId}
                             fetchComment={fetchComment}
+                            setInquiry={setInquiry}
                             handleLoad={handleReplyClick}
                             isReply={true}
                         />
@@ -169,6 +170,7 @@ export default function InquiryReply({item, parentName, formatDate, fetchComment
                             parentName={item.createdName}
                             formatDate={formatDate}
                             fetchComment={fetchComment}
+                            setInquiry={setInquiry}
                         />
                     ))}
             </itemS.WriteContainer>

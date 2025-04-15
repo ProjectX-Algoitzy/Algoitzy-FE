@@ -54,12 +54,17 @@ export const TitleContainer = styled.div`
     align-items: flex-start;
     width: 50rem;
     margin-bottom: 1.75rem;
+    gap: 1rem;
+    flex-wrap: wrap; /* 추가: 줄바꿈 필요시 */
 `;
 
 export const Title = styled.div`
-    // width: 28rem;
     ${tokens.typography.H3_SB_40};
     color: ${tokens.colors.Black};
+    flex: 1;
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+    white-space: normal; /* 줄바꿈 허용 */
+    margin: 0;
 `;
 
 export const ButtonBox = styled.div`
@@ -67,6 +72,7 @@ export const ButtonBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0; /* 버튼이 줄어들지 않도록 */
 `;
 
 export const EditBtn = styled.button`
@@ -151,12 +157,13 @@ export const InfoBottomBox = styled.div`
 export const CreatedTime = styled.div`
     ${tokens.typography.B2_M_16};
     color: ${tokens.colors.Black};
-    margin-right: 1.542rem;
+    margin-right: 0.5rem;
 `;
 
 export const ViewCnt = styled.div`
     ${tokens.typography.B2_M_16};
     color: ${tokens.colors.Black};
+    margin-right: 1.625rem;
 `;
 
 export const RadioButton = styled.input.attrs({type: 'radio'})`

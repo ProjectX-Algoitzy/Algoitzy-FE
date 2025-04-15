@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import * as Styled from './Styled/WriteInquiry.writeinquiry.actionbar.styles';
+import * as Styled from './Styled/WriteSelfStudy.writeselfstudy.actionbar.styles';
 import request from '../../Api/request';
-import DraftModal from './WriteInquiry.writeinquiry.draft';
+import DraftModal from './WriteSelfStudy.writeselfstudy.draft';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 
@@ -21,6 +21,9 @@ export default function ActionBar({
   category,
   setCategory,
 
+  profileUrl,
+  setProfileUrl,
+
   boardFileList,
   setBoardFileList,
   
@@ -32,9 +35,6 @@ export default function ActionBar({
 
   saveYn,
   setSaveYn,
-
-  publicYn,
-  setPublicYn,
 }) {
   
   const navigate = useNavigate();
@@ -240,29 +240,29 @@ export default function ActionBar({
     const fileUrlList = boardFileList.map(file => file.fileUrl);
 
     const requestData = {
-      title: title,
+      name: title,
       content: markdownContent,
-      category: categoryCode,
-      fileUrlList: fileUrlList,
-      saveYn: true,
-      publicYn: publicYn,
+      profileUrl: profileUrl,
+      // category: categoryCode,
+      // fileUrlList: fileUrlList,
+      // saveYn: true,
     };
 
     try {
       let response;
         if (boardId) {
           // 게시글 수정(임시저장 글 포함)
-          response = await request.patch(`/inquiry/${boardId}`, requestData);
+          response = await request.patch(`/study/${boardId}`, requestData);
         } else {
           // 새 게시글 작성
-          response = await request.post('/inquiry', requestData);
+          response = await request.post('/study', requestData);
         }
         if (response.isSuccess) {
           if (response.result) setBoardId(response.result);
-          alert(saveYn==true ? '문의가 수정되었습니다.' : '문의가 등록되었습니다.');
+          alert(boardId ? '자율 스터디가 수정되었습니다.' : '자율 스터디가 등록되었습니다.');
           navigate(-1); // 커뮤니티 게시글 목록으로 이동
         } else {
-          alert('문의를 등록하는 중 오류가 발생했습니다.');
+          alert('자율 스터디를 저장하는 중 오류가 발생했습니다.');
         }
       } catch (error) {
         // alert('게시글을 저장하는 중 오류가 발생했습니다.');

@@ -13,6 +13,14 @@ export default function SelftStudySidebar({selfStudyInfo, setActiveComponent, ac
     navigate(`/editstudy/${id}`);
   };
 
+  const handleEdit = () => {
+    navigate(`/writeSelfStudy`, {
+		state: {
+			boardId: id,
+		  },
+    });
+  };
+
   const openModalForParticipation = () => {
     setModalType('participation'); // 모달 타입 설정
     setIsModalOpen(true);
@@ -88,7 +96,7 @@ export default function SelftStudySidebar({selfStudyInfo, setActiveComponent, ac
 
               {selfStudyInfo.memberRole === "LEADER" ? (
                 <>
-                  <itemS.Gray7Btn onClick={handleEditStduyInfo}>수정하기</itemS.Gray7Btn>
+                  <itemS.Gray7Btn onClick={handleEdit}>수정하기</itemS.Gray7Btn>
                   <itemS.RedBtn onClick={openModalForEndStudy}>스터디 종료</itemS.RedBtn>
                 </>
               ): (actionForMember)}

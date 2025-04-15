@@ -55,6 +55,34 @@ export const CheckBox = styled.input`
   }
 `;
 
+export const InquiryCheckBox = styled.input`
+  width: 1.02rem;
+  height: 0.875rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  border: 0.08rem solid #ccc;
+  border-radius: 0.16rem;
+  background-color: #fff;
+  margin-left: 1rem;
+  cursor: pointer;
+
+  &:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  &:checked::before {
+    content: '✔'; 
+    color: #fff;
+    font-size: 0.583rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
 
 export const Blank = styled.div`
   width: 0.875rem;

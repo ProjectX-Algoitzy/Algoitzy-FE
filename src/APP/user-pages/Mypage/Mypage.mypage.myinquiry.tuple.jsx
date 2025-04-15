@@ -32,7 +32,7 @@ export default function MyInquiryTuple({
   return (
     <itemS.TupleContainer data-delete-yn={undefined}>
       {isMemberMatch ? (
-        <itemS.CheckBox
+        <itemS.InquiryCheckBox
           type="checkbox"
           checked={isChecked}
           onChange={(e) => {

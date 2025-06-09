@@ -10,6 +10,8 @@ export default function Community() {
   const [isRegularMember, setIsRegularMember] = useState(false);
   const navigate = useNavigate();
 
+  const accessToken = localStorage.getItem("accessToken");
+
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([{ code: "", name: "전체" }]); // Default '전체' tab
 
@@ -58,8 +60,6 @@ export default function Community() {
 
   const fetchBoard = async () => {
     try {
-      const accessToken = localStorage.getItem("accessToken");
-
       let response;
 
       if (accessToken) {

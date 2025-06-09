@@ -177,19 +177,21 @@ export default function Community() {
               </itemS.Head>
               <itemS.SemiHead>{content}</itemS.SemiHead>
             </itemS.HeadContainer>
-            <itemS.SearchContainer>
-              <itemS.Search
-                type="text"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-                placeholder="제목, 작성자 검색"
-              />
-              <itemS.SearchIcon
-                onClick={() => handleSearch()}
-                src="/img/search.svg"
-                alt="돋보기"
-              />
-            </itemS.SearchContainer>
+            {accessToken && (
+              <itemS.SearchContainer>
+                <itemS.Search
+                  type="text"
+                  value={searchKeyword}
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  placeholder="제목, 작성자 검색"
+                />
+                <itemS.SearchIcon
+                  onClick={() => handleSearch()}
+                  src="/img/search.svg"
+                  alt="돋보기"
+                />
+              </itemS.SearchContainer>
+            )}
           </itemS.TopContainer>
           <itemS.TabSortContainer>
             <itemS.TabContainer>

@@ -5,6 +5,7 @@ import ParticipatedStudyList from "./Mypage.mypage.participatedstudylist";
 import AppliedStudyList from "./Mypage.mypage.appliedstudylist";
 import MyBoardTable from "./Mypage.mypage.myboard.table";
 import MyInquiryTable from "./Mypage.mypage.myinquiry.table";
+import ChallengeTable from "./Mypage.mypage.challenge.table";
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from "../../Api/request";
 
@@ -193,6 +194,13 @@ export default function MyPage() {
           />
         ) : selectedTab === "inquiry" ? (
           <MyInquiryTable
+            items={inquiries}
+            inquiryCount={inquiryCount}
+            isMemberMatch={isMemberMatch}
+            fetchinquiry={fetchinquiry}
+          />
+        ) : selectedTab === "challenge" ? (
+          <ChallengeTable
             items={inquiries}
             inquiryCount={inquiryCount}
             isMemberMatch={isMemberMatch}

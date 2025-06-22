@@ -12,20 +12,12 @@ export default function ChallengeTable({
   isMemberMatch,
   fetchinquiry = { fetchinquiry },
 }) {
-  const navigate = useNavigate();
-  const { alert } = useContext(AlertContext);
-
-  const [checkedItems, setCheckedItems] = useState({
-    inquiry: {}, // 게시한 글의 체크 상태
-  });
-  const [isAllChecked, setIsAllChecked] = useState({
-    inquiry: false, // 게시한 글의 전체 선택 상태
-  });
-
   const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
 
-  // 게시글, 임시저장글 탭 변경
-  const [selectedTab, setSelectedTab] = useState("inquiry");
+  const [sortType, setSortType] = useState("LATEST");
+
+  const [sortText, setSortText] = useState("전체");
+  const [isSortDropVisible, setIsSortDropVisible] = useState(false); // 정렬 드롭박스 열기/닫기
 
   // 스크롤 동기화를 위한 참조
   const contentRef = useRef(null);
@@ -68,70 +60,16 @@ export default function ChallengeTable({
       (newTop / thumbHeight) * (scrollableHeight - containerHeight);
   };
 
-  const handleCheckChange = (inquiryId) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [selectedTab]: {
-        ...prev[selectedTab],
-        [inquiryId]: !prev[selectedTab][inquiryId],
-      },
-    }));
+  const toggleSortDrop = () => {
+    setIsSortDropVisible((prevState) => !prevState);
   };
 
-  const handleAllCheckChange = () => {
-    const newIsAllChecked = !isAllChecked[selectedTab];
-    setIsAllChecked((prev) => ({
-      ...prev,
-      [selectedTab]: newIsAllChecked,
-    }));
-
-    const newCheckedItems = {};
-    items.forEach((item) => {
-      newCheckedItems[item.inquiryId] = newIsAllChecked;
-    });
-
-    setCheckedItems((prev) => ({
-      ...prev,
-      [selectedTab]: newCheckedItems,
-    }));
-  };
-
-  const handleDelete = async (items) => {
-    const idsToDelete = Object.keys(items[selectedTab]).filter(
-      (id) => items[selectedTab][id] === true
+  const onSortType = (type) => {
+    setIsSortDropVisible(false);
+    setSortType(type);
+    setSortText(
+      type === "LATEST" ? "전체" : type === "VIEW_COUNT" ? "획득" : "사용"
     );
-
-    if (idsToDelete.length === 0) {
-      alert("삭제할 게시글을 선택해주세요.");
-      return;
-    }
-
-    try {
-      for (let id of idsToDelete) {
-        const response = await request.delete(`/inquiry/${id}`);
-        if (response.isSuccess) {
-          console.log(`게시글 ${id} 삭제 성공:`, response);
-        } else {
-          console.error(`게시글 ${id} 삭제 실패:`, response);
-        }
-      }
-
-      fetchinquiry();
-      setCheckedItems((prev) => ({
-        ...prev,
-        [selectedTab]: {},
-      }));
-      setIsAllChecked((prev) => ({
-        ...prev,
-        [selectedTab]: false,
-      }));
-    } catch (error) {
-      console.error("삭제 처리 중 오류 발생:", error);
-    }
-  };
-
-  const handleWriteClick = () => {
-    navigate("/writeinquiry");
   };
 
   return (
@@ -147,86 +85,89 @@ export default function ChallengeTable({
             <Compensation />
           </itemS.TabBox>
         </itemS.TabBtnContainer>
-        <itemS.TableContainerWrapper>
-          <itemS.TableContainer>
-            <itemS.CategoryContainer>
-              <itemS.CategoryStatus>획득/사용</itemS.CategoryStatus>
-              <itemS.CategoryTitle>제목</itemS.CategoryTitle>
-              <itemS.CategoryDate>획득/사용일</itemS.CategoryDate>
-              <itemS.CategoryView>총합</itemS.CategoryView>
-            </itemS.CategoryContainer>
-            <itemS.TupleContainerWrapper>
-              <itemS.TupleContainer
-                ref={contentRef}
-                onScroll={handleScrollSync}
-              >
-                {items.length === 0 ? (
-                  <itemS.NoItemsContainer>
-                    등록한 문의가 없습니다.
-                  </itemS.NoItemsContainer>
-                ) : (
-                  items.map((item) => (
-                    <ChallengeTuple
-                      key={item.inquiryId}
-                      item={item}
-                      // isChecked={
-                      //   checkedItems[selectedTab][item.inquiryId] || false
-                      // }
-                      // onCheckChange={() => handleCheckChange(item.inquiryId)}
-                      // isMemberMatch={isMemberMatch}
-                    />
-                  ))
-                )}
-              </itemS.TupleContainer>
-            </itemS.TupleContainerWrapper>
-          </itemS.TableContainer>
 
-          {count > 8 && (
-            <itemS.ScrollbarContainer>
-              <itemS.ScrollTopArrow
-                src="/img/scroll-top-arrow.svg"
-                alt="화살표"
-              />
-              <itemS.ScrollbarWrapper
-                ref={scrollRef}
-                // onScroll={handleScrollSync}
-              >
-                <itemS.ScrollbarThumb
-                  style={{ top: `${thumbTop}px` }}
-                  onMouseDown={handleThumbDrag}
-                />
-              </itemS.ScrollbarWrapper>
-              <itemS.ScrollBottomArrow
-                src="/img/scroll-bottom-arrow.svg"
-                alt="화살표"
-              />
-            </itemS.ScrollbarContainer>
-          )}
-        </itemS.TableContainerWrapper>
-      </itemS.Table>
-      <itemS.ButtonContainer>
-        {isMemberMatch && (
-          <itemS.AllCheckBox>
-            <itemS.AllCheck
-              type="checkbox"
-              // checked={isAllChecked}
-              checked={isAllChecked[selectedTab]}
-              onChange={handleAllCheckChange}
+        <itemS.SortTableContainer>
+          <itemS.SortContainer>
+            <itemS.CategoryDrop onClick={toggleSortDrop}>
+              {sortText}
+            </itemS.CategoryDrop>
+            <itemS.SortIcon
+              src="/img/sorticon.svg"
+              alt="Sort Icon"
+              onClick={toggleSortDrop}
             />
-            <itemS.AllCheckText>전체 선택</itemS.AllCheckText>
-          </itemS.AllCheckBox>
-        )}
-        {isMemberMatch && (
-          <itemS.ButtonBox>
-            <itemS.DeleteButton onClick={() => handleDelete(checkedItems)}>
-              삭제
-            </itemS.DeleteButton>
-            <itemS.WriteButton onClick={handleWriteClick}>
-              글쓰기
-            </itemS.WriteButton>
-          </itemS.ButtonBox>
-        )}
-      </itemS.ButtonContainer>
+            {isSortDropVisible && (
+              <itemS.SortDrop>
+                <itemS.SortText onClick={() => onSortType("LATEST")}>
+                  전체
+                </itemS.SortText>
+                <itemS.SortText onClick={() => onSortType("VIEW_COUNT")}>
+                  획득
+                </itemS.SortText>
+                <itemS.SortText onClick={() => onSortType("LIKE")}>
+                  사용
+                </itemS.SortText>
+              </itemS.SortDrop>
+            )}
+          </itemS.SortContainer>
+          <itemS.TableContainerWrapper>
+            <itemS.TableContainer>
+              <itemS.CategoryContainer>
+                <itemS.CategoryStatus>획득/사용</itemS.CategoryStatus>
+                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+                <itemS.CategoryDate>획득/사용일</itemS.CategoryDate>
+                <itemS.CategoryView>총합</itemS.CategoryView>
+              </itemS.CategoryContainer>
+              <itemS.TupleContainerWrapper>
+                <itemS.TupleContainer
+                  ref={contentRef}
+                  onScroll={handleScrollSync}
+                >
+                  {items.length === 0 ? (
+                    <itemS.NoItemsContainer>
+                      등록한 문의가 없습니다.
+                    </itemS.NoItemsContainer>
+                  ) : (
+                    items.map((item) => (
+                      <ChallengeTuple
+                        key={item.inquiryId}
+                        item={item}
+                        // isChecked={
+                        //   checkedItems[selectedTab][item.inquiryId] || false
+                        // }
+                        // onCheckChange={() => handleCheckChange(item.inquiryId)}
+                        // isMemberMatch={isMemberMatch}
+                      />
+                    ))
+                  )}
+                </itemS.TupleContainer>
+              </itemS.TupleContainerWrapper>
+            </itemS.TableContainer>
+
+            {count > 8 && (
+              <itemS.ScrollbarContainer>
+                <itemS.ScrollTopArrow
+                  src="/img/scroll-top-arrow.svg"
+                  alt="화살표"
+                />
+                <itemS.ScrollbarWrapper
+                  ref={scrollRef}
+                  // onScroll={handleScrollSync}
+                >
+                  <itemS.ScrollbarThumb
+                    style={{ top: `${thumbTop}px` }}
+                    onMouseDown={handleThumbDrag}
+                  />
+                </itemS.ScrollbarWrapper>
+                <itemS.ScrollBottomArrow
+                  src="/img/scroll-bottom-arrow.svg"
+                  alt="화살표"
+                />
+              </itemS.ScrollbarContainer>
+            )}
+          </itemS.TableContainerWrapper>
+        </itemS.SortTableContainer>
+      </itemS.Table>
     </itemS.Container>
   );
 }

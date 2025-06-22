@@ -9,6 +9,7 @@ export const TupleContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: ${tokens.colors.White};
   width: 50rem;
   min-height: 2.333rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ChallengeTuple from "./Mypage.mypage.challenge.tuple";
-import Compensation from "./Mypage.mypage.challenge.compensation";
+import RewardProgress from "./Mypage.mypage.challenge.rewardprogress";
 import * as itemS from "./Styled/Mypage.mypage.challenge.table.styles";
 import request from "../../Api/request";
 import { AlertContext } from "../../Common/Alert/AlertContext";
@@ -82,7 +82,7 @@ export default function ChallengeTable({
               참여 중인 정규스터디 출석부에서 획득한 챌린지 보상을 사용할 수
               있습니다.
             </itemS.TabBody>
-            <Compensation />
+            <RewardProgress />
           </itemS.TabBox>
         </itemS.TabBtnContainer>
 

@@ -101,9 +101,11 @@ export default function ChallengeTable({
                 <itemS.SortText onClick={() => onSortType("LATEST")}>
                   전체
                 </itemS.SortText>
+                <itemS.SortDivider />
                 <itemS.SortText onClick={() => onSortType("VIEW_COUNT")}>
                   획득
                 </itemS.SortText>
+                <itemS.SortDivider />
                 <itemS.SortText onClick={() => onSortType("LIKE")}>
                   사용
                 </itemS.SortText>

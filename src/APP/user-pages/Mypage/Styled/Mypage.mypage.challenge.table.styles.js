@@ -23,10 +23,10 @@ export const TabBtnContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
+  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
   padding-bottom: 0.5rem;
   margin-top: 4rem;
-  margin-bottom: 1.83rem;
+  margin-bottom: 0.83rem;
 `;
 
 export const TabBox = styled.div`
@@ -39,7 +39,17 @@ export const TabBox = styled.div`
 
 export const TabHead = styled.div`
   ${tokens.typography.T3_B_24};
-  text-decoration: underline;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0; // 컴포넌트의 바닥에
+    left: 0;
+    width: 100%;
+    height: 2px; // 선 두께
+    background-color: currentColor; // 텍스트 컬러를 따라감 (또는 tokens.colors.Black 등 지정 가능)
+  }
 `;
 
 export const TabBody = styled.div`
@@ -49,7 +59,7 @@ export const TabBody = styled.div`
 export const SortTableContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: right;
+  align-items: end;
 `;
 
 // 정렬
@@ -58,11 +68,15 @@ export const SortContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 5.92rem;
+  background-color: ${tokens.colors.White};
+  color: ${tokens.colors.Grey_8};
+  width: 5rem;
+  /* width: 5.92rem; */
   height: 1.5rem;
   border: 0.04rem solid ${tokens.colors.B_Grey_3};
   border-radius: 0.17rem;
-  margin-top: 0.83rem;
+  margin-right: 1.1rem; // 스크롤 있을 때 마진.  스크롤 없다면 마진 없이 너비 늘리기
+  margin-bottom: 0.96rem;
   position: relative;
 `;
 
@@ -76,7 +90,7 @@ export const CategoryDrop = styled.div`
 export const SortIcon = styled.img`
   width: 1rem;
   height: 1rem;
-  self-items: center;
+  align-self: center;
   cursor: pointer;
 `;
 
@@ -86,7 +100,8 @@ export const SortDrop = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${tokens.colors.White};
-  width: 5.92rem;
+  /* width: 5.92rem;  */ // 스크롤 없을 때 너비
+  width: 5rem;
   height: 4.5rem;
   border-radius: 0.17rem;
   position: absolute;
@@ -99,16 +114,23 @@ export const SortText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 5.92rem;
+  /* width: 5.92rem;  */ // 스크롤 없을 때 너비
+  width: 5rem;
   height: 1.5rem;
   ${tokens.typography.B3_M_14};
   color: ${tokens.colors.Grey_6};
 
   &:hover {
-    background-color: rgba(102, 201, 255, 0.2);
+    background-color: #dfe8f1;
   }
 
   cursor: pointer;
+`;
+
+export const SortDivider = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${tokens.colors.B_Grey_3};
 `;
 
 // 카테고리 파트 시작

@@ -1,36 +1,36 @@
 import React from "react";
 import * as ItemS from "./Styled/Mypage.mypage.challenge.rewardprogress.styles";
 
-export default function RewardProgress() {
+export default function RewardProgress({ challengeCount, rewardCount }) {
   return (
     <ItemS.Container>
       <ItemS.TriangleL />
       <ItemS.Badge>
         <ItemS.IconS src="/img/koala-gold.png" alt="교환권 아이콘" />
-        <ItemS.BadgeText>누적 교환권 : 1</ItemS.BadgeText>
+        <ItemS.BadgeText>누적 교환권 : {rewardCount}</ItemS.BadgeText>
       </ItemS.Badge>
       <ItemS.TriangleR />
 
       <ItemS.ProgressBarWrapper>
         <ItemS.ProgressBackground />
-        <ItemS.ProgressFill />
+        <ItemS.ProgressFill $challengeCount={2} />
 
         <ItemS.Icon
           src="/img/koala-gold.png"
           alt="1단계"
-          $position="33%"
+          $position="30%"
           $size="M"
         />
         <ItemS.Icon
           src="/img/koala-gold.png"
           alt="2단계"
-          $position="66%"
+          $position="63%"
           $size="M"
         />
         <ItemS.Icon
           src="/img/koala-gold.png"
           alt="3단계"
-          $position="100%"
+          $position="97%"
           $size="L"
         />
       </ItemS.ProgressBarWrapper>

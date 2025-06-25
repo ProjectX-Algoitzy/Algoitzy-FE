@@ -13,9 +13,10 @@ export default function ChallengeTable({
   fetchinquiry = { fetchinquiry },
 }) {
   const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
+  const [challengeCount, setChallengeCount] = useState(0);
+  const [rewardCount, setRewardCount] = useState(0);
 
   const [sortType, setSortType] = useState("LATEST");
-
   const [sortText, setSortText] = useState("전체");
   const [isSortDropVisible, setIsSortDropVisible] = useState(false); // 정렬 드롭박스 열기/닫기
 
@@ -79,10 +80,13 @@ export default function ChallengeTable({
           <itemS.TabBox>
             <itemS.TabHead>챌린지 보상 현황</itemS.TabHead>
             <itemS.TabBody>
-              참여 중인 정규스터디 출석부에서 획득한 챌린지 보상을 사용할 수
+              획득한 챌린지 보상을 참여 중인 정규스터디 출석부에서 사용할 수
               있습니다.
             </itemS.TabBody>
-            <RewardProgress />
+            <RewardProgress
+              challengeCount={challengeCount}
+              rewardCount={rewardCount}
+            />
           </itemS.TabBox>
         </itemS.TabBtnContainer>
 

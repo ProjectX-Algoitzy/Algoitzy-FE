@@ -74,10 +74,28 @@ export const ProgressFill = styled.div`
   position: absolute;
   top: 1.417rem;
   left: 0;
-  width: 4.833rem;
+
   height: 0.167rem;
   background: linear-gradient(90deg, #00a5ff 74.04%, rgba(0, 165, 255, 0) 100%);
   border-radius: 0.083rem;
+
+  ${({ $challengeCount }) =>
+    $challengeCount === 0 &&
+    css`
+      width: 10%;
+    `}
+
+  ${({ $challengeCount }) =>
+    $challengeCount === 1 &&
+    css`
+      width: 45%;
+    `}
+
+  ${({ $challengeCount }) =>
+    $challengeCount === 2 &&
+    css`
+      width: 85%;
+    `}
 `;
 
 export const Icon = styled.img`

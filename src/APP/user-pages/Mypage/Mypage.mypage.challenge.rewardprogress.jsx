@@ -15,7 +15,20 @@ export default function RewardProgress({ challengeCount, rewardCount }) {
         <ItemS.ProgressBackground />
         <ItemS.ProgressFill $challengeCount={2} />
 
-        <ItemS.Icon
+        <ItemS.Icon $position="30%" $size="M">
+          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.Effect $isSelected={false} />
+        </ItemS.Icon>
+        <ItemS.Icon $position="63%" $size="M">
+          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.Effect $isSelected={false} />
+        </ItemS.Icon>
+        <ItemS.Icon $position="97%" $size="L">
+          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.Effect $isSelected={false} />
+        </ItemS.Icon>
+
+        {/* <ItemS.Icon
           src="/img/koala-gold.png"
           alt="1단계"
           $position="30%"
@@ -32,7 +45,7 @@ export default function RewardProgress({ challengeCount, rewardCount }) {
           alt="3단계"
           $position="97%"
           $size="L"
-        />
+        /> */}
       </ItemS.ProgressBarWrapper>
 
       <ItemS.Button>보상 사용하기</ItemS.Button>

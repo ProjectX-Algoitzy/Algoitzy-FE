@@ -1,5 +1,38 @@
-import styled, { css } from "styled-components";
 import * as tokens from "../../../../tokens";
+import styled, { css, keyframes } from "styled-components";
+
+const Anima = keyframes`
+  0% {
+    transform: translate(-100%, -100%) rotateZ(-45deg);
+  }
+  70% {
+    transform: translate(100%, 100%) rotateZ(-45deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotateZ(-45deg);
+  }
+`;
+
+export const Effect = styled.div`
+  ${({ $isSelected }) =>
+    !$isSelected &&
+    css`
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      opacity: 0.9;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        white 50%,
+        transparent 100%
+      );
+      animation: ${Anima} 2s ease-in-out infinite;
+      pointer-events: none;
+    `}
+`;
 
 export const Container = styled.div`
   position: relative;
@@ -98,11 +131,17 @@ export const ProgressFill = styled.div`
     `}
 `;
 
-export const Icon = styled.img`
+export const Icon = styled.div`
   position: absolute;
   top: 0;
   transform: translateX(-50%);
   ${({ $position }) => $position && `left: ${$position};`}
+
+  display: flex; // 반짝임 효과
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: absolute;
 
   ${({ $size }) =>
     $size === "S" &&
@@ -114,17 +153,24 @@ export const Icon = styled.img`
   ${({ $size }) =>
     $size === "M" &&
     css`
-      top: 0.5rem;
-      width: 2rem;
-      height: 2rem;
+      top: 0.733rem;
+      width: 1.334rem; // 2rem
+      height: 1.334rem;
     `}
 
   ${({ $size }) =>
     $size === "L" &&
     css`
-      width: 3rem;
-      height: 3rem;
+      top: 0.4rem;
+      width: 2rem; // 3rem
+      height: 2rem;
     `}
+`;
+
+export const IconImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 또는 contain */
 `;
 
 export const IconS = styled.img`

@@ -73,7 +73,8 @@ export const TriangleR = styled.div`
   position: absolute;
   top: -0.75rem; /* -18px */
   /* right: 14.36rem;  */
-  right: 13.74rem;
+  right: 14.04rem;
+  /* right: 13.74rem; */
   width: 0.42rem; /* 10px */
   height: 0.93rem; /* 22.2px */
   background: #dfe8f1;
@@ -142,6 +143,8 @@ export const Icon = styled.div`
   align-items: center;
   overflow: hidden;
   position: absolute;
+  border-radius: 0.21rem;
+  box-shadow: 0 0.167rem 0.625rem 0 rgba(45, 54, 59, 0.25);
 
   ${({ $size }) =>
     $size === "S" &&
@@ -174,8 +177,8 @@ export const IconImage = styled.img`
 `;
 
 export const IconS = styled.img`
-  width: 1rem;
-  height: 1rem;
+  width: 0.583rem;
+  height: 0.583rem;
 `;
 
 export const Button = styled.button`

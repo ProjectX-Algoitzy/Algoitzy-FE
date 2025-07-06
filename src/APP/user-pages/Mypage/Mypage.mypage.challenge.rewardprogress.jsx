@@ -6,7 +6,7 @@ export default function RewardProgress({ challengeCount, rewardCount }) {
     <ItemS.Container>
       <ItemS.TriangleL />
       <ItemS.Badge>
-        <ItemS.IconS src="/img/koala-gold.png" alt="교환권 아이콘" />
+        <ItemS.IconS src="/img/koala-gold-s.png" alt="교환권 아이콘" />
         <ItemS.BadgeText>누적 교환권 : {rewardCount}</ItemS.BadgeText>
       </ItemS.Badge>
       <ItemS.TriangleR />
@@ -16,15 +16,15 @@ export default function RewardProgress({ challengeCount, rewardCount }) {
         <ItemS.ProgressFill $challengeCount={2} />
 
         <ItemS.Icon $position="30%" $size="M">
-          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.IconImage src="/img/koala-silver-m.png" alt="2단계" />
           <ItemS.Effect $isSelected={false} />
         </ItemS.Icon>
         <ItemS.Icon $position="63%" $size="M">
-          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.IconImage src="/img/koala-silver-m.png" alt="2단계" />
           <ItemS.Effect $isSelected={false} />
         </ItemS.Icon>
         <ItemS.Icon $position="97%" $size="L">
-          <ItemS.IconImage src="/img/camera.svg" alt="2단계" />
+          <ItemS.IconImage src="/img/koala-gold-l.png" alt="2단계" />
           <ItemS.Effect $isSelected={false} />
         </ItemS.Icon>
 

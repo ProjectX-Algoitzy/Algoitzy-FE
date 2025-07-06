@@ -13,6 +13,30 @@ const Anima = keyframes`
   }
 `;
 
+const fillAnimation = (target) => keyframes`
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: ${target}%;
+  }
+`;
+
+const targetPop = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
 export const Effect = styled.div`
   ${({ $isSelected }) =>
     !$isSelected &&
@@ -110,26 +134,59 @@ export const ProgressFill = styled.div`
   left: 0;
 
   height: 0.167rem;
-  background: linear-gradient(90deg, #00a5ff 74.04%, rgba(0, 165, 255, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 165, 255, 1) 74%,
+    rgba(0, 165, 255, 0) 100%
+  );
   border-radius: 0.083rem;
-
+  /* 
   ${({ $challengeCount }) =>
     $challengeCount === 0 &&
     css`
-      width: 10%;
+      width: 7%;
     `}
 
   ${({ $challengeCount }) =>
     $challengeCount === 1 &&
     css`
-      width: 45%;
+      width: 42%;
     `}
 
   ${({ $challengeCount }) =>
     $challengeCount === 2 &&
     css`
-      width: 85%;
-    `}
+      width: 75%;
+    `} */
+  ${({ $challengeCount }) => {
+    const widths = {
+      0: 7,
+      1: 42,
+      2: 75,
+    };
+    const targetWidth = widths[$challengeCount] ?? 0;
+    return css`
+      animation: ${fillAnimation(targetWidth)} 1.8s ease-in-out forwards;
+    `;
+  }}
+`;
+
+export const TargetIcon = styled.img`
+  position: absolute;
+  top: 1rem;
+  transform: translateX(-50%);
+  animation: ${targetPop} 0.8s ease-in-out 1.8s forwards;
+  ${({ $challengeCount }) => {
+    if ($challengeCount === 0) return "left: 3%;";
+    if ($challengeCount === 1) return "left: 38%;";
+    if ($challengeCount === 2) return "left: 71%;";
+    return "";
+  }}
+  width: 1rem;
+  height: 1rem;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
 `;
 
 export const Icon = styled.div`

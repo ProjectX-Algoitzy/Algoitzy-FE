@@ -15,6 +15,12 @@ export default function RewardProgress({ challengeCount, rewardCount }) {
         <ItemS.ProgressBackground />
         <ItemS.ProgressFill $challengeCount={2} />
 
+        <ItemS.TargetIcon
+          src="/img/test-star.png"
+          alt="목표 도달"
+          $challengeCount={2}
+        />
+
         <ItemS.Icon $position="30%" $size="M">
           <ItemS.IconImage src="/img/koala-silver-m.png" alt="2단계" />
           <ItemS.Effect $isSelected={false} />

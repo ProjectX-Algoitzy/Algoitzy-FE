@@ -31,6 +31,9 @@ import BoardDetail from "./APP/user-pages/BoardDetail/BoardDetail.boarddetail.ma
 import WriteSelfStudy from "./APP/user-pages/WriteSelfStudy/WriteSelfStudy.writeselfstudy.main";
 import InquiryBoardDetail from "./APP/user-pages/InquiryBoardDetail/InquiryBoardDetail.inquiryboarddetail.main";
 import WriteInquiry from "./APP/user-pages/WriteInquiry/WriteInquiry.writeinquiry.main";
+
+import DailyChallenge from "./APP/user-pages/DailyChallenge/DailyChallenge.dailychallenge.main";
+
 import ScrollToTop from "./APP/Common/ScrollToTop";
 import useInterval from "./APP/Common/UseInterval";
 import { refreshToken } from "./APP/Api/refreshToken";
@@ -193,6 +196,12 @@ function App() {
           />{" "}
           {/* 새 문의하기 글쓰기 */}
           {/* 새 문의하기 글쓰기 */}
+
+          {/* 데일리 챌린지 메인 */}
+          <Route
+            path="/dailychallenge"
+            element={<DailyChallenge />}
+          />{" "}
         </Routes>
       </ContentWrapper>
       {!hideHeader && <Footer />}

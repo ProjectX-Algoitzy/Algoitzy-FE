@@ -22,12 +22,29 @@ const fillAnimation = (target) => keyframes`
   }
 `;
 
-const targetPop = keyframes`
+// 150% 커졌다가 100% 크기 유지
+// const targetPop = keyframes`
+//   0% {
+//     transform: scale(1);
+//     opacity: 0;
+//   }
+//   30% {
+//     transform: scale(1.5);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: scale(1);
+//     opacity: 1;
+//   }
+// `;
+
+// 0 -> 150 -> 100
+const growIn = keyframes`
   0% {
-    transform: scale(1);
+    transform: scale(0);
     opacity: 0;
   }
-  30% {
+  70% {
     transform: scale(1.5);
     opacity: 1;
   }
@@ -175,7 +192,7 @@ export const TargetIcon = styled.img`
   position: absolute;
   top: 1rem;
   transform: translateX(-50%);
-  animation: ${targetPop} 0.8s ease-in-out 1.8s forwards;
+  animation: ${growIn} 1s ease-in-out 1.8s forwards;
   ${({ $challengeCount }) => {
     if ($challengeCount === 0) return "left: 3%;";
     if ($challengeCount === 1) return "left: 38%;";

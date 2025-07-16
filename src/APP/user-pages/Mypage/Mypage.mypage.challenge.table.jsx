@@ -10,7 +10,8 @@ export default function ChallengeTable({
   items,
   inquiryCount,
   isMemberMatch,
-  fetchinquiry = { fetchinquiry },
+  fetchRewardLog,
+  onChangeLogType,
 }) {
   const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
   const [challengeCount, setChallengeCount] = useState(0);
@@ -68,9 +69,16 @@ export default function ChallengeTable({
   const onSortType = (type) => {
     setIsSortDropVisible(false);
     setSortType(type);
-    setSortText(
-      type === "LATEST" ? "전체" : type === "VIEW_COUNT" ? "획득" : "사용"
-    );
+    if (type === "") {
+      setSortText("전체");
+      onChangeLogType(""); // 전체
+    } else if (type === "ACQUIRED") {
+      setSortText("획득");
+      onChangeLogType("ACQUIRED");
+    } else if (type === "USED") {
+      setSortText("사용");
+      onChangeLogType("USED");
+    }
   };
 
   return (
@@ -80,7 +88,7 @@ export default function ChallengeTable({
           <itemS.TabBox>
             <itemS.TabHead>챌린지 보상 현황</itemS.TabHead>
             <itemS.TabBody>
-              획득한 챌린지 보상을 참여 중인 정규스터디 출석부에서 사용할 수
+              챌린지 보상은 참여 중인 정규 스터디의 출석부에서 사용하실 수
               있습니다.
             </itemS.TabBody>
             <RewardProgress
@@ -102,15 +110,15 @@ export default function ChallengeTable({
             />
             {isSortDropVisible && (
               <itemS.SortDrop>
-                <itemS.SortText onClick={() => onSortType("LATEST")}>
+                <itemS.SortText onClick={() => onSortType("")}>
                   전체
                 </itemS.SortText>
                 <itemS.SortDivider />
-                <itemS.SortText onClick={() => onSortType("VIEW_COUNT")}>
+                <itemS.SortText onClick={() => onSortType("ACQUIRED")}>
                   획득
                 </itemS.SortText>
                 <itemS.SortDivider />
-                <itemS.SortText onClick={() => onSortType("LIKE")}>
+                <itemS.SortText onClick={() => onSortType("USED")}>
                   사용
                 </itemS.SortText>
               </itemS.SortDrop>
@@ -120,7 +128,7 @@ export default function ChallengeTable({
             <itemS.TableContainer>
               <itemS.CategoryContainer>
                 <itemS.CategoryStatus>획득/사용</itemS.CategoryStatus>
-                <itemS.CategoryTitle>제목</itemS.CategoryTitle>
+                <itemS.CategoryTitle>내용</itemS.CategoryTitle>
                 <itemS.CategoryDate>획득/사용일</itemS.CategoryDate>
                 <itemS.CategoryView>총합</itemS.CategoryView>
               </itemS.CategoryContainer>

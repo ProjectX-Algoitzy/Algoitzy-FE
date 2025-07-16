@@ -27,13 +27,15 @@ export default function ChallengeTuple({ item }) {
   return (
     <itemS.TupleContainer data-delete-yn={undefined}>
       {/* <itemS.Blank></itemS.Blank> */}
-      <itemS.TupleStatus>{item.categoryName}</itemS.TupleStatus>
+      <itemS.TupleStatus>{item.logType}</itemS.TupleStatus>
       <itemS.TupleTitleBox onClick={() => moveToDetail(item.inquiryId)}>
         <itemS.TupleTitle data-delete-yn={undefined}>
-          {truncateTitle(item.title)}
+          {item.logType === "사용"
+            ? truncateTitle(item.content ?? "내용 없음")
+            : item.problemList?.map((num, index) => `문제 ${num}`).join(" | ")}
         </itemS.TupleTitle>
       </itemS.TupleTitleBox>
-      <itemS.TupleDate>{formatDate(item.createdTime)}</itemS.TupleDate>
+      <itemS.TupleDate>{formatDate(item.logDate)}</itemS.TupleDate>
       <itemS.TupleView>{item.viewCount}회</itemS.TupleView>
     </itemS.TupleContainer>
   );

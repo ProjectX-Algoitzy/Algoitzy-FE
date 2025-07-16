@@ -23,6 +23,8 @@ export default function MyPage() {
   const [totalCount, setTotalCount] = useState(0); // 전체 글 수
   const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
   const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
+  const [rewardLogs, setRewardLogs] = useState([]); // 내 챌린지 보상 이력
+  const [logType, setLogType] = useState(""); // "" | "ACQUIRED" | "USED"
 
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -100,11 +102,32 @@ export default function MyPage() {
     }
   };
 
+  const fetchRewardLog = async (type = "") => {
+    try {
+      const url = type
+        ? `/challenge/reward/log?logType=${type}`
+        : `/challenge/reward/log`;
+      const response = await request.get(url);
+      if (response.isSuccess) {
+        setRewardLogs(response.result.inquiryList);
+      } else {
+        console.error("보상 로그 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("보상 로그 조회 오류", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRewardLog(logType);
+  }, [handle, logType]); // logType이 바뀌면 자동 호출
+
   useEffect(() => {
     fetchMyInfo();
     fetchMyStudy();
     fetchBoard();
     fetchinquiry();
+    fetchRewardLog();
   }, [handle]);
 
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
@@ -201,10 +224,11 @@ export default function MyPage() {
           />
         ) : selectedTab === "challenge" ? (
           <ChallengeTable
-            items={inquiries}
-            inquiryCount={inquiryCount}
+            items={rewardLogs}
+            inquiryCount={inquiryCount} //
             isMemberMatch={isMemberMatch}
-            fetchinquiry={fetchinquiry}
+            fetchRewardLog={fetchRewardLog}
+            onChangeLogType={setLogType}
           />
         ) : null}
       </itemS.InnerContainer>

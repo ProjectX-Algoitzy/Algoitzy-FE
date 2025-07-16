@@ -36,7 +36,7 @@ export default function ChallengeTuple({ item }) {
         </itemS.TupleTitle>
       </itemS.TupleTitleBox>
       <itemS.TupleDate>{formatDate(item.logDate)}</itemS.TupleDate>
-      <itemS.TupleView>{item.viewCount}회</itemS.TupleView>
+      <itemS.TupleView>{item.rewardCount}회</itemS.TupleView>
     </itemS.TupleContainer>
   );
 }

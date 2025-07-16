@@ -24,7 +24,10 @@ export default function MyPage() {
   const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
   const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
   const [rewardLogs, setRewardLogs] = useState([]); // 내 챌린지 보상 이력
+  const [logCount, setLogCount] = useState(0); // 내 챌린지 보상 이력 항목 수
   const [logType, setLogType] = useState(""); // "" | "ACQUIRED" | "USED"
+  const [rewardCount, setRewardCount] = useState(0); // 누적 교환권 수
+  const [winCount, setWinCount] = useState(0); // 챌린지 win 수
 
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -108,8 +111,10 @@ export default function MyPage() {
         ? `/challenge/reward/log?logType=${type}`
         : `/challenge/reward/log`;
       const response = await request.get(url);
+      console.log("보상 로그 조회 성공", response);
       if (response.isSuccess) {
-        setRewardLogs(response.result.inquiryList);
+        setRewardLogs(response.result.rewardLogList);
+        // setLogCount(esponse.result.)
       } else {
         console.error("보상 로그 조회 실패:", response);
       }
@@ -117,6 +122,26 @@ export default function MyPage() {
       console.error("보상 로그 조회 오류", error);
     }
   };
+
+  const fetchRewardStatus = async () => {
+    try {
+      const response = await request.get(`/challenge/reward/status`);
+      console.log("내 챌린지 보상 현황 조회 성공", response);
+
+      if (response.isSuccess) {
+        setRewardCount(response.result.rewardCount);
+        setWinCount(response.result.winCount);
+      } else {
+        console.error("내 챌린지 보상 현황 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("내 챌린지 보상 현황 조회 오류", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRewardStatus();
+  }, []);
 
   useEffect(() => {
     fetchRewardLog(logType);
@@ -127,7 +152,6 @@ export default function MyPage() {
     fetchMyStudy();
     fetchBoard();
     fetchinquiry();
-    fetchRewardLog();
   }, [handle]);
 
   // 현재 페이지에 해당하는 참여 스터디 리스트 가져오기
@@ -225,7 +249,9 @@ export default function MyPage() {
         ) : selectedTab === "challenge" ? (
           <ChallengeTable
             items={rewardLogs}
-            inquiryCount={inquiryCount} //
+            logCount={logCount}
+            rewardCount={rewardCount}
+            winCount={winCount}
             isMemberMatch={isMemberMatch}
             fetchRewardLog={fetchRewardLog}
             onChangeLogType={setLogType}

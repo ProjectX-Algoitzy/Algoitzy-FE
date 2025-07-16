@@ -70,12 +70,12 @@ export const SortContainer = styled.div`
   align-items: center;
   background-color: ${tokens.colors.White};
   color: ${tokens.colors.Grey_8};
-  width: 5rem;
-  /* width: 5.92rem; */
+  width: ${({ logCount }) => (logCount > 8 ? "5rem" : "5.92rem")};
   height: 1.5rem;
   border: 0.04rem solid ${tokens.colors.B_Grey_3};
   border-radius: 0.17rem;
-  margin-right: 1.1rem; // 스크롤 있을 때 마진.  스크롤 없다면 마진 없이 너비 늘리기
+  margin-right: ${({ logCount }) => (logCount > 8 ? "1.1rem" : "0")};
+  /* margin-right: 1.1rem; // 스크롤 있을 때 마진.  스크롤 없다면 마진 없이 너비 늘리기 */
   margin-bottom: 0.96rem;
   position: relative;
 `;
@@ -100,8 +100,7 @@ export const SortDrop = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${tokens.colors.White};
-  /* width: 5.92rem;  */ // 스크롤 없을 때 너비
-  width: 5rem;
+  width: ${({ logCount }) => (logCount > 8 ? "5rem" : "5.92rem")};
   height: 4.5rem;
   border-radius: 0.17rem;
   position: absolute;

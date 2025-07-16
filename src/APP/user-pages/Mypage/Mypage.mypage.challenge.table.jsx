@@ -8,14 +8,16 @@ import { AlertContext } from "../../Common/Alert/AlertContext";
 
 export default function ChallengeTable({
   items,
-  inquiryCount,
+  logCount,
+  rewardCount,
+  winCount,
   isMemberMatch,
   fetchRewardLog,
   onChangeLogType,
 }) {
-  const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
-  const [challengeCount, setChallengeCount] = useState(0);
-  const [rewardCount, setRewardCount] = useState(0);
+  // const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
+  const [challengeRewardCount, setChallengeRewardCount] = useState(rewardCount);
+  const [challengeWinCount, setChallengeWinCount] = useState(winCount);
 
   const [sortType, setSortType] = useState("LATEST");
   const [sortText, setSortText] = useState("전체");
@@ -92,14 +94,14 @@ export default function ChallengeTable({
               있습니다.
             </itemS.TabBody>
             <RewardProgress
-              challengeCount={challengeCount}
-              rewardCount={rewardCount}
+              challengeRewardCount={challengeRewardCount}
+              challengeWinCount={challengeWinCount}
             />
           </itemS.TabBox>
         </itemS.TabBtnContainer>
 
         <itemS.SortTableContainer>
-          <itemS.SortContainer>
+          <itemS.SortContainer logCount={logCount}>
             <itemS.CategoryDrop onClick={toggleSortDrop}>
               {sortText}
             </itemS.CategoryDrop>
@@ -109,7 +111,7 @@ export default function ChallengeTable({
               onClick={toggleSortDrop}
             />
             {isSortDropVisible && (
-              <itemS.SortDrop>
+              <itemS.SortDrop logCount={logCount}>
                 <itemS.SortText onClick={() => onSortType("")}>
                   전체
                 </itemS.SortText>
@@ -142,9 +144,9 @@ export default function ChallengeTable({
                       등록한 문의가 없습니다.
                     </itemS.NoItemsContainer>
                   ) : (
-                    items.map((item) => (
+                    items.map((item, index) => (
                       <ChallengeTuple
-                        key={item.inquiryId}
+                        key={index}
                         item={item}
                         // isChecked={
                         //   checkedItems[selectedTab][item.inquiryId] || false
@@ -158,7 +160,7 @@ export default function ChallengeTable({
               </itemS.TupleContainerWrapper>
             </itemS.TableContainer>
 
-            {count > 8 && (
+            {logCount > 8 && (
               <itemS.ScrollbarContainer>
                 <itemS.ScrollTopArrow
                   src="/img/scroll-top-arrow.svg"

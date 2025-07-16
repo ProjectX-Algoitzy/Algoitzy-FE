@@ -158,30 +158,30 @@ export const ProgressFill = styled.div`
   );
   border-radius: 0.083rem;
   /* 
-  ${({ $challengeCount }) =>
-    $challengeCount === 0 &&
+  ${({ $challengeWinCount }) =>
+    $challengeWinCount === 0 &&
     css`
       width: 7%;
     `}
 
-  ${({ $challengeCount }) =>
-    $challengeCount === 1 &&
+  ${({ $challengeWinCount }) =>
+    $challengeWinCount === 1 &&
     css`
       width: 42%;
     `}
 
-  ${({ $challengeCount }) =>
-    $challengeCount === 2 &&
+  ${({ $challengeWinCount }) =>
+    $challengeWinCount === 2 &&
     css`
       width: 75%;
     `} */
-  ${({ $challengeCount }) => {
+  ${({ $challengeWinCount }) => {
     const widths = {
       0: 7,
       1: 42,
       2: 75,
     };
-    const targetWidth = widths[$challengeCount] ?? 0;
+    const targetWidth = widths[$challengeWinCount] ?? 0;
     return css`
       animation: ${fillAnimation(targetWidth)} 1.8s ease-in-out forwards;
     `;
@@ -193,10 +193,10 @@ export const TargetIcon = styled.img`
   top: 1rem;
   transform: translateX(-50%);
   animation: ${growIn} 1s ease-in-out 1.8s forwards;
-  ${({ $challengeCount }) => {
-    if ($challengeCount === 0) return "left: 3%;";
-    if ($challengeCount === 1) return "left: 38%;";
-    if ($challengeCount === 2) return "left: 71%;";
+  ${({ $challengeWinCount }) => {
+    if ($challengeWinCount === 0) return "left: 3%;";
+    if ($challengeWinCount === 1) return "left: 38%;";
+    if ($challengeWinCount === 2) return "left: 71%;";
     return "";
   }}
   width: 1rem;

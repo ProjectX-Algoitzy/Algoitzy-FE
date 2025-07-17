@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as tokens from "../../../../tokens";
+import styled from 'styled-components';
+import * as tokens from '../../../../tokens';
 
 export const Container = styled.div`
   display: flex;
@@ -34,6 +34,39 @@ export const BlueComment = styled.div`
   color: ${tokens.colors.Blue_0_Main};
 `;
 
+// 누적 교환권 관련 스타일 추가
+export const TicketContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+`;
+
+export const TicketBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.333rem;
+  padding: 0.5rem 0.833rem;
+  background-color: #dfe8f1;
+  border-radius: 0.333rem;
+`;
+
+export const TicketIcon = styled.img`
+  width: 1.25rem;
+  height: 1.25rem;
+`;
+
+export const TicketText = styled.span`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.B_Grey_7};
+`;
+
+export const TicketCount = styled.span`
+  ${tokens.typography.T5_SB_16};
+  color: ${tokens.colors.Blue_0_Main};
+  margin-left: 0.25rem;
+`;
 
 export const CanNotEnterContainer = styled.div`
   display: flex;
@@ -55,12 +88,16 @@ export const StyledTable = styled.table`
 export const StyledTd = styled.td`
   color: ${tokens.colors.Grey_7};
   ${tokens.typography.T5_SB_16};
-  border: 0.042rem solid #B9C4D2;
+  border: 0.042rem solid #b9c4d2;
   padding: 0.333rem;
   text-align: center;
-  
-  cursor: ${({ rowIndex, colIndex }) => (rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default')};
-  transition: ${({ rowIndex, colIndex }) => (rowIndex !== 0 && colIndex === 0 ? 'background-color 0.2s ease-in-out, color 0.2s ease-in-out' : 'none')};
+
+  cursor: ${({ rowIndex, colIndex }) =>
+    rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default'};
+  transition: ${({ rowIndex, colIndex }) =>
+    rowIndex !== 0 && colIndex === 0
+      ? 'background-color 0.2s ease-in-out, color 0.2s ease-in-out'
+      : 'none'};
 
   background-color: ${({ rowIndex, colIndex }) => {
     if (rowIndex === 0 && colIndex === 0) return 'rgba(0, 165, 255, 0.05)';
@@ -68,21 +105,24 @@ export const StyledTd = styled.td`
     if (colIndex === 0) return 'rgba(216, 216, 216, 0.05)';
     return 'white';
   }};
-  border-top: ${({ rowIndex }) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
-  border-left: ${({ colIndex }) => (colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
-  border-right: ${({ colIndex }) => (colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2')};
+  border-top: ${({ rowIndex }) =>
+    rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2'};
+  border-left: ${({ colIndex }) =>
+    colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2'};
+  border-right: ${({ colIndex }) =>
+    colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2'};
   width: ${({ colIndex }) => (colIndex === 0 ? '7.333rem' : 'auto')};
   height: ${({ rowIndex }) => (rowIndex === 0 ? '1.875rem' : '2.5rem')};
 
   ${({ rowIndex, colIndex }) =>
-    rowIndex !== 0 && colIndex === 0 &&
+    rowIndex !== 0 &&
+    colIndex === 0 &&
     `
       &:hover {
         background-color: ${tokens.colors.Blue_0_Main};
         color: ${tokens.colors.B_Grey_1};
       }
-    `
-  }
+    `}
 `;
 
 export const ImgIcon = styled.img`

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import * as itemS from "../RegularStudy/Styled/RegularStudy.regularstudy.home.styles"
+import React, { useEffect, useState } from 'react';
+import * as itemS from '../RegularStudy/Styled/RegularStudy.regularstudy.home.styles';
 import request from '../../Api/request';
 import { useParams } from 'react-router-dom';
 import hljs from 'highlight.js';
@@ -13,17 +13,17 @@ export default function RegularStudyHome() {
     const fetchRegularStudyHome = async () => {
       try {
         const response = await request.get(`study/${id}/home`);
-        console.log("정규스터디 홈 정보 조회", response);
+        // console.log("정규스터디 홈 정보 조회", response);
         SetRegularStudyHome(response.result);
-        if (response["isSuccess"]) {
-          console.log("정규스터디 홈 정보 조회 성공");
-      } else {
-          console.error("정규스터디 홈 정보 조회 실패:", response);
-      }
+        if (response['isSuccess']) {
+          console.log('정규스터디 홈 정보 조회 성공');
+        } else {
+          console.error('정규스터디 홈 정보 조회 실패:', response);
+        }
       } catch (err) {
-        console.error("정규스터디 홈 정보 조회 오류", err);
+        console.error('정규스터디 홈 정보 조회 오류', err);
       }
-    }
+    };
     fetchRegularStudyHome();
   }, []);
 
@@ -41,5 +41,5 @@ export default function RegularStudyHome() {
       <itemS.Title>홈</itemS.Title>
       <MarkdownContent markdownContent={regularStudyHome || ''} />
     </itemS.Container>
-  )
+  );
 }

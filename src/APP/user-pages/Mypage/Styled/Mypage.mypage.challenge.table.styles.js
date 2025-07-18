@@ -113,8 +113,7 @@ export const SortText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 5.92rem;  */ // 스크롤 없을 때 너비
-  width: 5rem;
+  width: ${({ logCount }) => (logCount > 8 ? "5rem" : "5.92rem")};
   height: 1.5rem;
   ${tokens.typography.B3_M_14};
   color: ${tokens.colors.Grey_6};

@@ -114,7 +114,7 @@ export default function MyPage() {
       console.log("보상 로그 조회 성공", response);
       if (response.isSuccess) {
         setRewardLogs(response.result.rewardLogList);
-        // setLogCount(esponse.result.)
+        setLogCount(response.result.totalCount);
       } else {
         console.error("보상 로그 조회 실패:", response);
       }

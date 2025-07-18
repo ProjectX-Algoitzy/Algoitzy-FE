@@ -19,7 +19,7 @@ export default function RewardProgress({
         <ItemS.ProgressFill $challengeWinCount={challengeWinCount} />
 
         <ItemS.TargetIcon
-          src="/img/test-star.png"
+          src="/img/bling.svg"
           alt="목표 도달"
           $challengeWinCount={challengeWinCount}
         />

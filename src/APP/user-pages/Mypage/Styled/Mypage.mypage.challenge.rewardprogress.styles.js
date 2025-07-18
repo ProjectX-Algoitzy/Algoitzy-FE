@@ -190,7 +190,7 @@ export const ProgressFill = styled.div`
 
 export const TargetIcon = styled.img`
   position: absolute;
-  top: 1rem;
+  top: 0.5rem;
   transform: translateX(-50%);
   animation: ${growIn} 1s ease-in-out 1.8s forwards;
   ${({ $challengeWinCount }) => {
@@ -199,8 +199,8 @@ export const TargetIcon = styled.img`
     if ($challengeWinCount === 2) return "left: 71%;";
     return "";
   }}
-  width: 1rem;
-  height: 1rem;
+  width: 0.96rem;
+  height: 2rem;
   opacity: 0;
   z-index: 3;
   pointer-events: none;

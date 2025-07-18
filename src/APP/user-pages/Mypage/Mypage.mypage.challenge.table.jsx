@@ -112,15 +112,24 @@ export default function ChallengeTable({
             />
             {isSortDropVisible && (
               <itemS.SortDrop logCount={logCount}>
-                <itemS.SortText onClick={() => onSortType("")}>
+                <itemS.SortText
+                  logCount={logCount}
+                  onClick={() => onSortType("")}
+                >
                   전체
                 </itemS.SortText>
                 <itemS.SortDivider />
-                <itemS.SortText onClick={() => onSortType("ACQUIRED")}>
+                <itemS.SortText
+                  logCount={logCount}
+                  onClick={() => onSortType("ACQUIRED")}
+                >
                   획득
                 </itemS.SortText>
                 <itemS.SortDivider />
-                <itemS.SortText onClick={() => onSortType("USED")}>
+                <itemS.SortText
+                  logCount={logCount}
+                  onClick={() => onSortType("USED")}
+                >
                   사용
                 </itemS.SortText>
               </itemS.SortDrop>
@@ -146,7 +155,7 @@ export default function ChallengeTable({
                   ) : (
                     items.map((item, index) => (
                       <ChallengeTuple
-                        key={index}
+                        key={item.logId}
                         item={item}
                         // isChecked={
                         //   checkedItems[selectedTab][item.inquiryId] || false

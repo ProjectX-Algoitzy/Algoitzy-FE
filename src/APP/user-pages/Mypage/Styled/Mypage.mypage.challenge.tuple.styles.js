@@ -53,10 +53,42 @@ export const TupleTitleBox = styled.div`
   margin-right: 8.117rem; */
 `;
 
-export const TupleTitle = styled.span`
+// export const TupleTitle = styled.span`
+//   ${tokens.typography.B2_M_16};
+//   display: flex;
+//   flex-direction: row;
+//   color: ${(props) =>
+//     props["data-delete-yn"] ? tokens.colors.Sub_3 : tokens.colors.Black};
+// `;
+
+export const TupleTitle = styled.div`
   ${tokens.typography.B2_M_16};
-  color: ${(props) =>
-    props["data-delete-yn"] ? tokens.colors.Sub_3 : tokens.colors.Black};
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+`;
+
+export const ProblemBlock = styled.div`
+  display: flex;
+  align-items: center;
+  min-width: 6rem; // 문제 번호 블럭 최소 너비
+  justify-content: flex-start;
+`;
+
+export const ProblemNumber = styled.span`
+  width: 5rem;
+  text-align: ${({ $index }) => ($index === 0 ? "left" : "center")};
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const Divider = styled.span`
+  width: 1rem;
+  text-align: center;
+  user-select: none;
 `;
 
 export const TupleDate = styled.div`

@@ -20,19 +20,29 @@ export default function ChallengeTuple({ item }) {
     return name;
   };
 
-  const moveToDetail = (id) => {
-    // navigate(`/inquiryboard/${id}`);
+  const moveToDetail = (num) => {
+    window.open(`https://www.acmicpc.net/problem/${num}`, "_blank");
   };
 
   return (
     <itemS.TupleContainer data-delete-yn={undefined}>
       {/* <itemS.Blank></itemS.Blank> */}
       <itemS.TupleStatus>{item.logType}</itemS.TupleStatus>
-      <itemS.TupleTitleBox onClick={() => moveToDetail(item.inquiryId)}>
-        <itemS.TupleTitle data-delete-yn={undefined}>
-          {item.logType === "사용"
-            ? truncateTitle(item.content ?? "내용 없음")
-            : item.problemList?.map((num, index) => `문제 ${num}`).join(" | ")}
+      <itemS.TupleTitleBox>
+        <itemS.TupleTitle>
+          {item.problemList?.map((num, idx) => (
+            <itemS.ProblemBlock key={idx}>
+              <itemS.ProblemNumber
+                $index={idx}
+                onClick={() => moveToDetail(num)}
+              >
+                문제 {num}번
+              </itemS.ProblemNumber>
+              {idx !== item.problemList.length - 1 && (
+                <itemS.Divider>|</itemS.Divider>
+              )}
+            </itemS.ProblemBlock>
+          ))}
         </itemS.TupleTitle>
       </itemS.TupleTitleBox>
       <itemS.TupleDate>{formatDate(item.logDate)}</itemS.TupleDate>

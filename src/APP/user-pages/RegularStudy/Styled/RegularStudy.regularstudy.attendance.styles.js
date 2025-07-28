@@ -2,122 +2,115 @@ import styled from 'styled-components';
 import * as tokens from '../../../../tokens';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-left: 1.333rem;
-  height: 100%;
-  width: 100%;
-  max-width: 34rem;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.333rem;
+    height: 100%;
+    width: 100%;
+    max-width: 34rem;
 
-  @media (max-width: 600px) {
-    width: 33.04rem;
-    padding-right: 1.33rem;
-  }
+    @media (max-width: 600px) {
+        width: 33.04rem;
+        padding-right: 1.33rem;
+    }
 `;
 
 export const Title = styled.div`
-  display: flex;
-  margin-top: 4.17rem;
-  margin-bottom: 0.792rem;
-  width: 100%;
-  ${tokens.typography.T1_SB_32};
-  color: ${tokens.colors.Grey_8};
-  padding-bottom: 0.67rem;
-  border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
+    display: flex;
+    margin-top: 4.17rem;
+    margin-bottom: 0.792rem;
+    width: 100%;
+    ${tokens.typography.T1_SB_32};
+    color: ${tokens.colors.Grey_8};
+    padding-bottom: 0.67rem;
+    border-bottom: 0.042rem solid ${tokens.colors.B_Grey_2};
 `;
 
 export const BlueComment = styled.div`
-  display: flex;
-  width: 100%;
-  margin-bottom: 0.5rem;
-  ${tokens.typography.B3_M_14};
-  color: ${tokens.colors.Blue_0_Main};
+    display: flex;
+    margin-bottom: 0.5rem;
+    ${tokens.typography.B3_M_14};
+    color: ${tokens.colors.Blue_0_Main};
 `;
 
 // 누적 교환권 관련 스타일 추가
 export const TicketContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 1rem;
-  gap: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
 `;
 
 export const TicketBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.333rem;
-  padding: 0.5rem 0.833rem;
-  background-color: #dfe8f1;
-  border-radius: 0.333rem;
+    display: flex;
+    align-items: center;
+    gap: 0.333rem;
+    padding: 0.5rem 0.833rem;
+    background-color: #dfe8f1;
+    border-radius: 0.333rem;
 `;
 
 export const TicketIcon = styled.img`
-  width: 1.25rem;
-  height: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
 `;
 
 export const TicketText = styled.span`
-  ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.B_Grey_7};
+    ${tokens.typography.T5_SB_16};
+    color: ${tokens.colors.B_Grey_7};
 `;
 
 export const TicketCount = styled.span`
-  ${tokens.typography.T5_SB_16};
-  color: ${tokens.colors.Blue_0_Main};
-  margin-left: 0.25rem;
+    ${tokens.typography.T5_SB_16};
+    color: ${tokens.colors.Blue_0_Main};
+    margin-left: 0.25rem;
 `;
 
 export const CanNotEnterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 15rem;
-  background-color: ${tokens.colors.B_Grey_1};
-  border-radius: 0.42rem;
-  color: ${tokens.colors.B_Grey_5};
-  ${tokens.typography.T3_B_24};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 15rem;
+    background-color: ${tokens.colors.B_Grey_1};
+    border-radius: 0.42rem;
+    color: ${tokens.colors.B_Grey_5};
+    ${tokens.typography.T3_B_24};
 `;
 
 export const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 `;
 
 export const StyledTd = styled.td`
-  color: ${tokens.colors.Grey_7};
-  ${tokens.typography.T5_SB_16};
-  border: 0.042rem solid #b9c4d2;
-  padding: 0.333rem;
-  text-align: center;
+    color: ${tokens.colors.Grey_7};
+    ${tokens.typography.T5_SB_16};
+    border: 0.042rem solid #b9c4d2;
+    padding: 0.333rem;
+    text-align: center;
 
-  cursor: ${({ rowIndex, colIndex }) =>
-    rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default'};
-  transition: ${({ rowIndex, colIndex }) =>
-    rowIndex !== 0 && colIndex === 0
-      ? 'background-color 0.2s ease-in-out, color 0.2s ease-in-out'
-      : 'none'};
+    cursor: ${({rowIndex, colIndex}) => (rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default')};
+    transition: ${({rowIndex, colIndex}) =>
+        rowIndex !== 0 && colIndex === 0 ? 'background-color 0.2s ease-in-out, color 0.2s ease-in-out' : 'none'};
 
-  background-color: ${({ rowIndex, colIndex }) => {
-    if (rowIndex === 0 && colIndex === 0) return 'rgba(0, 165, 255, 0.05)';
-    if (rowIndex === 0) return 'rgba(0, 165, 255, 0.05)';
-    if (colIndex === 0) return 'rgba(216, 216, 216, 0.05)';
-    return 'white';
-  }};
-  border-top: ${({ rowIndex }) =>
-    rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2'};
-  border-left: ${({ colIndex }) =>
-    colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2'};
-  border-right: ${({ colIndex }) =>
-    colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2'};
-  width: ${({ colIndex }) => (colIndex === 0 ? '7.333rem' : 'auto')};
-  height: ${({ rowIndex }) => (rowIndex === 0 ? '1.875rem' : '2.5rem')};
+    background-color: ${({rowIndex, colIndex}) => {
+        if (rowIndex === 0 && colIndex === 0) return 'rgba(0, 165, 255, 0.05)';
+        if (rowIndex === 0) return 'rgba(0, 165, 255, 0.05)';
+        if (colIndex === 0) return 'rgba(216, 216, 216, 0.05)';
+        return 'white';
+    }};
+    border-top: ${({rowIndex}) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
+    border-left: ${({colIndex}) => (colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
+    border-right: ${({colIndex}) => (colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2')};
+    width: ${({colIndex}) => (colIndex === 0 ? '7.333rem' : 'auto')};
+    height: ${({rowIndex}) => (rowIndex === 0 ? '1.875rem' : '2.5rem')};
 
-  ${({ rowIndex, colIndex }) =>
-    rowIndex !== 0 &&
-    colIndex === 0 &&
-    `
+    ${({rowIndex, colIndex}) =>
+        rowIndex !== 0 &&
+        colIndex === 0 &&
+        `
       &:hover {
         background-color: ${tokens.colors.Blue_0_Main};
         color: ${tokens.colors.B_Grey_1};
@@ -126,24 +119,24 @@ export const StyledTd = styled.td`
 `;
 
 export const ImgIcon = styled.img`
-  width: 1.96rem;
-  height: 1.96rem;
+    width: 1.96rem;
+    height: 1.96rem;
 `;
 
 export const BtnContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 1.5rem;
 `;
 
 export const CertificationBtn = styled.button`
-  width: 7.33rem;
-  height: 2rem;
-  border-radius: 0.167rem;
-  border: none;
-  cursor: pointer;
-  color: ${tokens.colors.White};
-  ${tokens.typography.T5_SB_16}
-  background-color: ${tokens.colors.B_Grey_7};
+    width: 7.33rem;
+    height: 2rem;
+    border-radius: 0.167rem;
+    border: none;
+    cursor: pointer;
+    color: ${tokens.colors.White};
+    ${tokens.typography.T5_SB_16}
+    background-color: ${tokens.colors.B_Grey_7};
 `;

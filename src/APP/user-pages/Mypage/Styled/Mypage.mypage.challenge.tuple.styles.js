@@ -71,13 +71,16 @@ export const TupleTitle = styled.div`
 export const ProblemBlock = styled.div`
   display: flex;
   align-items: center;
-  min-width: 6rem; // 문제 번호 블럭 최소 너비
+  min-width: 4rem; // 문제 번호 블럭 최소 너비
   justify-content: flex-start;
 `;
 
 export const ProblemNumber = styled.span`
-  width: 5rem;
-  text-align: ${({ $index }) => ($index === 0 ? "left" : "center")};
+  width: 3rem;
+  text-align: ${({ $index }) =>
+    $index === 0 ? "right" : $index === 1 ? "center" : "left"};
+  margin-right: ${({ $index }) => ($index === 0 ? "0.2rem" : "0")};
+  margin-left: ${({ $index }) => ($index === 2 ? "0.2rem" : "0")};
   cursor: pointer;
 
   &:hover {

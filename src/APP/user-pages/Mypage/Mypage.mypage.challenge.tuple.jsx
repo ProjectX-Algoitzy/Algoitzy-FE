@@ -36,7 +36,7 @@ export default function ChallengeTuple({ item }) {
                 $index={idx}
                 onClick={() => moveToDetail(num)}
               >
-                문제 {num}번
+                {num}번
               </itemS.ProblemNumber>
               {idx !== item.problemList.length - 1 && (
                 <itemS.Divider>|</itemS.Divider>

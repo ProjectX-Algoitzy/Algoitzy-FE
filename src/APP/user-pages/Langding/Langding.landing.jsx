@@ -3,6 +3,7 @@ import * as itemS from "./Styled/Langing.landing";
 import request from "../../Api/request";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import DailyChallengeWidget from "../../components/Widget/DailyChallengeWidget/Widget.DailyChallengeWidget.main";
 
 export default function Langding() {
   const [detailRecentGeneration, setDetailRecentGeneration] = useState(null);
@@ -120,6 +121,7 @@ export default function Langding() {
           </itemS.BtnStudyApply>
         </Link>
       </itemS.NormalWrap>
+      <DailyChallengeWidget />
     </itemS.HomeWrap>
   );
 }

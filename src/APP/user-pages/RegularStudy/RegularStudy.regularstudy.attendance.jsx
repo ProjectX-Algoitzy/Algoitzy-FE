@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import * as itemS from '../RegularStudy/Styled/RegularStudy.regularstudy.attendance.styles';
 import RegularStudyCheckAttendanceHistoryModal from './RegularStudy.regularstudy.checkattendancehistorymodal';
 import request from '../../Api/request';
 import {useParams} from 'react-router-dom';
 import AttendanceModal from './RegularStudy.regularstudy.modal';
+import {AlertContext} from '../../Common/Alert/AlertContext';
+import {ConfirmContext} from '../../Common/Confirm/ConfirmContext';
 
 export default function RegularStudyAttendance() {
     const {id} = useParams(); //해당 스터디의 ID를 받아온다
@@ -16,13 +18,19 @@ export default function RegularStudyAttendance() {
     const [attendanceRequestList, setAttendanceRequestList] = useState([]);
     const [attendanceRequesterName, setAttendanceRequesterName] = useState(null);
     const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false); // 출석부 인증내역 조회를 위한 모달창
-    const [accumulatedTickets, setAccumulatedTickets] = useState(1); // 누적 교환권 관련 state (퍼블리싱용 임시 데이터)
+    const [accumulatedTickets, setAccumulatedTickets] = useState(1); // 누적 교환권 관련 state
 
     // 챌린지 보상 모드 상태 추가
     const [isChallengeRewardMode, setIsChallengeRewardMode] = useState(false);
 
-    // 선택된 출석 아이템들을 관리하는 state
-    const [selectedAttendances, setSelectedAttendances] = useState(new Set());
+    // 선택된 출석 아이템들을 관리하는 state (attendanceId와 attendanceType을 저장)
+    const [selectedAttendances, setSelectedAttendances] = useState([]);
+
+    // 현재 사용자 정보
+    const [currentUser, setCurrentUser] = useState(null);
+
+    const {alert} = useContext(AlertContext);
+    const {confirm} = useContext(ConfirmContext);
 
     useEffect(() => {
         const fetchAttendance = async () => {
@@ -31,6 +39,7 @@ export default function RegularStudyAttendance() {
                 // console.log("정규스터디 출석부 조회: ", response);
 
                 if (response['isSuccess']) {
+                    setOriginalAttendanceData(response.result.attendanceList);
                     const transformedData = transformData(response.result.attendanceList);
                     setData(transformedData);
                     console.log('정규스터디 출석부 성공');
@@ -43,6 +52,7 @@ export default function RegularStudyAttendance() {
                 }
             }
         };
+
         const fetchWeek = async () => {
             try {
                 const response = await request.get('/week/current');
@@ -63,9 +73,37 @@ export default function RegularStudyAttendance() {
                 }
             }
         };
+
+        // 현재 사용자 정보 조회
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await request.get('/member/my-info');
+                if (response['isSuccess']) {
+                    setCurrentUser({
+                        handle: response.result.handle,
+                        name: response.result.name,
+                    });
+                }
+            } catch (error) {
+                console.error('사용자 정보 조회 오류', error);
+            }
+        };
+
         fetchAttendance();
         fetchWeek();
+        fetchCurrentUser();
     }, [id]);
+
+    // 원본 출석 데이터를 저장하기 위한 state
+    const [originalAttendanceData, setOriginalAttendanceData] = useState([]);
+
+    // 출석 데이터가 변경되거나 챌린지 모드/선택 항목이 변경될 때마다 테이블 업데이트
+    useEffect(() => {
+        if (originalAttendanceData.length > 0) {
+            const transformedData = transformData(originalAttendanceData);
+            setData(transformedData);
+        }
+    }, [isChallengeRewardMode, selectedAttendances, currentUser, originalAttendanceData]);
 
     // 챌린지 보상 이력 조회 API
     const fetchChallengeRewardLog = async () => {
@@ -116,7 +154,13 @@ export default function RegularStudyAttendance() {
 
         const students = {};
 
-        attendanceList.forEach(({name, handle, problemYN, blogYN, workbookYN, week}) => {
+        // 챌린지 보상 모드일 때는 현재 사용자만 필터링
+        const filteredAttendanceList =
+            isChallengeRewardMode && currentUser
+                ? attendanceList.filter((item) => item.handle === currentUser.handle)
+                : attendanceList;
+
+        filteredAttendanceList.forEach(({attendanceId, name, handle, problemYN, blogYN, workbookYN, week}) => {
             const uniqueKey = `${name}-${handle}`;
             if (!students[uniqueKey]) {
                 students[uniqueKey] = {
@@ -138,37 +182,70 @@ export default function RegularStudyAttendance() {
             // week와 YN 필드들이 null인 경우 빈 값 유지
             if (week !== null) {
                 if (problemYN !== null) {
-                    const attendanceKey = `${uniqueKey}-PROBLEM-${week}`;
-                    const isSelected = selectedAttendances.has(attendanceKey);
+                    const isSelected = selectedAttendances.some(
+                        (item) => item.attendanceId === attendanceId && item.attendanceType === 'PROBLEM'
+                    );
 
                     students[uniqueKey]['문제 인증'][week] = problemYN ? (
                         <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
                     ) : (
-                        // <itemS.ImgIcon src="/img/noattendanceicon.png" alt="결석" />
                         <itemS.ImgIcon
                             src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
                             alt={isSelected ? '결석해제' : '결석'}
+                            attendanceId={attendanceId}
                             style={{
                                 cursor: isChallengeRewardMode ? 'pointer' : 'default',
                             }}
-                            onClick={isChallengeRewardMode ? () => handleAttendanceClick(attendanceKey) : undefined}
+                            onClick={
+                                isChallengeRewardMode ? () => handleAttendanceClick(attendanceId, 'PROBLEM') : undefined
+                            }
                         />
                     );
                 }
 
                 if (blogYN !== null) {
+                    const isSelected = selectedAttendances.some(
+                        (item) => item.attendanceId === attendanceId && item.attendanceType === 'BLOG'
+                    );
+
                     students[uniqueKey]['블로그 포스팅'][week] = blogYN ? (
                         <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
                     ) : (
-                        <itemS.ImgIcon src="/img/noattendanceicon.png" alt="결석" />
+                        <itemS.ImgIcon
+                            src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
+                            alt={isSelected ? '결석해제' : '결석'}
+                            attendanceId={attendanceId}
+                            style={{
+                                cursor: isChallengeRewardMode ? 'pointer' : 'default',
+                            }}
+                            onClick={
+                                isChallengeRewardMode ? () => handleAttendanceClick(attendanceId, 'BLOG') : undefined
+                            }
+                        />
                     );
                 }
 
                 if (workbookYN !== null) {
+                    const isSelected = selectedAttendances.some(
+                        (item) => item.attendanceId === attendanceId && item.attendanceType === 'WORKBOOK'
+                    );
+
                     students[uniqueKey]['주말 모의테스트'][week] = workbookYN ? (
                         <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
                     ) : (
-                        <itemS.ImgIcon src="/img/noattendanceicon.png" alt="결석" />
+                        <itemS.ImgIcon
+                            src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
+                            alt={isSelected ? '결석해제' : '결석'}
+                            attendanceId={attendanceId}
+                            style={{
+                                cursor: isChallengeRewardMode ? 'pointer' : 'default',
+                            }}
+                            onClick={
+                                isChallengeRewardMode
+                                    ? () => handleAttendanceClick(attendanceId, 'WORKBOOK')
+                                    : undefined
+                            }
+                        />
                     );
                 }
             }
@@ -208,7 +285,7 @@ export default function RegularStudyAttendance() {
                                 rowIndex={rowIndex}
                                 colIndex={colIndex}
                                 onClick={
-                                    rowIndex !== 0 && colIndex === 0
+                                    rowIndex !== 0 && colIndex === 0 && !isChallengeRewardMode
                                         ? () => {
                                               setIsHistoryModalOpen(true);
                                               const extractedText = extractText(data[currentTab][rowIndex][0]);
@@ -300,21 +377,79 @@ export default function RegularStudyAttendance() {
             fetchChallengeRewardLog();
         } else {
             // 모드가 비활성화될 때 선택된 항목들 초기화
-            setSelectedAttendances(new Set());
+            setSelectedAttendances([]);
         }
     };
 
     // 출석 아이콘 클릭 핸들러
-    const handleAttendanceClick = (attendanceKey) => {
+    const handleAttendanceClick = (attendanceId, attendanceType) => {
+        // 교환권이 부족한 경우 체크
+        if (accumulatedTickets <= 0) {
+            alert('교환권이 부족합니다.');
+            return;
+        }
+
         setSelectedAttendances((prev) => {
-            const newSet = new Set(prev);
-            if (newSet.has(attendanceKey)) {
-                newSet.delete(attendanceKey);
+            const existingIndex = prev.findIndex(
+                (item) => item.attendanceId === attendanceId && item.attendanceType === attendanceType
+            );
+
+            if (existingIndex !== -1) {
+                // 이미 선택된 항목이면 제거
+                return prev.filter((_, index) => index !== existingIndex);
             } else {
-                newSet.add(attendanceKey);
+                // 새로운 항목 추가 (교환권 개수만큼만 선택 가능)
+                if (prev.length >= accumulatedTickets) {
+                    alert('교환권이 부족합니다.');
+                    return prev;
+                }
+                return [...prev, {attendanceId, attendanceType}];
             }
-            return newSet;
         });
+    };
+
+    // 챌린지 보상 적용 함수
+    const applyChallengeReward = async () => {
+        if (selectedAttendances.length === 0) {
+            alert('선택된 출석 항목이 없습니다.');
+            return;
+        }
+
+        const confirmation = await confirm(
+            `${selectedAttendances.length}개의 챌린지 보상을 사용하시겠습니까? 적용 후에는 취소가 불가능합니다.`
+        );
+
+        if (confirmation) {
+            try {
+                const requestData = {
+                    requestList: selectedAttendances,
+                };
+
+                console.log('챌린지 보상 요청 데이터:', requestData);
+                console.log('선택된 출석 항목들:', selectedAttendances);
+
+                const response = await request.post('/challenge/reward', requestData);
+
+                if (response['isSuccess']) {
+                    alert('챌린지 보상이 적용되었습니다.');
+                    // 적용 후 상태 초기화 및 데이터 새로고침
+                    setSelectedAttendances([]);
+                    setIsChallengeRewardMode(false);
+
+                    // 출석부 데이터 새로고침
+                    const attendanceResponse = await request.get(`study/${id}/attendance`);
+                    if (attendanceResponse['isSuccess']) {
+                        setOriginalAttendanceData(attendanceResponse.result.attendanceList);
+                    }
+
+                    // 교환권 수량 새로고침
+                    fetchChallengeRewardLog();
+                }
+            } catch (error) {
+                console.error('챌린지 보상 적용 오류:', error);
+                alert('챌린지 보상 적용 중 오류가 발생했습니다.');
+            }
+        }
     };
 
     return (
@@ -353,9 +488,13 @@ export default function RegularStudyAttendance() {
             ) : (
                 <itemS.CanNotEnterContainer>{noticeMessage}</itemS.CanNotEnterContainer>
             )}
+
             <itemS.BtnContainer>
-                {showCertificationBtn && (
+                {showCertificationBtn && !isChallengeRewardMode && (
                     <itemS.CertificationBtn onClick={openAuthModal}>출석 인증하기</itemS.CertificationBtn>
+                )}
+                {isChallengeRewardMode && (
+                    <itemS.CertificationBtn onClick={applyChallengeReward}>적용하기</itemS.CertificationBtn>
                 )}
             </itemS.BtnContainer>
 

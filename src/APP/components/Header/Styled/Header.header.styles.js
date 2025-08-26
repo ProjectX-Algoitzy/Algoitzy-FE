@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
 
 export const InnerContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
+  border-bottom: ${({ $dark }) => $dark ? "none" : `1px solid ${tokens.colors.B_Grey_3}`};
 `;
 
 // HeaderWrap부분이 admin이랑 약간 다른 듯

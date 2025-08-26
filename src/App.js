@@ -88,12 +88,15 @@ function App() {
   const hideHeader = window.location.pathname
     .toLowerCase()
     .startsWith("/write");
+  const darkHeader = window.location.pathname
+    .toLowerCase()
+    .startsWith("/dailychallenge");
 
   return (
     <Root>
       <GlobalStyle />
       <ScrollToTop />
-      {!hideHeader && <Header />}
+      {!hideHeader && <Header dark={darkHeader}/>}
       <ContentWrapper>
         <Routes>
           <Route path="/" element={<Langding />} />

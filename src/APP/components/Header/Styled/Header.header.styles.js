@@ -115,6 +115,8 @@ export const Btn = styled.button`
   @media (max-width: 300px) {
      ${tokens.typography.T7_SB_12};
   }
+
+  background: ${({ $dark }) => $dark && "rgba(0, 153, 237, 0.18)"};
 `;
 
 // user의 경우에는 @media를 통해 모바일 버젼 만드는 것도 고려해서 수정이 필요함

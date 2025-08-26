@@ -81,8 +81,8 @@ export const NavButton = styled.button`
 export const LanguageContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 0 13px 13px;
-  gap: 30px;
+  padding: 0 0 0.542rem 0.542rem;
+  gap: 1.25rem;
 `;
 
 export const Language = styled.div`

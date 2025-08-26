@@ -23,17 +23,18 @@ export default function RankingTable({ disable, language, date }) {
 				  <itemS.LabelText>코드길이</itemS.LabelText>
 				</itemS.LabelContainer>
 
-				<itemS.Content $disabled>
 				<itemS.TupleContainer>
-				  {DEFAULT_ROWS.map((row) => (
-					<RankingTuple
-					  item={row}
-					  language={language}
-					  disable={true}
-					/>
-				  ))}
+					<itemS.OverlayText>
+						순위는 챌린지를 완료한 후에 확인하실 수 있습니다.
+					</itemS.OverlayText>
+					{DEFAULT_ROWS.map((row) => (
+						<RankingTuple
+						item={row}
+						language={language}
+						disable={true}
+						/>
+				 	))}
 				</itemS.TupleContainer>
-				</itemS.Content>
 			  </itemS.Table>
 		  </itemS.Container>
 		);

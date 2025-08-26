@@ -18,9 +18,9 @@ export const TupleContainer = styled.div`
   > div:nth-child(4) { width: 80px;  }  /* 메모리 */
   > div:nth-child(6) { width: 80px;  }  /* 코드길이 */
 
-  filter: ${({ $disabled }) => ($disabled ? "blur(10px)" : "none")};
+  filter: ${({ $disabled }) => ($disabled ? "blur(6px)" : "none")};
   pointer-events: ${({ $disabled }) => ($disabled ? "none" : "auto")};
-  opacity: ${({ $disabled }) => ($disabled ? 0.2 : 1)};
+  opacity: ${({ $disabled }) => ($disabled ? 0.8 : 1)};
 `;
 
 export const TupleContent = styled.div`

@@ -42,10 +42,12 @@ export const TupleContainer = styled.div`
   scrollbar-width: none;
 `;
 
-export const Content = styled.div`
-  position: relative;
-  z-index: 1;
-  filter: ${({ $disabled }) => ($disabled ? 'blur(1px)' : 'none')};
-  pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
-  user-select: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
+export const OverlayText = styled.div`
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 250%);
+  z-index: 10;
+  font-size: 1rem;
+  color: ${tokens.colors.White};
+  text-align: center;
 `;

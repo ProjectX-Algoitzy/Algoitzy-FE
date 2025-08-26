@@ -3,7 +3,7 @@ import RankingTable from './DailyChallenge.dailychallenge.table';
 import * as itemS from './Styled/DailyChallenge.dailychallenge.ranking.styles';
 
 function Ranking({
-  disable = true,
+  disable = false,
 }) {
 
   const today = new Date();

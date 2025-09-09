@@ -15,14 +15,18 @@ const dummyTags = [
 export default function DailyChallenge() {
   const location = useLocation();
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken");
+
 
   const [timeLeft, setTimeLeft] = useState('00:00:00');
   const [timeLeftMs, setTimeLeftMs] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const [showTags, setShowTags] = useState(false);
-  const [tierSrc, setTierSrc] = useState('/img/tier_icon.png');
-  const externalTierImg = 'https://cdn-icons-png.flaticon.com/512/1828/1828884.png';
+  const [showLevel, setShowLevel] = useState(false);
+  const [tierSrc, setTierSrc] = useState('https://static.solved.ac/tier_small/0.svg');
+  const [challengeData, setChallengeData] = useState(null);
+  const [hasLoadedChallengeData, setHasLoadedChallengeData] = useState(false);
 
   const msToHHMMSS = (ms) => {
     let total = Math.max(0, Math.floor(ms / 1000));
@@ -51,20 +55,56 @@ export default function DailyChallenge() {
     return () => clearInterval(id);
   }, []);
 
+  // 레벨 태그가 표시될 때 레벨 이미지도 함께 표시
+  useEffect(() => {
+    if (showLevel && challengeData && challengeData.levelImageUrl) {
+      setTierSrc(challengeData.levelImageUrl);
+    } else if (!showLevel) {
+      setTierSrc('https://static.solved.ac/tier_small/0.svg');
+    }
+  }, [showLevel, challengeData]);
+
   const isOneHourLeft = timeLeftMs <= 3600 * 1000;
 
-  // 금일 챌린지 문제 상세 조회 API
-  const getTodayChallengeProblem = async () => {
+  // 레벨 텍스트 포맷팅 함수 (BRONZE5 -> Bronze 5)
+  const formatLevel = (level) => {
+    if (!level) return '';
+    
+    // 숫자와 문자 분리
+    const match = level.match(/^([A-Z]+)(\d+)$/);
+    if (!match) return level;
+    
+    const [, tier, number] = match;
+    // 첫 글자만 대문자, 나머지는 소문자로 변환
+    const formattedTier = tier.charAt(0).toUpperCase() + tier.slice(1).toLowerCase();
+    
+    return `${formattedTier} ${number}`;
+  };
+
+  // 챌린지 데이터 로드 (한 번만 호출)
+  const loadChallengeData = async () => {
+    if (hasLoadedChallengeData || !accessToken) {
+      return;
+    }
+    
     try {
       setIsLoading(true);
       const response = await request.get('/challenge/problem/today');
-      console.log('금일 챌린지 문제:', response.data);
+      console.log('금일 챌린지 문제:', response.result);
       
-      // 백준 링크가 있는지 확인하고 새 탭에서 열기
-      if (response.data) {
-        window.open("response.data", '_blank');
+      if (response.isSuccess) {
+        const { problemNumber, level, levelImageUrl, algorithmList } = response.result;
+        
+        // 챌린지 데이터 저장
+        setChallengeData({
+          problemNumber,
+          level,
+          levelImageUrl,
+          algorithmList
+        });
+        setHasLoadedChallengeData(true);
       } else {
-        alert('문제 링크를 찾을 수 없습니다.');
+        alert('문제 정보를 불러올 수 없습니다.');
       }
       
     } catch (error) {
@@ -75,14 +115,62 @@ export default function DailyChallenge() {
     }
   };
 
-  const handleTagToggle = () => setShowTags((v) => !v);
-  const handleTierToggle = () => {
-    setTierSrc((prev) => (prev === '/img/tier_icon.png' ? externalTierImg : '/img/tier_icon.png'));
+  // 문제풀기 버튼 클릭
+  const handleProblemSolve = async () => {
+    // 로그인 상태 확인
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+
+    // 챌린지 데이터가 없으면 로드
+    if (!hasLoadedChallengeData) {
+      await loadChallengeData();
+    }
+
+    // 데이터가 있으면 백준 링크 열기
+    if (challengeData && challengeData.problemNumber) {
+      const bojLink = `https://www.acmicpc.net/problem/${challengeData.problemNumber}`;
+      window.open(bojLink, '_blank');
+    }
+    
+    // 알고리즘 태그만 표시 (레벨은 숨김)
+    setShowTags(true);
+    setShowLevel(false);
   };
 
-  const handleProblemSolve = () => {
-    getTodayChallengeProblem();
+  const handleTagToggle = async () => {
+    // 로그인 상태 확인
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+    
+    // 챌린지 데이터가 없으면 로드
+    if (!hasLoadedChallengeData) {
+      await loadChallengeData();
+    }
+    
+    setShowTags((v) => !v);
+    setShowLevel(false); // 다른 펼쳐진 요소 접기
   };
+  
+  const handleTierToggle = async () => {
+    // 로그인 상태 확인
+    if (!accessToken) {
+      navigate('/login');
+      return;
+    }
+    
+    // 챌린지 데이터가 없으면 로드
+    if (!hasLoadedChallengeData) {
+      await loadChallengeData();
+    }
+    
+    setShowLevel((v) => !v);
+    setShowTags(false); // 다른 펼쳐진 요소 접기
+  };
+
 
   return (
     <Styled.Container>
@@ -121,14 +209,28 @@ export default function DailyChallenge() {
             </Styled.IconWithTooltip>
           </Styled.IconContainer>
 
-          <Styled.AlgorithmTagContainer $show={showTags}>
-            {dummyTags.map((tag, index) => (
-              <Styled.AlgorithmTag key={index}>
-                <Styled.AlgorithmTagKorText>{tag.kor}</Styled.AlgorithmTagKorText>
-                <Styled.AlgorithmTagEngText>{tag.eng}</Styled.AlgorithmTagEngText>
-              </Styled.AlgorithmTag>
-            ))}
-          </Styled.AlgorithmTagContainer>
+          <Styled.TagContainer $show={showTags || showLevel} key={`container-${showTags ? 'tags' : 'level'}`}>
+            {showTags && challengeData && challengeData.algorithmList ? (
+              challengeData.algorithmList.map((algorithm, index) => (
+                <Styled.AlgorithmTag key={`algo-${algorithm}-${index}`} $index={index}>
+                  <Styled.AlgorithmTagKorText>#{algorithm}</Styled.AlgorithmTagKorText>
+                </Styled.AlgorithmTag>
+              ))
+            ) : showTags ? (
+              dummyTags.map((tag, index) => (
+                <Styled.AlgorithmTag key={`dummy-${tag.kor}-${index}`} $index={index}>
+                  <Styled.AlgorithmTagKorText>{tag.kor}</Styled.AlgorithmTagKorText>
+                  <Styled.AlgorithmTagEngText>{tag.eng}</Styled.AlgorithmTagEngText>
+                </Styled.AlgorithmTag>
+              ))
+            ) : null}
+            
+            {showLevel && challengeData && challengeData.level && (
+              <Styled.LevelTag key={`level-${challengeData.level}`}>
+                <Styled.LevelTagText>{formatLevel(challengeData.level)}</Styled.LevelTagText>
+              </Styled.LevelTag>
+            )}
+          </Styled.TagContainer>
         </Styled.ProblemInfoContainer>
       </Styled.TitleContainer>
       <Ranking

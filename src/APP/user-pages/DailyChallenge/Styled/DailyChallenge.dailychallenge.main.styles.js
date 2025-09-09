@@ -55,6 +55,17 @@ export const Btn = styled.button`
   font-size: 1.417rem;
   background-color: ${tokens.colors.Blue_0_Main};
   margin-bottom: 2.167rem;
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: ${tokens.colors.Blue_1};
+  }
+
+  &:disabled {
+    background-color: ${tokens.colors.B_Grey_6};
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 export const ParticipantsDescription = styled.div`
@@ -101,31 +112,36 @@ export const IconContainer = styled.div`
 
 export const AlgorithmTagIcon = styled.div`
   display: flex;
-  width: 2.123rem;
-  height: 2.097rem;
-  background-image: url('/img/algorithm_tag_icon.png');
-  background-size: cover;
+  width: 3.188rem;
+  height: 3.188rem;
+  background-image: url('/img/algorithm_tag_icon.svg');
+  background-size: 3.188rem 3.188rem;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
   border-radius: 0.33rem;
-    &:hover {
+  cursor: pointer;
+  &:hover {
     background-color: #383838;
   }
 `
 
 export const TierIcon = styled.div`
   display: flex;
-  width: 2.123rem;
-  height: 2.097rem;
-  background-image: url('/img/tier_icon.png');
-  background-size: cover;
+  width: 3.188rem;
+  height: 3.188rem;
+  background-image: url(${props => props.$src || 'https://static.solved.ac/tier_small/0.svg'});
+  background-size: 1.938rem 2.5rem;
   background-position: center;
   background-repeat: no-repeat;
+  background-origin: content-box;
+  background-clip: content-box;
   border: none;
   border-radius: 0.33rem;
+  cursor: pointer;
   &:hover {
     background-color: #383838;
+    background-clip: padding-box;
   }
 `
 
@@ -182,6 +198,20 @@ export const IconWithTooltip = styled.div`
   }
 `;
 
+export const TagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 6.15rem;
+  gap: 0.333rem;
+  position: relative;
+
+  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  transform: translateY(${({ $show }) => ($show ? '0' : '-0.25rem')});
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: ${({ $show }) => ($show ? 'auto' : 'none')};
+`;
+
 export const AlgorithmTagContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -206,6 +236,21 @@ export const AlgorithmTag = styled.div`
   background-color: #2d2d2d;
   border: 1px solid ${tokens.colors.B_Grey_6};
   padding: 0.396rem 0.667rem;
+  
+  opacity: 0;
+  transform: scale(0.8) translateY(-0.4rem);
+  animation: tagFadeIn 0.4s ease forwards;
+  
+  @keyframes tagFadeIn {
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  ${props => props.$index && `
+    animation-delay: ${props.$index * 0.1}s;
+  `}
 `;
 
 export const AlgorithmTagKorText = styled.div`
@@ -218,4 +263,48 @@ export const AlgorithmTagEngText = styled.div`
   font-size: 0.583rem;
   font-weight: 400;
   color: ${tokens.colors.B_Grey_6};
+`;
+
+export const LevelTagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 6.15rem;
+  gap: 0.333rem;
+
+  opacity: ${({ $show }) => ($show ? 1 : 0)};
+  transform: translateY(${({ $show }) => ($show ? '0' : '-0.25rem')});
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  pointer-events: ${({ $show }) => ($show ? 'auto' : 'none')};
+`;
+
+export const LevelTag = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.208rem;
+  width: auto;
+  height: 1.583rem;
+  border-radius: 1.208rem;
+  background-color: #2d2d2d;
+  border: 1px solid ${tokens.colors.B_Grey_6};
+  padding: 0.396rem 0.667rem;
+  
+  opacity: 0;
+  transform: scale(0.8) translateY(-0.4rem);
+  animation: tagFadeIn 0.4s ease forwards;
+  
+  @keyframes tagFadeIn {
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+`;
+
+export const LevelTagText = styled.div`
+  font-size: 0.667rem;
+  font-weight: 500;
+  color: ${tokens.colors.White};
 `;

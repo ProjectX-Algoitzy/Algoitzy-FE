@@ -102,6 +102,30 @@ export default function DailyChallenge() {
     }
   };
 
+
+  // 자정까지 남은 시간 계산
+  const getMsToMidnight = () => {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    return tomorrow - now;
+  };
+
+  // 자정에 페이지 새로고침
+  useEffect(() => {
+    const msToMidnight = getMsToMidnight();
+    
+    // 자정에 새로고침
+    const midnightTimer = setTimeout(() => {
+      window.location.reload();
+    }, msToMidnight);
+
+    return () => {
+      clearTimeout(midnightTimer);
+    };
+  }, []);
+
   // 컴포넌트 마운트 시 참여 여부 확인
   useEffect(() => {
     checkTodayJoinStatus();

@@ -4,6 +4,7 @@ import * as itemS from './Styled/DailyChallenge.dailychallenge.ranking.styles';
 
 function Ranking({
   disable = false,
+  challengeHistory = [],
 }) {
 
   const today = new Date();
@@ -73,6 +74,7 @@ function Ranking({
         disable={disable}
         language={selectedLanguage}
         date={formatKey(currentDate)}
+        challengeHistory={challengeHistory}
       />
     </itemS.Container>
   );

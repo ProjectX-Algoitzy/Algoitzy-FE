@@ -27,6 +27,8 @@ export default function DailyChallenge() {
   const [tierSrc, setTierSrc] = useState('https://static.solved.ac/tier_small/0.svg');
   const [challengeData, setChallengeData] = useState(null);
   const [hasLoadedChallengeData, setHasLoadedChallengeData] = useState(false);
+  const [hasJoinedToday, setHasJoinedToday] = useState(false);
+  const [challengeHistory, setChallengeHistory] = useState([]);
 
   const msToHHMMSS = (ms) => {
     let total = Math.max(0, Math.floor(ms / 1000));
@@ -65,6 +67,45 @@ export default function DailyChallenge() {
   }, [showLevel, challengeData]);
 
   const isOneHourLeft = timeLeftMs <= 3600 * 1000;
+
+  // 금일 챌린지 참여 여부 확인
+  const checkTodayJoinStatus = async () => {
+    if (!accessToken) return;
+    
+    try {
+      const response = await request.get('/challenge/check-join');
+      console.log('금일 챌린지 참여 여부:', response);
+      
+      if (response.isSuccess && response.result) {
+        setHasJoinedToday(true);
+        // 참여했다면 챌린지 이력도 조회
+        await loadChallengeHistory();
+      }
+    } catch (error) {
+      console.error('챌린지 참여 여부 확인 실패:', error);
+    }
+  };
+
+  // 챌린지 이력 목록 조회
+  const loadChallengeHistory = async () => {
+    if (!accessToken) return;
+    
+    try {
+      const response = await request.get('/challenge-join-log');
+      console.log('챌린지 이력:', response);
+      
+      if (response.isSuccess && response.result?.joinLogList) {
+        setChallengeHistory(response.result.joinLogList);
+      }
+    } catch (error) {
+      console.error('챌린지 이력 조회 실패:', error);
+    }
+  };
+
+  // 컴포넌트 마운트 시 참여 여부 확인
+  useEffect(() => {
+    checkTodayJoinStatus();
+  }, [accessToken]);
 
   // 레벨 텍스트 포맷팅 함수 (BRONZE5 -> Bronze 5)
   const formatLevel = (level) => {
@@ -209,16 +250,16 @@ export default function DailyChallenge() {
             </Styled.IconWithTooltip>
           </Styled.IconContainer>
 
-          <Styled.TagContainer $show={showTags || showLevel} key={`container-${showTags ? 'tags' : 'level'}`}>
+          <Styled.TagContainer $show={showTags || showLevel}>
             {showTags && challengeData && challengeData.algorithmList ? (
               challengeData.algorithmList.map((algorithm, index) => (
-                <Styled.AlgorithmTag key={`algo-${algorithm}-${index}`} $index={index}>
+                <Styled.AlgorithmTag key={index}>
                   <Styled.AlgorithmTagKorText>#{algorithm}</Styled.AlgorithmTagKorText>
                 </Styled.AlgorithmTag>
               ))
             ) : showTags ? (
               dummyTags.map((tag, index) => (
-                <Styled.AlgorithmTag key={`dummy-${tag.kor}-${index}`} $index={index}>
+                <Styled.AlgorithmTag key={index}>
                   <Styled.AlgorithmTagKorText>{tag.kor}</Styled.AlgorithmTagKorText>
                   <Styled.AlgorithmTagEngText>{tag.eng}</Styled.AlgorithmTagEngText>
                 </Styled.AlgorithmTag>
@@ -226,7 +267,7 @@ export default function DailyChallenge() {
             ) : null}
             
             {showLevel && challengeData && challengeData.level && (
-              <Styled.LevelTag key={`level-${challengeData.level}`}>
+              <Styled.LevelTag>
                 <Styled.LevelTagText>{formatLevel(challengeData.level)}</Styled.LevelTagText>
               </Styled.LevelTag>
             )}
@@ -234,7 +275,8 @@ export default function DailyChallenge() {
         </Styled.ProblemInfoContainer>
       </Styled.TitleContainer>
       <Ranking
-        disable={true}
+        disable={!hasJoinedToday}
+        challengeHistory={challengeHistory}
       />
     </Styled.Container>
   );

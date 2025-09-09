@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as Styled from './Styled/DailyChallenge.dailychallenge.main.styles';
 import Ranking from './DailyChallenge.dailychallenge.ranking';
+import Background from './DailyChallenge.dailychallenge.background';
 import request from '../../Api/request';
 
 const dummyTags = [
@@ -13,9 +14,11 @@ const dummyTags = [
 
 export default function DailyChallenge() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [timeLeft, setTimeLeft] = useState('00:00:00');
   const [timeLeftMs, setTimeLeftMs] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showTags, setShowTags] = useState(false);
   const [tierSrc, setTierSrc] = useState('/img/tier_icon.png');
@@ -50,19 +53,48 @@ export default function DailyChallenge() {
 
   const isOneHourLeft = timeLeftMs <= 3600 * 1000;
 
+  // 금일 챌린지 문제 상세 조회 API
+  const getTodayChallengeProblem = async () => {
+    try {
+      setIsLoading(true);
+      const response = await request.get('/challenge/problem/today');
+      console.log('금일 챌린지 문제:', response.data);
+      
+      // 백준 링크가 있는지 확인하고 새 탭에서 열기
+      if (response.data) {
+        window.open("response.data", '_blank');
+      } else {
+        alert('문제 링크를 찾을 수 없습니다.');
+      }
+      
+    } catch (error) {
+      console.error('금일 챌린지 문제 조회 실패:', error);
+      alert('문제를 불러오는데 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleTagToggle = () => setShowTags((v) => !v);
   const handleTierToggle = () => {
     setTierSrc((prev) => (prev === '/img/tier_icon.png' ? externalTierImg : '/img/tier_icon.png'));
   };
 
+  const handleProblemSolve = () => {
+    getTodayChallengeProblem();
+  };
+
   return (
     <Styled.Container>
+      <Background />
       <Styled.TitleContainer>
         <Styled.Title />
         <Styled.Timer $danger={isOneHourLeft}>
           {timeLeft}
         </Styled.Timer>
-        <Styled.Btn>문제 풀기</Styled.Btn>
+        <Styled.Btn onClick={handleProblemSolve} disabled={isLoading}>
+          {isLoading ? '로딩 중...' : '문제 풀기'}
+        </Styled.Btn>
         <Styled.ParticipantsDescription>
           오늘은{" "}
           <Styled.ParticiPantsHighlight>8</Styled.ParticiPantsHighlight>

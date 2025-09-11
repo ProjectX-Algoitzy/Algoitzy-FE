@@ -286,31 +286,30 @@ export default function RegularStudyAttendance() {
                                         }}
                                     >
                                         <img
-                                            src="/img/tablearrow.png"
+                                            src="/img/tablearrowleft.png"
                                             style={{
                                                 cursor: 'pointer',
                                                 position: 'absolute',
                                                 left: 0,
-                                                width: '0.458rem',
-                                                height: '0.458rem',
+                                                width: '0.274rem',
+                                                height: '0.484rem',
                                                 marginTop: '0.208rem',
-                                                marginLeft: '0.458rem',
+                                                // marginLeft: '1.135rem',
                                             }}
                                             alt="왼쪽"
                                             onClick={() => onArrowClick('prev')}
                                         />
                                         <span>{currentTab}</span>
                                         <img
-                                            src="/img/tablearrow.png"
+                                            src="/img/tablearrowright.png"
                                             style={{
-                                                rotate: '180deg',
                                                 cursor: 'pointer',
                                                 position: 'absolute',
                                                 right: 0,
-                                                width: '0.458rem',
-                                                height: '0.458rem',
+                                                width: '0.274rem',
+                                                height: '0.484rem',
                                                 marginTop: '0.208rem',
-                                                marginRight: '0.458rem',
+                                                // marginRight: '1.093rem',
                                             }}
                                             alt="오른쪽"
                                             onClick={() => onArrowClick('next')}
@@ -447,6 +446,7 @@ export default function RegularStudyAttendance() {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        marginBottom: '0.167rem',
                     }}
                 >
                     <itemS.BlueComment>*이름을 클릭하면 주차별 출석 인증 내역을 확인할 수 있습니다.</itemS.BlueComment>

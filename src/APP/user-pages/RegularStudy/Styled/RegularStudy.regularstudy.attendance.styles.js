@@ -18,7 +18,7 @@ export const Container = styled.div`
 export const Title = styled.div`
     display: flex;
     margin-top: 4.17rem;
-    margin-bottom: 0.792rem;
+    margin-bottom: 0.25rem;
     width: 100%;
     ${tokens.typography.T1_SB_32};
     color: ${tokens.colors.Grey_8};
@@ -28,8 +28,12 @@ export const Title = styled.div`
 
 export const BlueComment = styled.div`
     display: flex;
-    margin-bottom: 0.5rem;
+    align-items: center;
     ${tokens.typography.B3_M_14};
+    line-height: 0.875rem;
+    letter-spacing: 0;
+    text-align: left;
+    vertical-align: middle;
     color: ${tokens.colors.Blue_0_Main};
 `;
 
@@ -38,17 +42,23 @@ export const GrayBox = styled.div`
     align-items: center;
     justify-content: center;
     width: 6.667rem;
-    height: 1.417rem;
+    height: 1.75rem;
+    border-radius: 0.167rem;
     background-color: #dfe8f1;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 500;
-    font-size: 0.58333rem;
+    color: ${tokens.colors.B_Grey_7};
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+    font-size: 0.583rem;
     line-height: 0.875rem;
     letter-spacing: 0;
-    text-align: left;
-    vertical-align: baseline;
-    border-radius: 0.167rem;
-    margin-bottom: 0.333rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+    }
 `;
 
 // 누적 교환권 관련 스타일 추가
@@ -105,7 +115,7 @@ export const StyledTd = styled.td`
     color: ${tokens.colors.Grey_7};
     ${tokens.typography.T5_SB_16};
     border: 0.042rem solid #b9c4d2;
-    padding: 0.333rem;
+    padding: 0.667rem;
     text-align: center;
 
     cursor: ${({rowIndex, colIndex}) => (rowIndex !== 0 && colIndex === 0 ? 'pointer' : 'default')};
@@ -121,8 +131,8 @@ export const StyledTd = styled.td`
     border-top: ${({rowIndex}) => (rowIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
     border-left: ${({colIndex}) => (colIndex === 0 ? 'none' : '0.042rem solid #B9C4D2')};
     border-right: ${({colIndex}) => (colIndex === 8 ? 'none' : '0.042rem solid #B9C4D2')};
-    width: ${({colIndex}) => (colIndex === 0 ? '7.333rem' : 'auto')};
-    height: ${({rowIndex}) => (rowIndex === 0 ? '1.875rem' : '2.5rem')};
+    width: ${({colIndex}) => (colIndex === 0 ? '7.333rem' : '3.208rem')};
+    height: ${({rowIndex}) => (rowIndex === 0 ? '2.292rem' : '3.042rem')};
 
     ${({rowIndex, colIndex}) =>
         rowIndex !== 0 &&

@@ -168,10 +168,18 @@ export default function RegularStudyAttendance() {
                     );
 
                     students[uniqueKey]['문제 인증'][week] = problemYN ? (
-                        <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
+                        <itemS.ImgIcon
+                            src={
+                                isChallengeRewardMode ? '/img/untouched-attendance-icon.png' : '/img/attendanceicon.png'
+                            }
+                            alt="출석"
+                            style={{
+                                cursor: 'default',
+                            }}
+                        />
                     ) : (
                         <itemS.ImgIcon
-                            src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
+                            src={isSelected ? '/img/checknoattendanceicon.png' : '/img/noattendanceicon.png'}
                             alt={isSelected ? '결석해제' : '결석'}
                             attendanceId={attendanceId}
                             style={{
@@ -190,10 +198,18 @@ export default function RegularStudyAttendance() {
                     );
 
                     students[uniqueKey]['블로그 포스팅'][week] = blogYN ? (
-                        <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
+                        <itemS.ImgIcon
+                            src={
+                                isChallengeRewardMode ? '/img/untouched-attendance-icon.png' : '/img/attendanceicon.png'
+                            }
+                            alt="출석"
+                            style={{
+                                cursor: 'default',
+                            }}
+                        />
                     ) : (
                         <itemS.ImgIcon
-                            src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
+                            src={isSelected ? '/img/checknoattendanceicon.png' : '/img/noattendanceicon.png'}
                             alt={isSelected ? '결석해제' : '결석'}
                             attendanceId={attendanceId}
                             style={{
@@ -212,10 +228,18 @@ export default function RegularStudyAttendance() {
                     );
 
                     students[uniqueKey]['주말 모의테스트'][week] = workbookYN ? (
-                        <itemS.ImgIcon src="/img/attendanceicon.png" alt="출석" />
+                        <itemS.ImgIcon
+                            src={
+                                isChallengeRewardMode ? '/img/untouched-attendance-icon.png' : '/img/attendanceicon.png'
+                            }
+                            alt="출석"
+                            style={{
+                                cursor: 'default',
+                            }}
+                        />
                     ) : (
                         <itemS.ImgIcon
-                            src={isSelected ? '/img/checkattendanceicon.png' : '/img/noattendanceicon.png'}
+                            src={isSelected ? '/img/checknoattendanceicon.png' : '/img/noattendanceicon.png'}
                             alt={isSelected ? '결석해제' : '결석'}
                             attendanceId={attendanceId}
                             style={{
@@ -294,7 +318,6 @@ export default function RegularStudyAttendance() {
                                                 width: '0.274rem',
                                                 height: '0.484rem',
                                                 marginTop: '0.208rem',
-                                                // marginLeft: '1.135rem',
                                             }}
                                             alt="왼쪽"
                                             onClick={() => onArrowClick('prev')}
@@ -309,7 +332,6 @@ export default function RegularStudyAttendance() {
                                                 width: '0.274rem',
                                                 height: '0.484rem',
                                                 marginTop: '0.208rem',
-                                                // marginRight: '1.093rem',
                                             }}
                                             alt="오른쪽"
                                             onClick={() => onArrowClick('next')}
@@ -472,8 +494,8 @@ export default function RegularStudyAttendance() {
                     <itemS.TicketContainer>
                         <itemS.TicketBox>
                             <itemS.TicketIcon src="/img/changeticket.png" alt="교환권" />
-                            <itemS.TicketText>누적 교환권</itemS.TicketText>
-                            <itemS.TicketCount>: {accumulatedTickets}</itemS.TicketCount>
+                            <itemS.TicketCount>{accumulatedTickets}</itemS.TicketCount>
+                            <itemS.Tooltip className="tooltip">챌린지 교환권</itemS.Tooltip>
                         </itemS.TicketBox>
                     </itemS.TicketContainer>
                 </div>
@@ -489,10 +511,13 @@ export default function RegularStudyAttendance() {
             {/* 버튼 영역 */}
             <itemS.BtnContainer>
                 {showCertificationBtn && !isChallengeRewardMode && hasValidAttendanceData && (
-                    <itemS.CertificationBtn onClick={openAuthModal}>출석 인증하기</itemS.CertificationBtn>
+                    <itemS.ApiTriggerBtn onClick={openAuthModal}>출석 인증하기</itemS.ApiTriggerBtn>
                 )}
                 {isChallengeRewardMode && (
-                    <itemS.CertificationBtn onClick={applyChallengeReward}>적용하기</itemS.CertificationBtn>
+                    <>
+                        <itemS.PreviousBtn onClick={toggleChallengeRewardMode}>목록으로 돌아가기</itemS.PreviousBtn>
+                        <itemS.ApiTriggerBtn onClick={applyChallengeReward}>적용하기</itemS.ApiTriggerBtn>
+                    </>
                 )}
             </itemS.BtnContainer>
 

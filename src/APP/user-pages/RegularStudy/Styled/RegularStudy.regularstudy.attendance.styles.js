@@ -66,32 +66,63 @@ export const TicketContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: 1rem;
     gap: 0.5rem;
+    position: relative;
 `;
 
 export const TicketBox = styled.div`
     display: flex;
     align-items: center;
-    gap: 0.333rem;
-    padding: 0.5rem 0.833rem;
-    background-color: ${tokens.colors.B_Grey_1};
-    border-radius: 0.333rem;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #f5a623;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    position: relative;
+
+    &:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+    }
 `;
 
 export const TicketIcon = styled.img`
-    height: 1.25rem;
-`;
-
-export const TicketText = styled.span`
-    ${tokens.typography.T5_SB_16};
-    color: ${tokens.colors.B_Grey_7};
+    height: 1rem;
+    width: 1rem;
 `;
 
 export const TicketCount = styled.span`
     ${tokens.typography.T5_SB_16};
-    color: ${tokens.colors.Blue_0_Main};
-    margin-left: 0.25rem;
+    color: ${tokens.colors.White};
+    font-size: 0.875rem;
+    font-weight: 600;
+`;
+
+// 툴팁 스타일 추가
+export const Tooltip = styled.div`
+    position: absolute;
+    bottom: 1.983rem;
+    transform: translateX(-50%);
+    background-color: ${tokens.colors.Grey_8};
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1000;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 0.25rem solid transparent;
+        border-top-color: #333;
+    }
 `;
 
 export const CanNotEnterContainer = styled.div`
@@ -157,8 +188,20 @@ export const BtnContainer = styled.div`
     margin-top: 1.5rem;
 `;
 
-export const CertificationBtn = styled.button`
-    width: 7.33rem;
+export const PreviousBtn = styled.button`
+    margin-right: 0.708rem;
+    width: 6.667rem;
+    height: 2rem;
+    border-radius: 0.167rem;
+    border: none;
+    cursor: pointer;
+    color: ${tokens.colors.B_Grey_7};
+    ${tokens.typography.T5_SB_16}
+    background-color: #DFE8F1;
+`;
+
+export const ApiTriggerBtn = styled.button`
+    width: 6.667rem;
     height: 2rem;
     border-radius: 0.167rem;
     border: none;

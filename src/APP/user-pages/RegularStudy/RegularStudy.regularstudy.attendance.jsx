@@ -488,6 +488,8 @@ export default function RegularStudyAttendance() {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        marginTop: '0.625rem',
+                        marginBottom: '0.583rem',
                     }}
                 >
                     <itemS.BlueComment>*출석부의 [X]를 클릭하여 챌린지 보상을 사용할 수 있습니다.</itemS.BlueComment>

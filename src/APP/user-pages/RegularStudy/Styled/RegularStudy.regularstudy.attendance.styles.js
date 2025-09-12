@@ -64,19 +64,17 @@ export const GrayBox = styled.div`
 // 누적 교환권 관련 스타일 추가
 export const TicketContainer = styled.div`
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.5rem;
+    margin-right: 0.417rem;
     position: relative;
 `;
 
 export const TicketBox = styled.div`
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    background-color: #f5a623;
-    border-radius: 0.75rem;
+    background-color: ${tokens.colors.Grey_3};
+    width: 2.792rem;
+    height: 0.792rem;
+    border-radius: 0.396rem;
     cursor: pointer;
     position: relative;
 
@@ -87,31 +85,42 @@ export const TicketBox = styled.div`
 `;
 
 export const TicketIcon = styled.img`
-    height: 1rem;
-    width: 1rem;
+    margin-left: -0.308rem;
+    width: 2.2rem;
 `;
 
-export const TicketCount = styled.span`
-    ${tokens.typography.T5_SB_16};
-    color: ${tokens.colors.White};
-    font-size: 0.875rem;
-    font-weight: 600;
+export const TicketCount = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 0.583rem;
+    line-height: 0.875rem;
+    color: ${tokens.colors.Grey_6};
 `;
 
 // 툴팁 스타일 추가
 export const Tooltip = styled.div`
     position: absolute;
-    bottom: 1.983rem;
+    left: 26%;
+    bottom: 1.633rem;
     transform: translateX(-50%);
     background-color: ${tokens.colors.Grey_8};
     color: white;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
+    width: 5rem;
+    height: 1.5rem;
+    border-radius: 0.375rem;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    font-size: 0.71rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
     z-index: 1000;
 
     &::after {
@@ -120,8 +129,11 @@ export const Tooltip = styled.div`
         top: 100%;
         left: 50%;
         transform: translateX(-50%);
-        border: 0.25rem solid transparent;
-        border-top-color: #333;
+        width: 0;
+        height: 0;
+        border-left: 0.275rem solid transparent;
+        border-right: 0.275rem solid transparent;
+        border-top: 0.375rem solid ${tokens.colors.Grey_8};
     }
 `;
 

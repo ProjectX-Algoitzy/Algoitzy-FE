@@ -1,7 +1,30 @@
 import React, { useEffect, useState } from "react";
 import * as itemS from "./Styled/Widget.DailyChallengeWidget.main.styles";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import request from "../../../Api/request";
+
+const getTodayEndTime = () => {
+  const now = new Date();
+  const end = new Date(now);
+  end.setHours(24, 0, 0, 0);
+  return end;
+};
+
+const calculateRemainingTime = () => {
+  const now = new Date();
+  const diff = getTodayEndTime() - now;
+
+  if (diff <= 0) return "00:00:00";
+
+  const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
+  const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
+    2,
+    "0"
+  );
+  const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+};
 
 export default function DailyChallengeWidget() {
   const navigate = useNavigate();
@@ -12,35 +35,16 @@ export default function DailyChallengeWidget() {
     return new Date().toISOString().split("T")[0]; // "2025-08-06"
   });
 
-  const getTodayEndTime = () => {
-    const now = new Date();
-    const end = new Date(now);
-    end.setHours(24, 0, 0, 0);
-    return end;
-  };
-
-  const calculateRemainingTime = () => {
-    const now = new Date();
-    const diff = getTodayEndTime() - now;
-
-    if (diff <= 0) return "00:00:00";
-
-    const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
-    const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
-      2,
-      "0"
-    );
-    const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
-
-    return `${hours}:${minutes}:${seconds}`;
-  };
-
   const fetchChallengeStatus = async () => {
     try {
-      const { data } = await axios.get("/api/challenge/status");
-      setIsSolved(data.solved);
+      const response = await request.get("/challenge/check-join");
+      if (response.isSuccess) {
+        setIsSolved(response.result);
+      } else {
+        console.error("데일리 챌린지 상태 조회 실패:", response);
+      }
     } catch (error) {
-      console.error("데일리 챌린지 상태 가져오기 실패", error);
+      console.error("데일리 챌린지 상태 조회 오류", error);
     }
   };
 

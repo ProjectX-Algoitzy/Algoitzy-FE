@@ -8,8 +8,8 @@ export const DailyChallengeWidget = styled.div`
   width: 11.54rem;
   height: 7rem;
   background-color: white;
-  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.1);
-  border-radius: 0.6rem;
+  box-shadow: 0 0.166rem 0.563rem 0.25rem rgba(80, 115, 135, 0.15);
+  border-radius: 0.542rem;
 
   z-index: 999;
 `;

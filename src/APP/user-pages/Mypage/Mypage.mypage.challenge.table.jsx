@@ -150,7 +150,7 @@ export default function ChallengeTable({
                 >
                   {items.length === 0 ? (
                     <itemS.NoItemsContainer>
-                      등록한 문의가 없습니다.
+                      챌린지 보상 내역이 없습니다.
                     </itemS.NoItemsContainer>
                   ) : (
                     items.map((item, index) => (

@@ -57,7 +57,8 @@ export const TabBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: ${(props) => (props.isInquiryVisible ? "13.34rem" : "8rem")};
+  /* width: ${(props) => (props.isInquiryVisible ? "13.34rem" : "8rem")}; */
+  width: ${(props) => (props.isInquiryVisible ? "20.84rem" : "15.5rem")};
   height: 2rem;
 `;
 

@@ -45,6 +45,12 @@ export default function MyInfo({
       <itemS.TabBtnContainer>
         <itemS.TabBox isInquiryVisible={!isRoleAdmin && isMemberMatch}>
           <itemS.Tab
+            onClick={() => handleTabClick("challenge")}
+            active={activeTab === "challenge"}
+          >
+            챌린지 보상
+          </itemS.Tab>
+          <itemS.Tab
             onClick={() => handleTabClick("study")}
             active={activeTab === "study"}
           >

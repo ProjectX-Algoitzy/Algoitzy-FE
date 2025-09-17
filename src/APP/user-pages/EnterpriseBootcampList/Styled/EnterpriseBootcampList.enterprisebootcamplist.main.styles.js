@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
+import styled from "styled-components";
+import * as tokens from "../../../../tokens";
 
 export const OuterContainer = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   border-radius: 0.83rem;
   padding: 6.58rem 0;
   margin-bottom: 4.08rem;
@@ -68,7 +68,7 @@ export const Search = styled.input`
   margin: 0 0.42rem;
   border: none;
   outline: none;
-  
+
   &:focus {
     outline: none;
   }
@@ -152,7 +152,7 @@ export const CategoryDrop = styled.div`
 export const SortIcon = styled.img`
   width: 1rem;
   height: 1rem;
-  self-items: center;
+  align-self: center;
   cursor: pointer;
 `;
 
@@ -166,7 +166,7 @@ export const SortDrop = styled.div`
   height: 3rem;
   border-radius: 0.17rem;
   position: absolute;
-  box-shadow: 0 0.08rem 0.42rem 0.08rem rgba(58, 107, 135, 0.10);
+  box-shadow: 0 0.08rem 0.42rem 0.08rem rgba(58, 107, 135, 0.1);
   z-index: 99;
   top: -0.17rem;
 `;
@@ -179,11 +179,11 @@ export const SortText = styled.div`
   height: 1.5rem;
   ${tokens.typography.B3_M_14};
   color: ${tokens.colors.Grey_6};
-  
+
   &:hover {
-    background-color: rgba(102, 201, 255, 0.2); 
+    background-color: rgba(102, 201, 255, 0.2);
   }
-  
+
   cursor: pointer;
 `;
 
@@ -206,7 +206,7 @@ export const BtnContainer = styled.div`
 export const Pagination = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   padding: 0.83rem;
   list-style: none;
 `;
@@ -214,24 +214,25 @@ export const Pagination = styled.div`
 export const PaginationArrow = styled.div`
   width: 1rem;
   height: 1rem;
-  background-image: url('/img/grayarrow.png');
+  background-image: url("/img/grayarrow.png");
   background-size: contain;
   background-repeat: no-repeat;
-  transform: ${(props) => (props.left ? 'rotate(180deg)' : 'none')};
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  transform: ${(props) => (props.left ? "rotate(180deg)" : "none")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
 export const PaginationNumber = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   margin: 0 0.21rem;
   width: 0.33rem;
   height: 0.88rem;
   padding: 0.42rem;
   cursor: pointer;
-  color: ${(props) => (props.active ? tokens.colors.Blue_3 : tokens.colors.B_Grey_7)};
-  font-weight: ${(props) => (props.active ? 'bold' : 'normal')};
+  color: ${(props) =>
+    props.active ? tokens.colors.Blue_3 : tokens.colors.B_Grey_7};
+  font-weight: ${(props) => (props.active ? "bold" : "normal")};
   ${tokens.typography.B3_M_14};
 `;

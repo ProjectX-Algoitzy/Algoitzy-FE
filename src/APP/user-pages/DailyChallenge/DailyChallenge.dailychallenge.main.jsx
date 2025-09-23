@@ -19,6 +19,7 @@ export default function DailyChallenge() {
   const [tierSrc, setTierSrc] = useState('https://static.solved.ac/tier_small/0.svg');
   const [challengeData, setChallengeData] = useState(null);
   const [hasLoadedChallengeData, setHasLoadedChallengeData] = useState(false);
+  const [participantsCount, setParticipantsCount] = useState(0);
   const [hasJoinedToday, setHasJoinedToday] = useState(false);
   const [challengeHistory, setChallengeHistory] = useState([]);
 
@@ -83,7 +84,8 @@ export default function DailyChallenge() {
     try {
       const response = await request.get('/challenge-join-log');
       if (response.isSuccess && response.result?.joinLogList) {
-        setChallengeHistory(response.result.joinLogList);
+        setChallengeHistory(response.result.joinLogListv|| []);
+        setParticipantsCount(response.result.totalCount || 0);
       }
     } catch (error) {
       console.error('챌린지 이력 조회 실패:', error);
@@ -229,11 +231,11 @@ export default function DailyChallenge() {
           {timeLeft}
         </Styled.Timer>
         <Styled.Btn onClick={handleProblemSolve} disabled={isLoading}>
-          {isLoading ? '로딩 중...' : '문제 풀기'}
+          문제 풀기
         </Styled.Btn>
         <Styled.ParticipantsDescription>
           오늘은{" "}
-          <Styled.ParticiPantsHighlight>8</Styled.ParticiPantsHighlight>
+          <Styled.ParticiPantsHighlight>{participantsCount}</Styled.ParticiPantsHighlight>
           명이 참여하고 있어요!
         </Styled.ParticipantsDescription>
         <Styled.ChallengeDescription>

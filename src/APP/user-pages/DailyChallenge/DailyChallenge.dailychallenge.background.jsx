@@ -32,7 +32,7 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-/* ===== 좌표 유틸 ===== */
+/* ===== 좌표/문자 유틸 ===== */
 const SYMBOLS1 = ["<","*",";",":","/","%","=","{","}","[","!","/","<","$",":","+"];
 const SYMBOLS2 = ["<","&","#","{}","[","/","]","{","()","*","//","<","!",">","#",";"];
 const toPct = (v) => (v / 1000) * 100;
@@ -66,7 +66,7 @@ function vLineDots2(x, y1, y2, gap, color = "pink", idPrefix = "v") {
   return out;
 }
 
-/* ----- 길 정의 (+|      |+) — Dots & Path 일치 ----- */
+/* ----- 길 정의 ----- */
 /* 분홍 */
 function buildPinkDots() {
   const leftH  = hLineDots1(156, 28, 174, 24, "pink", "ph");
@@ -98,7 +98,7 @@ function buildBluePathD() {
   ].join(" ");
 }
 
-/* 스냅용 */
+/* 스냅용 (드래그 드롭) */
 function closestLengthOnPath(pathEl, x, y, samples = 350) {
   const total = pathEl.getTotalLength();
   let best = 0, bestD = Infinity;
@@ -111,8 +111,110 @@ function closestLengthOnPath(pathEl, x, y, samples = 350) {
   return best;
 }
 
+/* ===== Trail(잔상) 훅: 코알라와 독립적으로 선분 배열을 관리 ===== */
+function useTrails({
+  color = "#FFBEC6",
+  source,           // {x, y, rot}
+  enabled,          // true면 잔상 생성 / false면 생성 중지
+  headGap = 10,     // 머리 바로 뒤 지점(선분이 머리쪽부터 이어짐)
+  segLen = 80,      // 최대 선 길이(캡)
+  width = 2,
+  fadeMs = 2300,
+  spawnEveryPx = 12,
+  maxSegments = 450,
+}) {
+  const [segments, setSegments] = useState([]);
+  const srcRef = useRef({ x: 0, y: 0, rot: 0 });
+  const lastHeadRef = useRef(null);
+  const lastSpawnAtRef = useRef({ x: 0, y: 0 });
+  const nowRef = useRef(typeof performance !== "undefined" ? performance.now() : Date.now());
+  const [, forceTick] = useState(0);
+
+  // 축 정렬(0°, 90°, 180°)인지 판정 (허용 오차 포함)
+  const ORIENT_EPS = 0.5;
+  const isAxisAligned = (x1, y1, x2, y2) =>
+    Math.abs(x1 - x2) <= ORIENT_EPS || Math.abs(y1 - y2) <= ORIENT_EPS;
+
+  useEffect(() => {
+    srcRef.current = { x: source.x, y: source.y, rot: source.rot || 0 };
+  }, [source.x, source.y, source.rot]);
+
+  useEffect(() => {
+    let raf = 0;
+    const step = (t) => {
+      nowRef.current = t;
+
+      // 1) 만료 제거
+      setSegments((prev) => prev.filter((s) => (t - s.t) < fadeMs));
+
+      // 2) 이동 누적 기준 이상이면 선분 추가
+      const { x, y, rot } = srcRef.current;
+      const dx = x - lastSpawnAtRef.current.x;
+      const dy = y - lastSpawnAtRef.current.y;
+      const moved2 = dx * dx + dy * dy;
+
+      if (enabled) {
+        const hx = x - Math.cos(rot) * headGap;
+        const hy = y - Math.sin(rot) * headGap;
+
+        if (moved2 >= spawnEveryPx * spawnEveryPx) {
+          if (lastHeadRef.current) {
+            let { x: px, y: py } = lastHeadRef.current;
+
+            // 최대 길이 캡
+            const vx = hx - px, vy = hy - py;
+            const dist = Math.hypot(vx, vy);
+            if (dist > segLen) {
+              const s = segLen / dist;
+              px = hx - vx * s;
+              py = hy - vy * s;
+            }
+
+            // ⬇️ 축 정렬(가로/세로)인 경우에만 잔상 추가
+            if (isAxisAligned(px, py, hx, hy)) {
+              const id = `${color}-${t}-${hx.toFixed(1)}-${hy.toFixed(1)}`;
+              setSegments((prev) => {
+                const next = [...prev, { id, x1: px, y1: py, x2: hx, y2: hy, t }];
+                return next.length > maxSegments ? next.slice(next.length - maxSegments) : next;
+              });
+            }
+          }
+
+          // 기준 지점 갱신(잔상 추가 여부와 무관하게 최신 위치로 동기화)
+          lastHeadRef.current = { x: hx, y: hy };
+          lastSpawnAtRef.current = { x, y };
+        }
+      } else {
+        const hx = x - Math.cos(rot) * headGap;
+        const hy = y - Math.sin(rot) * headGap;
+        lastHeadRef.current = { x: hx, y: hy };
+        lastSpawnAtRef.current = { x, y };
+      }
+
+      // 3) 투명도 업데이트용 틱
+      forceTick(t);
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [enabled, headGap, segLen, fadeMs, spawnEveryPx, color, maxSegments]);
+
+  return {
+    segments,
+    width,
+    color,
+    opacityOf: (t0) => {
+      const age = Math.max(0, (nowRef.current - t0) / fadeMs);
+      const clamped = Math.min(1, age);
+      return 1 - clamped; // 선형 페이드아웃
+    },
+  };
+}
+
 /* ===== 공통 훅(한 코알라) ===== */
-function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22, disabled = false }) {
+function useKoalaMover({
+  svgRef, pathSelector, dots, speed = 120, hitRadius = 22, disabled = false
+}) {
   const koalaRef = useRef(null);
   const pathRef = useRef(null);
 
@@ -120,8 +222,14 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
   const timersRef = useRef(new Map());
   const hoveredRef = useRef(false);
   const draggingRef = useRef(false);
+  const [hovered, setHovered] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const progressRef = useRef(0);
   const totalLenRef = useRef(1);
+  const lastRotRef = useRef(0); // 마지막 각도(스냅 전후 기록용)
+
+  // 코알라 현재 위치/방향 (SVG 좌표계 0..1000)
+  const [pos, setPos] = useState({ x: 0, y: 0, rot: 0 });
 
   /* init */
   useEffect(() => {
@@ -137,7 +245,9 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
     progressRef.current = totalLenRef.current * 0.05;
 
     const p = path.getPointAtLength(progressRef.current);
-    setKoalaPosPercent(p.x, p.y, 0);
+    const rot = safeTangent(path, progressRef.current, totalLenRef.current, lastRotRef.current);
+    lastRotRef.current = rot;
+    setKoalaPosPercent(p.x, p.y, rot);
   }, [svgRef, pathSelector, disabled]);
 
   /* loop */
@@ -154,8 +264,9 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
         progressRef.current = prog;
 
         const p0 = path.getPointAtLength(prog);
-        const p1 = path.getPointAtLength(Math.min(prog + 1, total));
-        const rot = Math.atan2(p1.y - p0.y, p1.x - p0.x);
+        const rot = safeTangent(path, prog, total, lastRotRef.current);
+        lastRotRef.current = rot;
+
         setKoalaPosPercent(p0.x, p0.y, rot);
         eatNearby(p0.x, p0.y);
       }
@@ -169,8 +280,8 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
   useEffect(() => {
     if (disabled) return;
     const k = koalaRef.current; if (!k) return;
-    const onEnter = () => (hoveredRef.current = true);
-    const onLeave = () => (hoveredRef.current = false);
+    const onEnter = () => { hoveredRef.current = true; setHovered(true); };
+    const onLeave = () => { hoveredRef.current = false; setHovered(false); };
     k.addEventListener("pointerenter", onEnter);
     k.addEventListener("pointerleave", onLeave);
     return () => {
@@ -183,7 +294,7 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
   useEffect(() => {
     if (disabled) return;
     const k = koalaRef.current; if (!k) return;
-    const onDown = (e) => { draggingRef.current = true; k.setPointerCapture(e.pointerId); };
+    const onDown = (e) => { draggingRef.current = true; setDragging(true); k.setPointerCapture(e.pointerId); };
     const onMove = (e) => {
       if (!draggingRef.current) return;
       const svg = svgRef.current; if (!svg) return;
@@ -193,7 +304,7 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
       setKoalaPosPercent(p.x, p.y);
     };
     const onUp = (e) => {
-      if (!draggingRef.current) return; draggingRef.current = false;
+      if (!draggingRef.current) return; draggingRef.current = false; setDragging(false);
       const svg = svgRef.current; const path = pathRef.current; if (!svg || !path) return;
       const rect = svg.getBoundingClientRect();
       const x = (e.clientX - rect.left) * (1000 / rect.width);
@@ -201,7 +312,9 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
       const len = closestLengthOnPath(path, x, y, 500);
       progressRef.current = len; totalLenRef.current = path.getTotalLength();
       const p = path.getPointAtLength(len);
-      setKoalaPosPercent(p.x, p.y);
+      const rot = safeTangent(path, len, totalLenRef.current, lastRotRef.current);
+      lastRotRef.current = rot;
+      setKoalaPosPercent(p.x, p.y, rot);
     };
     k.addEventListener("pointerdown", onDown);
     window.addEventListener("pointermove", onMove, { passive: true });
@@ -213,13 +326,38 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
     };
   }, [svgRef, disabled]);
 
-  /* helpers */
+  /* === helpers === */
+
+  // 0°, 90°, 180° 중 가장 가까운 각으로 스냅
+  function snapRightAngle(rad) {
+    const CAND = [0, Math.PI / 2, Math.PI];
+    let best = CAND[0], bestDiff = Math.PI * 2;
+    for (const c of CAND) {
+      const diff = Math.abs(Math.atan2(Math.sin(rad - c), Math.cos(rad - c)));
+      if (diff < bestDiff) { bestDiff = diff; best = c; }
+    }
+    return best;
+  }
+
+  // 방어 로직 제거: 앞쪽 한 점만 이용해 접선 추정 → 곧바로 직각 스냅
+  function safeTangent(path, len, total /*, fallbackRot */) {
+    const EPS = 0.8; // 미세 전진 샘플
+    const l0 = Math.min(Math.max(len, 0), total);
+    const l1 = Math.min(len + EPS, total);
+    const p0 = path.getPointAtLength(l0);
+    const p1 = path.getPointAtLength(l1);
+    const ang = Math.atan2(p1.y - p0.y, p1.x - p0.x) || 0; // (0,0)일 때 0 처리
+    return snapRightAngle(ang);
+  }
+
   function setKoalaPosPercent(x, y, rad) {
     const el = koalaRef.current; if (!el) return;
     el.style.setProperty("--x", `${toPct(x)}%`);
     el.style.setProperty("--y", `${toPct(y)}%`);
     if (typeof rad === "number") el.style.setProperty("--rot", `${rad}rad`);
+    setPos((prev) => ({ x, y, rot: typeof rad === "number" ? rad : (prev?.rot ?? 0) }));
   }
+
   function eatNearby(x, y) {
     const r2 = hitRadius * hitRadius;
     setHiddenSet((prev) => {
@@ -240,7 +378,7 @@ function useKoalaMover({ svgRef, pathSelector, dots, speed = 120, hitRadius = 22
     });
   }
 
-  return { koalaRef, hiddenSet };
+  return { koalaRef, hiddenSet, pos, hovered, dragging };
 }
 
 /* ===== Main (한 캔버스) ===== */
@@ -250,7 +388,7 @@ export default function Background() {
   // 환경 감지
   const isMobile = useIsMobile(768);
   const prefersReduced = usePrefersReducedMotion();
-  const disableAnim = isMobile || prefersReduced; // 모바일/저전력 → 애니메이션/심볼 OFF
+  const disableAnim = isMobile || prefersReduced;
 
   // 길/기호
   const pinkDots = useMemo(() => buildPinkDots(), []);
@@ -266,20 +404,83 @@ export default function Background() {
     svgRef, pathSelector: "path.blue", dots: blueDots, disabled: disableAnim
   });
 
+  // 잔상(코알라와 독립)
+  const PINK_COLOR = "#FFBEC6";
+  const BLUE_COLOR = "#8DDFFF";
+  const HEAD_GAP = 10;
+  const TRAIL_LEN = 80;
+  const TRAIL_WIDTH = 2;
+  const FADE_MS = 1000;
+  const SPAWN_EVERY = 1;
+
+  const pinkTrails = useTrails({
+    color: PINK_COLOR,
+    source: pink.pos,
+    enabled: !disableAnim && !pink.hovered && !pink.dragging,
+    headGap: HEAD_GAP,
+    segLen: TRAIL_LEN,
+    width: TRAIL_WIDTH,
+    fadeMs: FADE_MS,
+    spawnEveryPx: SPAWN_EVERY,
+    maxSegments: 450,
+  });
+  const blueTrails = useTrails({
+    color: BLUE_COLOR,
+    source: blue.pos,
+    enabled: !disableAnim && !blue.hovered && !blue.dragging,
+    headGap: HEAD_GAP,
+    segLen: TRAIL_LEN,
+    width: TRAIL_WIDTH,
+    fadeMs: FADE_MS,
+    spawnEveryPx: SPAWN_EVERY,
+    maxSegments: 450,
+  });
+
   return (
     <Styled.Wrap>
-      {/* 단일 SVG 캔버스: 두 색 길 모두 여기에 */}
+      {/* 단일 SVG 캔버스 */}
       <Styled.Svg ref={svgRef} preserveAspectRatio="none">
+        {/* 실제 이동 경로(보이지 않음) */}
         <path className="pink" d={pinkPathD} stroke="none" fill="none" />
         <path className="blue" d={bluePathD} stroke="none" fill="none" />
+
+        {/* 잔상 */}
+        <g aria-label="pink-trails">
+          {pinkTrails.segments.map((s) => (
+            <line
+              key={s.id}
+              x1={s.x1} y1={s.y1}
+              x2={s.x2} y2={s.y2}
+              stroke={pinkTrails.color}
+              strokeWidth={pinkTrails.width}
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              opacity={pinkTrails.opacityOf(s.t)}
+            />
+          ))}
+        </g>
+        <g aria-label="blue-trails">
+          {blueTrails.segments.map((s) => (
+            <line
+              key={s.id}
+              x1={s.x1} y1={s.y1}
+              x2={s.x2} y2={s.y2}
+              stroke={blueTrails.color}
+              strokeWidth={blueTrails.width}
+              strokeLinecap="round"
+              vectorEffect="non-scaling-stroke"
+              opacity={blueTrails.opacityOf(s.t)}
+            />
+          ))}
+        </g>
       </Styled.Svg>
 
-      {/* 심볼: 모바일/저전력에서는 렌더링 자체를 생략 */}
+      {/* 심볼 */}
       {!disableAnim && (
         <>
           {pinkDots.map((d) => (
             <Styled.Sym
-              key={d.id}
+              key={`${d.id}-${d.x}-${d.y}`}
               $xPct={toPct(d.x)}
               $yPct={toPct(d.y)}
               $color="pink"
@@ -290,7 +491,7 @@ export default function Background() {
           ))}
           {blueDots.map((d) => (
             <Styled.Sym
-              key={d.id}
+              key={`${d.id}-${d.x}-${d.y}`}
               $xPct={toPct(d.x)}
               $yPct={toPct(d.y)}
               $color="blue"
@@ -302,7 +503,7 @@ export default function Background() {
         </>
       )}
 
-      {/* 모바일/저전력에서는 코알라/애니메이션 표시 안 함 */}
+      {/* 코알라 */}
       {!disableAnim && (
         <>
           <Styled.Koala

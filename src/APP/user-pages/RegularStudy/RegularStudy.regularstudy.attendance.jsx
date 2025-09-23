@@ -480,11 +480,6 @@ export default function RegularStudyAttendance() {
     // console.log('아이콘 클릭:', { attendanceId, attendanceType });
     // console.log('현재 선택된 항목들:', selectedAttendances);
 
-    if (accumulatedTickets <= 0) {
-      alert('교환권이 부족합니다.');
-      return;
-    }
-
     setSelectedAttendances((prev) => {
       const existingIndex = prev.findIndex(
         (item) =>
@@ -496,10 +491,6 @@ export default function RegularStudyAttendance() {
         // console.log('항목 제거:', { attendanceId, attendanceType });
         return prev.filter((_, index) => index !== existingIndex);
       } else {
-        if (prev.length >= accumulatedTickets) {
-          alert('교환권이 부족합니다.');
-          return prev;
-        }
         // console.log('항목 추가:', { attendanceId, attendanceType });
         return [...prev, { attendanceId, attendanceType }];
       }
@@ -549,7 +540,7 @@ export default function RegularStudyAttendance() {
         //   console.error('서버 에러 메시지:', error.response.data.message);
         //   console.error('서버 에러 코드:', error.response.data.code);
         // }
-        alert('챌린지 보상 적용 중 오류가 발생했습니다.');
+        // alert('챌린지 보상 적용 중 오류가 발생했습니다.');
       }
     }
   };

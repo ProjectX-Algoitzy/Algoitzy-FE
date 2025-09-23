@@ -86,7 +86,7 @@ export default function DailyChallengeWidget() {
   }, [isSolved]);
 
   const handleClick = () => {
-    navigate("/challenge/daily");
+    navigate("/dailychallenge");
   };
 
   // 상태에 따른 텍스트 렌더링

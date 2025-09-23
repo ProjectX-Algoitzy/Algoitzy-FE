@@ -5,18 +5,10 @@ import Ranking from './DailyChallenge.dailychallenge.ranking';
 import Background from './DailyChallenge.dailychallenge.background';
 import request from '../../Api/request';
 
-const dummyTags = [
-  { kor: '#구현', eng: 'implementation' },
-  { kor: '#그래프', eng: 'graph' },
-  { kor: '#문자열', eng: 'string' },
-  { kor: '#문자열', eng: 'string' }
-];
-
 export default function DailyChallenge() {
   const location = useLocation();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
-
 
   const [timeLeft, setTimeLeft] = useState('00:00:00');
   const [timeLeftMs, setTimeLeftMs] = useState(0);
@@ -74,8 +66,6 @@ export default function DailyChallenge() {
     
     try {
       const response = await request.get('/challenge/check-join');
-      console.log('금일 챌린지 참여 여부:', response);
-      
       if (response.isSuccess && response.result) {
         setHasJoinedToday(true);
         // 참여했다면 챌린지 이력도 조회
@@ -92,8 +82,6 @@ export default function DailyChallenge() {
     
     try {
       const response = await request.get('/challenge-join-log');
-      console.log('챌린지 이력:', response);
-      
       if (response.isSuccess && response.result?.joinLogList) {
         setChallengeHistory(response.result.joinLogList);
       }
@@ -101,7 +89,6 @@ export default function DailyChallenge() {
       console.error('챌린지 이력 조회 실패:', error);
     }
   };
-
 
   // 자정까지 남은 시간 계산
   const getMsToMidnight = () => {
@@ -155,7 +142,6 @@ export default function DailyChallenge() {
     try {
       setIsLoading(true);
       const response = await request.get('/challenge/problem/today');
-      console.log('금일 챌린지 문제:', response.result);
       
       if (response.isSuccess) {
         const { problemNumber, level, levelImageUrl, algorithmList } = response.result;
@@ -168,13 +154,10 @@ export default function DailyChallenge() {
           algorithmList
         });
         setHasLoadedChallengeData(true);
-      } else {
-        alert('문제 정보를 불러올 수 없습니다.');
       }
       
     } catch (error) {
       console.error('금일 챌린지 문제 조회 실패:', error);
-      alert('문제를 불러오는데 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsLoading(false);
     }
@@ -279,13 +262,6 @@ export default function DailyChallenge() {
               challengeData.algorithmList.map((algorithm, index) => (
                 <Styled.AlgorithmTag key={index}>
                   <Styled.AlgorithmTagKorText>#{algorithm}</Styled.AlgorithmTagKorText>
-                </Styled.AlgorithmTag>
-              ))
-            ) : showTags ? (
-              dummyTags.map((tag, index) => (
-                <Styled.AlgorithmTag key={index}>
-                  <Styled.AlgorithmTagKorText>{tag.kor}</Styled.AlgorithmTagKorText>
-                  <Styled.AlgorithmTagEngText>{tag.eng}</Styled.AlgorithmTagEngText>
                 </Styled.AlgorithmTag>
               ))
             ) : null}

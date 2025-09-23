@@ -33,20 +33,35 @@ function usePrefersReducedMotion() {
 }
 
 /* ===== 좌표 유틸 ===== */
-const SYMBOLS = ["<","!",";",":","/","[","]","{","}","=","!","/","<",">",":",";"];
+const SYMBOLS1 = ["<","*",";",":","/","%","=","{","}","[","!","/","<","$",":","+"];
+const SYMBOLS2 = ["<","&","#","{}","[","/","]","{","()","*","//","<","!",">","#",";"];
 const toPct = (v) => (v / 1000) * 100;
 
-function hLineDots(y, x1, x2, gap = 48, color = "pink", idPrefix = "h") {
+function hLineDots1(y, x1, x2, gap, color = "pink", idPrefix = "h") {
   const out = []; let id = 0;
   for (let x = x1; x <= x2; x += gap) {
-    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS[id % SYMBOLS.length] });
+    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS1[id % SYMBOLS1.length] });
   }
   return out;
 }
-function vLineDots(x, y1, y2, gap = 48, color = "pink", idPrefix = "v") {
+function hLineDots2(y, x1, x2, gap, color = "pink", idPrefix = "h") {
+  const out = []; let id = 0;
+  for (let x = x1; x <= x2; x += gap) {
+    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS2[id % SYMBOLS2.length] });
+  }
+  return out;
+}
+function vLineDots1(x, y1, y2, gap, color = "pink", idPrefix = "v") {
   const out = []; let id = 0;
   for (let y = y1; y <= y2; y += gap) {
-    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS[id % SYMBOLS.length] });
+    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS1[id % SYMBOLS1.length] });
+  }
+  return out;
+}
+function vLineDots2(x, y1, y2, gap, color = "pink", idPrefix = "v") {
+  const out = []; let id = 0;
+  for (let y = y1; y <= y2; y += gap) {
+    out.push({ id: `${idPrefix}-${id++}`, x, y, color, char: SYMBOLS2[id % SYMBOLS2.length] });
   }
   return out;
 }
@@ -54,14 +69,14 @@ function vLineDots(x, y1, y2, gap = 48, color = "pink", idPrefix = "v") {
 /* ----- 길 정의 (+|      |+) — Dots & Path 일치 ----- */
 /* 분홍 */
 function buildPinkDots() {
-  const leftH  = hLineDots(150, 20, 200, 24, "pink", "ph");
-  const midV   = vLineDots(100, 60, 420, 24, "pink", "pm");
-  const rightV = vLineDots(900, 60, 420, 24, "pink", "pr");
+  const leftH  = hLineDots1(156, 28, 174, 24, "pink", "ph");
+  const midV   = vLineDots2(100, 60, 410, 24, "pink", "pm");
+  const rightV = vLineDots1(900, 60, 410, 24, "pink", "pr");
   return [...leftH, ...midV, ...rightV];
 }
 function buildPinkPathD() {
   return [
-    "M  20 150 L 200 150",
+    "M  20 156 L 200 156",
     "M 100  60 L 100 420",
     "M 900  60 L 900 420",
   ].join(" ");
@@ -69,16 +84,17 @@ function buildPinkPathD() {
 
 /* 하늘 */
 function buildBlueDots() {
-  const leftV  = vLineDots(200, 60, 420, 24, "blue", "bvL");
-  const rightV = vLineDots(800, 60, 420, 24, "blue", "bvR");
-  const rightH = hLineDots(250, 800, 980, 24, "blue", "bh");
-  return [...leftV, ...rightV, ...rightH];
+  const leftV  = vLineDots1(200, 60, 410, 24, "blue", "bvL");
+  const rightV = vLineDots2(800, 60, 410, 24, "blue", "bvR");
+  const rightH = hLineDots1(252, 800, 890, 24, "blue", "bh");
+  const rightH2 = hLineDots2(252, 928, 978, 24, "blue", "bh");
+  return [...leftV, ...rightV, ...rightH, ...rightH2];
 }
 function buildBluePathD() {
   return [
     "M 200  60 L 200 420",
-    "M 800  60 L 800 420",
-    "M 800 250 L 980 250",
+    //"M 800  60 L 800 420",
+    //"M 800 250 L 980 250",
   ].join(" ");
 }
 

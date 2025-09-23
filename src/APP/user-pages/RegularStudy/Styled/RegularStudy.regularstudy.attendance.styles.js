@@ -200,6 +200,25 @@ export const ImgIcon = styled.img`
   height: 1.96rem;
 `;
 
+// 아이콘 컨테이너 추가 - 상대적 위치 설정
+export const IconContainer = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 1.96rem;
+  height: 1.96rem;
+`;
+
+// 스탬프 이미지 스타일 추가
+export const StampIcon = styled.img`
+  position: absolute;
+  top: -0.6rem;
+  right: -0.6rem;
+  width: 1.506rem;
+  height: 1.506rem;
+  z-index: 2;
+  pointer-events: none; /* 클릭 이벤트 차단 */
+`;
+
 export const BtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;

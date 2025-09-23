@@ -177,7 +177,18 @@ export default function RegularStudyAttendance() {
         : attendanceList;
 
     filteredAttendanceList.forEach(
-      ({ attendanceId, name, handle, problemYN, blogYN, workbookYN, week }) => {
+      ({
+        attendanceId,
+        name,
+        handle,
+        problemYN,
+        problemRewardYn,
+        blogYN,
+        blogRewardYn,
+        workbookYN,
+        workbookRewardYn,
+        week,
+      }) => {
         const uniqueKey = `${name}-${handle}`;
         if (!students[uniqueKey]) {
           students[uniqueKey] = {
@@ -201,17 +212,24 @@ export default function RegularStudyAttendance() {
             );
 
             students[uniqueKey]['문제 인증'][week] = problemYN ? (
-              <itemS.ImgIcon
-                src={
-                  isChallengeRewardMode
-                    ? '/img/untouched-attendance-icon.png'
-                    : '/img/attendanceicon.png'
-                }
-                alt="출석"
-                style={{
-                  cursor: 'default',
-                }}
-              />
+              <itemS.IconContainer>
+                <itemS.ImgIcon
+                  src={
+                    isChallengeRewardMode && problemRewardYn
+                      ? '/img/attendanceicon.png'
+                      : isChallengeRewardMode
+                      ? '/img/untouched-attendance-icon.png'
+                      : '/img/attendanceicon.png'
+                  }
+                  alt="출석"
+                  style={{
+                    cursor: 'default',
+                  }}
+                />
+                {isChallengeRewardMode && problemRewardYn && (
+                  <itemS.StampIcon src="/img/stamp.png" alt="스탬프" />
+                )}
+              </itemS.IconContainer>
             ) : (
               <itemS.ImgIcon
                 src={
@@ -241,17 +259,24 @@ export default function RegularStudyAttendance() {
             );
 
             students[uniqueKey]['블로그 포스팅'][week] = blogYN ? (
-              <itemS.ImgIcon
-                src={
-                  isChallengeRewardMode
-                    ? '/img/untouched-attendance-icon.png'
-                    : '/img/attendanceicon.png'
-                }
-                alt="출석"
-                style={{
-                  cursor: 'default',
-                }}
-              />
+              <itemS.IconContainer>
+                <itemS.ImgIcon
+                  src={
+                    isChallengeRewardMode && blogRewardYn
+                      ? '/img/attendanceicon.png'
+                      : isChallengeRewardMode
+                      ? '/img/untouched-attendance-icon.png'
+                      : '/img/attendanceicon.png'
+                  }
+                  alt="출석"
+                  style={{
+                    cursor: 'default',
+                  }}
+                />
+                {isChallengeRewardMode && blogRewardYn && (
+                  <itemS.StampIcon src="/img/stamp.png" alt="스탬프" />
+                )}
+              </itemS.IconContainer>
             ) : (
               <itemS.ImgIcon
                 src={
@@ -281,17 +306,24 @@ export default function RegularStudyAttendance() {
             );
 
             students[uniqueKey]['주말 모의테스트'][week] = workbookYN ? (
-              <itemS.ImgIcon
-                src={
-                  isChallengeRewardMode
-                    ? '/img/untouched-attendance-icon.png'
-                    : '/img/attendanceicon.png'
-                }
-                alt="출석"
-                style={{
-                  cursor: 'default',
-                }}
-              />
+              <itemS.IconContainer>
+                <itemS.ImgIcon
+                  src={
+                    isChallengeRewardMode && workbookRewardYn
+                      ? '/img/attendanceicon.png'
+                      : isChallengeRewardMode
+                      ? '/img/untouched-attendance-icon.png'
+                      : '/img/attendanceicon.png'
+                  }
+                  alt="출석"
+                  style={{
+                    cursor: 'default',
+                  }}
+                />
+                {isChallengeRewardMode && workbookRewardYn && (
+                  <itemS.StampIcon src="/img/stamp.png" alt="스탬프" />
+                )}
+              </itemS.IconContainer>
             ) : (
               <itemS.ImgIcon
                 src={

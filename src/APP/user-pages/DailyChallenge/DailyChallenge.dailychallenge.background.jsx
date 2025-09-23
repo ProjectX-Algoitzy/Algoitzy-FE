@@ -71,14 +71,14 @@ function vLineDots2(x, y1, y2, gap, color = "pink", idPrefix = "v") {
 function buildPinkDots() {
   const leftH  = hLineDots1(156, 28, 174, 24, "pink", "ph");
   const midV   = vLineDots2(100, 60, 410, 24, "pink", "pm");
-  const rightV = vLineDots1(900, 60, 410, 24, "pink", "pr");
+  const rightV = vLineDots1(898, 60, 410, 24, "pink", "pr");
   return [...leftH, ...midV, ...rightV];
 }
 function buildPinkPathD() {
   return [
-    "M  20 156 L 200 156",
+    "M  28 156 L 200 156",
     "M 100  60 L 100 420",
-    "M 900  60 L 900 420",
+    "M 898  60 L 898 420",
   ].join(" ");
 }
 
@@ -86,15 +86,15 @@ function buildPinkPathD() {
 function buildBlueDots() {
   const leftV  = vLineDots1(200, 60, 410, 24, "blue", "bvL");
   const rightV = vLineDots2(800, 60, 410, 24, "blue", "bvR");
-  const rightH = hLineDots1(252, 800, 890, 24, "blue", "bh");
-  const rightH2 = hLineDots2(252, 928, 978, 24, "blue", "bh");
-  return [...leftV, ...rightV, ...rightH, ...rightH2];
+  const rightH1 = hLineDots1(252, 800, 890, 24, "blue", "bh1");
+  const rightH2 = hLineDots2(252, 928, 978, 24, "blue", "bh2");
+  return [...leftV, ...rightV, ...rightH1, ...rightH2];
 }
 function buildBluePathD() {
   return [
-    "M 200  60 L 200 420",
-    //"M 800  60 L 800 420",
-    //"M 800 250 L 980 250",
+    "M 200  60 L 200 410",
+    "M 800  60 L 800 410",
+    "M 800 252 L 978 252",
   ].join(" ");
 }
 

@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
 
 export const InnerContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid ${tokens.colors.B_Grey_3};
+  border-bottom: ${({ $dark }) => $dark ? "none" : `1px solid ${tokens.colors.B_Grey_3}`};
 `;
 
 // HeaderWrap부분이 admin이랑 약간 다른 듯
@@ -115,6 +115,8 @@ export const Btn = styled.button`
   @media (max-width: 300px) {
      ${tokens.typography.T7_SB_12};
   }
+
+  background: ${({ $dark }) => $dark && "rgba(0, 153, 237, 0.18)"};
 `;
 
 // user의 경우에는 @media를 통해 모바일 버젼 만드는 것도 고려해서 수정이 필요함

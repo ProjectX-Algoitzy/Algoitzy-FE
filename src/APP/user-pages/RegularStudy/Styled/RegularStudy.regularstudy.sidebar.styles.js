@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import * as tokens from "../../../../tokens";
+import styled from 'styled-components';
+import * as tokens from '../../../../tokens';
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +22,8 @@ export const InnerContainer = styled.div`
   margin-bottom: 4.17rem;
 `;
 
-export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 감싸주는 컨테이너*/
+export const StudyImgContainer = styled.div`
+  /*해당 스터디의 이미지를 감싸주는 컨테이너*/
   display: flex;
   flex-direction: column;
   width: 14.29rem;
@@ -30,11 +31,10 @@ export const StudyImgContainer = styled.div` /*해당 스터디의 이미지를 
   border-radius: 0.33rem;
   background-color: ${tokens.colors.Grey_4};
   @media (max-width: 600px) {
-  
   }
 `;
 
-export const TitleContainer = styled.div` 
+export const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
   max-width: 14.29rem;
@@ -42,7 +42,11 @@ export const TitleContainer = styled.div`
   ${tokens.typography.T3_B_24};
   margin-top: 0.67rem;
   align-items: center;
-  
+
+  /* 줄바꿈 허용 */
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
 `;
 
 export const CountAndOnlineContainer = styled.div`
@@ -85,7 +89,8 @@ export const LinkContainer = styled.div`
 export const styledLink = styled.div`
   display: flex;
   flex-direction: row;
-  color: ${(props) => (props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7)};
+  color: ${(props) =>
+    props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7};
   ${tokens.typography.T5_SB_16};
   padding-top: 0.71rem;
   padding-bottom: 0.75rem;
@@ -97,7 +102,8 @@ export const styledLink = styled.div`
 export const ThirdstyledLink = styled.div`
   display: flex;
   flex-direction: row;
-  color: ${(props) => (props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7)};
+  color: ${(props) =>
+    props.isActive ? tokens.colors.Blue_0_Main : tokens.colors.Grey_7};
   ${tokens.typography.T5_SB_16};
   padding-top: 0.71rem;
   padding-bottom: 0.75rem;
@@ -112,7 +118,8 @@ export const ArrowImg = styled.img`
   height: 1rem;
 `;
 
-export const Btn = styled.button` /*지원하기 버튼*/
+export const Btn = styled.button`
+  /*지원하기 버튼*/
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;
@@ -128,7 +135,8 @@ export const Btn = styled.button` /*지원하기 버튼*/
   }
 `;
 
-export const AnnouncementBlock = styled.button` /*지원 기간이 아닙니다 전용 박스*/
+export const AnnouncementBlock = styled.button`
+  /*지원 기간이 아닙니다 전용 박스*/
   width: 14.33rem;
   height: 2rem;
   border-radius: 0.167rem;

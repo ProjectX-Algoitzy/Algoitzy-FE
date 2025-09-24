@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import * as itemS from "../RegularStudy/Styled/RegularStudy.regularstudy.sidebar.styles";
+import * as itemS from '../RegularStudy/Styled/RegularStudy.regularstudy.sidebar.styles';
 import request from '../../Api/request';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function RegularStudySideBar({ setActiveComponent, activeComponent }) {
+export default function RegularStudySideBar({
+  setActiveComponent,
+  activeComponent,
+}) {
   const { id } = useParams(); // 파라미터로 받는 해당 정규스터디의 studyId
   const navigate = useNavigate();
   const [regularStudyInfo, setRegularStudyInfo] = useState(null);
@@ -12,15 +15,15 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
     const fetchRegularStudyInfo = async () => {
       try {
         const response = await request.get(`study/${id}/info`);
-        console.log("정규 스터디 사이드 바 조회 정보: ", response);
+        // console.log("정규 스터디 사이드 바 조회 정보: ", response);
         setRegularStudyInfo(response.result);
-        if (response["isSuccess"]) {
-          console.log("정규 스터디 조회 성공");
+        if (response['isSuccess']) {
+          console.log('정규 스터디 조회 성공');
         } else {
-          console.error("정규 스터디 조회 실패:", response);
+          console.error('정규 스터디 조회 실패:', response);
         }
       } catch (err) {
-        console.error("정규스터디 정보 조회 오류", err);
+        console.error('정규스터디 정보 조회 오류', err);
       }
     };
     fetchRegularStudyInfo();
@@ -30,7 +33,9 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
     if (regularStudyInfo.answerYN) {
       navigate(`/writingapplication/answer/${regularStudyInfo.answerId}`);
     } else {
-      navigate(`/writingapplication/application/${regularStudyInfo.applicationId}`);
+      navigate(
+        `/writingapplication/application/${regularStudyInfo.applicationId}`
+      );
     }
   };
 
@@ -40,14 +45,35 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
         {regularStudyInfo ? (
           <>
             <itemS.StudyImgContainer>
-              <img src={regularStudyInfo.profileUrl} alt="스터디 이미지" style={{ width: "100%", height: "100%" }} />
+              <img
+                src={regularStudyInfo.profileUrl}
+                alt="스터디 이미지"
+                style={{ width: '100%', height: '100%' }}
+              />
             </itemS.StudyImgContainer>
             <itemS.TitleContainer>
-              {regularStudyInfo.studyName} <img src="/img/iconregularstudy.png" alt="정규스터디 아이콘" style={{ marginLeft: "0.333rem", width: "1.833rem", height: "0.875rem" }} />
+              {regularStudyInfo.studyName}{' '}
+              <img
+                src="/img/iconregularstudy.png"
+                alt="정규스터디 아이콘"
+                style={{
+                  marginLeft: '0.333rem',
+                  width: '1.833rem',
+                  height: '0.875rem',
+                }}
+              />
             </itemS.TitleContainer>
             <itemS.CountAndOnlineContainer>
               <itemS.CountContainer>
-                <img src="/img/iconpeople.png" alt="사람아이콘" style={{ width: "1rem", height: "1rem", marginRight: "0.333rem" }} />
+                <img
+                  src="/img/iconpeople.png"
+                  alt="사람아이콘"
+                  style={{
+                    width: '1rem',
+                    height: '1rem',
+                    marginRight: '0.333rem',
+                  }}
+                />
                 {regularStudyInfo.memberCount}명
               </itemS.CountContainer>
             </itemS.CountAndOnlineContainer>
@@ -62,13 +88,15 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
                 onClick={() => setActiveComponent('curriculum')}
                 isActive={activeComponent === 'curriculum'}
               >
-                커리큘럼 <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
+                커리큘럼{' '}
+                <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
               </itemS.styledLink>
               <itemS.styledLink
                 onClick={() => setActiveComponent('mocktest')}
                 isActive={activeComponent === 'mocktest'}
               >
-                모의테스트 <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
+                모의테스트{' '}
+                <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
               </itemS.styledLink>
               <itemS.ThirdstyledLink
                 onClick={() => setActiveComponent('attendance')}
@@ -77,7 +105,9 @@ export default function RegularStudySideBar({ setActiveComponent, activeComponen
                 출석부 <itemS.ArrowImg src="/img/grayarrow.png" alt="화살표" />
               </itemS.ThirdstyledLink>
               {regularStudyInfo.applicationId === null ? (
-                <itemS.AnnouncementBlock>지원 기간이 아닙니다.</itemS.AnnouncementBlock>
+                <itemS.AnnouncementBlock>
+                  지원 기간이 아닙니다.
+                </itemS.AnnouncementBlock>
               ) : (
                 <itemS.Btn onClick={handleApplicationClick}>지원하기</itemS.Btn>
               )}

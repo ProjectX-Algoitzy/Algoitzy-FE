@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import * as tokens from "../../../../tokens";
 
 export const Container = styled.div`
@@ -28,7 +28,7 @@ export const TabBtnContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_2};
+  border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
   padding-bottom: 0.5rem;
   margin-top: 4rem;
   margin-bottom: 1.83rem;
@@ -44,7 +44,7 @@ export const TabBox = styled.div`
 
 export const Tab = styled.div`
   ${tokens.typography.T3_B_24};
-  text-decoration: ${(props) => (props.active ? 'underline' : 'none')};
+  text-decoration: ${(props) => (props.active ? "underline" : "none")};
   cursor: pointer;
 `;
 
@@ -62,7 +62,7 @@ export const CategoryContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #DFE8F1;
+  background-color: #dfe8f1;
   width: 50rem;
   height: 2.292rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_4};
@@ -156,8 +156,7 @@ export const ScrollTopArrow = styled.img`
   margin-top: 2.292rem;
 `;
 
-export const ScrollBottomArrow = styled.img`
-`;
+export const ScrollBottomArrow = styled.img``;
 
 export const ScrollbarWrapper = styled.div`
   overflow-y: auto;
@@ -216,7 +215,7 @@ export const AllCheck = styled.input`
   }
 
   &:checked::before {
-    content: '✔';
+    content: "✔";
     color: #fff;
     font-size: 0.583rem;
     display: flex;

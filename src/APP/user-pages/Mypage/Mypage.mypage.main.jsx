@@ -5,6 +5,7 @@ import ParticipatedStudyList from "./Mypage.mypage.participatedstudylist";
 import AppliedStudyList from "./Mypage.mypage.appliedstudylist";
 import MyBoardTable from "./Mypage.mypage.myboard.table";
 import MyInquiryTable from "./Mypage.mypage.myinquiry.table";
+import ChallengeTable from "./Mypage.mypage.challenge.table";
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from "../../Api/request";
 
@@ -22,6 +23,11 @@ export default function MyPage() {
   const [totalCount, setTotalCount] = useState(0); // 전체 글 수
   const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
   const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
+  const [rewardLogs, setRewardLogs] = useState([]); // 내 챌린지 보상 이력
+  const [logCount, setLogCount] = useState(0); // 내 챌린지 보상 이력 항목 수
+  const [logType, setLogType] = useState(""); // "" | "ACQUIRED" | "USED"
+  const [rewardCount, setRewardCount] = useState(0); // 누적 교환권 수
+  const [winCount, setWinCount] = useState(0); // 챌린지 win 수
 
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -98,6 +104,48 @@ export default function MyPage() {
       console.error("내 문의하기 목록 조회 오류", error);
     }
   };
+
+  const fetchRewardLog = async (type = "") => {
+    try {
+      const url = type
+        ? `/challenge/reward/log?logType=${type}`
+        : `/challenge/reward/log`;
+      const response = await request.get(url);
+      console.log("보상 로그 조회 성공", response);
+      if (response.isSuccess) {
+        setRewardLogs(response.result.rewardLogList);
+        setLogCount(response.result.totalCount);
+      } else {
+        console.error("보상 로그 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("보상 로그 조회 오류", error);
+    }
+  };
+
+  const fetchRewardStatus = async () => {
+    try {
+      const response = await request.get(`/challenge/reward/status`);
+      console.log("내 챌린지 보상 현황 조회 성공", response);
+
+      if (response.isSuccess) {
+        setRewardCount(response.result.rewardCount);
+        setWinCount(response.result.winCount);
+      } else {
+        console.error("내 챌린지 보상 현황 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("내 챌린지 보상 현황 조회 오류", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRewardStatus();
+  }, []);
+
+  useEffect(() => {
+    fetchRewardLog(logType);
+  }, [handle, logType]); // logType이 바뀌면 자동 호출
 
   useEffect(() => {
     fetchMyInfo();
@@ -197,6 +245,16 @@ export default function MyPage() {
             inquiryCount={inquiryCount}
             isMemberMatch={isMemberMatch}
             fetchinquiry={fetchinquiry}
+          />
+        ) : selectedTab === "challenge" ? (
+          <ChallengeTable
+            items={rewardLogs}
+            logCount={logCount}
+            rewardCount={rewardCount}
+            winCount={winCount}
+            isMemberMatch={isMemberMatch}
+            fetchRewardLog={fetchRewardLog}
+            onChangeLogType={setLogType}
           />
         ) : null}
       </itemS.InnerContainer>

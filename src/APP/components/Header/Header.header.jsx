@@ -3,7 +3,7 @@ import * as itemS from "./Styled/Header.header.styles";
 import request from '../../Api/request';
 import ProfileModal from './Header.profile.modal';
 
-export default function Header() {
+export default function Header({ dark }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [profileUrl, setProfileUrl] = useState('');
@@ -85,11 +85,11 @@ export default function Header() {
 
   return (
     <itemS.HeaderContainer activeMenu={activeMenu}>
-      <itemS.InnerContainer>
+      <itemS.InnerContainer $dark={dark}>
         <itemS.HeaderWrap>
           <itemS.HeaderLeftWrap>
             <itemS.StyledLink to="/" style={{ textDecoration: 'none' }}>
-              <itemS.Rabel src='/img/koalalogo.png' alt='코알라로고' />
+              <itemS.Rabel src={dark ? '/img/koalalogo_dark.png':'/img/koalalogo.png'} alt='코알라로고' />
             </itemS.StyledLink>
           </itemS.HeaderLeftWrap>
           <itemS.HeaderRightWrap>
@@ -143,7 +143,7 @@ export default function Header() {
               </div>
             ) : (
               <itemS.StyledLink to="/login">
-                <itemS.Btn>로그인/회원가입</itemS.Btn>
+                <itemS.Btn $dark={dark}>로그인/회원가입</itemS.Btn>
               </itemS.StyledLink>
             )}
           </itemS.HeaderRightWrap>

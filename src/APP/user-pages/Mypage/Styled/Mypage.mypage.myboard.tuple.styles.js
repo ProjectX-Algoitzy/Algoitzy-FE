@@ -1,11 +1,7 @@
-import styled from 'styled-components';
-import * as tokens from "../../../../tokens"
+import styled from "styled-components";
+import * as tokens from "../../../../tokens";
 
-
-export const Container = styled.div`
-  
-`;
-
+export const Container = styled.div``;
 
 // 튜플 파트 시작
 export const TupleContainer = styled.div`
@@ -16,16 +12,17 @@ export const TupleContainer = styled.div`
   width: 50rem;
   border-bottom: 0.04rem solid ${tokens.colors.B_Grey_3};
 
-  // &:hover {
-  //   background-color: ${tokens.colors.B_Grey_2};
-  //   cursor: ${(props) => (props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
-  // }
   &:hover {
-    background-color: ${(props) => (props.temp === 'true' ? 'inherit' : tokens.colors.B_Grey_2)};
-    cursor: ${(props) => (props.temp === 'true' ? 'default' : props['data-delete-yn'] ? 'not-allowed' : 'pointer')};
+    background-color: ${(props) =>
+      props.temp === "true" ? "inherit" : tokens.colors.B_Grey_2};
+    cursor: ${(props) =>
+      props.temp === "true"
+        ? "default"
+        : props["data-delete-yn"]
+        ? "not-allowed"
+        : "pointer"};
   }
 `;
-
 
 export const CheckBox = styled.input`
   width: 0.875rem;
@@ -46,7 +43,7 @@ export const CheckBox = styled.input`
   }
 
   &:checked::before {
-    content: '✔'; 
+    content: "✔";
     color: #fff;
     font-size: 0.583rem;
     display: flex;
@@ -74,7 +71,7 @@ export const InquiryCheckBox = styled.input`
   }
 
   &:checked::before {
-    content: '✔'; 
+    content: "✔";
     color: #fff;
     font-size: 0.583rem;
     display: flex;
@@ -82,7 +79,6 @@ export const InquiryCheckBox = styled.input`
     justify-content: center;
   }
 `;
-
 
 export const Blank = styled.div`
   width: 0.875rem;
@@ -112,17 +108,16 @@ export const TupleTitleBox = styled.div`
   // cursor: pointer;
 `;
 
-
 export const DeletedIcon = styled.img`
   width: 0.833rem;
   height: 0.833rem;
   margin-right: 0.16rem;
 `;
 
-
 export const TupleTitle = styled.span`
   ${tokens.typography.B2_M_16};
-  color: ${(props) => (props['data-delete-yn']? tokens.colors.Sub_3 : tokens.colors.Black)};
+  color: ${(props) =>
+    props["data-delete-yn"] ? tokens.colors.Sub_3 : tokens.colors.Black};
 `;
 
 export const HighlightedText = styled.span`
@@ -131,17 +126,17 @@ export const HighlightedText = styled.span`
 `;
 
 export const NewIcon = styled.div`
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   ${tokens.typography.B2_M_16};
-   background-color: rgba(251, 170, 132, 0.2);
-   color: ${tokens.colors.Sub_3};
-   width: 2.17rem;
-   height: 0.88rem;
-   border: none;
-   border-radius: 0.17rem;
-   margin-left: 0.17rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${tokens.typography.B2_M_16};
+  background-color: rgba(251, 170, 132, 0.2);
+  color: ${tokens.colors.Sub_3};
+  width: 2.17rem;
+  height: 0.88rem;
+  border: none;
+  border-radius: 0.17rem;
+  margin-left: 0.17rem;
 `;
 
 export const TupleWriter = styled.div`
@@ -202,7 +197,8 @@ export const TupleProcess = styled.div`
 `;
 
 export const ProcessingYNBox = styled.div`
-  background-color: ${({ solvedYn }) => (solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4)};
+  background-color: ${({ solvedYn }) =>
+    solvedYn ? tokens.colors.Blue_0_Main : tokens.colors.Grey_4};
   color: ${tokens.colors.White};
   width: 3.167rem;
   height: 0.875rem;
@@ -214,4 +210,3 @@ export const ProcessingYNBox = styled.div`
 `;
 
 // 튜플 파트 끝
-

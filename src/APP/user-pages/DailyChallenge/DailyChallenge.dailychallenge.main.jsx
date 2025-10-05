@@ -83,20 +83,24 @@ export default function DailyChallenge() {
   // 챌린지 이력 조회
   const loadChallengeHistory = async () => {
     try {
-      // 비로그인 공개 API 호출
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/challenge-join-log`,
-      );
-  
-      const result = response?.data?.result ?? {};
-      const totalCount = result?.totalCount ?? 0;
-      const joinLogList = Array.isArray(result?.joinLogList)
-        ? result.joinLogList
-        : [];
-  
+      let response;
+      if (!accessToken){
+        response = (await axios.get(
+          `${process.env.REACT_APP_API_URL}/challenge-join-log`,
+        )).data;
+      }
+      else {
+        response = await request.get('/challenge-join-log');
+      }
+      
+      const result = response.result;
+      const joinLogList = result.joinLogList;
+      const totalCount = result.totalCount;
+
+      console.log("챌린지 이력 조회 성공:", result);
+
       // 참여 인원 수 세팅
       setParticipantsCount(totalCount);
-      console.log("챌린지 이력 조회 성공:", result);
   
       // totalCount가 0보다 크면 참여 이력 있다고 판단
       if (totalCount > 0 && joinLogList.length > 0) {

@@ -4,6 +4,7 @@ import * as Styled from './Styled/DailyChallenge.dailychallenge.main.styles';
 import Ranking from './DailyChallenge.dailychallenge.ranking';
 import Background from './DailyChallenge.dailychallenge.background';
 import request from '../../Api/request';
+import axios from 'axios';
 
 export default function DailyChallenge() {
   const location = useLocation();
@@ -61,6 +62,7 @@ export default function DailyChallenge() {
 
   const isOneHourLeft = timeLeftMs <= 3600 * 1000;
 
+  /*
   // 금일 챌린지 참여 여부 확인
   const checkTodayJoinStatus = async () => {
     if (!accessToken) return;
@@ -76,19 +78,36 @@ export default function DailyChallenge() {
       console.error('챌린지 참여 여부 확인 실패:', error);
     }
   };
+  */
 
-  // 챌린지 이력 목록 조회
+  // 챌린지 이력 조회
   const loadChallengeHistory = async () => {
-    if (!accessToken) return;
-    
     try {
-      const response = await request.get('/challenge-join-log');
-      if (response.isSuccess && response.result?.joinLogList) {
-        setChallengeHistory(response.result.joinLogListv|| []);
-        setParticipantsCount(response.result.totalCount || 0);
+      // 비로그인 공개 API 호출
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/challenge-join-log`,
+      );
+  
+      const result = response?.data?.result ?? {};
+      const totalCount = result?.totalCount ?? 0;
+      const joinLogList = Array.isArray(result?.joinLogList)
+        ? result.joinLogList
+        : [];
+  
+      // 참여 인원 수 세팅
+      setParticipantsCount(totalCount);
+      console.log("챌린지 이력 조회 성공:", result);
+  
+      // totalCount가 0보다 크면 참여 이력 있다고 판단
+      if (totalCount > 0 && joinLogList.length > 0) {
+        setHasJoinedToday(true);
+        setChallengeHistory(joinLogList);
+      } else {
+        setHasJoinedToday(false);
+        setChallengeHistory([]);
       }
     } catch (error) {
-      console.error('챌린지 이력 조회 실패:', error);
+      console.error("챌린지 이력 조회 실패:", error);
     }
   };
 
@@ -117,8 +136,8 @@ export default function DailyChallenge() {
 
   // 컴포넌트 마운트 시 참여 여부 확인
   useEffect(() => {
-    checkTodayJoinStatus();
-  }, [accessToken]);
+    loadChallengeHistory();
+  }, []);
 
   // 레벨 텍스트 포맷팅 함수 (BRONZE5 -> Bronze 5)
   const formatLevel = (level) => {
@@ -137,26 +156,32 @@ export default function DailyChallenge() {
 
   // 챌린지 데이터 로드 (한 번만 호출)
   const loadChallengeData = async () => {
-    if (hasLoadedChallengeData || !accessToken) {
-      return;
+
+    // 비로그인이라면 로드하지 않음
+    if (!accessToken) return null;
+
+    // 이미 로드되어 있다면 캐시 반환
+    if (hasLoadedChallengeData && challengeData) {
+      return challengeData;
     }
-    
+
     try {
       setIsLoading(true);
       const response = await request.get('/challenge/problem/today');
-      
       if (response.isSuccess) {
-        const { problemNumber, level, levelImageUrl, algorithmList } = response.result;
-        
+        const data = {
+          problemNumber: response.result.problemNumber,
+          level: response.result.level,
+          levelImageUrl: response.result.levelImageUrl,
+          algorithmList: response.result.algorithmList || [],
+        }
         // 챌린지 데이터 저장
-        setChallengeData({
-          problemNumber,
-          level,
-          levelImageUrl,
-          algorithmList
-        });
+        setChallengeData(data);
         setHasLoadedChallengeData(true);
+
+        return data;
       }
+      
       
     } catch (error) {
       console.error('금일 챌린지 문제 조회 실패:', error);
@@ -173,20 +198,13 @@ export default function DailyChallenge() {
       return;
     }
 
-    // 챌린지 데이터가 없으면 로드
-    if (!hasLoadedChallengeData) {
-      await loadChallengeData();
-    }
+    const data = await loadChallengeData();
 
     // 데이터가 있으면 백준 링크 열기
-    if (challengeData && challengeData.problemNumber) {
-      const bojLink = `https://www.acmicpc.net/problem/${challengeData.problemNumber}`;
+    if (data) {
+      const bojLink = `https://www.acmicpc.net/problem/${data.problemNumber}`;
       window.open(bojLink, '_blank');
     }
-    
-    // 알고리즘 태그만 표시 (레벨은 숨김)
-    setShowTags(true);
-    setShowLevel(false);
   };
 
   const handleTagToggle = async () => {
@@ -196,10 +214,7 @@ export default function DailyChallenge() {
       return;
     }
     
-    // 챌린지 데이터가 없으면 로드
-    if (!hasLoadedChallengeData) {
-      await loadChallengeData();
-    }
+    await loadChallengeData();
     
     setShowTags((v) => !v);
     setShowLevel(false); // 다른 펼쳐진 요소 접기
@@ -212,10 +227,7 @@ export default function DailyChallenge() {
       return;
     }
     
-    // 챌린지 데이터가 없으면 로드
-    if (!hasLoadedChallengeData) {
-      await loadChallengeData();
-    }
+    await loadChallengeData();
     
     setShowLevel((v) => !v);
     setShowTags(false); // 다른 펼쳐진 요소 접기

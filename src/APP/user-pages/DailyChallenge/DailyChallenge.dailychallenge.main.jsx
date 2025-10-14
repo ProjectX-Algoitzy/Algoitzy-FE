@@ -19,7 +19,6 @@ export default function DailyChallenge() {
   const [tierSrc, setTierSrc] = useState('https://static.solved.ac/tier_small/0.svg');
   const [challengeData, setChallengeData] = useState(null);
   const [participantsCount, setParticipantsCount] = useState(0);
-  const [hasJoinedToday, setHasJoinedToday] = useState(false);
   const [challengeHistory, setChallengeHistory] = useState([]);
 
   const msToHHMMSS = (ms) => {
@@ -79,17 +78,9 @@ export default function DailyChallenge() {
 
       console.log("챌린지 이력 조회 성공:", result);
 
-      // 참여 인원 수 세팅
       setParticipantsCount(totalCount);
-  
-      // totalCount가 0보다 크면 참여 이력 있다고 판단
-      if (totalCount > 0 && joinLogList.length > 0) {
-        setHasJoinedToday(true);
-        setChallengeHistory(joinLogList);
-      } else {
-        setHasJoinedToday(false);
-        setChallengeHistory([]);
-      }
+      setChallengeHistory(joinLogList);
+
     } catch (error) {
       console.error("챌린지 이력 조회 실패:", error);
     }
@@ -260,7 +251,6 @@ export default function DailyChallenge() {
         </Styled.ProblemInfoContainer>
       </Styled.TitleContainer>
       <Ranking
-        disable={!hasJoinedToday}
         challengeHistory={challengeHistory}
       />
     </Styled.Container>

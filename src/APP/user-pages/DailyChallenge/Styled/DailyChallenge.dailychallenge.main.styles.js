@@ -97,14 +97,13 @@ export const ProblemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `
 
 export const IconContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 1.542rem;
   margin-bottom: 0.583rem;
@@ -185,6 +184,7 @@ export const Tooltip = styled.div`
 `;
 
 export const IconWithTooltip = styled.div`
+  width: 3.8rem;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -307,4 +307,12 @@ export const LevelTagText = styled.div`
   font-size: 0.667rem;
   font-weight: 500;
   color: ${tokens.colors.White};
+`;
+
+export const TierWithLevel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 `;

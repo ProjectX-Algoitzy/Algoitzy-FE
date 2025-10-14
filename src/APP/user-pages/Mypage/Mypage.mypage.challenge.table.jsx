@@ -11,11 +11,12 @@ export default function ChallengeTable({
   logCount,
   rewardCount,
   winCount,
+  regularStudyId,
   isMemberMatch,
   fetchRewardLog,
   onChangeLogType,
 }) {
-  // const [count, setCount] = useState(inquiryCount); //TODO -  - 임시로 10 넣음
+  // const [count, setCount] = useState(inquiryCount);
   const [challengeRewardCount, setChallengeRewardCount] = useState(rewardCount);
   const [challengeWinCount, setChallengeWinCount] = useState(winCount);
 
@@ -96,6 +97,7 @@ export default function ChallengeTable({
             <RewardProgress
               challengeRewardCount={challengeRewardCount}
               challengeWinCount={challengeWinCount}
+              regularStudyId={regularStudyId}
             />
           </itemS.TabBox>
         </itemS.TabBtnContainer>

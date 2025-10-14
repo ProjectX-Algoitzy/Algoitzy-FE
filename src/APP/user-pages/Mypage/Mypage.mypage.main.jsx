@@ -5,6 +5,7 @@ import ParticipatedStudyList from "./Mypage.mypage.participatedstudylist";
 import AppliedStudyList from "./Mypage.mypage.appliedstudylist";
 import MyBoardTable from "./Mypage.mypage.myboard.table";
 import MyInquiryTable from "./Mypage.mypage.myinquiry.table";
+import ChallengeTable from "./Mypage.mypage.challenge.table";
 import * as itemS from "./Styled/Mypage.mypage.main.styles";
 import request from "../../Api/request";
 
@@ -22,6 +23,12 @@ export default function MyPage() {
   const [totalCount, setTotalCount] = useState(0); // 전체 글 수
   const [inquiries, setInquiries] = useState([]); // 내 문의하기 글
   const [inquiryCount, setInquiryCount] = useState(0); // 내 문의하기 글 수
+  const [rewardLogs, setRewardLogs] = useState([]); // 내 챌린지 보상 이력
+  const [logCount, setLogCount] = useState(0); // 내 챌린지 보상 이력 항목 수
+  const [logType, setLogType] = useState(""); // "" | "ACQUIRED" | "USED"
+  const [rewardCount, setRewardCount] = useState(0); // 누적 교환권 수
+  const [winCount, setWinCount] = useState(0); // 챌린지 win 수
+  const [regularStudyId, setRegularStudyId] = useState(null); // 참여중인 정규 스터디 id
 
   // 내 스터디, 내가 쓴 글 탭 변경
   const [selectedTab, setSelectedTab] = useState("study");
@@ -34,12 +41,24 @@ export default function MyPage() {
   const totalPagesPassStudy = Math.ceil(passStudyList.length / itemsPerPage); // 참여 스터디 총 페이지 수
   const totalPagesApplyStudy = Math.ceil(applyStudyList.length / itemsPerPage); // 지원 스터디 총 페이지 수
 
+  const fetchInfo = async () => {
+    try {
+      const response = await request.get("/member/info");
+      // console.log("로그인 멤버 정규스터 정보 조회", response);
+      if (response.isSuccess && response.result.regularStudyId !== null) {
+        setRegularStudyId(response.result.regularStudyId);
+      }
+    } catch (error) {
+      console.error("로그인 멤버 정보 조회 실패", error);
+    }
+  };
+
   const fetchMyInfo = async () => {
     try {
       const response = await request.get(`/member/${handle}/info`);
 
       if (response.isSuccess) {
-        console.log("나의 정보 조회 성공", response);
+        // console.log("나의 정보 조회 성공", response);
         setMyInfoData(response.result);
       } else {
         console.error("나의 정보 조회 실패:", response);
@@ -54,7 +73,7 @@ export default function MyPage() {
       const response = await request.get(`/member/${handle}/study`);
 
       if (response.isSuccess) {
-        console.log("나의 스터디 조회 성공", response);
+        // console.log("나의 스터디 조회 성공", response);
         setPassStudyList(response.result.passStudyList);
         setApplyStudyList(response.result.applyStudyList);
       } else {
@@ -68,7 +87,7 @@ export default function MyPage() {
   const fetchBoard = async () => {
     try {
       const response = await request.get(`/member/${handle}/board`);
-      console.log("내 게시글 목록 조회 성공", response);
+      // console.log("내 게시글 목록 조회 성공", response);
 
       if (response.isSuccess) {
         setBoards(response.result.boardList);
@@ -86,7 +105,7 @@ export default function MyPage() {
   const fetchinquiry = async () => {
     try {
       const response = await request.get(`/member/${handle}/inquiry`);
-      console.log("내 문의하기 목록 조회 성공", response);
+      // console.log("내 문의하기 목록 조회 성공", response);
 
       if (response.isSuccess) {
         setInquiries(response.result.inquiryList);
@@ -99,7 +118,50 @@ export default function MyPage() {
     }
   };
 
+  const fetchRewardLog = async (type = "") => {
+    try {
+      const url = type
+        ? `/challenge/reward/log?logType=${type}`
+        : `/challenge/reward/log`;
+      const response = await request.get(url);
+      // console.log("보상 로그 조회 성공", response);
+      if (response.isSuccess) {
+        setRewardLogs(response.result.rewardLogList);
+        setLogCount(response.result.totalCount);
+      } else {
+        console.error("보상 로그 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("보상 로그 조회 오류", error);
+    }
+  };
+
+  const fetchRewardStatus = async () => {
+    try {
+      const response = await request.get(`/challenge/reward/status`);
+      // console.log("내 챌린지 보상 현황 조회 성공", response);
+
+      if (response.isSuccess) {
+        setRewardCount(response.result.rewardCount);
+        setWinCount(response.result.winCount);
+      } else {
+        console.error("내 챌린지 보상 현황 조회 실패:", response);
+      }
+    } catch (error) {
+      console.error("내 챌린지 보상 현황 조회 오류", error);
+    }
+  };
+
   useEffect(() => {
+    fetchRewardStatus();
+  }, []);
+
+  useEffect(() => {
+    fetchRewardLog(logType);
+  }, [handle, logType]); // logType이 바뀌면 자동 호출
+
+  useEffect(() => {
+    fetchInfo();
     fetchMyInfo();
     fetchMyStudy();
     fetchBoard();
@@ -197,6 +259,17 @@ export default function MyPage() {
             inquiryCount={inquiryCount}
             isMemberMatch={isMemberMatch}
             fetchinquiry={fetchinquiry}
+          />
+        ) : selectedTab === "challenge" ? (
+          <ChallengeTable
+            items={rewardLogs}
+            logCount={logCount}
+            rewardCount={rewardCount}
+            winCount={winCount}
+            regularStudyId={regularStudyId}
+            isMemberMatch={isMemberMatch}
+            fetchRewardLog={fetchRewardLog}
+            onChangeLogType={setLogType}
           />
         ) : null}
       </itemS.InnerContainer>

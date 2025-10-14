@@ -62,7 +62,7 @@ export default function RegularStudyMocktest() {
   const fetchCurrentWeek = useCallback(async () => {
     try {
       const responseCurrentWeek = await request.get('/week/current');
-      // console.log("현재 주차 정보 조회: ", responseCurrentWeek);
+      // console.log('현재 주차 정보 조회: ', responseCurrentWeek);
       if (responseCurrentWeek.isSuccess) {
         const currentWeekValue = responseCurrentWeek.result.week;
         setCurrentWeek(currentWeekValue); // 상태 업데이트
@@ -70,6 +70,10 @@ export default function RegularStudyMocktest() {
       }
     } catch (error) {
       console.error('현재 주차 정보 조회 오류: ', error);
+      if (error?.response?.data?.code === 'ATTENDANCE_ENDED') {
+        setCurrentWeek(1);
+        return 1;
+      }
     }
     return null; // 실패 시 null 반환
   }, []);

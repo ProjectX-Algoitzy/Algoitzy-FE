@@ -3,14 +3,17 @@ import RankingTuple from './DailyChallenge.dailychallenge.tuple';
 import rankingData from "./dummyRanking.js";
 
 const DEFAULT_ROWS = [
-	{ rank: "1", name: "홍길동", speed: "0ms", memory: "0KB", codeLength: "1000B" },
-	{ rank: "2", name: "홍길동", speed: "0ms", memory: "0KB", codeLength: "2000B" },
-	{ rank: "3", name: "홍길동", speed: "0ms", memory: "0KB", codeLength: "3000B" },
+	{ rank: "1", name: "이유경", speed: "0ms", memory: "0KB", codeLength: "1000B" },
+	{ rank: "2", name: "이육영", speed: "0ms", memory: "0KB", codeLength: "2000B" },
+	{ rank: "3", name: "이규영", speed: "0ms", memory: "0KB", codeLength: "3000B" },
 ];
 
-export default function RankingTable({ disable, language, date, challengeHistory = [] }) {
+export default function RankingTable({ language, date, challengeHistory = [] }) {
+	
+	const hasRecordForDate = challengeHistory.some(item => item.date === date);
+	const isDisabled = !hasRecordForDate;
 
-	if (disable) {
+	if (isDisabled) {
 		return (
 		  <itemS.Container>
 			  <itemS.Table>
@@ -92,7 +95,7 @@ export default function RankingTable({ disable, language, date, challengeHistory
 						key={`${item.name}-${item.rank}-${index}`}
 						item={item} 
 						language={language} 
-						disable={disable}
+						disable={false}
 					/>
 				))}
 			</itemS.Table>

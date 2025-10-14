@@ -20,7 +20,7 @@ export default function Langding() {
         // console.log("스터디 최신 기수 api", response);
         setDetailRecentGeneration(response.data.result);
         if (response.data["isSuccess"]) {
-          console.log("api 연동 성공");
+          // console.log("api 연동 성공");
         } else {
           console.error("api 연동 실패:", response);
         }
@@ -37,7 +37,7 @@ export default function Langding() {
         console.log("최신 기수 스터디 개수 api", response);
         setDetailStudyCount(response.data.result);
         if (response.data["isSuccess"]) {
-          console.log("api 연동 성공");
+          // console.log("api 연동 성공");
         } else {
           console.error("api 연동 실패:", response);
         }
@@ -48,7 +48,7 @@ export default function Langding() {
     const checkLoginStatus = async () => {
       try {
         const response = await request.get("/member/info");
-        console.log("로그인 멤버 정보 조회", response);
+        // console.log("로그인 멤버 정보 조회", response);
         if (response["isSuccess"]) {
           setIsLoggedIn(true);
           localStorage.setItem("memberId", response.result.memberId);

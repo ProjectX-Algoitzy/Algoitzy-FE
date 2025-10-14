@@ -7,7 +7,7 @@ import AttendanceModal from './RegularStudy.regularstudy.modal';
 import { AlertContext } from '../../Common/Alert/AlertContext';
 import { ConfirmContext } from '../../Common/Confirm/ConfirmContext';
 
-export default function RegularStudyAttendance() {
+export default function RegularStudyAttendance({ memberRole, endYn }) {
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('문제 인증');
   const [data, setData] = useState({});
@@ -34,6 +34,7 @@ export default function RegularStudyAttendance() {
       try {
         const response = await request.get(`study/${id}/attendance`);
         if (response['isSuccess']) {
+          // console.log('출석 데이터 조회: ', response.result);
           setOriginalAttendanceData(response.result.attendanceList);
           const transformedData = transformData(response.result.attendanceList);
           setData(transformedData);
@@ -560,20 +561,23 @@ export default function RegularStudyAttendance() {
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginBottom: '0.167rem',
+            height: '1.75rem',
           }}
         >
           <itemS.BlueComment>
             *이름을 클릭하면 주차별 출석 인증 내역을 확인할 수 있습니다.
           </itemS.BlueComment>
-          <itemS.GrayBox
-            style={{
-              textDecorationLBlueCommentine: 'underline',
-              cursor: 'pointer',
-            }}
-            onClick={toggleChallengeRewardMode}
-          >
-            챌린지 보상 사용하기
-          </itemS.GrayBox>
+          {!endYn && memberRole === 'MEMBER' && (
+            <itemS.GrayBox
+              style={{
+                textDecorationLBlueCommentine: 'underline',
+                cursor: 'pointer',
+              }}
+              onClick={toggleChallengeRewardMode}
+            >
+              챌린지 보상 사용하기
+            </itemS.GrayBox>
+          )}
         </div>
       )}
 

@@ -6,28 +6,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 export default function RegularStudySideBar({
   setActiveComponent,
   activeComponent,
+  regularStudyInfo,
 }) {
-  const { id } = useParams(); // 파라미터로 받는 해당 정규스터디의 studyId
   const navigate = useNavigate();
-  const [regularStudyInfo, setRegularStudyInfo] = useState(null);
-
-  useEffect(() => {
-    const fetchRegularStudyInfo = async () => {
-      try {
-        const response = await request.get(`study/${id}/info`);
-        // console.log("정규 스터디 사이드 바 조회 정보: ", response);
-        setRegularStudyInfo(response.result);
-        if (response['isSuccess']) {
-          console.log('정규 스터디 조회 성공');
-        } else {
-          console.error('정규 스터디 조회 실패:', response);
-        }
-      } catch (err) {
-        console.error('정규스터디 정보 조회 오류', err);
-      }
-    };
-    fetchRegularStudyInfo();
-  }, [id]);
 
   const handleApplicationClick = () => {
     if (regularStudyInfo.answerYN) {

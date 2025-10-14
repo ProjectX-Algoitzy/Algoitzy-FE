@@ -7,7 +7,6 @@ import request from '../../Api/request';
 import axios from 'axios';
 
 export default function DailyChallenge() {
-  const location = useLocation();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
 
@@ -19,7 +18,6 @@ export default function DailyChallenge() {
   const [showLevel, setShowLevel] = useState(false);
   const [tierSrc, setTierSrc] = useState('https://static.solved.ac/tier_small/0.svg');
   const [challengeData, setChallengeData] = useState(null);
-  const [hasLoadedChallengeData, setHasLoadedChallengeData] = useState(false);
   const [participantsCount, setParticipantsCount] = useState(0);
   const [hasJoinedToday, setHasJoinedToday] = useState(false);
   const [challengeHistory, setChallengeHistory] = useState([]);
@@ -61,24 +59,6 @@ export default function DailyChallenge() {
   }, [showLevel, challengeData]);
 
   const isOneHourLeft = timeLeftMs <= 3600 * 1000;
-
-  /*
-  // 금일 챌린지 참여 여부 확인
-  const checkTodayJoinStatus = async () => {
-    if (!accessToken) return;
-    
-    try {
-      const response = await request.get('/challenge/check-join');
-      if (response.isSuccess && response.result) {
-        setHasJoinedToday(true);
-        // 참여했다면 챌린지 이력도 조회
-        await loadChallengeHistory();
-      }
-    } catch (error) {
-      console.error('챌린지 참여 여부 확인 실패:', error);
-    }
-  };
-  */
 
   // 챌린지 이력 조회
   const loadChallengeHistory = async () => {
@@ -128,7 +108,6 @@ export default function DailyChallenge() {
   useEffect(() => {
     const msToMidnight = getMsToMidnight();
     
-    // 자정에 새로고침
     const midnightTimer = setTimeout(() => {
       window.location.reload();
     }, msToMidnight);
@@ -140,6 +119,7 @@ export default function DailyChallenge() {
 
   // 컴포넌트 마운트 시 참여 여부 확인
   useEffect(() => {
+    loadChallengeData();
     loadChallengeHistory();
   }, []);
 
@@ -160,12 +140,8 @@ export default function DailyChallenge() {
 
   // 챌린지 데이터 로드 (한 번만 호출)
   const loadChallengeData = async () => {
-
-    // 비로그인이라면 로드하지 않음
     if (!accessToken) return null;
-
-    // 이미 로드되어 있다면 캐시 반환
-    if (hasLoadedChallengeData && challengeData) {
+    if (challengeData) {
       return challengeData;
     }
 
@@ -179,14 +155,9 @@ export default function DailyChallenge() {
           levelImageUrl: response.result.levelImageUrl,
           algorithmList: response.result.algorithmList || [],
         }
-        // 챌린지 데이터 저장
         setChallengeData(data);
-        setHasLoadedChallengeData(true);
-
         return data;
       }
-      
-      
     } catch (error) {
       console.error('금일 챌린지 문제 조회 실패:', error);
     } finally {
@@ -196,7 +167,6 @@ export default function DailyChallenge() {
 
   // 문제풀기 버튼 클릭
   const handleProblemSolve = async () => {
-    // 로그인 상태 확인
     if (!accessToken) {
       navigate('/login');
       return;
@@ -204,7 +174,6 @@ export default function DailyChallenge() {
 
     const data = await loadChallengeData();
 
-    // 데이터가 있으면 백준 링크 열기
     if (data) {
       const bojLink = `https://www.acmicpc.net/problem/${data.problemNumber}`;
       window.open(bojLink, '_blank');
@@ -212,7 +181,6 @@ export default function DailyChallenge() {
   };
 
   const handleTagToggle = async () => {
-    // 로그인 상태 확인
     if (!accessToken) {
       navigate('/login');
       return;
@@ -221,11 +189,10 @@ export default function DailyChallenge() {
     await loadChallengeData();
     
     setShowTags((v) => !v);
-    setShowLevel(false); // 다른 펼쳐진 요소 접기
+    setShowLevel(false); 
   };
   
   const handleTierToggle = async () => {
-    // 로그인 상태 확인
     if (!accessToken) {
       navigate('/login');
       return;
@@ -234,7 +201,7 @@ export default function DailyChallenge() {
     await loadChallengeData();
     
     setShowLevel((v) => !v);
-    setShowTags(false); // 다른 펼쳐진 요소 접기
+    setShowTags(false);
   };
 
 

@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 /* 한 캔버스 전체 래퍼 */
 export const Wrap = styled.div`
   position: absolute;
+  height: 120vw;
   inset: 0;
   overflow: hidden;
   pointer-events: none; /* 배경은 기본 비활성, 코알라만 이벤트 */

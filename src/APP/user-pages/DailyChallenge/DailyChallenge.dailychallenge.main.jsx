@@ -225,20 +225,21 @@ export default function DailyChallenge() {
               <Styled.AlgorithmTagIcon onClick={handleTagToggle}/>
               <Styled.Tooltip>태그 보기</Styled.Tooltip>
             </Styled.IconWithTooltip>
-    {/* 티어 아이콘 + 레벨 태그 */}
-    <Styled.TierWithLevel>
-      <Styled.IconWithTooltip>
-        <Styled.TierIcon onClick={handleTierToggle} $src={tierSrc}/>
-        <Styled.Tooltip>레벨 보기</Styled.Tooltip>
-      </Styled.IconWithTooltip>
+            
+            {/* 티어 아이콘 + 레벨 태그 */}
+            <Styled.TierWithLevel>
+              <Styled.IconWithTooltip>
+                <Styled.TierIcon onClick={handleTierToggle} $src={tierSrc}/>
+                <Styled.Tooltip>레벨 보기</Styled.Tooltip>
+              </Styled.IconWithTooltip>
 
-      {showLevel && challengeData && challengeData.level && (
-        <Styled.LevelTag>
-          <Styled.LevelTagText>{formatLevel(challengeData.level)}</Styled.LevelTagText>
-        </Styled.LevelTag>
-      )}
-    </Styled.TierWithLevel>
-  </Styled.IconContainer>
+              {showLevel && challengeData && challengeData.level && (
+                <Styled.LevelTag>
+                  <Styled.LevelTagText>{formatLevel(challengeData.level)}</Styled.LevelTagText>
+                </Styled.LevelTag>
+              )}
+            </Styled.TierWithLevel>
+          </Styled.IconContainer>
 
           <Styled.TagContainer $show={showTags || showLevel}>
             {showTags && challengeData && challengeData.algorithmList ? (
